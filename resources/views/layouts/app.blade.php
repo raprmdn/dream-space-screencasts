@@ -64,5 +64,34 @@
 <script src="{{ asset('assets/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 @stack('scripts')
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "3000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+</script>
+@if(Session::has('success'))
+    <script>
+        toastr.success("{{ Session::get('status') }}");
+    </script>
+@endif
+@if(Session::has('error'))
+    <script>
+        toastr.error("{{ Session::get('error') }}");
+    </script>
+@endif
 </body>
 </html>

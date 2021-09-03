@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="subscribe-form d-flex align-items-center m-0 bgi-no-repeat bgi-position-y-bottom bgi-position-x-right p-8 p-lg-12">
-            <a href="/" class="btn btn-lg btn-outline border-2 btn-outline-white flex-shrink-0 my-2">Join and become students!</a>
+            <a href="{{ route('register') }}" class="btn btn-lg btn-outline border-2 btn-outline-white flex-shrink-0 my-2">Join and become students!</a>
         </div>
     </div>
 </div>
