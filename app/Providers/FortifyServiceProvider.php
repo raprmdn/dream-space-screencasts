@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Contracts\{LoginResponse, LogoutResponse, RegisterResponse};
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,35 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+            public function toResponse($request)
+            {
+                return redirect()->intended(route('index'))->with([
+                    'type' => 'success',
+                    'message' => 'You have been logged in.'
+                ]);
+            }
+        });
+        $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
+            public function toResponse($request)
+            {
+                return redirect()->route('index')->with([
+                    'type' => 'success',
+                    'message' => 'You have been logged out.'
+                ]);
+            }
+        });
+
+
+        $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
+            public function toResponse($request)
+            {
+                return redirect()->route('index')->with([
+                    'type' => 'success',
+                    'message' => 'Successfully registered. Please confirm your email address.'
+                ]);
+            }
+        });
     }
 
     /**
@@ -45,19 +74,24 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::loginView(function () {
-            return view('auth.login');
+            return inertia('Auth/Login');
         });
 
         Fortify::registerView(function () {
-            return view('auth.register');
+            return inertia('Auth/Register');
         });
 
         Fortify::requestPasswordResetLinkView(function () {
-            return view('auth.forgot-password');
+            return inertia('Auth/ForgotPassword');
         });
 
         Fortify::resetPasswordView(function ($request) {
-            return view('auth.reset-password', ['request' => $request]);
+            return inertia('Auth/ResetPassword', [
+                'request' => [
+                    'email' => $request->email,
+                    'token' => $request->route('token')
+                ]
+            ]);
         });
     }
 }
