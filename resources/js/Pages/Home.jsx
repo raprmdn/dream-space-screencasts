@@ -10,7 +10,7 @@ export default function Home() {
     return (
         <>
             <Head title="Dream Space">
-                {/*<script src="/assets/js/scripts.bundle.js"></script>*/}
+                <script src="/assets/js/scripts.bundle.js"></script>
             </Head>
             <Jumbotron>
                 <div className="text-center mb-5 mb-lg-10 py-10 py-lg-20">

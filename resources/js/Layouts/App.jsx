@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import Header from "../Components/Layouts/Header";
-import QuickPanelUser from "../Components/Layouts/QuickPanelUser";
 import {Head, usePage} from "@inertiajs/inertia-react"
 import Footer from "../Components/Layouts/Footer";
 import HeaderMobile from "../Components/Layouts/HeaderMobile";
@@ -15,7 +14,7 @@ export default function App({children, title}) {
     return (
         <>
             <Head title={title}>
-                <script src="/assets/js/scripts.bundle.js"></script>
+                {/*<script src="/assets/js/scripts.bundle.js"></script>*/}
             </Head>
             <HeaderMobile/>
             <div className="d-flex flex-column flex-root">
@@ -34,7 +33,6 @@ export default function App({children, title}) {
                     </div>
                 </div>
             </div>
-            <QuickPanelUser/>
             <div id="kt_scrolltop" className="scrolltop">
               <span className="svg-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
