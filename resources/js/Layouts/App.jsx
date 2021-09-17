@@ -13,9 +13,9 @@ export default function App({children, title}) {
         flash.type && toast[flash.type](flash.message)
     }, [flash])
     return (
-        <div>
+        <>
             <Head title={title}>
-                <script src="assets/js/scripts.bundle.js"></script>
+                <script src="/assets/js/scripts.bundle.js"></script>
             </Head>
             <HeaderMobile/>
             <div className="d-flex flex-column flex-root">
@@ -46,6 +46,6 @@ export default function App({children, title}) {
                 </svg>
               </span>
             </div>
-        </div>
+        </>
     )
 }

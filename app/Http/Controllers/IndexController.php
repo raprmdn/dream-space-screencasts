@@ -14,6 +14,6 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return inertia('Index');
+        return inertia('Home');
     }
 }

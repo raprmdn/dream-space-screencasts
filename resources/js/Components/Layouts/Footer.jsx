@@ -52,19 +52,19 @@ export default function Footer() {
                                 <h3 className="text-muted mb-5 mb-lg-7 font-size-4">Stay Connected</h3>
                                 <div className="d-flex flex-column font-size-3 font-weight-bold">
                                     <a href="/" className="d-flex align-items-center text-center text-dark-50 text-hover-white py-2 py-lg-3">
-                                        <img src="https://keenthemes.com/images/social-icons/facebook.svg" data-lazy-src="https://keenthemes.com/images/social-icons/facebook.svg" className="w-20px mr-4 loaded" alt="" />
+                                        {/*<img src="https://keenthemes.com/images/social-icons/facebook.svg" data-lazy-src="https://keenthemes.com/images/social-icons/facebook.svg" className="w-20px mr-4 loaded" alt="" />*/}
                                         Facebook
                                     </a>
                                     <a href="/" className="d-flex align-items-center text-center text-dark-50 text-hover-white py-2 py-lg-3">
-                                        <img src="https://keenthemes.com/images/social-icons/twitter.svg" data-lazy-src="https://keenthemes.com/images/social-icons/twitter.svg" className="w-20px mr-4 loaded" alt="" />
+                                        {/*<img src="https://keenthemes.com/images/social-icons/twitter.svg" data-lazy-src="https://keenthemes.com/images/social-icons/twitter.svg" className="w-20px mr-4 loaded" alt="" />*/}
                                         Twitter
                                     </a>
                                     <a href="/" className="d-flex align-items-center text-center text-dark-50 text-hover-white py-2 py-lg-3">
-                                        <img src="https://keenthemes.com/images/social-icons/instagram.svg" data-lazy-src="https://keenthemes.com/images/social-icons/instagram.svg" className="w-20px mr-4 loaded" alt="" />
+                                        {/*<img src="https://keenthemes.com/images/social-icons/instagram.svg" data-lazy-src="https://keenthemes.com/images/social-icons/instagram.svg" className="w-20px mr-4 loaded" alt="" />*/}
                                         Instagram
                                     </a>
                                     <a href="/" className="d-flex align-items-center text-center text-dark-50 text-hover-white py-2 py-lg-3">
-                                        <img src="https://keenthemes.com/images/social-icons/github.svg" data-lazy-src="https://keenthemes.com/images/social-icons/github.svg" className="w-20px mr-4 loaded" alt="" />
+                                        {/*<img src="https://keenthemes.com/images/social-icons/github.svg" data-lazy-src="https://keenthemes.com/images/social-icons/github.svg" className="w-20px mr-4 loaded" alt="" />*/}
                                         Github
                                     </a>
                                 </div>
@@ -72,7 +72,7 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-                <div style={{borderTop: '1px solid #152231'}} />
+                <div style={{borderTop: '1px dashed #2b3e5a'}} />
                     <div className="container py-5 py-lg-10">
                         <div className="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between">
                         <span className="font-size-6 font-weight-bolder text-white pt-1">© 2021 Dream Space.</span>

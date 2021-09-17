@@ -17,7 +17,7 @@ export default function QuickPanelUser() {
                     <div className="offcanvas-content pr-5 mr-n5">
                         <div className="d-flex align-items-center mt-5">
                             <div className="symbol symbol-100 mr-5">
-                                <div className="symbol-label" style={{backgroundImage: 'url(assets/media/users/300_21.jpg)'}} />
+                                <div className="symbol-label" style={{backgroundImage: 'url(/assets/media/users/300_21.jpg)'}} />
                                 <i className="symbol-badge bg-success" />
                             </div>
                             <div className="d-flex flex-column">

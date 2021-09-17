@@ -25,7 +25,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
-                return redirect()->intended(route('index'))->with([
+                return redirect()->intended(route('home'))->with([
                     'type' => 'success',
                     'message' => 'You have been logged in.'
                 ]);
@@ -34,7 +34,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
             public function toResponse($request)
             {
-                return redirect()->route('index')->with([
+                return redirect()->route('home')->with([
                     'type' => 'success',
                     'message' => 'You have been logged out.'
                 ]);
@@ -45,7 +45,7 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
             public function toResponse($request)
             {
-                return redirect()->route('index')->with([
+                return redirect()->route('home')->with([
                     'type' => 'success',
                     'message' => 'Successfully registered. Please confirm your email address.'
                 ]);

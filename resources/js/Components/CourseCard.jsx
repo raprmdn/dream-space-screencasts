@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function CourseCard() {
     return (
-        <div className="col-xl-4">
+        <div className="col-xl-4 mb-5">
             <div className="card card-custom card-stretch gutter-b">
                 <div className="ribbon ribbon-clip ribbon-left">
                     <div className="ribbon-target" style={{top: '12px'}}>
@@ -12,18 +12,18 @@ export default function CourseCard() {
                         </a>
                     </div>
                 </div>
-                <div className="ribbon ribbon-clip ribbon-left">
-                    <div className="ribbon-target" style={{top: '50px'}}>
-                        <span className="ribbon-inner bg-danger" />
-                        <a href="#" className="text-white text-hover-white">
-                            Discount
-                        </a>
-                    </div>
-                </div>
+                {/*<div className="ribbon ribbon-clip ribbon-left">*/}
+                {/*    <div className="ribbon-target" style={{top: '50px'}}>*/}
+                {/*        <span className="ribbon-inner bg-danger" />*/}
+                {/*        <a href="#" className="text-white text-hover-white">*/}
+                {/*            Discount*/}
+                {/*        </a>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 <div className="card-body d-flex flex-column">
                     <div className="text-center">
                         <a href="#">
-                            <img src="assets/media/stock-600x400/img-11.jpg" className="mw-100 rounded-lg" />
+                            <img src="/assets/media/stock-600x400/img-12.jpg" className="mw-100 rounded-lg" />
                         </a>
                     </div>
                     <div className="align-items-center py-5">
