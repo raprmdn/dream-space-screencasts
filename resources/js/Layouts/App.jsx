@@ -13,9 +13,7 @@ export default function App({children, title}) {
     }, [flash])
     return (
         <>
-            <Head title={title}>
-                {/*<script src="/assets/js/scripts.bundle.js"></script>*/}
-            </Head>
+            <Head title={title}/>
             <HeaderMobile/>
             <div className="d-flex flex-column flex-root">
                 <div className="d-flex flex-row flex-column-fluid page">

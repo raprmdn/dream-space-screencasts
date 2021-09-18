@@ -39,7 +39,6 @@ export default function Header() {
                                             </Link>
                                         </li>
                                         <li className="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
-                                            {/*menu-item-open-dropdown menu-item-hover menu-item-open*/}
                                             <Link href={route('home')} className="menu-link menu-toggle">
                                                 <span className="menu-text">Dashboard</span>
                                                 <span className="menu-desc" />
@@ -230,9 +229,16 @@ export default function Header() {
                                                 </div>
                                                 <div className="d-flex flex-column">
                                                     <div className="d-flex align-items-center font-weight-bolder">{auth.user.name}
-                                                        {/*<span className="badge badge-light-success font-weight-bolder px-2 py-1 ml-2">Pro</span>*/}
+                                                        {
+                                                            !auth.user.email_verified_at &&
+                                                            (
+                                                                <span className="label label-light-danger label-pill" data-container="body" data-toggle="tooltip" data-placement="right" title="Please verify your email.">
+                                                                    <i className="fas fa-exclamation-circle font-size-sm text-danger"/>
+                                                                </span>
+                                                            )
+                                                        }
                                                     </div>
-                                                    <a href="#" className="font-weight-bold text-muted text-hover-primary">{auth.user.email}</a>
+                                                    <span className="font-weight-bold text-muted">{auth.user.email}</span>
                                                 </div>
                                             </div>
                                             <div className="separator separator-solid"/>
