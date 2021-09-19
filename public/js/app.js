@@ -3180,6 +3180,132 @@ function FormPermissions(_ref) {
 
 /***/ }),
 
+/***/ "./resources/js/Components/Forms/FormRoles.jsx":
+/*!*****************************************************!*\
+  !*** ./resources/js/Components/Forms/FormRoles.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ FormRoles)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+function FormRoles(_ref) {
+  var permissionsData = _ref.permissionsData,
+      data = _ref.data,
+      submitHandler = _ref.submitHandler,
+      changeHandler = _ref.changeHandler,
+      checkedHandler = _ref.checkedHandler,
+      submitLabel = _ref.submitLabel,
+      errors = _ref.errors;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      className: "modal-body",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("form", {
+        onSubmit: submitHandler,
+        className: "form",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "font-weight-bolder",
+            children: "Role Name"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+            className: "text-danger",
+            children: " * "
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("i", {
+            className: "fas fa-exclamation-circle font-size-sm",
+            "data-container": "body",
+            "data-toggle": "tooltip",
+            "data-placement": "right",
+            title: "Role names is required to be unique."
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            type: "text",
+            id: "name",
+            name: "name",
+            value: data.name,
+            onChange: changeHandler,
+            className: "form-control form-control-solid ".concat(errors.name ? 'is-invalid' : ''),
+            placeholder: "Enter a role name"
+          }), errors.name && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "invalid-feedback mb-n5",
+            children: errors.name
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "font-weight-bolder",
+            children: "Guard Type"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("i", {
+            className: "fas fa-exclamation-circle font-size-sm ml-1",
+            "data-container": "body",
+            "data-toggle": "tooltip",
+            "data-placement": "right",
+            title: "Guard name is default to web."
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            type: "text",
+            id: "guard_name",
+            name: "guard_name",
+            value: data.guard_name,
+            onChange: changeHandler,
+            className: "form-control form-control-solid ".concat(errors.guard_name ? 'is-invalid' : ''),
+            placeholder: "Enter guard name"
+          }), errors.guard_name && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "invalid-feedback mb-n5",
+            children: errors.guard_name
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "font-weight-bolder",
+            children: "Role Permissions"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "checkbox-list",
+            children: permissionsData.map(function (permission, index) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("label", {
+                className: "checkbox",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+                  type: "checkbox",
+                  name: "permissions",
+                  id: "permissions",
+                  value: permission.id,
+                  onChange: function onChange() {
+                    return checkedHandler(permission);
+                  }
+                }, permission.name), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {}), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+                  className: "font-weight-bold text-dark-50",
+                  children: permission.name
+                })]
+              });
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "text-center",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+            className: "btn btn-light mr-3 font-weight-bold",
+            children: "Discard"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("button", {
+            type: "submit",
+            className: "btn btn-primary font-weight-bold",
+            children: [" ", submitLabel]
+          })]
+        })]
+      })
+    })
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/Components/Jumbotron.jsx":
 /*!***********************************************!*\
   !*** ./resources/js/Components/Jumbotron.jsx ***!
@@ -5528,7 +5654,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Layouts/App */ "./resources/js/Layouts/App.jsx");
 /* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
 /* harmony import */ var _Components_SubHeader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Components/SubHeader */ "./resources/js/Components/SubHeader.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _Components_Modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Components/Modal */ "./resources/js/Components/Modal.jsx");
+/* harmony import */ var _Components_Forms_FormRoles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../Components/Forms/FormRoles */ "./resources/js/Components/Forms/FormRoles.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
 
 
 
@@ -5537,48 +5673,227 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Index() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
-      title: "Dream Space | Roles"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_Components_SubHeader__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
+  var _usePage$props = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props,
+      permissionsData = _usePage$props.permissions,
+      roles = _usePage$props.roles;
+
+  var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
+    name: '',
+    guard_name: 'web',
+    permissions: []
+  }),
+      data = _useForm.data,
+      setData = _useForm.setData,
+      post = _useForm.post,
+      put = _useForm.put,
+      errors = _useForm.errors,
+      reset = _useForm.reset; // const [ isChecked, setIsChecked ] = useState({})
+  //
+  // useEffect(() => {
+  //     console.log(isChecked)
+  // }, [isChecked])
+  //
+  // console.log(data)
+
+
+  console.log(data);
+
+  var checkedHandler = function checkedHandler(selected) {
+    // setIsChecked({...isChecked, [e.target.id] : e.target.checked })
+    // const permission = data.permissions
+    // const find = permission.indexOf(e.target.value)
+    // if (find > -1 ) {
+    //     permission.splice(find, 1)
+    // } else {
+    //     permission.push(e.target.value)
+    // }
+    var permission = data.permissions;
+    var find = permission.indexOf(selected);
+
+    if (find > -1) {
+      permission.splice(find, 1);
+    } else {
+      permission.push(selected);
+    }
+
+    console.log(permission);
+    console.log(data);
+  };
+
+  var changeHandler = function changeHandler(e) {
+    setData(_objectSpread(_objectSpread({}, data), {}, _defineProperty({}, e.target.id, e.target.value)));
+  };
+
+  var updateHandler = function updateHandler(e) {
+    e.preventDefault(); // put(route('roles.update', data),{
+    //     data,
+    //     preserveScroll: true,
+    //     resetOnSuccess: false,
+    //     onSuccess: () => {
+    //         window.$('#editRoleModal').modal('hide')
+    //     }
+    // })
+
+    console.log(data);
+  };
+
+  var storeHandler = function storeHandler(e) {
+    e.preventDefault();
+    post(route('roles.store'), {
+      data: data,
+      preserveScroll: true,
+      resetOnSuccess: false,
+      onSuccess: function onSuccess() {
+        window.$('#addRoleModal').modal('hide');
+      }
+    });
+    console.log(data);
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
+      title: "Dream Space | Roles",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("script", {
+        src: "/assets/js/scripts.bundle.js"
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      trigger: "addRoleModal",
+      title: "Add a Role",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_Forms_FormRoles__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        permissionsData: permissionsData,
+        data: data,
+        errors: errors,
+        changeHandler: changeHandler,
+        checkedHandler: checkedHandler,
+        submitLabel: "Submit",
+        submitHandler: storeHandler
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      trigger: "editRoleModal",
+      title: "Edit Role : ".concat(data.name),
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_Forms_FormRoles__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        permissionsData: permissionsData,
+        data: data,
+        errors: errors,
+        changeHandler: changeHandler,
+        checkedHandler: checkedHandler,
+        submitLabel: "Update",
+        submitHandler: updateHandler
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_Components_SubHeader__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h2", {
         className: "text-white font-weight-bold my-2 mr-5",
         children: "Roles"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
         className: "d-flex align-items-center font-weight-bold my-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
           href: route('home'),
           className: "text-white text-hover-white opacity-75 hover-opacity-100",
           children: "Home"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
           className: "label label-dot label-sm bg-white opacity-75 mx-3"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
           className: "text-white text-hover-white opacity-75 hover-opacity-100",
           children: "Dashboard"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
           className: "label label-dot label-sm bg-white opacity-75 mx-3"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
           className: "text-white text-hover-white opacity-75 hover-opacity-100",
           children: "User Management"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
           className: "label label-dot label-sm bg-white opacity-75 mx-3"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
           className: "text-white text-hover-white opacity-75 hover-opacity-100",
           children: "Roles"
         })]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-      className: "d-flex flex-column-fluid",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+      className: "d-flex flex-column-fluid mb-11",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
         className: "container",
-        children: "Roles"
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+          className: "row",
+          children: [roles.map(function (role, index) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              className: "col-lg-4 mb-7",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                className: "card card-custom card-stretch shadow-lg",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                  className: "card-header",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                    className: "card-title",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("h4", {
+                      className: "font-weight-boldest text-dark-75 my-2",
+                      children: role.name
+                    })
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                  className: "card-body py-5",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                    className: "font-weight-bold text-dark-50 mb-5",
+                    children: "Total user with this role : 7"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                    className: "d-flex flex-column text-dark-50",
+                    children: role.permissions.map(function (permission, index) {
+                      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                        className: "d-flex align-items-center py-2",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+                          className: "bullet bg-primary mr-3"
+                        }), permission.name]
+                      }, index);
+                    })
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+                  className: "card-footer flex-wrap py-5",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("a", {
+                    href: "",
+                    className: "btn btn-light btn-active-primary my-1 mr-2 font-weight-bold",
+                    children: "View Role"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                    onClick: function onClick() {
+                      return setData(role);
+                    },
+                    className: "btn btn-light btn-active-light-primary my-1 font-weight-bold",
+                    "data-toggle": "modal",
+                    "data-target": "#editRoleModal",
+                    children: "Edit Role"
+                  })]
+                })]
+              })
+            }, index);
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+            className: "col-lg-4 mb-7",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+              className: "card card-custom card-stretch shadow-lg",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                className: "card-body d-flex flex-center",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("button", {
+                  onClick: function onClick() {
+                    return reset();
+                  },
+                  className: "btn btn-clear d-flex flex-column flex-center",
+                  "data-toggle": "modal",
+                  "data-target": "#addRoleModal",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("img", {
+                    src: "/assets/media/user-role.png",
+                    alt: "add-role",
+                    className: "mw-100 mh-150px mb-7"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+                    className: "font-weight-bolder font-size-h3 text-dark-50 text-hover-primary",
+                    children: "Add New Role"
+                  })]
+                })
+              })
+            })
+          })]
+        })
       })
     })]
   });
 }
 
 Index.layout = function (page) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Layouts_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Layouts_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
     children: page
   });
 };

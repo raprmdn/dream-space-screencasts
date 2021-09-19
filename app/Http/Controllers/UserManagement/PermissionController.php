@@ -11,7 +11,7 @@ class PermissionController extends Controller
     public function index()
     {
         return inertia('Dashboard/Permissions/Index', [
-            'permissions' => Permission::latest()->paginate(12)->onEachSide(1),
+            'permissions' => Permission::latest()->paginate(10)->onEachSide(1),
         ]);
     }
 
