@@ -18,7 +18,7 @@ export default function Header() {
                             <div className="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
                                 <div id="kt_header_menu" className="header-menu header-menu-left header-menu-mobile header-menu-layout-default">
                                     <ul className="menu-nav">
-                                        <li className={`menu-item menu-item-open menu-item-rel ${location.href === route('home') + '/' ? 'menu-item-here' : ''}`}>
+                                        <li className={`menu-item menu-item-open menu-item-rel ${route().current('home') ? 'menu-item-here' : ''}`}>
                                             <Link href={route('home')} className="menu-link">
                                                 <span className="menu-text">Home</span>
                                             </Link>
@@ -33,7 +33,7 @@ export default function Header() {
                                                 <span className="menu-text">Series</span>
                                             </Link>
                                         </li>
-                                        <li className={`menu-item menu-item-open menu-item-rel ${location.href === route('topics') ? 'menu-item-here' : ''}`}>
+                                        <li className={`menu-item menu-item-open menu-item-rel ${route().current('topics') ? 'menu-item-here' : ''}`}>
                                             <Link href={route('topics')} className="menu-link">
                                                 <span className="menu-text">Topics</span>
                                             </Link>

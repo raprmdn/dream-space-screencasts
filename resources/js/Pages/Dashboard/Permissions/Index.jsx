@@ -1,5 +1,5 @@
-import React from 'react';
-import {Head, Link, useForm} from "@inertiajs/inertia-react";
+import React, {useEffect, useState} from 'react';
+import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
 import SubHeader from "../../../Components/SubHeader";
 import App from "../../../Layouts/App";
 import Modal from "../../../Components/Modal";
@@ -7,25 +7,48 @@ import FormPermissions from "../../../Components/Forms/FormPermissions";
 import Swal from "sweetalert2";
 import {Inertia} from "@inertiajs/inertia";
 import SmallPagination from "../../../Components/SmallPagination";
+import { usePrevious } from 'react-use';
+import {pickBy} from "lodash";
 
 export default function Index(props) {
-    const { data: permissions, links, from } = props.permissions
+    const { filters } = usePage().props;
+    const { data: permissions, meta: { links, from } } = props.permissions
     const { data, setData, post, put, errors, reset  } = useForm({
         name: '',
         guard_name: 'web'
     });
+    const [ params, setParams ] = useState({
+        search: filters.search || ''
+    });
+
+    const prevValues = usePrevious(params);
+
     const changeHandler = (e) => {
         setData({
             ...data,
             [e.target.id]: e.target.value
         })
     }
+    const searchHandler = (e) => setParams({
+        ...params,
+        [e.target.name]: e.target.value
+    })
+
+    useEffect(() => {
+        if (prevValues) {
+            Inertia.get(route('permissions.index'), pickBy(params), {
+                replace: true,
+                preserveState: true,
+                preserveScroll: true,
+            });
+        }
+    }, [params]);
+
     const updateHandler = (e) => {
         e.preventDefault()
         put(route('permissions.update', data), {
             data,
             preserveScroll: true,
-            resetOnSuccess: false,
             onSuccess: () => {
                 window.$('#updatePermissionsModal').modal('hide')
             }
@@ -36,7 +59,6 @@ export default function Index(props) {
         post(route('permissions.store'), {
             data,
             preserveScroll: true,
-            resetOnSuccess: false,
             onSuccess: () => {
                 reset()
                 window.$('#modalPermissions').modal('hide')
@@ -99,10 +121,16 @@ export default function Index(props) {
                                                 <i className="flaticon2-search-1 icon-md"/>
                                             </span>
                                         </div>
-                                        <input type="text" className="form-control" placeholder="Search Permissions"/>
+                                        <input type="text" name="search" id="search" value={params.search} onChange={searchHandler} className="form-control" placeholder="Search Permissions"/>
+                                        <div className="input-group-append">
+                                            <span className="input-group-text">
+                                                 {/*spinner spinner-sm spinner-primary*/}
+                                                {/*<i className="quick-search-close ki ki-close icon-sm text-muted" style="display: none;"></i>*/}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                                <a href="#" className="btn btn-light-primary font-weight-bolder font-size-sm ml-5"
+                                <a href="#" className="btn btn-light-primary font-weight-bolder font-size-sm ml-3"
                                    data-toggle="modal" data-target="#modalPermissions" onClick={() => reset()}>
                                     Add Permissions
                                 </a>
@@ -125,7 +153,7 @@ export default function Index(props) {
                                             permissions.map((permission, index) => (
                                                 <tr key={permission.id}>
                                                     <td className="pl-0 py-7">
-                                                        {from + index}
+                                                        { from + index}
                                                     </td>
                                                     <td>
                                                         <span className="font-weight-bolder font-size-lg">{permission.name}</span>
