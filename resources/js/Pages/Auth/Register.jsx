@@ -3,7 +3,7 @@ import Guest from "../../Layouts/Guest";
 import {Link, Head, useForm} from "@inertiajs/inertia-react";
 
 export default function Register() {
-    const { data, setData, post, errors } = useForm({
+    const { data, setData, post, errors, processing } = useForm({
         name: '',
         email: '',
         password: '',
@@ -67,7 +67,10 @@ export default function Register() {
                     <div className="form-text text-muted text-center" />
                 </div>
                 <div className="form-group">
-                    <button type="submit" className="btn btn-pill btn-primary opacity-90 px-15 py-3 m-2">Sign Up</button>
+                    <button type="submit" className="btn btn-pill btn-primary opacity-90 px-15 py-3 m-2" disabled={processing}>
+                        {processing && (<i className="spinner spinner-sm spinner-white px-4"/>)}
+                        Sign Up
+                    </button>
                 </div>
             </form>
             <div className="mt-10">

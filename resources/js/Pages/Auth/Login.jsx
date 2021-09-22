@@ -3,7 +3,7 @@ import Guest from "../../Layouts/Guest";
 import {Head, Link, useForm} from "@inertiajs/inertia-react";
 
 export default function Login({flash}) {
-    const { data, setData , post, errors } = useForm({
+    const { data, setData , post, errors, processing } = useForm({
         email: '',
         password: '',
         remember: false
@@ -50,7 +50,10 @@ export default function Login({flash}) {
                     <Link href={route('password.request')} className="text-white font-weight-bold">Forgot Password ?</Link>
                 </div>
                 <div className="form-group text-center mt-10">
-                    <button type="submit" className="btn btn-pill btn-primary opacity-90 px-15 py-3">Sign In</button>
+                    <button type="submit" className="btn btn-pill btn-primary opacity-90 px-15 py-3" disabled={processing}>
+                        {processing && (<i className="spinner spinner-sm spinner-white px-4"/>)}
+                        Sign In
+                    </button>
                 </div>
             </form>
             <div className="mt-10">

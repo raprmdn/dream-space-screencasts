@@ -31,9 +31,10 @@ export default function FormRoles({permissionsData, data, submitHandler , change
                         <div className="checkbox-list">
                             {
                                 permissionsData.map((permission, index) => (
-                                    <label className="checkbox">
-                                        <input key={permission.name} type="checkbox" name="permissions" id="permissions"
+                                    <label className="checkbox" key={permission.id}>
+                                        <input type="checkbox" name="permissions" id="permissions"
                                                value={permission.id}
+
                                                onChange={() => checkedHandler(permission)}
                                                 />
                                         <span/> <div className="font-weight-bold text-dark-50">{permission.name}</div>

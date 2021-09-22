@@ -3,7 +3,7 @@ import Guest from "../../Layouts/Guest";
 import {Head, Link, useForm} from "@inertiajs/inertia-react";
 
 export default function ForgotPassword({flash}) {
-    const { data, setData, errors, post } = useForm({
+    const { data, setData, errors, post, processing } = useForm({
         email: ''
     });
     const changeHandler = (e) => {
@@ -33,7 +33,10 @@ export default function ForgotPassword({flash}) {
                     {errors.email && (<div className="invalid-feedback mb-n5">{errors.email}</div>)}
                 </div>
                 <div className="form-group">
-                    <button type="submit" className="btn btn-pill btn-primary opacity-90 px-15 py-3 m-2">Request</button>
+                    <button type="submit" className="btn btn-pill btn-primary opacity-90 px-15 py-3 m-2" disabled={processing}>
+                        {processing && (<i className="spinner spinner-sm spinner-white px-4"/>)}
+                        Request
+                    </button>
                     <Link href={route('login')} className="btn btn-pill btn-outline-white opacity-70 px-15 py-3 m-2">Cancel</Link>
                 </div>
             </form>

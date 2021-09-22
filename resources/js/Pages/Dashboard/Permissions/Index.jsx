@@ -13,7 +13,7 @@ import {pickBy} from "lodash";
 export default function Index(props) {
     const { filters } = usePage().props;
     const { data: permissions, meta: { links, from } } = props.permissions
-    const { data, setData, post, put, errors, reset  } = useForm({
+    const { data, setData, post, put, errors, reset, processing  } = useForm({
         name: '',
         guard_name: 'web'
     });
@@ -89,10 +89,10 @@ export default function Index(props) {
                 <script src="/assets/js/scripts.bundle.js"></script>
             </Head>
             <Modal trigger={"modalPermissions"} title={"Add a Permissions"}>
-                <FormPermissions {...{data, errors, changeHandler, submitLabel:"Submit", submitHandler:storeHandler }}/>
+                <FormPermissions {...{data, errors, changeHandler, submitLabel:"Submit", submitHandler:storeHandler, processing }}/>
             </Modal>
             <Modal trigger={"updatePermissionsModal"} title={`Edit Permission : ${data.name}`}>
-                <FormPermissions {...{data, errors, changeHandler, submitLabel:"Update", submitHandler:updateHandler }}/>
+                <FormPermissions {...{data, errors, changeHandler, submitLabel:"Update", submitHandler:updateHandler, processing }}/>
             </Modal>
             <SubHeader>
                 <h2 className="text-white font-weight-bold my-2 mr-5">Permissions</h2>
@@ -123,7 +123,7 @@ export default function Index(props) {
                                         </div>
                                         <input type="text" name="search" id="search" value={params.search} onChange={searchHandler} className="form-control" placeholder="Search Permissions"/>
                                         <div className="input-group-append">
-                                            <span className="input-group-text">
+                                            <span className={`input-group-text`}>
                                                  {/*spinner spinner-sm spinner-primary*/}
                                                 {/*<i className="quick-search-close ki ki-close icon-sm text-muted" style="display: none;"></i>*/}
                                             </span>

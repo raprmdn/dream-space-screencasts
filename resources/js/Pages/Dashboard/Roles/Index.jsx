@@ -38,7 +38,6 @@ export default function Index() {
             permission.push(selected)
         }
         console.log(permission)
-        console.log(data)
     }
     const changeHandler = (e) => {
         setData({

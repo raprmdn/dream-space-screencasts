@@ -3103,7 +3103,8 @@ function FormPermissions(_ref) {
       submitHandler = _ref.submitHandler,
       changeHandler = _ref.changeHandler,
       submitLabel = _ref.submitLabel,
-      errors = _ref.errors;
+      errors = _ref.errors,
+      processing = _ref.processing;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
       className: "modal-body",
@@ -3170,7 +3171,10 @@ function FormPermissions(_ref) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("button", {
             type: "submit",
             className: "btn btn-primary font-weight-bold",
-            children: [" ", submitLabel]
+            disabled: processing,
+            children: [processing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("i", {
+              className: "spinner spinner-sm spinner-white px-4"
+            }), submitLabel]
           })]
         })]
       })
@@ -3278,11 +3282,11 @@ function FormRoles(_ref) {
                   onChange: function onChange() {
                     return checkedHandler(permission);
                   }
-                }, permission.name), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {}), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {}), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
                   className: "font-weight-bold text-dark-50",
                   children: permission.name
                 })]
-              });
+              }, permission.id);
             })
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
@@ -4775,7 +4779,8 @@ function ForgotPassword(_ref) {
       data = _useForm.data,
       setData = _useForm.setData,
       errors = _useForm.errors,
-      post = _useForm.post;
+      post = _useForm.post,
+      processing = _useForm.processing;
 
   var changeHandler = function changeHandler(e) {
     setData(_objectSpread(_objectSpread({}, data), {}, _defineProperty({}, e.target.id, e.target.value)));
@@ -4820,10 +4825,13 @@ function ForgotPassword(_ref) {
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
           type: "submit",
           className: "btn btn-pill btn-primary opacity-90 px-15 py-3 m-2",
-          children: "Request"
+          disabled: processing,
+          children: [processing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("i", {
+            className: "spinner spinner-sm spinner-white px-4"
+          }), "Request"]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
           href: route('login'),
           className: "btn btn-pill btn-outline-white opacity-70 px-15 py-3 m-2",
@@ -4879,7 +4887,8 @@ function Login(_ref) {
       data = _useForm.data,
       setData = _useForm.setData,
       post = _useForm.post,
-      errors = _useForm.errors;
+      errors = _useForm.errors,
+      processing = _useForm.processing;
 
   var changeHandler = function changeHandler(e) {
     setData(_objectSpread(_objectSpread({}, data), {}, _defineProperty({}, e.target.id, e.target.value)));
@@ -4955,10 +4964,13 @@ function Login(_ref) {
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "form-group text-center mt-10",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
           type: "submit",
           className: "btn btn-pill btn-primary opacity-90 px-15 py-3",
-          children: "Sign In"
+          disabled: processing,
+          children: [processing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("i", {
+            className: "spinner spinner-sm spinner-white px-4"
+          }), "Sign In"]
         })
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
@@ -5020,7 +5032,8 @@ function Register() {
       data = _useForm.data,
       setData = _useForm.setData,
       post = _useForm.post,
-      errors = _useForm.errors;
+      errors = _useForm.errors,
+      processing = _useForm.processing;
 
   var changeHandler = function changeHandler(e) {
     setData(_objectSpread(_objectSpread({}, data), {}, _defineProperty({}, e.target.id, e.target.value)));
@@ -5128,10 +5141,13 @@ function Register() {
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "form-group",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
           type: "submit",
           className: "btn btn-pill btn-primary opacity-90 px-15 py-3 m-2",
-          children: "Sign Up"
+          disabled: processing,
+          children: [processing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("i", {
+            className: "spinner spinner-sm spinner-white px-4"
+          }), "Sign Up"]
         })
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
@@ -5356,7 +5372,8 @@ function Index(props) {
       post = _useForm.post,
       put = _useForm.put,
       errors = _useForm.errors,
-      reset = _useForm.reset;
+      reset = _useForm.reset,
+      processing = _useForm.processing;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     search: filters.search || ''
@@ -5441,7 +5458,8 @@ function Index(props) {
         errors: errors,
         changeHandler: changeHandler,
         submitLabel: "Submit",
-        submitHandler: storeHandler
+        submitHandler: storeHandler,
+        processing: processing
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
       trigger: "updatePermissionsModal",
@@ -5451,7 +5469,8 @@ function Index(props) {
         errors: errors,
         changeHandler: changeHandler,
         submitLabel: "Update",
-        submitHandler: updateHandler
+        submitHandler: updateHandler,
+        processing: processing
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_Components_SubHeader__WEBPACK_IMPORTED_MODULE_2__["default"], {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h2", {
@@ -5766,7 +5785,6 @@ function Index() {
     }
 
     console.log(permission);
-    console.log(data);
   };
 
   var changeHandler = function changeHandler(e) {

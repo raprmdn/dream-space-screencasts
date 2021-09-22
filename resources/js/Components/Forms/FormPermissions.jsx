@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function FormPermissions({data, submitHandler , changeHandler, submitLabel, errors}) {
+export default function FormPermissions({data, submitHandler , changeHandler, submitLabel, errors, processing}) {
     return (
         <>
             <div className="modal-body">
@@ -30,7 +30,10 @@ export default function FormPermissions({data, submitHandler , changeHandler, su
                         <button type="button" data-dismiss="modal"
                                 aria-label="Close" className="btn btn-light mr-3 font-weight-bold">Discard
                         </button>
-                        <button type="submit" className="btn btn-primary font-weight-bold"> {submitLabel}</button>
+                        <button type="submit" className="btn btn-primary font-weight-bold" disabled={processing}>
+                            {processing && (<i className="spinner spinner-sm spinner-white px-4"/>)}
+                            {submitLabel}
+                        </button>
                     </div>
                 </form>
             </div>
