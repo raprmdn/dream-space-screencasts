@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function FormRoles({permissionsData, data, submitHandler , changeHandler, checkedHandler, submitLabel, errors}) {
+export default function FormRoles({permissionsData, data, submitHandler , changeHandler, checkedHandler, submitLabel, errors, isChecked}) {
     return (
         <>
             <div className="modal-body">
@@ -34,7 +34,7 @@ export default function FormRoles({permissionsData, data, submitHandler , change
                                     <label className="checkbox" key={permission.id}>
                                         <input type="checkbox" name="permissions" id="permissions"
                                                value={permission.id}
-
+                                               checked={isChecked[index]}
                                                onChange={() => checkedHandler(permission)}
                                                 />
                                         <span/> <div className="font-weight-bold text-dark-50">{permission.name}</div>

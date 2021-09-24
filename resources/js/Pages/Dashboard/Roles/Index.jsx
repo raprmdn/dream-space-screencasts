@@ -4,6 +4,7 @@ import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
 import SubHeader from "../../../Components/SubHeader";
 import Modal from "../../../Components/Modal";
 import FormRoles from "../../../Components/Forms/FormRoles";
+import {usePrevious} from "react-use";
 
 export default function Index() {
     const { permissions: permissionsData, roles } = usePage().props
@@ -12,24 +13,22 @@ export default function Index() {
         guard_name: 'web',
         permissions: []
     });
-    // const [ isChecked, setIsChecked ] = useState({})
-    //
+    let currentIdPermissions = data.permissions.map((current => current.id))
+    let currentGroupIds = permissionsData.map(group => (
+        {...group, checked: currentIdPermissions.includes(group.id)}
+    ))
+    const [isChecked, setIsChecked] = useState((
+        new Array(permissionsData.length).fill(false)
+        // currentGroupIds.map(val => val.checked)
+    ))
     // useEffect(() => {
-    //     console.log(isChecked)
+    //     setIsChecked( data.permissions.length ?? currentGroupIds.map(val => val.checked) )
     // }, [isChecked])
-    //
-    // console.log(data)
-    console.log(data)
+    // console.log(currentIdPermissions)
+    // console.log(data.permissions.length > 0)
+    console.log(currentGroupIds.map(val => val.checked))
+    console.log(isChecked)
     const checkedHandler = (selected) => {
-        // setIsChecked({...isChecked, [e.target.id] : e.target.checked })
-        // const permission = data.permissions
-        // const find = permission.indexOf(e.target.value)
-        // if (find > -1 ) {
-        //     permission.splice(find, 1)
-        // } else {
-        //     permission.push(e.target.value)
-        // }
-
         const permission = data.permissions
         const find = permission.indexOf(selected)
         if (find > -1 ) {
@@ -37,6 +36,7 @@ export default function Index() {
         } else {
             permission.push(selected)
         }
+        setIsChecked(currentGroupIds.map(val => val.checked))
         console.log(permission)
     }
     const changeHandler = (e) => {
@@ -59,14 +59,14 @@ export default function Index() {
     }
     const storeHandler = (e) => {
         e.preventDefault()
-        post(route('roles.store'),{
-            data,
-            preserveScroll: true,
-            resetOnSuccess: false,
-            onSuccess: () => {
-                window.$('#addRoleModal').modal('hide')
-            }
-        })
+        // post(route('roles.store'),{
+        //     data,
+        //     preserveScroll: true,
+        //     resetOnSuccess: false,
+        //     onSuccess: () => {
+        //         window.$('#addRoleModal').modal('hide')
+        //     }
+        // })
         console.log(data)
     }
     return (
@@ -76,11 +76,11 @@ export default function Index() {
             </Head>
             <Modal trigger={"addRoleModal"} title={"Add a Role"}>
                 <FormRoles
-                    {...{permissionsData, data, errors, changeHandler, checkedHandler, submitLabel:"Submit", submitHandler:storeHandler }}/>
+                    {...{permissionsData, isChecked, data, errors, changeHandler, checkedHandler, submitLabel:"Submit", submitHandler:storeHandler }}/>
             </Modal>
             <Modal trigger={"editRoleModal"} title={`Edit Role : ${data.name}`}>
                 <FormRoles
-                    {...{permissionsData, data, errors, changeHandler, checkedHandler, submitLabel:"Update", submitHandler:updateHandler }}/>
+                    {...{permissionsData, isChecked, data, errors, changeHandler, checkedHandler, submitLabel:"Update", submitHandler:updateHandler }}/>
             </Modal>
             <SubHeader>
                 <h2 className="text-white font-weight-bold my-2 mr-5">Roles</h2>
