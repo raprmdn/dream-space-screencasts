@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function FormRoles({permissionsData, data, submitHandler , changeHandler, checkedHandler, submitLabel, errors, isChecked}) {
+export default function FormRoles({permissionsData, data, submitHandler , changeHandler, checkedHandler, submitLabel, errors, processing}) {
     return (
         <>
             <div className="modal-body">
@@ -30,12 +30,12 @@ export default function FormRoles({permissionsData, data, submitHandler , change
                         <label className="font-weight-bolder">Role Permissions</label>
                         <div className="checkbox-list">
                             {
-                                permissionsData.map((permission, index) => (
+                                permissionsData.map((permission) => (
                                     <label className="checkbox" key={permission.id}>
                                         <input type="checkbox" name="permissions" id="permissions"
                                                value={permission.id}
-                                               checked={isChecked[index]}
-                                               onChange={() => checkedHandler(permission)}
+                                               checked={data.permissions.includes(permission.id)}
+                                               onChange={checkedHandler}
                                                 />
                                         <span/> <div className="font-weight-bold text-dark-50">{permission.name}</div>
                                     </label>
@@ -47,7 +47,10 @@ export default function FormRoles({permissionsData, data, submitHandler , change
                         <button type="button" data-dismiss="modal"
                                 aria-label="Close" className="btn btn-light mr-3 font-weight-bold">Discard
                         </button>
-                        <button type="submit" className="btn btn-primary font-weight-bold"> {submitLabel}</button>
+                        <button type="submit" className="btn btn-primary font-weight-bold" disabled={processing}>
+                            {processing && (<i className="spinner spinner-sm spinner-white px-4"/>)}
+                            {submitLabel}
+                        </button>
                     </div>
                 </form>
             </div>

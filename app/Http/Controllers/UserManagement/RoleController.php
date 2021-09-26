@@ -28,7 +28,7 @@ class RoleController extends Controller
         Role::create([
             'name' => $request->name,
             'guard_name' => $request->guard_name
-        ])->syncPermissions(collect($request->permissions)->pluck('id'));
+        ])->syncPermissions($request->permissions);
 
         return back()->with([
             'type' => 'success',
@@ -38,6 +38,21 @@ class RoleController extends Controller
 
     public function update(Request $request, Role $role)
     {
-        dd($request->all());
+        $request->validate([
+            'name' => ['required'],
+            'guard_name' => ['required'],
+            'permissions' => ['array']
+        ]);
+
+        $role->update([
+            'name' => $request->name,
+            'guard_name' => $request->guard_name
+        ]);
+        $role->syncPermissions($request->permissions);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Role has been updated.'
+        ]);
     }
 }
