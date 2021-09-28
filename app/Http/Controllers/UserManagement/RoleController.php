@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\UserManagement;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\RoleRequest;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -12,19 +12,13 @@ class RoleController extends Controller
     public function index()
     {
         return inertia('Dashboard/Roles/Index', [
-            'roles' => Role::with(['permissions'])->latest()->get(),
+            'roles' => Role::with(['permissions'])->withCount('users')->latest()->get(),
             'permissions' => Permission::latest()->get(),
         ]);
     }
 
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        $request->validate([
-            'name' => ['required'],
-            'guard_name' => ['required'],
-            'permissions' => ['array']
-        ]);
-
         Role::create([
             'name' => $request->name,
             'guard_name' => $request->guard_name
@@ -36,14 +30,8 @@ class RoleController extends Controller
         ]);
     }
 
-    public function update(Request $request, Role $role)
+    public function update(RoleRequest $request, Role $role)
     {
-        $request->validate([
-            'name' => ['required'],
-            'guard_name' => ['required'],
-            'permissions' => ['array']
-        ]);
-
         $role->update([
             'name' => $request->name,
             'guard_name' => $request->guard_name
@@ -54,5 +42,21 @@ class RoleController extends Controller
             'type' => 'success',
             'message' => 'Role has been updated.'
         ]);
+    }
+
+    public function destroy(Role $role)
+    {
+        if ($role->users()->exists()) {
+            return back()->with([
+                'type' => 'error',
+                'message' => 'Action deleting role denied.'
+            ], 403);
+        } else {
+            $role->delete();
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Role has been deleted.'
+            ]);
+        }
     }
 }

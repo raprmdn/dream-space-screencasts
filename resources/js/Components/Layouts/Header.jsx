@@ -3,6 +3,7 @@ import {Link, usePage} from "@inertiajs/inertia-react";
 
 export default function Header() {
     const { auth } = usePage().props;
+    let segmentUrl = window.location.pathname;
     return (
         <>
             <div className="bgi-no-repeat" style={{backgroundColor: '#13263c'}}>
@@ -38,7 +39,8 @@ export default function Header() {
                                                 <span className="menu-text">Topics</span>
                                             </Link>
                                         </li>
-                                        <li className="menu-item menu-item-submenu menu-item-rel" data-menu-toggle="hover" aria-haspopup="true">
+                                        <li className={`menu-item menu-item-submenu menu-item-rel ${segmentUrl.split("/")[1] === 'p' ? 'menu-item-here' : ''}`}
+                                            data-menu-toggle="hover" aria-haspopup="true">
                                             <Link href={route('home')} className="menu-link menu-toggle">
                                                 <span className="menu-text">Dashboard</span>
                                                 <span className="menu-desc" />
@@ -46,7 +48,7 @@ export default function Header() {
                                             </Link>
                                             <div className="menu-submenu menu-submenu-classic menu-submenu-left">
                                                 <ul className="menu-subnav">
-                                                    <li className="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                                                    <li className={`menu-item menu-item-submenu ${segmentUrl.split("/")[2] === 'user-management' ? 'menu-item-open menu-item-here' : ''}`} data-menu-toggle="hover" aria-haspopup="true">
                                                         <a href="" className="menu-link menu-toggle">
                                                               <span className="svg-icon menu-icon">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -70,7 +72,7 @@ export default function Header() {
                                                                         <span className="menu-text">Users</span>
                                                                     </a>
                                                                 </li>
-                                                                <li className="menu-item" aria-haspopup="true">
+                                                                <li className={`menu-item ${route().current('roles.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
                                                                     <Link href={route('roles.index')} className="menu-link">
                                                                         <i className="menu-bullet menu-bullet-dot">
                                                                             <span />
@@ -78,7 +80,7 @@ export default function Header() {
                                                                         <span className="menu-text">Roles</span>
                                                                     </Link>
                                                                 </li>
-                                                                <li className="menu-item" aria-haspopup="true">
+                                                                <li className={`menu-item ${route().current('permissions.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
                                                                     <Link href={route('permissions.index')} className="menu-link">
                                                                         <i className="menu-bullet menu-bullet-dot">
                                                                             <span />

@@ -54,10 +54,17 @@ class PermissionController extends Controller
 
     public function destroy(Permission $permission)
     {
-        $permission->delete();
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Permissions has been deleted.'
-        ]);
+        if ($permission->roles()->exists()) {
+            return back()->with([
+                'type' => 'error',
+                'message' => 'Action deleting permission denied.'
+            ], 403);
+        } else {
+            $permission->delete();
+            return back()->with([
+                'type' => 'success',
+                'message' => 'Permission has been deleted.'
+            ]);
+        }
     }
 }

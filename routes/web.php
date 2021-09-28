@@ -9,12 +9,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', IndexController::class)->name('home');
 Route::get('topics', [TopicsController::class, 'topics'])->name('topics');
 
-Route::prefix('p')->middleware('auth')->group(function () {
-    Route::prefix('user-management')->group(function () {
+Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {
+    Route::prefix('user-management')->middleware(['can:user management'])->group(function () {
         Route::prefix('roles')->group(function () {
             Route::get('', [RoleController::class, 'index'])->name('roles.index');
             Route::post('', [RoleController::class, 'store'])->name('roles.store');
             Route::put('{role}', [RoleController::class, 'update'])->name('roles.update');
+            Route::delete('{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
         });
         Route::prefix('permissions')->group(function () {
             Route::get('', [PermissionController::class, 'index'])->name('permissions.index');
