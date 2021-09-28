@@ -39,61 +39,90 @@ export default function Header() {
                                                 <span className="menu-text">Topics</span>
                                             </Link>
                                         </li>
-                                        <li className={`menu-item menu-item-submenu menu-item-rel ${segmentUrl.split("/")[1] === 'p' ? 'menu-item-here' : ''}`}
-                                            data-menu-toggle="hover" aria-haspopup="true">
-                                            <Link href={route('home')} className="menu-link menu-toggle">
-                                                <span className="menu-text">Dashboard</span>
-                                                <span className="menu-desc" />
-                                                <i className="menu-arrow" />
-                                            </Link>
-                                            <div className="menu-submenu menu-submenu-classic menu-submenu-left">
-                                                <ul className="menu-subnav">
-                                                    <li className={`menu-item menu-item-submenu ${segmentUrl.split("/")[2] === 'user-management' ? 'menu-item-open menu-item-here' : ''}`} data-menu-toggle="hover" aria-haspopup="true">
-                                                        <a href="" className="menu-link menu-toggle">
-                                                              <span className="svg-icon menu-icon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                                                    <g stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
-                                                                        <rect x={0} y={0} width={24} height={24}></rect>
-                                                                        <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" fill="#000000" opacity="0.3"></path>
-                                                                        <path d="M14.5,11 C15.0522847,11 15.5,11.4477153 15.5,12 L15.5,15 C15.5,15.5522847 15.0522847,16 14.5,16 L9.5,16 C8.94771525,16 8.5,15.5522847 8.5,15 L8.5,12 C8.5,11.4477153 8.94771525,11 9.5,11 L9.5,10.5 C9.5,9.11928813 10.6192881,8 12,8 C13.3807119,8 14.5,9.11928813 14.5,10.5 L14.5,11 Z M12,9 C11.1715729,9 10.5,9.67157288 10.5,10.5 L10.5,11 L13.5,11 L13.5,10.5 C13.5,9.67157288 12.8284271,9 12,9 Z" fill="#000000"></path>
-                                                                    </g>
-                                                                </svg>
-                                                              </span>
-                                                            <span className="menu-text">User Management</span>
-                                                            <i className="menu-arrow" />
-                                                        </a>
-                                                        <div className="menu-submenu menu-submenu-classic menu-submenu-right">
-                                                            <ul className="menu-subnav">
-                                                                <li className="menu-item" aria-haspopup="true">
-                                                                    <a href="/" className="menu-link">
-                                                                        <i className="menu-bullet menu-bullet-dot">
-                                                                            <span />
-                                                                        </i>
-                                                                        <span className="menu-text">Users</span>
-                                                                    </a>
-                                                                </li>
-                                                                <li className={`menu-item ${route().current('roles.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
-                                                                    <Link href={route('roles.index')} className="menu-link">
-                                                                        <i className="menu-bullet menu-bullet-dot">
-                                                                            <span />
-                                                                        </i>
-                                                                        <span className="menu-text">Roles</span>
-                                                                    </Link>
-                                                                </li>
-                                                                <li className={`menu-item ${route().current('permissions.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
-                                                                    <Link href={route('permissions.index')} className="menu-link">
-                                                                        <i className="menu-bullet menu-bullet-dot">
-                                                                            <span />
-                                                                        </i>
-                                                                        <span className="menu-text">Permissions</span>
-                                                                    </Link>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
+                                        {
+                                            auth.can.includes('view dashboard') && (
+                                                <li className={`menu-item menu-item-submenu menu-item-rel ${segmentUrl.split("/")[1] === 'p' ? 'menu-item-here' : ''}`}
+                                                    data-menu-toggle="hover" aria-haspopup="true">
+                                                    <Link href={route('home')} className="menu-link menu-toggle">
+                                                        <span className="menu-text">Dashboard</span>
+                                                        <span className="menu-desc" />
+                                                        <i className="menu-arrow" />
+                                                    </Link>
+                                                    <div className="menu-submenu menu-submenu-classic menu-submenu-left">
+                                                        <ul className="menu-subnav">
+                                                            {
+                                                                auth.can.includes('user management') && (
+                                                                    <li className={`menu-item menu-item-submenu ${segmentUrl.split("/")[2] === 'user-management' ? 'menu-item-open menu-item-here' : ''}`}
+                                                                        data-menu-toggle="hover" aria-haspopup="true">
+                                                                        <a href="" className="menu-link menu-toggle">
+                                                                              <span className="svg-icon menu-icon">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                                    <g stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
+                                                                                        <rect x={0} y={0} width={24} height={24}></rect>
+                                                                                        <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" fill="#000000" opacity="0.3"></path>
+                                                                                        <path d="M14.5,11 C15.0522847,11 15.5,11.4477153 15.5,12 L15.5,15 C15.5,15.5522847 15.0522847,16 14.5,16 L9.5,16 C8.94771525,16 8.5,15.5522847 8.5,15 L8.5,12 C8.5,11.4477153 8.94771525,11 9.5,11 L9.5,10.5 C9.5,9.11928813 10.6192881,8 12,8 C13.3807119,8 14.5,9.11928813 14.5,10.5 L14.5,11 Z M12,9 C11.1715729,9 10.5,9.67157288 10.5,10.5 L10.5,11 L13.5,11 L13.5,10.5 C13.5,9.67157288 12.8284271,9 12,9 Z" fill="#000000"></path>
+                                                                                    </g>
+                                                                                </svg>
+                                                                              </span>
+                                                                            <span className="menu-text">User Management</span>
+                                                                            <i className="menu-arrow" />
+                                                                        </a>
+                                                                        <div className="menu-submenu menu-submenu-classic menu-submenu-right">
+                                                                            <ul className="menu-subnav">
+                                                                                <li className="menu-item" aria-haspopup="true">
+                                                                                    <a href="/" className="menu-link">
+                                                                                        <i className="menu-bullet menu-bullet-dot">
+                                                                                            <span />
+                                                                                        </i>
+                                                                                        <span className="menu-text">Users</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                                <li className={`menu-item ${route().current('roles.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('roles.index')} className="menu-link">
+                                                                                        <i className="menu-bullet menu-bullet-dot">
+                                                                                            <span />
+                                                                                        </i>
+                                                                                        <span className="menu-text">Roles</span>
+                                                                                    </Link>
+                                                                                </li>
+                                                                                <li className={`menu-item ${route().current('permissions.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('permissions.index')} className="menu-link">
+                                                                                        <i className="menu-bullet menu-bullet-dot">
+                                                                                            <span />
+                                                                                        </i>
+                                                                                        <span className="menu-text">Permissions</span>
+                                                                                    </Link>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </li>
+                                                                )
+                                                            }
+                                                            {
+                                                                auth.can.includes('menu management') && (
+                                                                    <li className="menu-item" aria-haspopup="true">
+                                                                        <Link href="/" className="menu-link">
+                                                                            <span className="svg-icon menu-icon">
+                                                                              <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                                <g stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
+                                                                                  <rect x={0} y={0} width={24} height={24} />
+                                                                                  <rect fill="#000000" x={4} y={4} width={7} height={7} rx="1.5" />
+                                                                                  <path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" fill="#000000" opacity="0.3" />
+                                                                                </g>
+                                                                              </svg>
+                                                                            </span>
+                                                                            <span className="menu-text">Menu Management</span>
+                                                                        </Link>
+                                                                    </li>
+                                                                )
+                                                            }
+
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            )
+
+                                        }
 
                                     </ul>
                                 </div>
