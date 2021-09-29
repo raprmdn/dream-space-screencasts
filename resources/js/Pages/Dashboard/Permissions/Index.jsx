@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
 import SubHeader from "../../../Components/SubHeader";
 import App from "../../../Layouts/App";
@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import {Inertia} from "@inertiajs/inertia";
 import SmallPagination from "../../../Components/SmallPagination";
 import { usePrevious } from 'react-use';
-import {pickBy} from "lodash";
+import {debounce, pickBy} from "lodash";
 
 export default function Index(props) {
     const { filters } = usePage().props;
@@ -34,13 +34,21 @@ export default function Index(props) {
         [e.target.name]: e.target.value
     })
 
-    useEffect(() => {
-        if (prevValues) {
+    const searching = useCallback(
+        debounce((params) => {
             Inertia.get(route('permissions.index'), pickBy(params), {
                 replace: true,
                 preserveState: true,
                 preserveScroll: true,
             });
+        }, 200)
+        ,
+        []
+    );
+
+    useEffect(() => {
+        if (prevValues) {
+            searching(params)
         }
     }, [params]);
 

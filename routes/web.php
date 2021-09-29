@@ -16,6 +16,9 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
             Route::post('', [RoleController::class, 'store'])->name('roles.store');
             Route::put('{role}', [RoleController::class, 'update'])->name('roles.update');
             Route::delete('{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+            Route::get('{role}', [RoleController::class, 'show'])->name('roles.view');
+            Route::post('{role}/assign', [RoleController::class, 'assignRole'])->name('roles.assign');
+            Route::post('{role}/{user}', [RoleController::class, 'removeRoleUser'])->name('roles.remove');
         });
         Route::prefix('permissions')->group(function () {
             Route::get('', [PermissionController::class, 'index'])->name('permissions.index');

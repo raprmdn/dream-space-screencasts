@@ -145,7 +145,7 @@ export default function Index() {
                                             </div>
                                         </div>
                                         <div className="card-footer flex-wrap py-5 border-top-0">
-                                            <a href="" className="btn btn-light btn-active-primary my-1 mr-2 font-weight-bold">View Role</a>
+                                            <Link href={route('roles.view', role)} className="btn btn-light btn-active-primary my-1 mr-2 font-weight-bold">View Role</Link>
                                             <button onClick={() => setData({...role, permissions: role.permissions.map(val => val.id)})} className="btn btn-light btn-active-light-primary my-1 mr-2 font-weight-bold"
                                                     data-toggle="modal" data-target="#editRoleModal">Edit Role
                                             </button>

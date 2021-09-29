@@ -3081,6 +3081,77 @@ function CourseCard() {
 
 /***/ }),
 
+/***/ "./resources/js/Components/Forms/FormAssignRoleUser.jsx":
+/*!**************************************************************!*\
+  !*** ./resources/js/Components/Forms/FormAssignRoleUser.jsx ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ FormAssignRoleUser)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+function FormAssignRoleUser(_ref) {
+  var data = _ref.data,
+      submitHandler = _ref.submitHandler,
+      changeHandler = _ref.changeHandler,
+      submitLabel = _ref.submitLabel,
+      errors = _ref.errors,
+      processing = _ref.processing;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      className: "modal-body",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("form", {
+        onSubmit: submitHandler,
+        className: "form",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+            className: "font-weight-bolder",
+            children: "User Email"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+            type: "email",
+            id: "email",
+            name: "email",
+            value: data.email,
+            onChange: changeHandler,
+            className: "form-control form-control-solid ".concat(errors.email ? 'is-invalid' : ''),
+            placeholder: "Enter user email"
+          }), errors.email && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "invalid-feedback mb-n5",
+            children: errors.email
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "text-center",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+            className: "btn btn-light mr-3 font-weight-bold",
+            children: "Discard"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("button", {
+            type: "submit",
+            className: "btn btn-primary font-weight-bold",
+            disabled: processing,
+            children: [processing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("i", {
+              className: "spinner spinner-sm spinner-white px-4"
+            }), submitLabel]
+          })]
+        })]
+      })
+    })
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/Components/Forms/FormPermissions.jsx":
 /*!***********************************************************!*\
   !*** ./resources/js/Components/Forms/FormPermissions.jsx ***!
@@ -5440,13 +5511,16 @@ function Index(props) {
     return setParams(_objectSpread(_objectSpread({}, params), {}, _defineProperty({}, e.target.name, e.target.value)));
   };
 
+  var searching = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((0,lodash__WEBPACK_IMPORTED_MODULE_9__.debounce)(function (params) {
+    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__.Inertia.get(route('permissions.index'), (0,lodash__WEBPACK_IMPORTED_MODULE_9__.pickBy)(params), {
+      replace: true,
+      preserveState: true,
+      preserveScroll: true
+    });
+  }, 200), []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (prevValues) {
-      _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_7__.Inertia.get(route('permissions.index'), (0,lodash__WEBPACK_IMPORTED_MODULE_9__.pickBy)(params), {
-        replace: true,
-        preserveState: true,
-        preserveScroll: true
-      });
+      searching(params);
     }
   }, [params]);
 
@@ -6047,8 +6121,8 @@ function Index() {
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
                   className: "card-footer flex-wrap py-5 border-top-0",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
-                    href: "",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                    href: route('roles.view', role),
                     className: "btn btn-light btn-active-primary my-1 mr-2 font-weight-bold",
                     children: "View Role"
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("button", {
@@ -6106,6 +6180,354 @@ function Index() {
 
 Index.layout = function (page) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Layouts_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    children: page
+  });
+};
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Dashboard/Roles/Show.jsx":
+/*!*****************************************************!*\
+  !*** ./resources/js/Pages/Dashboard/Roles/Show.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Show)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Layouts_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Layouts/App */ "./resources/js/Layouts/App.jsx");
+/* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
+/* harmony import */ var _Components_SubHeader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Components/SubHeader */ "./resources/js/Components/SubHeader.jsx");
+/* harmony import */ var _Components_SmallPagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Components/SmallPagination */ "./resources/js/Components/SmallPagination.jsx");
+/* harmony import */ var _Components_Modal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../Components/Modal */ "./resources/js/Components/Modal.jsx");
+/* harmony import */ var _Components_Forms_FormAssignRoleUser__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../Components/Forms/FormAssignRoleUser */ "./resources/js/Components/Forms/FormAssignRoleUser.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
+
+
+
+function Show(props) {
+  var role = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props.role;
+  var _props$users = props.users,
+      users = _props$users.data,
+      _props$users$meta = _props$users.meta,
+      links = _props$users$meta.links,
+      from = _props$users$meta.from;
+
+  var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
+    email: ''
+  }),
+      data = _useForm.data,
+      setData = _useForm.setData,
+      errors = _useForm.errors,
+      post = _useForm.post,
+      processing = _useForm.processing,
+      reset = _useForm.reset;
+
+  var changeHandler = function changeHandler(e) {
+    setData(_objectSpread(_objectSpread({}, data), {}, _defineProperty({}, e.target.id, e.target.value)));
+  };
+
+  var removeHandler = function removeHandler(e, user) {
+    e.preventDefault();
+    post(route('roles.remove', [role[0], user]));
+  };
+
+  var storeHandler = function storeHandler(e) {
+    e.preventDefault();
+    post(route('roles.assign', role[0]), {
+      data: data,
+      preserveScroll: true,
+      onSuccess: function onSuccess() {
+        window.$('#assignRole').modal('hide');
+      }
+    });
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
+      title: "Dream Space | Roles"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_Components_SubHeader__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h2", {
+        className: "text-white font-weight-bold my-2 mr-5",
+        children: "Roles"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+        className: "d-flex align-items-center font-weight-bold my-2",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+          href: route('home'),
+          className: "text-white text-hover-white opacity-75 hover-opacity-100",
+          children: "Home"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "label label-dot label-sm bg-white opacity-75 mx-3"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "text-white text-hover-white opacity-75 hover-opacity-100",
+          children: "Dashboard"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "label label-dot label-sm bg-white opacity-75 mx-3"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "text-white text-hover-white opacity-75 hover-opacity-100",
+          children: "User Management"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "label label-dot label-sm bg-white opacity-75 mx-3"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+          href: route('roles.index'),
+          className: "text-white text-hover-white opacity-75 hover-opacity-100",
+          children: "Roles"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "label label-dot label-sm bg-white opacity-75 mx-3"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+          className: "text-white text-hover-white opacity-75 hover-opacity-100",
+          children: role[0].name
+        })]
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "d-flex flex-column-fluid flex-xl-row mb-11",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        className: "container",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+          className: "d-flex flex-column flex-md-row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            className: "flex-column flex-lg-row-auto w-100 w-lg-300px",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: "card card-custom gutter-b shadow-lg",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                className: "card-header",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  className: "card-title",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("h4", {
+                    className: "font-weight-boldest text-dark-75 my-2",
+                    children: role[0].name
+                  })
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                className: "card-body py-5",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  className: "d-flex flex-column text-dark-50",
+                  children: role[0].permissions.map(function (permission) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                      className: "d-flex align-items-center py-2",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("span", {
+                        className: "svg-icon svg-icon-primary",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("svg", {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          xmlnsXlink: "http://www.w3.org/1999/xlink",
+                          width: "24px",
+                          height: "24px",
+                          viewBox: "0 0 24 24",
+                          version: "1.1",
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("g", {
+                            stroke: "none",
+                            strokeWidth: 1,
+                            fill: "none",
+                            fillRule: "evenodd",
+                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("polygon", {
+                              points: "0 0 24 0 24 24 0 24"
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("path", {
+                              d: "M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z",
+                              fill: "#000000",
+                              fillRule: "nonzero"
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("path", {
+                              d: "M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z",
+                              fill: "#000000",
+                              fillRule: "nonzero",
+                              opacity: "0.3",
+                              transform: "translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999)"
+                            })]
+                          })
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                          className: "ml-1",
+                          children: permission.name
+                        })]
+                      })
+                    }, permission.id);
+                  })
+                })
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+            className: "flex-lg-row-fluid ml-lg-10",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+              className: "card card-custom gutter-b shadow-lg",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: "card-header border-0 py-5",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("h3", {
+                  className: "card-title font-weight-bolder text-dark",
+                  children: ["Users Assigned (", role[0].users_count, ")"]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                  className: "card-toolbar",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                      className: "input-group input-group-solid",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                        className: "input-group-prepend",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                          className: "input-group-text",
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("i", {
+                            className: "flaticon2-search-1 icon-md"
+                          })
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
+                        type: "text",
+                        name: "search",
+                        id: "search",
+                        className: "form-control",
+                        placeholder: "Search Users . . ."
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                        className: "input-group-append",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                          className: "input-group-text"
+                        })
+                      })]
+                    })
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("a", {
+                    href: "#",
+                    className: "btn btn-light-primary font-weight-bolder font-size-sm ml-3",
+                    "data-toggle": "modal",
+                    "data-target": "#assignRole",
+                    onClick: function onClick() {
+                      return reset();
+                    },
+                    children: "Assign Role User"
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                className: "card-body py-0",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+                  className: "table-responsive",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("table", {
+                    className: "table table-head-custom table-vertical-center",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("thead", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("tr", {
+                        className: "text-left",
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("th", {
+                          className: "pl-0",
+                          style: {
+                            width: '50px'
+                          },
+                          children: "#"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("th", {
+                          style: {
+                            width: '350px'
+                          },
+                          children: "Name"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("th", {
+                          style: {
+                            width: '350px'
+                          },
+                          children: "Email"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("th", {
+                          style: {
+                            width: '250px'
+                          },
+                          children: "Joined"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("th", {
+                          className: "pr-0 text-right",
+                          style: {
+                            minWidth: '150px'
+                          },
+                          children: "action"
+                        })]
+                      })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("tbody", {
+                      className: "text-dark-50",
+                      children: users.length > 0 ? users.map(function (user, index) {
+                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("tr", {
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
+                            className: "pl-0 py-7",
+                            children: from + index
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
+                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                              className: "font-weight-bolder text-dark-50",
+                              children: user.name
+                            })
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
+                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                              className: "font-weight-bolder text-dark-50",
+                              children: user.email
+                            })
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
+                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
+                              className: "font-weight-bolder text-dark-50",
+                              children: user.joined
+                            })
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
+                            className: "pr-0 text-right",
+                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                              className: "btn-group",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("button", {
+                                type: "button",
+                                className: "btn btn-secondary dropdown-toggle",
+                                "data-toggle": "dropdown",
+                                "aria-haspopup": "true",
+                                "aria-expanded": "false",
+                                children: "Actions"
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+                                className: "dropdown-menu",
+                                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                                  className: "dropdown-item",
+                                  href: "#",
+                                  children: "View"
+                                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                                  as: "button",
+                                  onClick: function onClick(e) {
+                                    return removeHandler(e, user);
+                                  },
+                                  className: "dropdown-item",
+                                  children: "Remove Role"
+                                })]
+                              })]
+                            })
+                          })]
+                        }, user.id);
+                      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("tr", {
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
+                          colSpan: 5,
+                          className: "text-center p-7 font-weight-bolder",
+                          children: "No records found in table"
+                        })
+                      })
+                    })]
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_SmallPagination__WEBPACK_IMPORTED_MODULE_4__["default"], {
+                  links: links
+                })]
+              })]
+            })
+          })]
+        })
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      trigger: "assignRole",
+      title: "Assign Role User",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Forms_FormAssignRoleUser__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        data: data,
+        submitHandler: storeHandler,
+        changeHandler: changeHandler,
+        submitLabel: "Assign",
+        errors: errors,
+        processing: processing
+      })
+    })]
+  });
+}
+
+Show.layout = function (page) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Layouts_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
     children: page
   });
 };
@@ -62503,6 +62925,8 @@ var map = {
 	"./Dashboard/Permissions/Index.jsx": "./resources/js/Pages/Dashboard/Permissions/Index.jsx",
 	"./Dashboard/Roles/Index": "./resources/js/Pages/Dashboard/Roles/Index.jsx",
 	"./Dashboard/Roles/Index.jsx": "./resources/js/Pages/Dashboard/Roles/Index.jsx",
+	"./Dashboard/Roles/Show": "./resources/js/Pages/Dashboard/Roles/Show.jsx",
+	"./Dashboard/Roles/Show.jsx": "./resources/js/Pages/Dashboard/Roles/Show.jsx",
 	"./Home": "./resources/js/Pages/Home.jsx",
 	"./Home.jsx": "./resources/js/Pages/Home.jsx",
 	"./Topics": "./resources/js/Pages/Topics.jsx",
