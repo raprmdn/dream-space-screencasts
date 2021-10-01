@@ -40,8 +40,8 @@ class HandleInertiaRequests extends Middleware
         $permissions = $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') : [];
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => fn() => $request->user(),
-                'can' => Inertia::lazy(fn() => $permissions)
+                'user' => $request->user(),
+                'can' => $permissions
             ],
             'flash' => [
                 'type' => $request->session()->get('type'),

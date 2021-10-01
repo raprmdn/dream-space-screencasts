@@ -23,10 +23,13 @@ class RoleController extends Controller
     public function show(Role $role)
     {
         $role = Role::whereId($role->id)->with(['permissions:id,name'])->withCount('users')->get();
-        $users = User::role($role)->latest()->paginate(10);
+        $users = User::role($role)->search(request()->search);
         return inertia('Dashboard/Roles/Show', [
             'role' => $role,
             'users' => new UserCollection($users),
+            'filters' => [
+                'search' => request()->search
+            ]
         ]);
     }
 

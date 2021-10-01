@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
+import React from 'react';
+import {Head, Link, useForm} from "@inertiajs/inertia-react";
 import SubHeader from "../../../Components/SubHeader";
 import App from "../../../Layouts/App";
 import Modal from "../../../Components/Modal";
@@ -7,51 +7,20 @@ import FormPermissions from "../../../Components/Forms/FormPermissions";
 import Swal from "sweetalert2";
 import {Inertia} from "@inertiajs/inertia";
 import SmallPagination from "../../../Components/SmallPagination";
-import { usePrevious } from 'react-use';
-import {debounce, pickBy} from "lodash";
+import SearchFilter from "../../../Components/SearchFilter";
 
 export default function Index(props) {
-    const { filters } = usePage().props;
     const { data: permissions, meta: { links, from } } = props.permissions
     const { data, setData, post, put, errors, reset, processing  } = useForm({
         name: '',
         guard_name: 'web'
     });
-    const [ params, setParams ] = useState({
-        search: filters.search || ''
-    });
-
-    const prevValues = usePrevious(params);
-
     const changeHandler = (e) => {
         setData({
             ...data,
             [e.target.id]: e.target.value
         })
     }
-    const searchHandler = (e) => setParams({
-        ...params,
-        [e.target.name]: e.target.value
-    })
-
-    const searching = useCallback(
-        debounce((params) => {
-            Inertia.get(route('permissions.index'), pickBy(params), {
-                replace: true,
-                preserveState: true,
-                preserveScroll: true,
-            });
-        }, 200)
-        ,
-        []
-    );
-
-    useEffect(() => {
-        if (prevValues) {
-            searching(params)
-        }
-    }, [params]);
-
     const updateHandler = (e) => {
         e.preventDefault()
         put(route('permissions.update', data), {
@@ -122,22 +91,7 @@ export default function Index(props) {
                                 Permissions
                             </h3>
                             <div className="card-toolbar">
-                                <div>
-                                    <div className="input-group input-group-solid">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="flaticon2-search-1 icon-md"/>
-                                            </span>
-                                        </div>
-                                        <input type="text" name="search" id="search" value={params.search} onChange={searchHandler} className="form-control" placeholder="Search Permissions"/>
-                                        <div className="input-group-append">
-                                            <span className={`input-group-text`}>
-                                                 {/*spinner spinner-sm spinner-primary*/}
-                                                {/*<i className="quick-search-close ki ki-close icon-sm text-muted" style="display: none;"></i>*/}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <SearchFilter placeholder={"Search permissions . . ."}/>
                                 <a href="#" className="btn btn-light-primary font-weight-bolder font-size-sm ml-3"
                                    data-toggle="modal" data-target="#modalPermissions" onClick={() => reset()}>
                                     Add Permissions

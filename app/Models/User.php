@@ -46,8 +46,30 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Assigned User to role student.
+     *
+     */
     public static function booted()
     {
         static::creating(fn (User $user) => $user->assignRole(3));
+    }
+
+    /**
+     * Query search name.
+     *
+     * @param $query
+     * @param $params
+     *
+     * @return mixed
+     */
+    public function scopeSearch($query, $params)
+    {
+        return $query->where(function ($query) use($params) {
+                    $query->where('name', 'ilike', '%' . $params . '%')
+                        ->orWhere('email', 'ilike', '%' . $params . '%');
+                    })
+                    ->latest()->paginate(16)
+                    ->appends(request()->only('search'));
     }
 }

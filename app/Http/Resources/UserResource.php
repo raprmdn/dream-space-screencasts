@@ -27,7 +27,9 @@ class UserResource extends JsonResource
             'twitter' => $this->twitter,
             'facebook' => $this->facebook,
             'pp' => $this->profile_picture,
-            'joined' => $this->created_at->diffForHumans()
+            'verified_email' => $this->email_verified_at,
+            'joined' => $this->created_at->format('d M Y, H:i A'),
+            'roles' => $this->whenLoaded('roles')
         ];
     }
 }

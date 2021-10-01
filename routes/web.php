@@ -3,7 +3,8 @@
 use App\Http\Controllers\{IndexController,
     TopicsController,
     UserManagement\PermissionController,
-    UserManagement\RoleController};
+    UserManagement\RoleController,
+    UserManagement\UsersController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('home');
@@ -11,6 +12,9 @@ Route::get('topics', [TopicsController::class, 'topics'])->name('topics');
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {
     Route::prefix('user-management')->middleware(['can:user management'])->group(function () {
+        Route::prefix('users')->group(function () {
+            Route::get('', [UsersController::class, 'index'])->name('users.index');
+        });
         Route::prefix('roles')->group(function () {
             Route::get('', [RoleController::class, 'index'])->name('roles.index');
             Route::post('', [RoleController::class, 'store'])->name('roles.store');

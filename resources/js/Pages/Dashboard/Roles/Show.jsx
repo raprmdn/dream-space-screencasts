@@ -5,6 +5,7 @@ import SubHeader from "../../../Components/SubHeader";
 import SmallPagination from "../../../Components/SmallPagination";
 import Modal from "../../../Components/Modal";
 import FormAssignRoleUser from "../../../Components/Forms/FormAssignRoleUser";
+import SearchFilter from "../../../Components/SearchFilter";
 
 export default function Show(props) {
     const { role } = usePage().props
@@ -88,20 +89,7 @@ export default function Show(props) {
                                         Users Assigned ({role[0].users_count})
                                     </h3>
                                     <div className="card-toolbar">
-                                        <div>
-                                            <div className="input-group input-group-solid">
-                                                <div className="input-group-prepend">
-                                            <span className="input-group-text">
-                                                <i className="flaticon2-search-1 icon-md"/>
-                                            </span>
-                                                </div>
-                                                <input type="text" name="search" id="search" className="form-control" placeholder="Search Users . . ."/>
-                                                <div className="input-group-append">
-                                            <span className={`input-group-text`}>
-                                            </span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <SearchFilter placeholder={"Search users . . ."} identifier={role[0]}/>
                                         <a href="#" className="btn btn-light-primary font-weight-bolder font-size-sm ml-3"
                                            data-toggle="modal" data-target="#assignRole" onClick={() => reset()}>
                                             Assign Role User
