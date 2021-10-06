@@ -6,6 +6,7 @@ import SmallPagination from "../../../Components/SmallPagination";
 import Modal from "../../../Components/Modal";
 import FormAssignRoleUser from "../../../Components/Forms/FormAssignRoleUser";
 import SearchFilter from "../../../Components/SearchFilter";
+import Breadcrumb from "../../../Components/Breadcrumb";
 
 export default function Show(props) {
     const { role } = usePage().props
@@ -36,20 +37,13 @@ export default function Show(props) {
     return (
         <>
             <Head title="Dream Space | Roles"/>
-            <SubHeader>
-                <h2 className="text-white font-weight-bold my-2 mr-5">Roles</h2>
-                <div className="d-flex align-items-center font-weight-bold my-2">
-                    <Link href={route('home')} className="text-white text-hover-white opacity-75 hover-opacity-100">Home</Link>
-                    <span className="label label-dot label-sm bg-white opacity-75 mx-3" />
-                    <span className="text-white text-hover-white opacity-75 hover-opacity-100">Dashboard</span>
-                    <span className="label label-dot label-sm bg-white opacity-75 mx-3" />
-                    <span className="text-white text-hover-white opacity-75 hover-opacity-100">User Management</span>
-                    <span className="label label-dot label-sm bg-white opacity-75 mx-3" />
-                    <Link href={route('roles.index')} className="text-white text-hover-white opacity-75 hover-opacity-100">Roles</Link>
-                    <span className="label label-dot label-sm bg-white opacity-75 mx-3" />
-                    <span className="text-white text-hover-white opacity-75 hover-opacity-100">{role[0].name}</span>
-                </div>
-            </SubHeader>
+            <Breadcrumb
+                titleHeading="Roles"
+                item1="Dashboard"
+                item2="User Management"
+                item3="Roles" linkItem3={route('roles.index')}
+                item4={role[0].name}
+            />
             <div className="d-flex flex-column-fluid flex-xl-row mb-11">
                 <div className="container">
                     <div className="d-flex flex-column flex-md-row">

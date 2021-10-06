@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import App from "../../../Layouts/App";
 import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
-import SubHeader from "../../../Components/SubHeader";
 import Modal from "../../../Components/Modal";
 import FormRoles from "../../../Components/Forms/FormRoles";
 import Swal from "sweetalert2";
 import {Inertia} from "@inertiajs/inertia";
+import Breadcrumb from "../../../Components/Breadcrumb";
 
 export default function Index() {
     const { permissions: permissionsData, roles } = usePage().props
@@ -81,18 +81,12 @@ export default function Index() {
                 <FormRoles
                     {...{permissionsData, data, errors, processing, changeHandler, checkedHandler, submitLabel:"Update", submitHandler:updateHandler }}/>
             </Modal>
-            <SubHeader>
-                <h2 className="text-white font-weight-bold my-2 mr-5">Roles</h2>
-                <div className="d-flex align-items-center font-weight-bold my-2">
-                    <Link href={route('home')} className="text-white text-hover-white opacity-75 hover-opacity-100">Home</Link>
-                    <span className="label label-dot label-sm bg-white opacity-75 mx-3" />
-                    <span className="text-white text-hover-white opacity-75 hover-opacity-100">Dashboard</span>
-                    <span className="label label-dot label-sm bg-white opacity-75 mx-3" />
-                    <span className="text-white text-hover-white opacity-75 hover-opacity-100">User Management</span>
-                    <span className="label label-dot label-sm bg-white opacity-75 mx-3" />
-                    <span className="text-white text-hover-white opacity-75 hover-opacity-100">Roles</span>
-                </div>
-            </SubHeader>
+            <Breadcrumb
+                titleHeading="Roles"
+                item1="Dashboard"
+                item2="User Management"
+                item3="Roles" linkItem3={route('roles.index')}
+            />
             <div className="d-flex flex-column-fluid mb-11">
                 <div className="container">
                     <div className="row">

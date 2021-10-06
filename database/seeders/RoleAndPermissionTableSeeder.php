@@ -18,10 +18,9 @@ class RoleAndPermissionTableSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissions = collect([
-            'user management', 'menu management', 'courses', 'categories', 'tags', 'deactivate user',
-            'create categories', 'update categories', 'archive categories', 'delete categories',
-            'create tags', 'update tags', 'archive tags', 'delete tags' ,
-            'view invoice', 'view dashboard'
+            'user management', 'menu management', 'courses', 'topics',
+            'deactivate user', 'view invoice', 'view dashboard', 'trash',
+            'create topics', 'update topics', 'archive topics',
         ]);
 
         $permissions->each(function ($permission) {
@@ -32,7 +31,7 @@ class RoleAndPermissionTableSeeder extends Seeder
         });
 
         Role::create(['name' => 'administrator'])->givePermissionTo(Permission::all());
-        Role::create(['name' => 'instructor'])->givePermissionTo([3,4,5,7,8,11,12,15,16]);
+        Role::create(['name' => 'instructor'])->givePermissionTo([3, 4, 9, 10, 11]);
         Role::create(['name' => 'student']);
     }
 }

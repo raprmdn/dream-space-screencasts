@@ -24,11 +24,11 @@ export default function Header() {
                                                 <span className="menu-text">Home</span>
                                             </Link>
                                         </li>
-                                        <li className="menu-item menu-item-submenu menu-item-rel">
-                                            <Link href="/" className="menu-link">
-                                                <span className="menu-text">Flash Sale</span>
-                                            </Link>
-                                        </li>
+                                        {/*<li className="menu-item menu-item-submenu menu-item-rel">*/}
+                                        {/*    <Link href="/" className="menu-link">*/}
+                                        {/*        <span className="menu-text">Flash Sale</span>*/}
+                                        {/*    </Link>*/}
+                                        {/*</li>*/}
                                         <li className="menu-item menu-item-submenu menu-item-rel">
                                             <Link href="/" className="menu-link">
                                                 <span className="menu-text">Series</span>
@@ -50,6 +50,64 @@ export default function Header() {
                                                     </Link>
                                                     <div className="menu-submenu menu-submenu-classic menu-submenu-left">
                                                         <ul className="menu-subnav">
+                                                            {
+                                                                auth.can.includes('user management') && (
+                                                                    <li className={`menu-item menu-item-submenu ${segmentUrl.split("/")[2] === 'user-management' ? 'menu-item-open menu-item-here' : ''}`}
+                                                                        data-menu-toggle="hover" aria-haspopup="true">
+                                                                        <a href="" className="menu-link menu-toggle">
+                                                                            <div className="menu-icon">
+                                                                                <i className="fas fa-video text-dark-25"/>
+                                                                            </div>
+                                                                            <span className="menu-text">Courses</span>
+                                                                            <i className="menu-arrow" />
+                                                                        </a>
+                                                                        <div className="menu-submenu menu-submenu-classic menu-submenu-right">
+                                                                            <ul className="menu-subnav">
+                                                                                <li className={`menu-item ${route().current('users.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('users.index')} className="menu-link">
+                                                                                        <i className="menu-bullet menu-bullet-dot">
+                                                                                            <span />
+                                                                                        </i>
+                                                                                        <span className="menu-text">Series</span>
+                                                                                    </Link>
+                                                                                </li>
+                                                                                <li className={`menu-item ${route().current('users.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('users.index')} className="menu-link">
+                                                                                        <i className="menu-bullet menu-bullet-dot">
+                                                                                            <span />
+                                                                                        </i>
+                                                                                        <span className="menu-text">Videos</span>
+                                                                                    </Link>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </li>
+                                                                )
+                                                            }
+                                                            {
+                                                                auth.can.includes('categories') && (
+                                                                    <li className="menu-item" aria-haspopup="true">
+                                                                        <Link href="/" className="menu-link">
+                                                                            <div className="menu-icon">
+                                                                                <i className="flaticon2-indent-dots text-dark-25"/>
+                                                                            </div>
+                                                                            <span className="menu-text">Categories</span>
+                                                                        </Link>
+                                                                    </li>
+                                                                )
+                                                            }
+                                                            {
+                                                                auth.can.includes('topics') && (
+                                                                    <li className={`menu-item ${route().current('topics.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                        <Link href={route('topics.index')} className="menu-link">
+                                                                            <div className="menu-icon">
+                                                                                <i className="flaticon2-indent-dots text-dark-25"/>
+                                                                            </div>
+                                                                            <span className="menu-text">Topics</span>
+                                                                        </Link>
+                                                                    </li>
+                                                                )
+                                                            }
                                                             {
                                                                 auth.can.includes('user management') && (
                                                                     <li className={`menu-item menu-item-submenu ${segmentUrl.split("/")[2] === 'user-management' ? 'menu-item-open menu-item-here' : ''}`}
@@ -116,7 +174,6 @@ export default function Header() {
                                                                     </li>
                                                                 )
                                                             }
-
                                                         </ul>
                                                     </div>
                                                 </li>
@@ -163,7 +220,7 @@ export default function Header() {
                                                 <input type="text" className="form-control" placeholder="Search..." />
                                                 <div className="input-group-append">
                                                     <span className="input-group-text">
-                                                      <i className="quick-search-close ki ki-close icon-sm text-muted" />
+                                                        <i className="quick-search-close ki ki-close icon-sm text-muted" />
                                                     </span>
                                                 </div>
                                             </div>

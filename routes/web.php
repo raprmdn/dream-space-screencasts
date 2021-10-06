@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\{IndexController,
+    Topic\TopicController,
     TopicsController,
     UserManagement\PermissionController,
     UserManagement\RoleController,
@@ -11,6 +12,10 @@ Route::get('/', IndexController::class)->name('home');
 Route::get('topics', [TopicsController::class, 'topics'])->name('topics');
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {
+    Route::prefix('topics')->middleware(['can:topics'])->group(function () {
+        Route::get('', [TopicController::class, 'index'])->name('topics.index');
+        Route::post('', [TopicController::class, 'store'])->name('topics.store');
+    });
     Route::prefix('user-management')->middleware(['can:user management'])->group(function () {
         Route::prefix('users')->group(function () {
             Route::get('', [UsersController::class, 'index'])->name('users.index');

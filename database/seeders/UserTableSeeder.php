@@ -23,6 +23,6 @@ class UserTableSeeder extends Seeder
             'job_title' => 'Web Developer',
             'website' => 'dreamspace.com',
             'password' => bcrypt('123123123')
-        ])->assignRole(1);
+        ])->syncRoles(1);
     }
 }
