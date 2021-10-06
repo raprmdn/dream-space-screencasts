@@ -58,7 +58,7 @@ export default function Index() {
                                 Topics
                             </h3>
                             <div className="card-toolbar">
-                                {/*<SearchFilter placeholder={"Search topics . . ."}/>*/}
+                                <SearchFilter placeholder={"Search topics . . ."}/>
                                 <a href="#" className="btn btn-light-primary font-weight-bolder font-size-sm ml-3"
                                    data-toggle="modal" data-target="#modalTopics">
                                     Add Topic

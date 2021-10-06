@@ -9,9 +9,9 @@ use Illuminate\Support\Str;
 
 class TopicService {
 
-    public function findAll()
+    public function findAll($params)
     {
-        return new TopicCollection(Topic::latest()->paginate(10));
+        return new TopicCollection(Topic::search($params));
     }
 
     public function save($attributes)

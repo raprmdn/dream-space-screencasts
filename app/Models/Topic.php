@@ -15,10 +15,24 @@ class Topic extends Model
         'picture', 'position', 'is_archived'
     ];
 
-//    protected $appends = ['topic_picture'];
-
     public function getTopicPictureAttribute()
     {
         return "/storage/" . $this->picture;
+    }
+
+
+    /**
+     * Query searching topic name.
+     *
+     * @param $query
+     * @param $params
+     *
+     * @return mixed
+     */
+    public function scopeSearch($query, $params)
+    {
+        return $query->where('name', 'ilike', '%' . $params . '%')
+            ->latest()->paginate(16)
+            ->appends(request()->only('search'));
     }
 }

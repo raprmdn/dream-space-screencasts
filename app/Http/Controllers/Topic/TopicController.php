@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Topic;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
+use App\Http\Resources\TopicCollection;
+use App\Models\Topic;
 use App\Services\TopicService;
 use Illuminate\Http\Request;
 
@@ -19,7 +21,10 @@ class TopicController extends Controller
     public function index()
     {
         return inertia('Dashboard/Topics/Index', [
-            'topics' => $this->topicService->findAll()
+            'topics' => $this->topicService->findAll(request()->search),
+            'filters' => [
+                'search' => request()->search
+            ]
         ]);
     }
 
