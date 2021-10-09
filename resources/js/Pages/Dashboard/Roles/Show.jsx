@@ -1,7 +1,6 @@
 import React from 'react';
 import App from "../../../Layouts/App";
 import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
-import SubHeader from "../../../Components/SubHeader";
 import SmallPagination from "../../../Components/SmallPagination";
 import Modal from "../../../Components/Modal";
 import FormAssignRoleUser from "../../../Components/Forms/FormAssignRoleUser";
@@ -11,7 +10,7 @@ import Breadcrumb from "../../../Components/Breadcrumb";
 export default function Show(props) {
     const { role } = usePage().props
     const { data: users, meta: { links, from } } = props.users
-    const { data, setData, errors, post, processing, reset } = useForm({
+    const { data, setData, post, errors, clearErrors, processing, reset } = useForm({
         email: ''
     });
     const changeHandler = (e) => {
@@ -85,7 +84,7 @@ export default function Show(props) {
                                     <div className="card-toolbar">
                                         <SearchFilter placeholder={"Search users . . ."} identifier={role[0]}/>
                                         <a href="#" className="btn btn-light-primary font-weight-bolder font-size-sm ml-3"
-                                           data-toggle="modal" data-target="#assignRole" onClick={() => reset()}>
+                                           data-toggle="modal" data-target="#assignRole" onClick={() => {reset(); clearErrors()}}>
                                             Assign Role User
                                         </a>
                                     </div>

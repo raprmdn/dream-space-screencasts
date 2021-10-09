@@ -1,7 +1,6 @@
 import React from 'react';
 import App from "../../../Layouts/App";
 import {Head, Link, usePage} from "@inertiajs/inertia-react";
-import SubHeader from "../../../Components/SubHeader";
 import SearchFilter from "../../../Components/SearchFilter";
 import SmallPagination from "../../../Components/SmallPagination";
 import Breadcrumb from "../../../Components/Breadcrumb";

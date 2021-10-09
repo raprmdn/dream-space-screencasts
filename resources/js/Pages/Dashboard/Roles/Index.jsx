@@ -9,7 +9,7 @@ import Breadcrumb from "../../../Components/Breadcrumb";
 
 export default function Index() {
     const { permissions: permissionsData, roles } = usePage().props
-    const { data, setData, post, put, errors, reset, processing } = useForm({
+    const { data, setData, post, put, errors, clearErrors , reset, processing } = useForm({
         name: '',
         guard_name: 'web',
         permissions: []
@@ -140,7 +140,7 @@ export default function Index() {
                                         </div>
                                         <div className="card-footer flex-wrap py-5 border-top-0">
                                             <Link href={route('roles.view', role)} className="btn btn-light btn-active-primary my-1 mr-2 font-weight-bold">View Role</Link>
-                                            <button onClick={() => setData({...role, permissions: role.permissions.map(val => val.id)})} className="btn btn-light btn-active-light-primary my-1 mr-2 font-weight-bold"
+                                            <button onClick={() => {setData({...role, permissions: role.permissions.map(val => val.id)}); clearErrors()}} className="btn btn-light btn-active-light-primary my-1 mr-2 font-weight-bold"
                                                     data-toggle="modal" data-target="#editRoleModal">Edit Role
                                             </button>
                                             <button onClick={() => deleteHandler(role)}
@@ -154,7 +154,7 @@ export default function Index() {
                         <div className="col-lg-4 mb-7">
                             <div className="card card-custom card-stretch shadow-lg">
                                 <div className="card-body d-flex flex-center">
-                                    <button onClick={() => reset()} className="btn btn-clear d-flex flex-column flex-center"
+                                    <button onClick={() => {reset(); clearErrors()}} className="btn btn-clear d-flex flex-column flex-center"
                                             data-toggle="modal" data-target="#addRoleModal">
                                         <img src="/assets/media/user-role.png" alt="add-role" className="mw-100 mh-150px mb-7" />
                                         <div className="font-weight-bolder font-size-h3 text-dark-50 text-hover-primary">Add New Role</div>

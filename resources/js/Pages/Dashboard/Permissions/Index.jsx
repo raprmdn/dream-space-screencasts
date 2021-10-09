@@ -1,6 +1,5 @@
 import React from 'react';
 import {Head, Link, useForm} from "@inertiajs/inertia-react";
-import SubHeader from "../../../Components/SubHeader";
 import App from "../../../Layouts/App";
 import Modal from "../../../Components/Modal";
 import FormPermissions from "../../../Components/Forms/FormPermissions";
@@ -12,7 +11,7 @@ import Breadcrumb from "../../../Components/Breadcrumb";
 
 export default function Index(props) {
     const { data: permissions, meta: { links, from } } = props.permissions
-    const { data, setData, post, put, errors, reset, processing  } = useForm({
+    const { data, setData, post, put, errors, clearErrors , reset, processing  } = useForm({
         name: '',
         guard_name: 'web'
     });
@@ -88,7 +87,7 @@ export default function Index(props) {
                             <div className="card-toolbar">
                                 <SearchFilter placeholder={"Search permissions . . ."}/>
                                 <a href="#" className="btn btn-light-primary font-weight-bolder font-size-sm ml-3"
-                                   data-toggle="modal" data-target="#modalPermissions" onClick={() => reset()}>
+                                   data-toggle="modal" data-target="#modalPermissions" onClick={() => {reset(); clearErrors()}}>
                                     Add Permissions
                                 </a>
                             </div>
@@ -119,7 +118,7 @@ export default function Index(props) {
                                                         <span className="font-weight-bolder font-size-lg">{permission.guard_name}</span>
                                                     </td>
                                                     <td className="pr-0 text-right">
-                                                        <button onClick={() => setData(permission)} data-toggle="modal" data-target="#updatePermissionsModal"
+                                                        <button onClick={() => {setData(permission); clearErrors()}} data-toggle="modal" data-target="#updatePermissionsModal"
                                                                 className="btn btn-icon btn-sm btn-light btn-hover-primary">
                                                             <span className="svg-icon svg-icon-3">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
