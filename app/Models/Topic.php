@@ -38,7 +38,7 @@ class Topic extends Model
     public function scopeSearch($query, $params)
     {
         return $query->where('name', 'ilike', '%' . $params . '%')
-            ->latest()->paginate(16)
+            ->latest()->paginate(10)
             ->appends(request()->only('search'));
     }
 }

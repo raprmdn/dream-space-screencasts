@@ -1,5 +1,5 @@
 import React from 'react';
-import {Head, Link, useForm} from "@inertiajs/inertia-react";
+import {Head, useForm} from "@inertiajs/inertia-react";
 import App from "../../../Layouts/App";
 import Modal from "../../../Components/Modal";
 import FormPermissions from "../../../Components/Forms/FormPermissions";

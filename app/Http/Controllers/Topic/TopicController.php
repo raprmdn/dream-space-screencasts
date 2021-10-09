@@ -32,15 +32,9 @@ class TopicController extends Controller
         try {
             $this->topicService->save($request->all());
         } catch (\Exception $e) {
-            return back()->with([
-                'type' => 'error',
-                'message' => 'Something went wrong. ' . $e
-            ]);
+            return back()->with(['type' => 'error', 'message' => 'Something went wrong. ' . $e]);
         }
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Topic has been added.'
-        ]);
+        return back()->with(['type' => 'success', 'message' => 'Topic has been added.']);
     }
 
     public function update(TopicRequest $request, Topic $topic)
@@ -48,14 +42,18 @@ class TopicController extends Controller
         try {
             $this->topicService->update($request->all(), $topic);
         } catch (\Exception $e) {
-            return back()->with([
-                'type' => 'error',
-                'message' => 'Something went wrong. ' . $e
-            ]);
+            return back()->with(['type' => 'error', 'message' => 'Something went wrong. ' . $e]);
         }
-        return back()->with([
-            'type' => 'success',
-            'message' => 'Topic has been added.'
-        ]);
+        return back()->with(['type' => 'success', 'message' => 'Topic has been added.']);
+    }
+
+    public function destroy(Topic $topic)
+    {
+        try {
+            $this->topicService->delete($topic);
+        } catch (\Exception $e) {
+            return back()->with(['type' => 'error', 'message' => 'Something went wrong. ' . $e]);
+        }
+        return back()->with(['type' => 'success', 'message' => 'Topic has been deleted.']);
     }
 }

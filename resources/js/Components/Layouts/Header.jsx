@@ -174,6 +174,32 @@ export default function Header() {
                                                                     </li>
                                                                 )
                                                             }
+                                                            {
+                                                                auth.can.includes('trash') && (
+                                                                    <li className={`menu-item menu-item-submenu ${segmentUrl.split("/")[2] === 'trash' ? 'menu-item-open menu-item-here' : ''}`}
+                                                                        data-menu-toggle="hover" aria-haspopup="true">
+                                                                        <a href="" className="menu-link menu-toggle">
+                                                                            <div className="menu-icon">
+                                                                                <i className="flaticon2-trash"/>
+                                                                            </div>
+                                                                            <span className="menu-text">Trash</span>
+                                                                            <i className="menu-arrow" />
+                                                                        </a>
+                                                                        <div className="menu-submenu menu-submenu-classic menu-submenu-right">
+                                                                            <ul className="menu-subnav">
+                                                                                <li className={`menu-item ${route().current('trash.topic_index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('trash.topic_index')} className="menu-link">
+                                                                                        <i className="menu-bullet menu-bullet-dot">
+                                                                                            <span />
+                                                                                        </i>
+                                                                                        <span className="menu-text">Topic</span>
+                                                                                    </Link>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </li>
+                                                                )
+                                                            }
                                                         </ul>
                                                     </div>
                                                 </li>

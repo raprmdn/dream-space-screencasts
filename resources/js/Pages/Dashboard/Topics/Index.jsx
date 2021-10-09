@@ -6,10 +6,11 @@ import SearchFilter from "../../../Components/SearchFilter";
 import SmallPagination from "../../../Components/SmallPagination";
 import Modal from "../../../Components/Modal";
 import FormTopic from "../../../Components/Forms/FormTopic";
+import Swal from "sweetalert2";
 
 export default function Index() {
-    const { data: topics, meta: {links, from} } = usePage().props.topics
-    const { data, setData, post, errors, reset, clearErrors , processing } = useForm({
+    const { data: topics, meta: {links, from, per_page} } = usePage().props.topics
+    const { data, setData, post, delete: destroy, errors, reset, clearErrors , processing } = useForm({
         name: '',
         description: '',
         position: '',
@@ -55,6 +56,24 @@ export default function Index() {
                 reset()
                 window.$('#addTopicModal').modal('hide')
             },
+        })
+    }
+    const deleteHandler = (topic) => {
+        Swal.fire({
+            title: `Are you sure want to delete the "${topic.name}" topic?`,
+            text: 'By deleting the topic, you might break the system topics functionality.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Discard',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                destroy(route('topic.delete', topic) , {
+                    preserveScroll: true,
+                    resetOnSuccess: false,
+                })
+            }
         })
     }
     return (
@@ -135,31 +154,44 @@ export default function Index() {
                                                     </td>
                                                     <td className="pr-0 text-center">
                                                         <div className="btn-group">
-                                                            <button className="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i className="la la-cog" /></button>
-                                                            <div className="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                                                                <ul className="nav nav-hoverable flex-column">
-                                                                    <li className="nav-item">
-                                                                        <button onClick={() => {setData(topic); setPreview(topic.picture); clearErrors();}}
-                                                                              data-toggle="modal" data-target="#updateTopicModal"
-                                                                              className="nav-link btn btn-block text-left">
-                                                                            <i className="nav-icon la la-edit" />
-                                                                            <span className="nav-text font-weight-bold">Edit Topic</span>
-                                                                        </button>
-                                                                    </li>
-                                                                    <li className="nav-item">
-                                                                        <a className="nav-link" href="#">
-                                                                            <i className="nav-icon flaticon2-trash" />
-                                                                            <span className="nav-text font-weight-bold">Delete Topic</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li className="nav-item">
-                                                                        <a className="nav-link" href="#">
-                                                                            <i className="nav-icon flaticon-eye" />
-                                                                            <span className="nav-text font-weight-bold">View Topic</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
+                                                            <button className="btn btn-sm btn-clean btn-icon"
+                                                                    data-toggle="modal" data-target="#updateTopicModal"
+                                                                    onClick={() => {setData(topic); setPreview(topic.picture); clearErrors();}}>
+                                                                <i className="la la-edit text-primary" />
+                                                            </button>
+                                                            <button className="btn btn-sm btn-clean btn-icon"
+                                                                    data-toggle="tooltip" title="Delete"
+                                                                    onClick={() => deleteHandler(topic)}>
+                                                                <i className="la la-trash text-danger" />
+                                                            </button>
+                                                            <button className="btn btn-sm btn-clean btn-icon"
+                                                                    data-toggle="tooltip" title="View">
+                                                                <i className="la flaticon-eye text-muted" />
+                                                            </button>
+                                                            {/*<div className="dropdown-menu dropdown-menu-sm dropdown-menu-right">*/}
+                                                            {/*    <ul className="nav nav-hoverable flex-column">*/}
+                                                            {/*        <li className="nav-item">*/}
+                                                            {/*            <button onClick={() => {setData(topic); setPreview(topic.picture); clearErrors();}}*/}
+                                                            {/*                  data-toggle="modal" data-target="#updateTopicModal"*/}
+                                                            {/*                  className="nav-link btn btn-block text-left">*/}
+                                                            {/*                <i className="nav-icon la la-edit" />*/}
+                                                            {/*                <span className="nav-text font-weight-bold">Edit Topic</span>*/}
+                                                            {/*            </button>*/}
+                                                            {/*        </li>*/}
+                                                            {/*        <li className="nav-item">*/}
+                                                            {/*            <button onClick={() => deleteHandler(topic)} className="nav-link btn btn-block text-left">*/}
+                                                            {/*                <i className="nav-icon flaticon2-trash" />*/}
+                                                            {/*                <span className="nav-text font-weight-bold">Delete Topic</span>*/}
+                                                            {/*            </button>*/}
+                                                            {/*        </li>*/}
+                                                            {/*        <li className="nav-item">*/}
+                                                            {/*            <a className="nav-link" href="#">*/}
+                                                            {/*                <i className="nav-icon flaticon-eye" />*/}
+                                                            {/*                <span className="nav-text font-weight-bold">View Topic</span>*/}
+                                                            {/*            </a>*/}
+                                                            {/*        </li>*/}
+                                                            {/*    </ul>*/}
+                                                            {/*</div>*/}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -172,7 +204,11 @@ export default function Index() {
                                     </tbody>
                                 </table>
                             </div>
-                            <SmallPagination links={links}/>
+                            {
+                                !(topics.length < per_page) && (
+                                    <SmallPagination links={links}/>
+                                )
+                            }
                         </div>
                     </div>
                 </div>

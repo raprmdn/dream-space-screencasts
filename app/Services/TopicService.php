@@ -14,6 +14,11 @@ class TopicService {
         return new TopicCollection(Topic::search($params));
     }
 
+    public function findAllOnlyTrashed($params)
+    {
+        return new TopicCollection(Topic::onlyTrashed()->search($params));
+    }
+
     public function save($attributes)
     {
         $picture = $attributes['picture'];
@@ -49,6 +54,23 @@ class TopicService {
             'position' => $attributes['position'],
             'is_archived' => $attributes['is_archived']
         ]);
+    }
+
+    public function delete($topic)
+    {
+        return $topic->delete();
+    }
+
+    public function restore($topic)
+    {
+        return Topic::whereId($topic)->withTrashed()->restore();
+    }
+
+    public function forceDelete($topic)
+    {
+        $topic = Topic::whereId($topic)->withTrashed()->first();
+        Storage::delete($topic->picture);
+        return $topic->forceDelete();
     }
 
     private function assignPicture($picture, $slug) : string {

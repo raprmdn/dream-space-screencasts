@@ -3,6 +3,7 @@
 use App\Http\Controllers\{IndexController,
     Topic\TopicController,
     TopicsController,
+    TrashController,
     UserManagement\PermissionController,
     UserManagement\RoleController,
     UserManagement\UsersController};
@@ -16,6 +17,7 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
         Route::get('', [TopicController::class, 'index'])->name('topics.index');
         Route::post('', [TopicController::class, 'store'])->name('topics.store');
         Route::put('{topic}', [TopicController::class, 'update'])->name('topic.update');
+        Route::delete('{topic}', [TopicController::class, 'destroy'])->name('topic.delete');
     });
     Route::prefix('user-management')->middleware(['can:user management'])->group(function () {
         Route::prefix('users')->group(function () {
@@ -36,5 +38,10 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
             Route::put('{permission}', [PermissionController::class, 'update'])->name('permissions.update');
             Route::delete('{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
         });
+    });
+    Route::prefix('trash')->middleware(['can:topic'])->group(function () {
+        Route::get('topic', [TrashController::class, 'topicTrashed'])->name('trash.topic_index');
+        Route::put('topic/{topic}', [TrashController::class, 'topicRestore'])->name('trash.topic_restore');
+        Route::delete('topic/{topic}', [TrashController::class, 'topicForce'])->name('trash.topic_force');
     });
 });
