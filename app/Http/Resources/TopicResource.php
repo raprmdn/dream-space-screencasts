@@ -20,7 +20,7 @@ class TopicResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'picture' => $this->topicPicture,
-            'archived' => $this->is_archived,
+            'is_archived' => $this->is_archived,
             'position' => $this->position
         ];
     }

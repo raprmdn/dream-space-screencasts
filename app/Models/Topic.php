@@ -15,7 +15,13 @@ class Topic extends Model
         'picture', 'position', 'is_archived'
     ];
 
-    public function getTopicPictureAttribute()
+
+    /**
+     * Get picture topic path.
+     *
+     * @return string
+     */
+    public function getTopicPictureAttribute() : string
     {
         return "/storage/" . $this->picture;
     }

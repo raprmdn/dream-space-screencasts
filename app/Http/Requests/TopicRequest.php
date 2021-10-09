@@ -23,11 +23,14 @@ class TopicRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [];
+        if (!$this->topic) $rules = ['required', 'image', 'mimes:png,jpg,jpeg,svg', 'max:3048'];
+        if ($this->hasFile('picture')) $rules = ['required', 'image', 'mimes:png,jpg,jpeg,svg', 'max:3048'];
         return [
             'name' => ['required'],
             'description' => ['required'],
             'position' => ['required', 'integer', 'min:1'],
-            'picture' => ['required', 'image', 'mimes:png,jpg,jpeg,svg', 'max:3048']
+            'picture' => $rules
         ];
     }
 }

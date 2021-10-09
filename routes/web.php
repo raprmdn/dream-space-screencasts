@@ -15,6 +15,7 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
     Route::prefix('topics')->middleware(['can:topics'])->group(function () {
         Route::get('', [TopicController::class, 'index'])->name('topics.index');
         Route::post('', [TopicController::class, 'store'])->name('topics.store');
+        Route::put('{topic}', [TopicController::class, 'update'])->name('topic.update');
     });
     Route::prefix('user-management')->middleware(['can:user management'])->group(function () {
         Route::prefix('users')->group(function () {

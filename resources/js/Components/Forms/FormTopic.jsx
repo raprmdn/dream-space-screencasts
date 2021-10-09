@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function FormTopic({submitHandler, data, errors, submitLabel, changeHandler, processing}) {
+export default function FormTopic({submitHandler, data, errors, submitLabel, changeHandler, processing, preview}) {
     return (
         <>
             <div className="modal-body">
@@ -38,7 +38,7 @@ export default function FormTopic({submitHandler, data, errors, submitLabel, cha
                         <span className="text-danger"> * </span>
                         <div>
                             <div className="image-input image-input-outline" id="topic_picture">
-                                <div className="image-input-wrapper" />
+                                <div className="image-input-wrapper" style={{backgroundImage: data.id ? `url(${preview})` : preview}} />
                                 <label className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" data-original-title="Change picture">
                                     <i className="fa fa-pen icon-sm text-muted" />
                                     <input type="file"
@@ -59,8 +59,8 @@ export default function FormTopic({submitHandler, data, errors, submitLabel, cha
                                 <input type="checkbox"
                                        name="is_archived"
                                        id="is_archived"
+                                       checked={!!data.is_archived}
                                        onChange={changeHandler}
-                                       checked={data.is_archived}
                                 />
                                 <span />Archive the topic?</label>
                         </div>

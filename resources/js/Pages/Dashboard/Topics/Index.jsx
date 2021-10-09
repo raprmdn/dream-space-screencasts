@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import App from "../../../Layouts/App";
-import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
+import {Head, useForm, usePage} from "@inertiajs/inertia-react";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import SearchFilter from "../../../Components/SearchFilter";
 import SmallPagination from "../../../Components/SmallPagination";
@@ -9,17 +9,23 @@ import FormTopic from "../../../Components/Forms/FormTopic";
 
 export default function Index() {
     const { data: topics, meta: {links, from} } = usePage().props.topics
-    const { data, setData, post, put, errors, reset, processing } = useForm({
+    const { data, setData, post, errors, reset, clearErrors , processing } = useForm({
         name: '',
         description: '',
         position: '',
         picture: '',
-        is_archived: false
+        is_archived: false,
     });
+    const [ preview, setPreview ] = useState(null)
     const changeHandler = (e) => {
         let value
         if (e.target.id === 'picture') {
             value = e.target.files[0]
+            let reader = new FileReader()
+            reader.onload = () => {
+                setPreview(reader.result)
+            }
+            reader.readAsDataURL(value)
         } else if (e.target.id === 'is_archived') {
             value = e.target.checked
         } else {
@@ -30,6 +36,16 @@ export default function Index() {
             [e.target.id]: value,
         })
     }
+    const updateHandler = (e) => {
+        e.preventDefault()
+        data._method = 'put'
+        post(route('topic.update', data), {
+            preserveScroll: true,
+            onSuccess: () => {
+                window.$('#updateTopicModal').modal('hide')
+            }
+        })
+    }
     const storeHandler = (e) => {
         e.preventDefault()
         post(route('topics.store'), {
@@ -37,7 +53,7 @@ export default function Index() {
             preserveScroll: true,
             onSuccess: () => {
                 reset()
-                window.$('#modalTopics').modal('hide')
+                window.$('#addTopicModal').modal('hide')
             },
         })
     }
@@ -60,7 +76,7 @@ export default function Index() {
                             <div className="card-toolbar">
                                 <SearchFilter placeholder={"Search topics . . ."}/>
                                 <a href="#" className="btn btn-light-primary font-weight-bolder font-size-sm ml-3"
-                                   data-toggle="modal" data-target="#modalTopics">
+                                   data-toggle="modal" data-target="#addTopicModal" onClick={() => {reset(); setPreview(null); clearErrors()}}>
                                     Add Topic
                                 </a>
                             </div>
@@ -111,18 +127,38 @@ export default function Index() {
                                                     </td>
                                                     <td>
                                                         <span
-                                                            className={`label label-${topic.archived ? 'danger' : 'success'} label-pill label-inline mr-2`}>{topic.archived ? 'Archived' : 'Public'}
+                                                            className={`label label-${topic.is_archived ? 'danger' : 'success'} label-pill label-inline mr-2`}>{topic.is_archived ? 'Archived' : 'Public'}
                                                         </span>
                                                     </td>
                                                     <td className="text-center">
                                                         <span className="font-weight-bold">{topic.position}</span>
                                                     </td>
-                                                    <td className="pr-0 text-right">
+                                                    <td className="pr-0 text-center">
                                                         <div className="btn-group">
-                                                            <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
-                                                            <div className="dropdown-menu" >
-                                                                <Link className="dropdown-item" href="#">View</Link>
-                                                                {/*<Link as="button" className="dropdown-item">Remove Role</Link>*/}
+                                                            <button className="btn btn-sm btn-clean btn-icon" data-toggle="dropdown" aria-expanded="false"><i className="la la-cog" /></button>
+                                                            <div className="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                                                <ul className="nav nav-hoverable flex-column">
+                                                                    <li className="nav-item">
+                                                                        <button onClick={() => {setData(topic); setPreview(topic.picture); clearErrors();}}
+                                                                              data-toggle="modal" data-target="#updateTopicModal"
+                                                                              className="nav-link btn btn-block text-left">
+                                                                            <i className="nav-icon la la-edit" />
+                                                                            <span className="nav-text font-weight-bold">Edit Topic</span>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li className="nav-item">
+                                                                        <a className="nav-link" href="#">
+                                                                            <i className="nav-icon flaticon2-trash" />
+                                                                            <span className="nav-text font-weight-bold">Delete Topic</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li className="nav-item">
+                                                                        <a className="nav-link" href="#">
+                                                                            <i className="nav-icon flaticon-eye" />
+                                                                            <span className="nav-text font-weight-bold">View Topic</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -141,7 +177,7 @@ export default function Index() {
                     </div>
                 </div>
             </div>
-            <Modal trigger={"modalTopics"} title={"Add new topic"}>
+            <Modal trigger={"addTopicModal"} title={"Add new topic"}>
                 <FormTopic
                     {...{
                         submitHandler:storeHandler,
@@ -149,7 +185,22 @@ export default function Index() {
                         errors,
                         submitLabel:"Submit",
                         changeHandler,
-                        processing }}
+                        processing,
+                        preview
+                    }}
+                />
+            </Modal>
+            <Modal trigger={"updateTopicModal"} title={`Update Topic : ${data.name}`}>
+                <FormTopic
+                    {...{
+                        submitHandler:updateHandler,
+                        data,
+                        errors,
+                        submitLabel:"Update",
+                        changeHandler,
+                        processing,
+                        preview
+                    }}
                 />
             </Modal>
         </>
