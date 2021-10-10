@@ -168,30 +168,6 @@ export default function Index() {
                                                                     data-toggle="tooltip" title="View">
                                                                 <i className="la flaticon-eye text-muted" />
                                                             </button>
-                                                            {/*<div className="dropdown-menu dropdown-menu-sm dropdown-menu-right">*/}
-                                                            {/*    <ul className="nav nav-hoverable flex-column">*/}
-                                                            {/*        <li className="nav-item">*/}
-                                                            {/*            <button onClick={() => {setData(topic); setPreview(topic.picture); clearErrors();}}*/}
-                                                            {/*                  data-toggle="modal" data-target="#updateTopicModal"*/}
-                                                            {/*                  className="nav-link btn btn-block text-left">*/}
-                                                            {/*                <i className="nav-icon la la-edit" />*/}
-                                                            {/*                <span className="nav-text font-weight-bold">Edit Topic</span>*/}
-                                                            {/*            </button>*/}
-                                                            {/*        </li>*/}
-                                                            {/*        <li className="nav-item">*/}
-                                                            {/*            <button onClick={() => deleteHandler(topic)} className="nav-link btn btn-block text-left">*/}
-                                                            {/*                <i className="nav-icon flaticon2-trash" />*/}
-                                                            {/*                <span className="nav-text font-weight-bold">Delete Topic</span>*/}
-                                                            {/*            </button>*/}
-                                                            {/*        </li>*/}
-                                                            {/*        <li className="nav-item">*/}
-                                                            {/*            <a className="nav-link" href="#">*/}
-                                                            {/*                <i className="nav-icon flaticon-eye" />*/}
-                                                            {/*                <span className="nav-text font-weight-bold">View Topic</span>*/}
-                                                            {/*            </a>*/}
-                                                            {/*        </li>*/}
-                                                            {/*    </ul>*/}
-                                                            {/*</div>*/}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -204,11 +180,7 @@ export default function Index() {
                                     </tbody>
                                 </table>
                             </div>
-                            {
-                                !(topics.length < per_page) && (
-                                    <SmallPagination links={links}/>
-                                )
-                            }
+                            <SmallPagination links={links}/>
                         </div>
                     </div>
                 </div>

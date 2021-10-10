@@ -9,17 +9,17 @@ use Illuminate\Support\Str;
 
 class TopicService {
 
-    public function findAll($params)
+    public function findAll($params) : TopicCollection
     {
         return new TopicCollection(Topic::search($params));
     }
 
-    public function findAllOnlyTrashed($params)
+    public function findAllOnlyTrashed($params) : TopicCollection
     {
         return new TopicCollection(Topic::onlyTrashed()->search($params));
     }
 
-    public function save($attributes)
+    public function save($attributes) : Topic
     {
         $picture = $attributes['picture'];
         $slug = Str::slug($attributes['name']);

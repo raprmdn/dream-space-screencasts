@@ -4575,7 +4575,7 @@ function Header() {
                       className: "symbol symbol-50px mr-5",
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
                         alt: "Logo",
-                        src: "/assets/media/users/100_7.jpg"
+                        src: "/assets/media/users/100_1.jpg"
                       })
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                       className: "d-flex flex-column",
@@ -7201,7 +7201,7 @@ function Index() {
                   })
                 })]
               })
-            }), !(topics.length < per_page) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Components_SmallPagination__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Components_SmallPagination__WEBPACK_IMPORTED_MODULE_5__["default"], {
               links: links
             })]
           })]
