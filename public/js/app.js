@@ -3489,7 +3489,8 @@ function FormTopic(_ref) {
       submitLabel = _ref.submitLabel,
       changeHandler = _ref.changeHandler,
       processing = _ref.processing,
-      preview = _ref.preview;
+      preview = _ref.preview,
+      auth = _ref.auth;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
       className: "modal-body",
@@ -3598,7 +3599,7 @@ function FormTopic(_ref) {
             className: "text-danger font-size-sm mb-n5",
             children: errors.picture
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        }), auth.can.includes('archive topics') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
           className: "form-group",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
             className: "checkbox-inline",
@@ -6914,12 +6915,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function Index() {
+  var auth = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props.auth;
   var _usePage$props$topics = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props.topics,
       topics = _usePage$props$topics.data,
       _usePage$props$topics2 = _usePage$props$topics.meta,
       links = _usePage$props$topics2.links,
-      from = _usePage$props$topics2.from,
-      per_page = _usePage$props$topics2.per_page;
+      from = _usePage$props$topics2.from;
 
   var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
     name: '',
@@ -7177,7 +7178,7 @@ function Index() {
                             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("i", {
                               className: "la la-edit text-primary"
                             })
-                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", {
+                          }), auth.can.includes('delete topics') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", {
                             className: "btn btn-sm btn-clean btn-icon",
                             "data-toggle": "tooltip",
                             title: "Delete",
@@ -7223,7 +7224,8 @@ function Index() {
         submitLabel: "Submit",
         changeHandler: changeHandler,
         processing: processing,
-        preview: preview
+        preview: preview,
+        auth: auth
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_6__["default"], {
       trigger: "updateTopicModal",
@@ -7235,7 +7237,8 @@ function Index() {
         submitLabel: "Update",
         changeHandler: changeHandler,
         processing: processing,
-        preview: preview
+        preview: preview,
+        auth: auth
       })
     })]
   });

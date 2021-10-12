@@ -20,7 +20,7 @@ class RoleAndPermissionTableSeeder extends Seeder
         $permissions = collect([
             'user management', 'menu management', 'courses', 'topics',
             'deactivate user', 'view invoice', 'view dashboard', 'trash',
-            'create topics', 'update topics', 'archive topics',
+            'create topics', 'update topics', 'archive topics', 'delete topics'
         ]);
 
         $permissions->each(function ($permission) {
@@ -31,7 +31,7 @@ class RoleAndPermissionTableSeeder extends Seeder
         });
 
         Role::create(['name' => 'administrator'])->givePermissionTo(Permission::all());
-        Role::create(['name' => 'instructor'])->givePermissionTo([3, 4, 9, 10, 11]);
+        Role::create(['name' => 'instructor'])->givePermissionTo([3, 4, 7, 9, 10, 11]);
         Role::create(['name' => 'student']);
     }
 }

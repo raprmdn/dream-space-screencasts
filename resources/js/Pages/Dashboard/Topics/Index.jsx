@@ -11,7 +11,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function Index() {
-    const { data: topics, meta: {links, from, per_page} } = usePage().props.topics
+    const { auth } = usePage().props
+    const { data: topics, meta: {links, from} } = usePage().props.topics
     const { data, setData, post, delete: destroy, errors, reset, clearErrors , processing } = useForm({
         name: '',
         description: '',
@@ -167,11 +168,16 @@ export default function Index() {
                                                                     onClick={() => {setData(topic); setPreview(topic.picture); clearErrors();}}>
                                                                 <i className="la la-edit text-primary" />
                                                             </button>
-                                                            <button className="btn btn-sm btn-clean btn-icon"
-                                                                    data-toggle="tooltip" title="Delete"
-                                                                    onClick={() => deleteHandler(topic)}>
-                                                                <i className="la la-trash text-danger" />
-                                                            </button>
+                                                            {
+                                                                auth.can.includes('delete topics') &&
+                                                                (
+                                                                    <button className="btn btn-sm btn-clean btn-icon"
+                                                                            data-toggle="tooltip" title="Delete"
+                                                                            onClick={() => deleteHandler(topic)}>
+                                                                        <i className="la la-trash text-danger" />
+                                                                    </button>
+                                                                )
+                                                            }
                                                             <button className="btn btn-sm btn-clean btn-icon"
                                                                     data-toggle="tooltip" title="View">
                                                                 <i className="la flaticon-eye text-muted" />
@@ -202,7 +208,8 @@ export default function Index() {
                         submitLabel:"Submit",
                         changeHandler,
                         processing,
-                        preview
+                        preview,
+                        auth
                     }}
                 />
             </Modal>
@@ -215,7 +222,8 @@ export default function Index() {
                         submitLabel:"Update",
                         changeHandler,
                         processing,
-                        preview
+                        preview,
+                        auth
                     }}
                 />
             </Modal>

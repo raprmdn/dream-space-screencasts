@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function FormTopic({submitHandler, data, errors, submitLabel, changeHandler, processing, preview}) {
+export default function FormTopic({submitHandler, data, errors, submitLabel, changeHandler, processing, preview, auth}) {
     return (
         <>
             <div className="modal-body">
@@ -53,18 +53,23 @@ export default function FormTopic({submitHandler, data, errors, submitLabel, cha
                         </div>
                         {errors.picture && (<div className="text-danger font-size-sm mb-n5">{errors.picture}</div>)}
                     </div>
-                    <div className="form-group">
-                        <div className="checkbox-inline">
-                            <label className="checkbox">
-                                <input type="checkbox"
-                                       name="is_archived"
-                                       id="is_archived"
-                                       checked={!!data.is_archived}
-                                       onChange={changeHandler}
-                                />
-                                <span />Archive the topic?</label>
-                        </div>
-                    </div>
+                    {
+                        auth.can.includes('archive topics') &&
+                        (
+                            <div className="form-group">
+                                <div className="checkbox-inline">
+                                    <label className="checkbox">
+                                        <input type="checkbox"
+                                               name="is_archived"
+                                               id="is_archived"
+                                               checked={!!data.is_archived}
+                                               onChange={changeHandler}
+                                        />
+                                        <span />Archive the topic?</label>
+                                </div>
+                            </div>
+                        )
+                    }
                     <div className="text-center">
                         <button type="button" data-dismiss="modal"
                                 aria-label="Close" className="btn btn-light mr-3 font-weight-bold">Discard
