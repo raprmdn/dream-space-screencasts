@@ -7,6 +7,8 @@ import SmallPagination from "../../../Components/SmallPagination";
 import Modal from "../../../Components/Modal";
 import FormTopic from "../../../Components/Forms/FormTopic";
 import Swal from "sweetalert2";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function Index() {
     const { data: topics, meta: {links, from, per_page} } = usePage().props.topics
@@ -127,7 +129,13 @@ export default function Index() {
                                                         <div className="d-flex align-items-center">
                                                             <div className="symbol symbol-50 overflow-hidden mr-3">
                                                                 <div className="symbol-label">
-                                                                    <img src={topic.picture} width={50} height={50} alt={topic.slug} className="w-100" />
+                                                                    <LazyLoadImage
+                                                                        effect="blur"
+                                                                        src={topic.picture}
+                                                                        width={50}
+                                                                        height={50}
+                                                                        alt={topic.slug}
+                                                                        className="w-100" />
                                                                 </div>
                                                             </div>
                                                             <div className="d-flex flex-column">
