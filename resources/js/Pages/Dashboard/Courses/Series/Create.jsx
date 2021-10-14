@@ -26,7 +26,7 @@ export default function Create() {
     const [selectedLevel, setSelectedLevel] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState([]);
     const [ preview, setPreview ] = useState(null)
-    const { data, setData, post, errors, processing, reset } = useForm({
+    const { data, setData, post, errors, processing } = useForm({
         title: '',
         topics: [],
         description: '',
@@ -51,7 +51,7 @@ export default function Create() {
             levels: selectedLevel.value,
             status: selectedStatus.value
         })
-    }, [selectedOption, selectedLevel, selectedStatus, ])
+    }, [selectedOption, selectedLevel, selectedStatus])
 
     const changeHandler = (e) => {
         let value

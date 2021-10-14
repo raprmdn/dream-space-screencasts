@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class SeriesService
 {
 
-    public function findAll($params)
+    public function findAll($params): SeriesCollection
     {
         return new SeriesCollection(Series::with('topics:id,name,slug')->search($params));
     }

@@ -3,12 +3,10 @@ import App from "../../../../Layouts/App";
 import {Head, Link} from "@inertiajs/inertia-react";
 import Breadcrumb from "../../../../Components/Breadcrumb";
 import SearchFilter from "../../../../Components/SearchFilter";
-import {LazyLoadImage} from "react-lazy-load-image-component";
 import SmallPagination from "../../../../Components/SmallPagination";
 
 export default function Index(props) {
     const { data: series, meta:{ links, from } } = props.series
-    console.log(series)
     return (
         <>
             <Head title="Dream Space | Series"/>
@@ -59,10 +57,12 @@ export default function Index(props) {
                                                         <span className="font-weight-bold">{series.title}</span>
                                                     </td>
                                                     <td>
-                                                        <span className="font-weight-bold">{series.price}</span>
+                                                        <span className="font-weight-bold">Rp. {series.price_formatter},-</span>
                                                     </td>
                                                     <td>
-                                                        <span className="font-weight-bold">{series.discount ?? '-'}</span>
+                                                        <span className="font-weight-bold">
+                                                            {series.discount ? `Rp. ${series.discount_formatter},-` : '-'}
+                                                        </span>
                                                     </td>
                                                     <td>
                                                         <div className="font-weight-bold text-center">
