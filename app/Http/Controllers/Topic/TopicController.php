@@ -44,7 +44,7 @@ class TopicController extends Controller
         } catch (\Exception $e) {
             return back()->with(['type' => 'error', 'message' => 'Something went wrong. ' . $e]);
         }
-        return back()->with(['type' => 'success', 'message' => 'Topic has been added.']);
+        return back()->with(['type' => 'success', 'message' => 'Topic has been updated.']);
     }
 
     public function destroy(Topic $topic)

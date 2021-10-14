@@ -15,7 +15,6 @@ class Topic extends Model
         'picture', 'position', 'is_archived'
     ];
 
-
     /**
      * Get picture topic path.
      *
@@ -40,5 +39,13 @@ class Topic extends Model
         return $query->where('name', 'ilike', '%' . $params . '%')
             ->orderBy('position')->paginate(10)
             ->appends(request()->only('search'));
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function series()
+    {
+        return $this->belongsToMany(Series::class, 'series_topic', 'topic_id');
     }
 }

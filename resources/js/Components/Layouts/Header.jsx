@@ -51,8 +51,8 @@ export default function Header() {
                                                     <div className="menu-submenu menu-submenu-classic menu-submenu-left">
                                                         <ul className="menu-subnav">
                                                             {
-                                                                auth.can.includes('user management') && (
-                                                                    <li className={`menu-item menu-item-submenu ${segmentUrl.split("/")[2] === 'user-management' ? 'menu-item-open menu-item-here' : ''}`}
+                                                                auth.can.includes('courses') && (
+                                                                    <li className={`menu-item menu-item-submenu ${segmentUrl.split("/")[2] === 'courses' ? 'menu-item-open menu-item-here' : ''}`}
                                                                         data-menu-toggle="hover" aria-haspopup="true">
                                                                         <a href="" className="menu-link menu-toggle">
                                                                             <div className="menu-icon">
@@ -63,8 +63,8 @@ export default function Header() {
                                                                         </a>
                                                                         <div className="menu-submenu menu-submenu-classic menu-submenu-right">
                                                                             <ul className="menu-subnav">
-                                                                                <li className={`menu-item ${route().current('users.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
-                                                                                    <Link href={route('users.index')} className="menu-link">
+                                                                                <li className={`menu-item ${route().current('series.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('series.index')} className="menu-link">
                                                                                         <i className="menu-bullet menu-bullet-dot">
                                                                                             <span />
                                                                                         </i>

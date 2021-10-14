@@ -97,9 +97,9 @@ export default function Index() {
                             </h3>
                             <div className="card-toolbar">
                                 <SearchFilter placeholder={"Search topics . . ."}/>
-                                <a href="#" className="btn btn-light-primary font-weight-bolder font-size-sm ml-3"
+                                <a href="#" className="btn btn-primary font-weight-bold font-size-sm ml-3"
                                    data-toggle="modal" data-target="#addTopicModal" onClick={() => {reset(); setPreview(null); clearErrors()}}>
-                                    Add Topic
+                                    <i className="flaticon2-plus icon-1x"/> Add Topic
                                 </a>
                             </div>
                         </div>
@@ -109,8 +109,8 @@ export default function Index() {
                                     <thead>
                                     <tr className="text-left">
                                         <th className="pl-0" style={{width: '30px'}}>#</th>
-                                        <th style={{minWidth: '120px'}}>Name</th>
-                                        <th style={{minWidth: '100px'}}>Slug</th>
+                                        <th style={{minWidth: '150px'}}>Name</th>
+                                        <th style={{minWidth: '120px'}}>Slug</th>
                                         <th style={{minWidth: '150px'}}>Description</th>
                                         <th style={{width: '70px'}} className="text-center">Series</th>
                                         <th style={{width: '100px', minWidth: '50px'}}>Archived</th>
@@ -148,25 +148,28 @@ export default function Index() {
                                                         <span className="font-weight-bold">{topic.slug}</span>
                                                     </td>
                                                     <td>
-                                                        <div className="font-weight-bold">{topic.description.substring(0, 50)}...</div>
+                                                        <div className="font-weight-bold">{topic.description.substring(0, 50)}</div>
                                                     </td>
                                                     <td className="text-center">
                                                         <span className="font-weight-bold">30</span>
                                                     </td>
                                                     <td>
-                                                        <span
-                                                            className={`label label-${topic.is_archived ? 'danger' : 'success'} label-pill label-inline mr-2`}>{topic.is_archived ? 'Archived' : 'Public'}
-                                                        </span>
+                                                        <div className="font-weight-bold text-center">
+                                                            <i className={topic.is_archived ?
+                                                                'flaticon2-check-mark text-success icon-1x'
+                                                                :
+                                                                'flaticon2-cancel text-danger icon-1x'}/>
+                                                        </div>
                                                     </td>
-                                                    <td className="text-center">
-                                                        <span className="font-weight-bold">{topic.position}</span>
+                                                    <td className="text-center font-weight-bold">
+                                                        <span className="label label-rounded label-dark">{topic.position}</span>
                                                     </td>
                                                     <td className="pr-0 text-center">
                                                         <div className="btn-group">
                                                             <button className="btn btn-sm btn-clean btn-icon"
                                                                     data-toggle="modal" data-target="#updateTopicModal"
                                                                     onClick={() => {setData(topic); setPreview(topic.picture); clearErrors();}}>
-                                                                <i className="la la-edit text-primary" />
+                                                                <i className="flaticon-edit text-success icon-1x" />
                                                             </button>
                                                             {
                                                                 auth.can.includes('delete topics') &&
@@ -174,13 +177,13 @@ export default function Index() {
                                                                     <button className="btn btn-sm btn-clean btn-icon"
                                                                             data-toggle="tooltip" title="Delete"
                                                                             onClick={() => deleteHandler(topic)}>
-                                                                        <i className="la la-trash text-danger" />
+                                                                        <i className="flaticon2-trash text-danger icon-1x" />
                                                                     </button>
                                                                 )
                                                             }
                                                             <button className="btn btn-sm btn-clean btn-icon"
                                                                     data-toggle="tooltip" title="View">
-                                                                <i className="la flaticon-eye text-muted" />
+                                                                <i className="far fa-eye text-muted" />
                                                             </button>
                                                         </div>
                                                     </td>

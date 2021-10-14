@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\{IndexController,
+use App\Http\Controllers\{Courses\SeriesController,
+    IndexController,
     Topic\TopicController,
     TopicsController,
     TrashController,
@@ -13,6 +14,13 @@ Route::get('/', IndexController::class)->name('home');
 Route::get('topics', [TopicsController::class, 'topics'])->name('topics');
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {
+    Route::prefix('courses')->middleware('can:courses')->group(function () {
+        Route::prefix('series')->group(function () {
+            Route::get('', [SeriesController::class, 'index'])->name('series.index');
+            Route::get('create', [SeriesController::class, 'create'])->name('series.create');
+            Route::post('create', [SeriesController::class, 'store'])->name('series.store');
+        });
+    });
     Route::prefix('topics')->middleware(['can:topics'])->group(function () {
         Route::get('', [TopicController::class, 'index'])->name('topics.index');
         Route::post('', [TopicController::class, 'store'])->name('topics.store');
