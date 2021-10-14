@@ -4,10 +4,13 @@ namespace App\Services;
 
 use App\Http\Resources\TopicCollection;
 use App\Models\Topic;
+use App\Traits\ImageTrait;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class TopicService {
+
+    use ImageTrait;
 
     public function findAll($params) : TopicCollection
     {
@@ -23,7 +26,7 @@ class TopicService {
     {
         $picture = $attributes['picture'];
         $slug = Str::slug($attributes['name']);
-        $pathPicture = $this->assignPicture($picture, $slug);
+        $pathPicture = $this->assignPicture('icon/topic', $picture, $slug);
 
         return Topic::create([
             'name' => $attributes['name'],
@@ -41,7 +44,7 @@ class TopicService {
         $slug = Str::slug($attributes['name']);
         if (request()->hasFile('picture')) {
             Storage::delete($topic->picture);
-            $pathPicture = $this->assignPicture($picture, $slug);
+            $pathPicture = $this->assignPicture('icon/topic', $picture, $slug);
         } else {
             $pathPicture = $topic->picture;
         }
@@ -71,12 +74,6 @@ class TopicService {
         $topic = Topic::whereId($topic)->withTrashed()->first();
         Storage::delete($topic->picture);
         return $topic->forceDelete();
-    }
-
-    private function assignPicture($picture, $slug) : string {
-        $ext = $picture->getClientOriginalExtension();
-        $picName = Str::random(4) . "-" . $slug . ".$ext";
-        return Storage::putFileAs('icon/topic', $picture, $picName);
     }
 
 }

@@ -4,11 +4,13 @@ namespace App\Services;
 
 use App\Http\Resources\SeriesCollection;
 use App\Models\Series;
-use Illuminate\Support\Facades\Storage;
+use App\Traits\ImageTrait;
 use Illuminate\Support\Str;
 
 class SeriesService
 {
+
+    use ImageTrait;
 
     public function findAll($params): SeriesCollection
     {
@@ -19,7 +21,7 @@ class SeriesService
     {
         $picture = $attributes['thumbnail'];
         $slug = Str::slug($attributes['title']);
-        $pathPicture = $this->assignPicture($picture, $slug);
+        $pathPicture = $this->assignPicture('thumbnail/series', $picture, $slug);
 
         $series = Series::create([
             'title' => $attributes['title'],
@@ -40,11 +42,5 @@ class SeriesService
         ]);
 
         return $series->topics()->sync($attributes['topics']);
-    }
-
-    private function assignPicture($picture, $slug) : string {
-        $ext = $picture->getClientOriginalExtension();
-        $picName = Str::random(4) . "-" . $slug . ".$ext";
-        return Storage::putFileAs('thumbnail/series', $picture, $picName);
     }
 }
