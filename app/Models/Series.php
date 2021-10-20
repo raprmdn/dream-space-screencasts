@@ -26,6 +26,16 @@ class Series extends Model
     ];
 
     /**
+     * Path storage for topic thumbnail.
+     *
+     * @return string
+     */
+    public function getSeriesThumbnailAttribute() : string
+    {
+        return "/storage/" . $this->thumbnail;
+    }
+
+    /**
      * Query searching title series.
      *
      * @param $query

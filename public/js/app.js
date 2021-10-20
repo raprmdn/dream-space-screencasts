@@ -5163,6 +5163,404 @@ function FormRoles(_ref) {
 
 /***/ }),
 
+/***/ "./resources/js/Components/Forms/FormSeries.jsx":
+/*!******************************************************!*\
+  !*** ./resources/js/Components/Forms/FormSeries.jsx ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ FormSeries)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
+/* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
+/* harmony import */ var react_select_animated__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-select/animated */ "./node_modules/react-select/animated/dist/react-select.esm.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+var animatedComponents = (0,react_select_animated__WEBPACK_IMPORTED_MODULE_2__["default"])();
+function FormSeries(_ref) {
+  var topicsData = _ref.topicsData,
+      submitHandler = _ref.submitHandler,
+      data = _ref.data,
+      setData = _ref.setData,
+      changeHandler = _ref.changeHandler,
+      errors = _ref.errors,
+      preview = _ref.preview,
+      processing = _ref.processing,
+      submitLabel = _ref.submitLabel;
+  var optionsTopics = topicsData.map(function (topic) {
+    return {
+      value: topic.id,
+      label: topic.name
+    };
+  });
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+      className: "form",
+      onSubmit: submitHandler,
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "card-body",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+            className: "font-weight-bold",
+            children: "Series Title"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+            className: "text-danger",
+            children: " * "
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+            type: "text",
+            id: "title",
+            name: "title",
+            value: data.title,
+            onChange: function onChange(e) {
+              return setData('title', e.target.value);
+            },
+            className: "form-control ".concat(errors.title && 'is-invalid'),
+            placeholder: "Enter a series title"
+          }), errors.title && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "invalid-feedback mb-n5",
+            children: errors.title
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+            className: "font-weight-bold",
+            children: "Series Topics"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+            className: "text-danger",
+            children: " * "
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_select__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            closeMenuOnSelect: false,
+            id: "topics",
+            name: "topics",
+            components: animatedComponents,
+            value: data.topics,
+            onChange: function onChange(e) {
+              return setData('topics', e);
+            },
+            options: optionsTopics,
+            isMulti: true,
+            placeholder: "Select topics"
+          }), errors.topics && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+            className: "text-danger font-size-sm mb-n5",
+            children: errors.topics
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+            className: "font-weight-bold",
+            children: "Series Description"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+            className: "text-danger",
+            children: " * "
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("textarea", {
+            id: "description",
+            name: "description",
+            value: data.description,
+            onChange: function onChange(e) {
+              return setData('description', e.target.value);
+            },
+            className: "form-control ".concat(errors.description && 'is-invalid'),
+            placeholder: "Enter a series description",
+            rows: 10
+          }), errors.description && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "invalid-feedback mb-n5",
+            children: errors.description
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-group row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-lg-6",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              className: "font-weight-bold",
+              children: "Series Price"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              type: "number",
+              id: "price",
+              name: "price",
+              value: data.price,
+              onChange: function onChange(e) {
+                return setData('price', e.target.value);
+              },
+              className: "form-control ".concat(errors.price && 'is-invalid'),
+              min: 1,
+              placeholder: "Enter a series price"
+            }), errors.price && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.price
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-lg-6",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              className: "font-weight-bold",
+              children: "Series Discount Price"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              type: "number",
+              id: "discount_price",
+              name: "discount_price",
+              value: data.discount_price,
+              onChange: function onChange(e) {
+                return setData('discount_price', e.target.value);
+              },
+              className: "form-control ".concat(errors.discount_price && 'is-invalid'),
+              min: 1,
+              placeholder: "Enter a series discount price"
+            }), errors.discount_price && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.discount_price
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-group row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-lg-6",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              className: "font-weight-bold",
+              children: "Series Level"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+              className: "text-danger",
+              children: " * "
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("select", {
+              id: "levels",
+              name: "levels",
+              className: "form-control",
+              value: data.levels,
+              onChange: function onChange(e) {
+                return setData('levels', e.target.value);
+              },
+              placeholder: "Select level",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                disabled: true,
+                hidden: true,
+                value: "",
+                children: "Select series levels"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                value: "Beginner",
+                children: "Beginner"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                value: "Intermediate",
+                children: "Intermediate"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                value: "Advanced",
+                children: "Advanced"
+              })]
+            }), errors.levels && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+              className: "text-danger font-size-sm mb-n5",
+              children: errors.levels
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-lg-6",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              className: "font-weight-bold",
+              children: "Series Status"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+              className: "text-danger",
+              children: " * "
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("select", {
+              id: "levels",
+              name: "levels",
+              className: "form-control",
+              value: data.status,
+              onChange: function onChange(e) {
+                return setData('status', e.target.value);
+              },
+              placeholder: "Select level",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                disabled: true,
+                hidden: true,
+                value: "",
+                children: "Select series status"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                value: "Completed",
+                children: "Completed"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
+                value: "Development",
+                children: "Development"
+              })]
+            }), errors.status && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+              className: "text-danger font-size-sm mb-n5",
+              children: errors.status
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-group row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-lg-6",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              className: "font-weight-bold",
+              children: "Series Episode"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+              className: "text-danger",
+              children: " * "
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              type: "number",
+              id: "episodes",
+              name: "episodes",
+              value: data.episodes,
+              onChange: function onChange(e) {
+                return setData('episodes', e.target.value);
+              },
+              className: "form-control ".concat(errors.episodes && 'is-invalid'),
+              placeholder: "Enter a series episode"
+            }), errors.episodes && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.episodes
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-lg-6",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              className: "font-weight-bold",
+              children: "Series Preview"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              type: "text",
+              id: "preview_series",
+              name: "preview_series",
+              value: data.preview_series,
+              onChange: function onChange(e) {
+                return setData('preview_series', e.target.value);
+              },
+              className: "form-control ".concat(errors.preview_series && 'is-invalid'),
+              placeholder: "Enter a series preview url. ex:_XyBa8QsVQU"
+            }), errors.preview_series && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.preview_series
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-group row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-lg-6",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              className: "font-weight-bold",
+              children: "Series Source Code"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              type: "text",
+              id: "source_code",
+              name: "source_code",
+              value: data.source_code,
+              onChange: function onChange(e) {
+                return setData('source_code', e.target.value);
+              },
+              className: "form-control ".concat(errors.source_code && 'is-invalid'),
+              placeholder: "Enter a series source code. ex: https://github.com/Rafi1112/dream-space-screencasts"
+            }), errors.source_code && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.source_code
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "col-lg-6",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+              className: "font-weight-bold",
+              children: "Series Project Demo"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+              type: "text",
+              id: "project_demo",
+              name: "project_demo",
+              value: data.project_demo,
+              onChange: function onChange(e) {
+                return setData('project_demo', e.target.value);
+              },
+              className: "form-control ".concat(errors.project_demo && 'is-invalid'),
+              placeholder: "Enter a series project demo. ex: projectdemo.com"
+            }), errors.project_demo && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.project_demo
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+            className: "font-weight-bold",
+            children: "Series Thumbnail"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+            type: "file",
+            className: "form-control",
+            id: "thumbnail",
+            name: "thumbnail",
+            onChange: changeHandler
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
+            src: preview,
+            className: "mw-100 mt-1 rounded-lg"
+          }), errors.thumbnail && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "text-danger font-size-sm mb-n5",
+            children: errors.thumbnail
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "form-group row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "col-lg-4 d-flex justify-content-center",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "checkbox-inline",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+                className: "checkbox",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                  type: "checkbox",
+                  name: "is_discount",
+                  id: "is_discount",
+                  checked: !!data.is_discount,
+                  onChange: changeHandler
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {}), "Discount Series"]
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "col-lg-4 d-flex justify-content-center",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "checkbox-inline",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+                className: "checkbox",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                  type: "checkbox",
+                  name: "is_free",
+                  id: "is_free",
+                  checked: !!data.is_free,
+                  onChange: changeHandler
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {}), "Free Series"]
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "col-lg-4 d-flex justify-content-center",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "checkbox-inline",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
+                className: "checkbox",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                  type: "checkbox",
+                  name: "archived_at",
+                  id: "archived_at",
+                  checked: !!data.archived_at,
+                  onChange: changeHandler
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {}), "Archive Series"]
+              })
+            })
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        className: "card-footer border-0 text-right",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("button", {
+          type: "submit",
+          className: "btn btn-primary btn-block font-weight-bold",
+          disabled: processing,
+          children: [processing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("i", {
+            className: "spinner spinner-sm spinner-white px-4"
+          }), submitLabel]
+        })
+      })]
+    })
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/Components/Forms/FormTopic.jsx":
 /*!*****************************************************!*\
   !*** ./resources/js/Components/Forms/FormTopic.jsx ***!
@@ -7598,8 +7996,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../Layouts/App */ "./resources/js/Layouts/App.jsx");
 /* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
 /* harmony import */ var _Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../Components/Breadcrumb */ "./resources/js/Components/Breadcrumb.jsx");
-/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
-/* harmony import */ var react_select_animated__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-select/animated */ "./node_modules/react-select/animated/dist/react-select.esm.js");
+/* harmony import */ var _Components_Forms_FormSeries__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../Components/Forms/FormSeries */ "./resources/js/Components/Forms/FormSeries.jsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
@@ -7627,53 +8024,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-var animatedComponents = (0,react_select_animated__WEBPACK_IMPORTED_MODULE_4__["default"])();
 function Create() {
   var topicsData = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props.topics;
-  var optionsTopics = topicsData.map(function (topic) {
-    return {
-      value: topic.id,
-      label: topic.name
-    };
-  });
-  var optionsLevel = [{
-    value: 'Beginner',
-    label: 'Beginner'
-  }, {
-    value: 'Intermediate',
-    label: 'Intermediate'
-  }, {
-    value: 'Advanced',
-    label: 'Advanced'
-  }];
-  var optionsStatus = [{
-    value: 'Completed',
-    label: 'Completed'
-  }, {
-    value: 'Development',
-    label: 'Development'
-  }];
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
       _useState2 = _slicedToArray(_useState, 2),
-      selectedOption = _useState2[0],
-      setSelectedOption = _useState2[1];
-
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-      _useState4 = _slicedToArray(_useState3, 2),
-      selectedLevel = _useState4[0],
-      setSelectedLevel = _useState4[1];
-
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-      _useState6 = _slicedToArray(_useState5, 2),
-      selectedStatus = _useState6[0],
-      setSelectedStatus = _useState6[1];
-
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-      _useState8 = _slicedToArray(_useState7, 2),
-      preview = _useState8[0],
-      setPreview = _useState8[1];
+      preview = _useState2[0],
+      setPreview = _useState2[1];
 
   var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
     title: '',
@@ -7698,40 +8055,20 @@ function Create() {
       errors = _useForm.errors,
       processing = _useForm.processing;
 
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    setData(_objectSpread(_objectSpread({}, data), {}, {
-      topics: selectedOption.map(function (obj) {
-        return obj.value;
-      }),
-      levels: selectedLevel.value,
-      status: selectedStatus.value
-    }));
-  }, [selectedOption, selectedLevel, selectedStatus]);
-
   var changeHandler = function changeHandler(e) {
     var value;
 
-    switch (e.target.id) {
-      case 'thumbnail':
-        value = e.target.files[0];
-        var reader = new FileReader();
+    if (e.target.id === 'thumbnail') {
+      value = e.target.files[0];
+      var reader = new FileReader();
 
-        reader.onload = function () {
-          setPreview(reader.result);
-        };
+      reader.onload = function () {
+        setPreview(reader.result);
+      };
 
-        reader.readAsDataURL(value);
-        break;
-
-      case 'is_discount':
-      case 'is_free':
-      case 'archived_at':
-        value = e.target.checked;
-        break;
-
-      default:
-        value = e.target.value;
-        break;
+      reader.readAsDataURL(value);
+    } else {
+      value = e.target.checked;
     }
 
     setData(_objectSpread(_objectSpread({}, data), {}, _defineProperty({}, e.target.id, value)));
@@ -7773,308 +8110,16 @@ function Create() {
                 }), " Back"]
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
-            className: "form",
-            onSubmit: submitHandler,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-              className: "card-body",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                className: "form-group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                  className: "font-weight-bold",
-                  children: "Series Title"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                  className: "text-danger",
-                  children: " * "
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                  type: "text",
-                  id: "title",
-                  name: "title",
-                  value: data.title,
-                  onChange: changeHandler,
-                  className: "form-control ".concat(errors.title && 'is-invalid'),
-                  placeholder: "Enter a series title"
-                }), errors.title && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                  className: "invalid-feedback mb-n5",
-                  children: errors.title
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                className: "form-group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                  className: "font-weight-bold",
-                  children: "Series Topics"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                  className: "text-danger",
-                  children: " * "
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_select__WEBPACK_IMPORTED_MODULE_6__["default"], {
-                  closeMenuOnSelect: false,
-                  id: "topics",
-                  name: "topics",
-                  components: animatedComponents,
-                  value: selectedOption,
-                  onChange: setSelectedOption,
-                  isMulti: true,
-                  options: optionsTopics,
-                  placeholder: "Select topics"
-                }), errors.topics && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                  className: "text-danger font-size-sm mb-n5",
-                  children: errors.topics
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                className: "form-group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                  className: "font-weight-bold",
-                  children: "Series Description"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                  className: "text-danger",
-                  children: " * "
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("textarea", {
-                  id: "description",
-                  name: "description",
-                  value: data.description,
-                  onChange: changeHandler,
-                  className: "form-control ".concat(errors.description && 'is-invalid'),
-                  placeholder: "Enter a series description",
-                  rows: 10
-                }), errors.description && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                  className: "invalid-feedback mb-n5",
-                  children: errors.description
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                className: "form-group row",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                  className: "col-lg-6",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                    className: "font-weight-bold",
-                    children: "Series Price"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                    type: "number",
-                    id: "price",
-                    name: "price",
-                    value: data.price,
-                    onChange: changeHandler,
-                    className: "form-control ".concat(errors.price && 'is-invalid'),
-                    min: 1,
-                    placeholder: "Enter a series price"
-                  }), errors.price && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                    className: "invalid-feedback mb-n5",
-                    children: errors.price
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                  className: "col-lg-6",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                    className: "font-weight-bold",
-                    children: "Series Discount Price"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                    type: "number",
-                    id: "discount_price",
-                    name: "discount_price",
-                    value: data.discount_price,
-                    onChange: changeHandler,
-                    className: "form-control ".concat(errors.discount_price && 'is-invalid'),
-                    min: 1,
-                    placeholder: "Enter a series discount price"
-                  }), errors.discount_price && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                    className: "invalid-feedback mb-n5",
-                    children: errors.discount_price
-                  })]
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                className: "form-group row",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                  className: "col-lg-6",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                    className: "font-weight-bold",
-                    children: "Series Level"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                    className: "text-danger",
-                    children: " * "
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_select__WEBPACK_IMPORTED_MODULE_6__["default"], {
-                    id: "levels",
-                    name: "levels",
-                    defaultValue: selectedLevel,
-                    onChange: setSelectedLevel,
-                    options: optionsLevel,
-                    placeholder: "Select level"
-                  }), errors.levels && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                    className: "text-danger font-size-sm mb-n5",
-                    children: errors.levels
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                  className: "col-lg-6",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                    className: "font-weight-bold",
-                    children: "Series Status"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                    className: "text-danger",
-                    children: " * "
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_select__WEBPACK_IMPORTED_MODULE_6__["default"], {
-                    id: "status",
-                    name: "status",
-                    defaultValue: selectedStatus,
-                    onChange: setSelectedStatus,
-                    options: optionsStatus,
-                    placeholder: "Select status"
-                  }), errors.status && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                    className: "text-danger font-size-sm mb-n5",
-                    children: errors.status
-                  })]
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                className: "form-group row",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                  className: "col-lg-6",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                    className: "font-weight-bold",
-                    children: "Series Episode"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
-                    className: "text-danger",
-                    children: " * "
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                    type: "number",
-                    id: "episodes",
-                    name: "episodes",
-                    value: data.episodes,
-                    onChange: changeHandler,
-                    className: "form-control ".concat(errors.episodes && 'is-invalid'),
-                    placeholder: "Enter a series episode"
-                  }), errors.episodes && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                    className: "invalid-feedback mb-n5",
-                    children: errors.episodes
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                  className: "col-lg-6",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                    className: "font-weight-bold",
-                    children: "Series Preview"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                    type: "text",
-                    id: "preview_series",
-                    name: "preview_series",
-                    value: data.preview_series,
-                    onChange: changeHandler,
-                    className: "form-control ".concat(errors.preview_series && 'is-invalid'),
-                    placeholder: "Enter a series preview url. ex:_XyBa8QsVQU"
-                  }), errors.preview_series && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                    className: "invalid-feedback mb-n5",
-                    children: errors.preview_series
-                  })]
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                className: "form-group row",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                  className: "col-lg-6",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                    className: "font-weight-bold",
-                    children: "Series Source Code"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                    type: "text",
-                    id: "source_code",
-                    name: "source_code",
-                    value: data.source_code,
-                    onChange: changeHandler,
-                    className: "form-control ".concat(errors.source_code && 'is-invalid'),
-                    placeholder: "Enter a series source code. ex: https://github.com/Rafi1112/dream-space-screencasts"
-                  }), errors.source_code && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                    className: "invalid-feedback mb-n5",
-                    children: errors.source_code
-                  })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                  className: "col-lg-6",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                    className: "font-weight-bold",
-                    children: "Series Project Demo"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                    type: "text",
-                    id: "project_demo",
-                    name: "project_demo",
-                    value: data.project_demo,
-                    onChange: changeHandler,
-                    className: "form-control ".concat(errors.project_demo && 'is-invalid'),
-                    placeholder: "Enter a series project demo. ex: projectdemo.com"
-                  }), errors.project_demo && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                    className: "invalid-feedback mb-n5",
-                    children: errors.project_demo
-                  })]
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                className: "form-group",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
-                  className: "font-weight-bold",
-                  children: "Series Thumbnail"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                  type: "file",
-                  className: "form-control",
-                  id: "thumbnail",
-                  name: "thumbnail",
-                  onChange: changeHandler
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("img", {
-                  src: preview,
-                  className: "mt-1 rounded-lg"
-                }), errors.thumbnail && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                  className: "text-danger font-size-sm mb-n5",
-                  children: errors.thumbnail
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-                className: "form-group row",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                  className: "col-lg-4 d-flex justify-content-center",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                    className: "checkbox-inline",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
-                      className: "checkbox",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                        type: "checkbox",
-                        name: "is_discount",
-                        id: "is_discount",
-                        checked: !!data.is_discount,
-                        onChange: changeHandler
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {}), "Discount Series"]
-                    })
-                  })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                  className: "col-lg-4 d-flex justify-content-center",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                    className: "checkbox-inline",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
-                      className: "checkbox",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                        type: "checkbox",
-                        name: "is_free",
-                        id: "is_free",
-                        checked: !!data.is_free,
-                        onChange: changeHandler
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {}), "Free Series"]
-                    })
-                  })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                  className: "col-lg-4 d-flex justify-content-center",
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-                    className: "checkbox-inline",
-                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
-                      className: "checkbox",
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
-                        type: "checkbox",
-                        name: "archived_at",
-                        id: "archived_at",
-                        checked: !!data.archived_at,
-                        onChange: changeHandler
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {}), "Archive Series"]
-                    })
-                  })
-                })]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-              className: "card-footer border-0 text-right",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
-                type: "submit",
-                className: "btn btn-primary btn-block font-weight-bold",
-                disabled: processing,
-                children: [processing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
-                  className: "spinner spinner-sm spinner-white px-4"
-                }), "Save"]
-              })
-            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_Forms_FormSeries__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            topicsData: topicsData,
+            data: data,
+            setData: setData,
+            errors: errors,
+            changeHandler: changeHandler,
+            submitLabel: "Submit",
+            submitHandler: submitHandler,
+            processing: processing,
+            preview: preview
           })]
         })
       })
@@ -8083,6 +8128,170 @@ function Create() {
 }
 
 Create.layout = function (page) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Layouts_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    children: page
+  });
+};
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Dashboard/Courses/Series/Edit.jsx":
+/*!**************************************************************!*\
+  !*** ./resources/js/Pages/Dashboard/Courses/Series/Edit.jsx ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Edit)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Layouts_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../Layouts/App */ "./resources/js/Layouts/App.jsx");
+/* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
+/* harmony import */ var _Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../Components/Breadcrumb */ "./resources/js/Components/Breadcrumb.jsx");
+/* harmony import */ var _Components_Forms_FormSeries__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../Components/Forms/FormSeries */ "./resources/js/Components/Forms/FormSeries.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+function Edit() {
+  var _usePage$props = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props,
+      series = _usePage$props.series,
+      topicsData = _usePage$props.topics;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(series.id ? "/storage/".concat(series.thumbnail) : null),
+      _useState2 = _slicedToArray(_useState, 2),
+      preview = _useState2[0],
+      setPreview = _useState2[1];
+
+  var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
+    title: series.title || '',
+    topics: series.topics.map(function (topic) {
+      return {
+        value: topic.id,
+        label: topic.name
+      };
+    }) || [],
+    description: series.description || '',
+    price: series.price || '',
+    discount_price: series.discount_price || '',
+    levels: series.levels || '',
+    status: series.status || '',
+    episodes: series.episodes || '',
+    preview_series: series.preview_series || '',
+    source_code: series.source_code || '',
+    project_demo: series.project_demo || '',
+    thumbnail: series.thumbnail || '',
+    is_discount: series.is_discount || false,
+    is_free: series.is_free || false,
+    archived_at: series.archived_at || false
+  }),
+      data = _useForm.data,
+      setData = _useForm.setData,
+      post = _useForm.post,
+      errors = _useForm.errors,
+      processing = _useForm.processing;
+
+  var changeHandler = function changeHandler(e) {
+    var value;
+
+    if (e.target.id === 'thumbnail') {
+      value = e.target.files[0];
+      var reader = new FileReader();
+
+      reader.onload = function () {
+        setPreview(reader.result);
+      };
+
+      reader.readAsDataURL(value);
+    } else {
+      value = e.target.checked;
+    }
+
+    setData(_objectSpread(_objectSpread({}, data), {}, _defineProperty({}, e.target.id, value)));
+  };
+
+  var submitHandler = function submitHandler(e) {
+    e.preventDefault();
+    data._method = 'put';
+    post(route('series.update', series), {
+      preserveScroll: true
+    });
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
+      title: "Dream Space - ".concat(series.title)
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      titleHeading: "Series",
+      item1: "Dashboard",
+      item2: "Courses",
+      item3: "Series",
+      linkItem3: route('series.index'),
+      item4: series.title
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "d-flex flex-column-fluid mb-11",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "container",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "card card-custom gutter-b",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "card-header py-5",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
+              className: "card-title font-weight-bolder text-dark",
+              children: series.title
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "card-toolbar",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                href: route('series.index'),
+                className: "btn btn-primary font-weight-bold",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "flaticon2-left-arrow-1 icon-1x"
+                }), " Back"]
+              })
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_Forms_FormSeries__WEBPACK_IMPORTED_MODULE_4__["default"], {
+            topicsData: topicsData,
+            data: data,
+            setData: setData,
+            errors: errors,
+            changeHandler: changeHandler,
+            submitLabel: "Submit",
+            submitHandler: submitHandler,
+            processing: processing,
+            preview: preview
+          })]
+        })
+      })
+    })]
+  });
+}
+
+Edit.layout = function (page) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Layouts_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
     children: page
   });
@@ -8257,12 +8466,20 @@ function Index(props) {
                         className: "pr-0 text-right",
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                           className: "btn-group",
-                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                            href: route('series.edit', series.slug),
                             className: "btn btn-sm btn-clean btn-icon",
                             "data-toggle": "tooltip",
                             title: "Edit",
                             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("i", {
                               className: "flaticon-settings-1 text-primary"
+                            })
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
+                            className: "btn btn-sm btn-clean btn-icon",
+                            "data-toggle": "tooltip",
+                            title: "Add Videos",
+                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("i", {
+                              className: "fas fa-video text-success"
                             })
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                             className: "btn btn-sm btn-clean btn-icon",
@@ -75504,6 +75721,8 @@ var map = {
 	"./Auth/ResetPassword.jsx": "./resources/js/Pages/Auth/ResetPassword.jsx",
 	"./Dashboard/Courses/Series/Create": "./resources/js/Pages/Dashboard/Courses/Series/Create.jsx",
 	"./Dashboard/Courses/Series/Create.jsx": "./resources/js/Pages/Dashboard/Courses/Series/Create.jsx",
+	"./Dashboard/Courses/Series/Edit": "./resources/js/Pages/Dashboard/Courses/Series/Edit.jsx",
+	"./Dashboard/Courses/Series/Edit.jsx": "./resources/js/Pages/Dashboard/Courses/Series/Edit.jsx",
 	"./Dashboard/Courses/Series/Index": "./resources/js/Pages/Dashboard/Courses/Series/Index.jsx",
 	"./Dashboard/Courses/Series/Index.jsx": "./resources/js/Pages/Dashboard/Courses/Series/Index.jsx",
 	"./Dashboard/Permissions/Index": "./resources/js/Pages/Dashboard/Permissions/Index.jsx",

@@ -8,6 +8,9 @@ class SeriesRequest extends FormRequest
 {
     public function rules(): array
     {
+        $rules = [];
+        if (!$this->series) $rules = ['required', 'image', 'mimes:jpg,jpeg,png,svg', 'max:3048'];
+        if ($this->hasFile('thumbnail')) $rules = ['required', 'image', 'mimes:jpg,jpeg,png,svg', 'max:3048'];
         return [
             'title' => ['required', 'min:5'],
             'topics' => ['required', 'array', 'min:1', 'max:5'],
@@ -17,7 +20,7 @@ class SeriesRequest extends FormRequest
             'levels' => ['required'],
             'status' => ['required'],
             'episodes' => ['required', 'min:1', 'integer'],
-            'thumbnail' => ['required', 'image', 'mimes:jpg,jpeg,png,svg', 'max:3048']
+            'thumbnail' =>  $rules
         ];
     }
 

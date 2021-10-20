@@ -83,9 +83,13 @@ export default function Index(props) {
                                                     </td>
                                                     <td className="pr-0 text-right">
                                                         <div className="btn-group">
-                                                            <button className="btn btn-sm btn-clean btn-icon"
+                                                            <Link href={route('series.edit', series.slug)} className="btn btn-sm btn-clean btn-icon"
                                                                     data-toggle="tooltip" title="Edit">
                                                                 <i className="flaticon-settings-1 text-primary" />
+                                                            </Link>
+                                                            <button className="btn btn-sm btn-clean btn-icon"
+                                                                    data-toggle="tooltip" title="Add Videos">
+                                                                <i className="fas fa-video text-success" />
                                                             </button>
                                                             <button className="btn btn-sm btn-clean btn-icon"
                                                                     data-toggle="tooltip" title="View">

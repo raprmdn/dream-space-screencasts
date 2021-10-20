@@ -30,7 +30,7 @@ class SeriesResource extends JsonResource
             'preview_url' => $this->preview_series,
             'source_code_url' => $this->source_code,
             'demo_url' => $this->project_demo,
-            'thumbnail' => $this->thumbnail,
+            'thumbnail' => $this->seriesThumbnail,
             'is_discount' => $this->is_discount,
             'is_free' => $this->is_free,
             'archived_at' => $this->archived_at,
