@@ -26,10 +26,7 @@ class RoleController extends Controller
         $users = User::role($role)->search(request()->search);
         return inertia('Dashboard/Roles/Show', [
             'role' => $role,
-            'users' => new UserCollection($users),
-            'filters' => [
-                'search' => request()->search
-            ]
+            'users' => new UserCollection($users)
         ]);
     }
 

@@ -69,9 +69,8 @@ class TopicService {
         return Topic::whereId($topic)->withTrashed()->restore();
     }
 
-    public function forceDelete($topic)
+    public function forceDelete($topic): ?bool
     {
-        $topic = Topic::whereId($topic)->withTrashed()->first();
         Storage::delete($topic->picture);
         return $topic->forceDelete();
     }

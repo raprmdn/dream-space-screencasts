@@ -7,7 +7,6 @@ use App\Http\Requests\SeriesRequest;
 use App\Models\Series;
 use App\Models\Topic;
 use App\Services\SeriesService;
-use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Topic;
 use App\Services\SeriesService;
 use App\Services\TopicService;
 
@@ -30,6 +31,10 @@ class TrashController extends Controller
 
     public function topicForce($topic)
     {
+        $topic = Topic::whereId($topic)->withTrashed()->first();
+        if ($topic->series()->exists()) {
+            return back()->with(['type' => 'error', 'message' => 'The action is denied.']);
+        }
         $this->topicService->forceDelete($topic);
         return back()->with(['type' => 'success', 'message' => 'Topic has been delete permanently.']);
     }

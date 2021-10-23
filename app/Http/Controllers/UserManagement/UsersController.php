@@ -13,9 +13,6 @@ class UsersController extends Controller
         $users = new UserCollection(User::with('roles')->search(request()->search));
         return inertia('Dashboard/Users/Index', [
             'users' => $users,
-            'filters' => [
-                'search' => request()->search
-            ]
         ]);
     }
 }

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
 use App\Models\Topic;
 use App\Services\TopicService;
-use Illuminate\Http\Request;
 
 class TopicController extends Controller
 {

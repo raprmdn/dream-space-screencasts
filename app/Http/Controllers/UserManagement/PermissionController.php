@@ -19,10 +19,7 @@ class PermissionController extends Controller
         $permissions =  $query->latest()->paginate(10)->appends($request->only('search'));
 
         return inertia('Dashboard/Permissions/Index', [
-            'permissions' => PermissionResource::collection($permissions),
-            'filters' => [
-                'search' => $request->search
-            ]
+            'permissions' => PermissionResource::collection($permissions)
         ]);
     }
 
