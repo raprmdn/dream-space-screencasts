@@ -21,7 +21,7 @@ class SeriesController extends Controller
     public function index()
     {
         return inertia('Dashboard/Courses/Series/Index', [
-            'series' => $this->seriesService->findAllWithParams(request()->search)
+            'series' => $this->seriesService->findAllWithParams(request()->search),
         ]);
     }
 
@@ -66,5 +66,14 @@ class SeriesController extends Controller
         return redirect()
             ->route('series.index')
             ->with(['type' => 'success', 'message' => 'Series has been updated.']);
+    }
+
+    public function destroy(Series $series)
+    {
+        $this->seriesService->delete($series);
+
+        return redirect()
+            ->route('series.index')
+            ->with(['type' => 'success', 'message' => 'Series has been moved to trash.']);
     }
 }

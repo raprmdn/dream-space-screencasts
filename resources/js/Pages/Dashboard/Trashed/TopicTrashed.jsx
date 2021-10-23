@@ -1,6 +1,6 @@
 import React from 'react';
 import App from "../../../Layouts/App";
-import {Head, usePage} from "@inertiajs/inertia-react";
+import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import SearchFilter from "../../../Components/SearchFilter";
 import SmallPagination from "../../../Components/SmallPagination";
@@ -8,13 +8,8 @@ import {Inertia} from "@inertiajs/inertia";
 import Swal from "sweetalert2";
 
 export default function TopicTrashed() {
-    const { data: topics, meta: {links, from, per_page} } = usePage().props.topics
-    const restoreHandler = (e, topic) => {
-        e.preventDefault()
-        Inertia.put(route('trash.topic_restore', topic), {
-            preserveScroll: true
-        })
-    }
+    const { data: topics, meta: {links, from} } = usePage().props.topics
+
     const deleteHandler = (topic) => {
         Swal.fire({
             title: `Are you sure want to delete the "${topic.name}" topic?`,
@@ -32,6 +27,7 @@ export default function TopicTrashed() {
             }
         })
     }
+
     return (
         <>
             <Head title="Dream Space | Trashed"/>
@@ -106,9 +102,13 @@ export default function TopicTrashed() {
                                                     </td>
                                                     <td className="pr-0 text-center">
                                                         <div className="btn-group">
-                                                            <button onClick={(e) => restoreHandler(e, topic)} className="btn btn-sm btn-clean btn-icon" data-toggle="tooltip" title="Restore">
+                                                            <Link preserveScroll={true}
+                                                                  as="button"
+                                                                  method="post"
+                                                                  href={route('trash.topic_restore', topic)}
+                                                                  className="btn btn-sm btn-clean btn-icon" data-toggle="tooltip" title="Restore">
                                                                 <i className="la la-redo-alt text-success" />
-                                                            </button>
+                                                            </Link>
                                                             <button onClick={() => deleteHandler(topic)} className="btn btn-sm btn-clean btn-icon" data-toggle="tooltip" title="Delete permanent">
                                                                 <i className="la la-trash text-danger" />
                                                             </button>
@@ -124,11 +124,7 @@ export default function TopicTrashed() {
                                     </tbody>
                                 </table>
                             </div>
-                            {
-                                !(topics.length < per_page) && (
-                                    <SmallPagination links={links}/>
-                                )
-                            }
+                            <SmallPagination links={links}/>
                         </div>
                     </div>
                 </div>

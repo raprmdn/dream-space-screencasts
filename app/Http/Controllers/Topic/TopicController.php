@@ -20,10 +20,7 @@ class TopicController extends Controller
     public function index()
     {
         return inertia('Dashboard/Topics/Index', [
-            'topics' => $this->topicService->findAll(request()->search),
-            'filters' => [
-                'search' => request()->search
-            ]
+            'topics' => $this->topicService->findAllWithParams(request()->search),
         ]);
     }
 
@@ -54,6 +51,6 @@ class TopicController extends Controller
         } catch (\Exception $e) {
             return back()->with(['type' => 'error', 'message' => 'Something went wrong. ' . $e]);
         }
-        return back()->with(['type' => 'success', 'message' => 'Topic has been deleted.']);
+        return back()->with(['type' => 'success', 'message' => 'Topic has been moved to trash.']);
     }
 }

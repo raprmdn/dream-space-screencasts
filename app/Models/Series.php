@@ -16,6 +16,8 @@ class Series extends Model
         'thumbnail', 'is_discount', 'is_free', 'archived_at'
     ];
 
+    protected $appends = ['series_thumbnail'];
+
     /**
      * The attributes that should be cast.
      *

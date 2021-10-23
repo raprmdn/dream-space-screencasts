@@ -2,24 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\SeriesService;
 use App\Services\TopicService;
 
 class TrashController extends Controller
 {
-    protected $topicService;
+    protected $topicService, $seriesService;
 
-    public function __construct(TopicService $topicService)
+    public function __construct(TopicService $topicService, SeriesService $seriesService)
     {
         $this->topicService = $topicService;
+        $this->seriesService = $seriesService;
     }
 
     public function topicTrashed()
     {
         return inertia('Dashboard/Trashed/TopicTrashed', [
-            'topics' => $this->topicService->findAllOnlyTrashed(\request()->search),
-            'filters' => [
-                'search' => \request()->search
-            ]
+            'topics' => $this->topicService->findAllOnlyTrashed(request()->search),
         ]);
     }
 
@@ -33,5 +32,12 @@ class TrashController extends Controller
     {
         $this->topicService->forceDelete($topic);
         return back()->with(['type' => 'success', 'message' => 'Topic has been delete permanently.']);
+    }
+
+    public function seriesTrashed()
+    {
+        return inertia('Dashboard/Trashed/SeriesTrashed' , [
+            'series' => $this->seriesService->findAllOnlyTrash(request()->search),
+        ]);
     }
 }

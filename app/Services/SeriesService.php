@@ -17,6 +17,11 @@ class SeriesService
         return new SeriesCollection(Series::search($params));
     }
 
+    public function findAllOnlyTrash($params)
+    {
+        return new SeriesCollection(Series::onlyTrashed()->search($params));
+    }
+
     public function save($attributes): array
     {
         $picture = $attributes['thumbnail'];
@@ -74,5 +79,10 @@ class SeriesService
         ]);
 
         return $series->topics()->sync(collect($attributes['topics'])->pluck('value'));
+    }
+
+    public function delete($series)
+    {
+        return $series->delete();
     }
 }

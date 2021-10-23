@@ -187,6 +187,14 @@ export default function Header() {
                                                                         </a>
                                                                         <div className="menu-submenu menu-submenu-classic menu-submenu-right">
                                                                             <ul className="menu-subnav">
+                                                                                <li className={`menu-item ${route().current('trash.series_index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('trash.series_index')} className="menu-link">
+                                                                                        <i className="menu-bullet menu-bullet-dot">
+                                                                                            <span />
+                                                                                        </i>
+                                                                                        <span className="menu-text">Series</span>
+                                                                                    </Link>
+                                                                                </li>
                                                                                 <li className={`menu-item ${route().current('trash.topic_index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
                                                                                     <Link href={route('trash.topic_index')} className="menu-link">
                                                                                         <i className="menu-bullet menu-bullet-dot">

@@ -24,8 +24,8 @@ export default function Index(props) {
                                 Series
                             </h3>
                             <div className="card-toolbar">
-                                {/*<SearchFilter placeholder={"Search topics . . ."}/>*/}
-                                <Link href={route('series.create')} className="btn btn-primary font-weight-bold">
+                                <SearchFilter placeholder={"Search series . . ."}/>
+                                <Link href={route('series.create')} className="btn btn-primary font-weight-bold ml-2">
                                     <i className="flaticon2-plus icon-1x"/> Add Series
                                 </Link>
                             </div>

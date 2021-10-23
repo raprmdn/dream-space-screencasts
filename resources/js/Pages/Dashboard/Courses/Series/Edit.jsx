@@ -3,11 +3,12 @@ import App from "../../../../Layouts/App";
 import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
 import Breadcrumb from "../../../../Components/Breadcrumb";
 import FormSeries from "../../../../Components/Forms/FormSeries";
+import Swal from "sweetalert2";
 
 export default function Edit() {
     const { series, topics: topicsData } = usePage().props
-    const [ preview, setPreview ] = useState(series.id ? `/storage/${series.thumbnail}` : null)
-    const { data, setData, post, errors, processing } = useForm({
+    const [ preview, setPreview ] = useState(series.id ? series.series_thumbnail : null)
+    const { data, setData, post, delete: destroy, errors, processing } = useForm({
         title: series.title || '',
         topics: series.topics.map(topic => ({value: topic.id, label: topic.name})) || [],
         description: series.description || '',
@@ -24,30 +25,38 @@ export default function Edit() {
         is_free: series.is_free || false,
         archived_at: series.archived_at || false
     });
-    const changeHandler = (e) => {
-        let value
-        if (e.target.id === 'thumbnail') {
-            value = e.target.files[0]
-            let reader = new FileReader()
-            reader.onload = () => {
-                setPreview(reader.result)
+
+    const deleteHandler = (series) => {
+        Swal.fire({
+            title: `Are you sure want to delete the "${series.title}" series?`,
+            text: `Series not delete permanently. But User won't be able to watch the Series. Please be wise.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Discard',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                destroy(route('series.delete', series))
             }
-            reader.readAsDataURL(value)
-        } else {
-            value = e.target.checked
-        }
-        setData({
-            ...data,
-            [e.target.id]: value
         })
     }
+
     const submitHandler = (e) => {
         e.preventDefault()
         data._method = 'put'
         post(route('series.update', series), {
             preserveScroll: true,
+            onStart: () => {
+                KTApp.block('#kt_blockui_content', {
+                    overlayColor: '#000000',
+                    state: 'danger',
+                    message: 'Please wait...'
+                })
+            }
         })
     }
+
     return (
         <>
             <Head title={`Dream Space - ${series.title}`}/>
@@ -66,6 +75,10 @@ export default function Edit() {
                                 {series.title}
                             </h3>
                             <div className="card-toolbar">
+                                <button className="btn btn-danger font-weight-bold mr-3"
+                                        onClick={() => deleteHandler(series)}>
+                                    <i className="flaticon2-rubbish-bin-delete-button icon-1x icon-1x" /> Delete
+                                </button>
                                 <Link href={route('series.index')} className="btn btn-primary font-weight-bold">
                                     <i className="flaticon2-left-arrow-1 icon-1x"/> Back
                                 </Link>
@@ -77,11 +90,11 @@ export default function Edit() {
                                 data,
                                 setData,
                                 errors,
-                                changeHandler,
                                 submitLabel:"Submit",
                                 submitHandler,
                                 processing,
-                                preview
+                                preview,
+                                setPreview
                             }
                         }/>
                     </div>

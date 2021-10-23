@@ -6,7 +6,7 @@ import FormSeries from "../../../../Components/Forms/FormSeries";
 
 export default function Create() {
     const { topics: topicsData } = usePage().props
-    const [ preview, setPreview ] = useState(null)
+    const [ preview, setPreview ] = useState( null)
     const { data, setData, post, errors, processing } = useForm({
         title: '',
         topics: [],
@@ -25,27 +25,19 @@ export default function Create() {
         archived_at: false
     })
 
-    const changeHandler = (e) => {
-        let value
-        if (e.target.id === 'thumbnail') {
-            value = e.target.files[0]
-            let reader = new FileReader()
-            reader.onload = () => {
-                setPreview(reader.result)
-            }
-            reader.readAsDataURL(value)
-        } else {
-            value = e.target.checked
-        }
-        setData({
-            ...data,
-            [e.target.id]: value
-        })
-    }
     const submitHandler = (e) => {
         e.preventDefault()
-        post(route('series.store'), data)
+        post(route('series.store'), data, {
+            onStart: () => {
+                KTApp.block('#kt_blockui_content', {
+                    overlayColor: '#000000',
+                    state: 'danger',
+                    message: 'Please wait...'
+                })
+            }
+        })
     }
+
     return (
         <>
             <Head title="Dream Space | Create Series"/>
@@ -75,11 +67,11 @@ export default function Create() {
                                 data,
                                 setData,
                                 errors,
-                                changeHandler,
                                 submitLabel:"Submit",
                                 submitHandler,
                                 processing,
-                                preview
+                                preview,
+                                setPreview
                             }
                         }/>
                     </div>

@@ -1,16 +1,30 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Select from "react-select";
-import {usePage} from "@inertiajs/inertia-react";
 import makeAnimated from 'react-select/animated';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const animatedComponents = makeAnimated();
 
-export default function FormSeries({topicsData, submitHandler, data, setData, changeHandler, errors, preview, processing, submitLabel}) {
+export default function FormSeries({topicsData, submitHandler, data, setData, errors, processing, submitLabel, preview, setPreview}) {
 
     const optionsTopics = topicsData.map(topic => ({value: topic.id, label: topic.name}))
 
+    const changeHandler = (e) => {
+        let value
+        if (e.target.id === 'thumbnail') {
+            value = e.target.files[0]
+            setData({...data, thumbnail: value})
+            let reader = new FileReader()
+            reader.onload = () => {
+                setPreview(reader.result)
+            }
+            reader.readAsDataURL(value)
+        }
+    }
+
     return (
-        <>
+        <div id="kt_blockui_content">
             <form className="form" onSubmit={submitHandler}>
                 <div className="card-body">
                     <div className="form-group">
@@ -142,16 +156,6 @@ export default function FormSeries({topicsData, submitHandler, data, setData, ch
                             {errors.project_demo && (<div className="invalid-feedback mb-n5">{errors.project_demo}</div>)}
                         </div>
                     </div>
-                    <div className="form-group">
-                        <label className="font-weight-bold">Series Thumbnail</label>
-                        <input type="file"
-                               className="form-control"
-                               id="thumbnail"
-                               name="thumbnail"
-                               onChange={changeHandler}/>
-                        <img src={preview} className="mw-100 mt-1 rounded-lg"/>
-                        {errors.thumbnail && (<div className="text-danger font-size-sm mb-n5">{errors.thumbnail}</div>)}
-                    </div>
                     <div className="form-group row">
                         <div className="col-lg-4 d-flex justify-content-center">
                             <div className="checkbox-inline">
@@ -160,7 +164,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, ch
                                            name="is_discount"
                                            id="is_discount"
                                            checked={!!data.is_discount}
-                                           onChange={changeHandler}
+                                           onChange={(e) => setData('is_discount', e.target.checked)}
                                     />
                                     <span />Discount Series</label>
                             </div>
@@ -172,7 +176,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, ch
                                            name="is_free"
                                            id="is_free"
                                            checked={!!data.is_free}
-                                           onChange={changeHandler}
+                                           onChange={(e) => setData('is_free', e.target.checked)}
                                     />
                                     <span />Free Series</label>
                             </div>
@@ -184,11 +188,32 @@ export default function FormSeries({topicsData, submitHandler, data, setData, ch
                                            name="archived_at"
                                            id="archived_at"
                                            checked={!!data.archived_at}
-                                           onChange={changeHandler}
+                                           onChange={(e) => setData('archived_at', e.target.checked)}
                                     />
                                     <span />Archive Series</label>
                             </div>
                         </div>
+                    </div>
+                    <div className="form-group">
+                        <label className="font-weight-bold">Series Thumbnail</label>
+                        <span className="text-danger"> * Recommended 1280 x 720</span>
+                        <input type="file"
+                               className="form-control"
+                               id="thumbnail"
+                               name="thumbnail"
+                               onChange={changeHandler}
+                               accept="image/*"
+                        />
+                        {
+                            preview && (
+                                <LazyLoadImage
+                                    effect="blur"
+                                    src={preview}
+                                    height={720}
+                                    className="w-100 h-100 mt-3 rounded-lg" />
+                            )
+                        }
+                        {errors.thumbnail && (<div className="text-danger font-size-sm mb-n5">{errors.thumbnail}</div>)}
                     </div>
                 </div>
                 <div className="card-footer border-0 text-right">
@@ -198,6 +223,6 @@ export default function FormSeries({topicsData, submitHandler, data, setData, ch
                     </button>
                 </div>
             </form>
-        </>
+        </div>
     )
 }

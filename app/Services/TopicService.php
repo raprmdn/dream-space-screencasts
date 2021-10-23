@@ -12,7 +12,7 @@ class TopicService {
 
     use ImageTrait;
 
-    public function findAll($params) : TopicCollection
+    public function findAllWithParams($params) : TopicCollection
     {
         return new TopicCollection(Topic::search($params));
     }
