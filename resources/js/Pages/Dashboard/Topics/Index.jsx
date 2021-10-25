@@ -13,6 +13,8 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 export default function Index() {
     const { auth } = usePage().props
     const { data: topics, meta: {links, from} } = usePage().props.topics
+    const [ preview, setPreview ] = useState(null)
+
     const { data, setData, post, delete: destroy, errors, reset, clearErrors , processing } = useForm({
         name: '',
         description: '',
@@ -20,26 +22,7 @@ export default function Index() {
         picture: '',
         is_archived: false,
     });
-    const [ preview, setPreview ] = useState(null)
-    const changeHandler = (e) => {
-        let value
-        if (e.target.id === 'picture') {
-            value = e.target.files[0]
-            let reader = new FileReader()
-            reader.onload = () => {
-                setPreview(reader.result)
-            }
-            reader.readAsDataURL(value)
-        } else if (e.target.id === 'is_archived') {
-            value = e.target.checked
-        } else {
-            value = e.target.value
-        }
-        setData({
-            ...data,
-            [e.target.id]: value,
-        })
-    }
+
     const updateHandler = (e) => {
         e.preventDefault()
         data._method = 'put'
@@ -50,6 +33,7 @@ export default function Index() {
             }
         })
     }
+
     const storeHandler = (e) => {
         e.preventDefault()
         post(route('topics.store'), {
@@ -61,6 +45,7 @@ export default function Index() {
             },
         })
     }
+
     const deleteHandler = (topic) => {
         Swal.fire({
             title: `Are you sure want to delete the "${topic.name}" topic?`,
@@ -79,11 +64,10 @@ export default function Index() {
             }
         })
     }
+
     return (
         <>
-            <Head title="Dream Space | Topics">
-                <script>var picture1 = new KTImageInput('topic_picture')</script>
-            </Head>
+            <Head title="Dream Space | Topics"/>
             <Breadcrumb
                 titleHeading="Topics"
                 item1="Dashboard"
@@ -191,7 +175,7 @@ export default function Index() {
                                             ))
                                             :
                                             <tr>
-                                                <td colSpan={7} className="text-center p-7 font-weight-bolder">No records found in table</td>
+                                                <td colSpan={8} className="text-center p-7 font-weight-bolder">No records found in table</td>
                                             </tr>
                                     }
                                     </tbody>
@@ -206,13 +190,14 @@ export default function Index() {
                 <FormTopic
                     {...{
                         submitHandler:storeHandler,
+                        setData,
                         data,
                         errors,
                         submitLabel:"Submit",
-                        changeHandler,
                         processing,
+                        auth,
                         preview,
-                        auth
+                        setPreview
                     }}
                 />
             </Modal>
@@ -220,13 +205,14 @@ export default function Index() {
                 <FormTopic
                     {...{
                         submitHandler:updateHandler,
+                        setData,
                         data,
                         errors,
                         submitLabel:"Update",
-                        changeHandler,
                         processing,
+                        auth,
                         preview,
-                        auth
+                        setPreview
                     }}
                 />
             </Modal>

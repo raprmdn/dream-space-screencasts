@@ -5613,156 +5613,190 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ FormTopic)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-lazy-load-image-component */ "./node_modules/react-lazy-load-image-component/build/index.js");
+/* harmony import */ var react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
 
 function FormTopic(_ref) {
   var submitHandler = _ref.submitHandler,
+      setData = _ref.setData,
       data = _ref.data,
       errors = _ref.errors,
       submitLabel = _ref.submitLabel,
-      changeHandler = _ref.changeHandler,
       processing = _ref.processing,
+      auth = _ref.auth,
       preview = _ref.preview,
-      auth = _ref.auth;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      setPreview = _ref.setPreview;
+  var fileInput = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+
+  var changeHandler = function changeHandler(e) {
+    var value = e.target.files[0];
+    var reader = new FileReader();
+
+    reader.onload = function () {
+      setPreview(reader.result);
+    };
+
+    reader.readAsDataURL(value);
+    setData('picture', value);
+  };
+
+  var removePicture = function removePicture() {
+    setData('picture', null);
+    setPreview(null);
+    fileInput.current.value = null;
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "modal-body",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("form", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
         onSubmit: submitHandler,
         className: "form",
         encType: "multipart/form-data",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "form-group",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
             className: "font-weight-bold",
             children: "Topic Name"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
             className: "text-danger",
             children: " * "
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
             type: "text",
             id: "name",
             name: "name",
             value: data.name,
-            onChange: changeHandler,
+            onChange: function onChange(e) {
+              return setData('name', e.target.value);
+            },
             className: "form-control form-control-solid ".concat(errors.name ? 'is-invalid' : ''),
             placeholder: "Enter a topic name"
-          }), errors.name && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          }), errors.name && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "invalid-feedback mb-n5",
             children: errors.name
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "form-group",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
             className: "font-weight-bold",
             children: "Topic Description"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
             className: "text-danger",
             children: " * "
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("textarea", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("textarea", {
             id: "description",
             name: "description",
             value: data.description,
-            onChange: changeHandler,
+            onChange: function onChange(e) {
+              return setData('description', e.target.value);
+            },
             className: "form-control form-control-solid ".concat(errors.description ? 'is-invalid' : ''),
             placeholder: "Enter a topic description",
             rows: 5
-          }), errors.description && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          }), errors.description && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "invalid-feedback mb-n5",
             children: errors.description
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "form-group",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
             className: "font-weight-bold",
             children: "Topic Position"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
             className: "text-danger",
             children: " * "
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
             type: "number",
             id: "position",
             name: "position",
             value: data.position,
-            onChange: changeHandler,
+            onChange: function onChange(e) {
+              return setData('position', e.target.value);
+            },
             className: "form-control form-control-solid ".concat(errors.position ? 'is-invalid' : ''),
             placeholder: "Enter a topic position",
             min: 1
-          }), errors.position && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          }), errors.position && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "invalid-feedback mb-n5",
             children: errors.position
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "form-group",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
             className: "font-weight-bold",
             children: "Topic Image"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
             className: "text-danger",
             children: " * "
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-              className: "image-input image-input-outline",
-              id: "topic_picture",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-                className: "image-input-wrapper",
+          }), preview && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "position-relative",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+              className: "symbol symbol-150 my-2 rounded-lg",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_1__.LazyLoadImage, {
+                effect: "blur",
+                src: preview,
                 style: {
-                  backgroundImage: data.id ? "url(".concat(preview, ")") : preview
-                }
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("label", {
-                className: "btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow",
-                "data-action": "change",
-                "data-toggle": "tooltip",
-                "data-original-title": "Change picture",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("i", {
-                  className: "fa fa-pen icon-sm text-muted"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
-                  type: "file",
-                  name: "picture",
-                  id: "picture",
-                  accept: ".png, .jpg, .jpeg, .svg",
-                  onChange: changeHandler
-                })]
+                  boxShadow: "0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075)"
+                },
+                className: "symbol-label"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                onClick: removePicture,
+                className: "btn btn-xs btn-icon btn-circle btn-white btn-shadow m-1 position-absolute top-0 right-0",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                  className: "ki ki-bold-close icon-xs text-muted"
+                })
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
-              className: "form-text text-muted",
-              children: "Allowed file types: png, jpg, jpeg, svg."
-            })]
-          }), errors.picture && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+            type: "file",
+            className: "form-control",
+            name: "picture",
+            id: "picture",
+            accept: ".png, .jpg, .jpeg, .svg",
+            onChange: changeHandler,
+            ref: fileInput
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+            className: "form-text text-muted",
+            children: "Allowed file types: png, jpg, jpeg, svg."
+          }), errors.picture && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "text-danger font-size-sm mb-n5",
             children: errors.picture
           })]
-        }), auth.can.includes('archive topics') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        }), auth.can.includes('archive topics') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "form-group",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "checkbox-inline",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("label", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("label", {
               className: "checkbox",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
                 type: "checkbox",
                 name: "is_archived",
                 id: "is_archived",
                 checked: !!data.is_archived,
-                onChange: changeHandler
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {}), "Archive the topic?"]
+                onChange: function onChange(e) {
+                  return setData('is_archived', e.target.checked);
+                }
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {}), "Archive the topic?"]
             })
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: "text-center",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
             type: "button",
             "data-dismiss": "modal",
             "aria-label": "Close",
             className: "btn btn-light mr-3 font-weight-bold",
             children: "Discard"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
             type: "submit",
             className: "btn btn-primary font-weight-bold",
             disabled: processing,
-            children: [processing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("i", {
+            children: [processing && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
               className: "spinner spinner-sm spinner-white px-4"
             }), submitLabel]
           })]
@@ -8105,7 +8139,7 @@ function Create() {
 
   var submitHandler = function submitHandler(e) {
     e.preventDefault();
-    post(route('series.store'), data, {
+    post(route('series.store'), {
       onStart: function onStart() {
         KTApp.block('#kt_blockui_content', {
           overlayColor: '#000000',
@@ -9565,12 +9599,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var react_lazy_load_image_component_src_effects_blur_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-lazy-load-image-component/src/effects/blur.css */ "./node_modules/react-lazy-load-image-component/src/effects/blur.css");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -9605,6 +9633,11 @@ function Index() {
       links = _usePage$props$topics2.links,
       from = _usePage$props$topics2.from;
 
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      preview = _useState2[0],
+      setPreview = _useState2[1];
+
   var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
     name: '',
     description: '',
@@ -9620,32 +9653,6 @@ function Index() {
       reset = _useForm.reset,
       clearErrors = _useForm.clearErrors,
       processing = _useForm.processing;
-
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-      _useState2 = _slicedToArray(_useState, 2),
-      preview = _useState2[0],
-      setPreview = _useState2[1];
-
-  var changeHandler = function changeHandler(e) {
-    var value;
-
-    if (e.target.id === 'picture') {
-      value = e.target.files[0];
-      var reader = new FileReader();
-
-      reader.onload = function () {
-        setPreview(reader.result);
-      };
-
-      reader.readAsDataURL(value);
-    } else if (e.target.id === 'is_archived') {
-      value = e.target.checked;
-    } else {
-      value = e.target.value;
-    }
-
-    setData(_objectSpread(_objectSpread({}, data), {}, _defineProperty({}, e.target.id, value)));
-  };
 
   var updateHandler = function updateHandler(e) {
     e.preventDefault();
@@ -9691,10 +9698,7 @@ function Index() {
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
-      title: "Dream Space | Topics",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("script", {
-        children: "var picture1 = new KTImageInput('topic_picture')"
-      })
+      title: "Dream Space | Topics"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__["default"], {
       titleHeading: "Topics",
       item1: "Dashboard",
@@ -9888,7 +9892,7 @@ function Index() {
                     }, topic.id);
                   }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("tr", {
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("td", {
-                      colSpan: 7,
+                      colSpan: 8,
                       className: "text-center p-7 font-weight-bolder",
                       children: "No records found in table"
                     })
@@ -9906,26 +9910,28 @@ function Index() {
       title: "Add new topic",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_Forms_FormTopic__WEBPACK_IMPORTED_MODULE_7__["default"], {
         submitHandler: storeHandler,
+        setData: setData,
         data: data,
         errors: errors,
         submitLabel: "Submit",
-        changeHandler: changeHandler,
         processing: processing,
+        auth: auth,
         preview: preview,
-        auth: auth
+        setPreview: setPreview
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_6__["default"], {
       trigger: "updateTopicModal",
       title: "Update Topic : ".concat(data.name),
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_Forms_FormTopic__WEBPACK_IMPORTED_MODULE_7__["default"], {
         submitHandler: updateHandler,
+        setData: setData,
         data: data,
         errors: errors,
         submitLabel: "Update",
-        changeHandler: changeHandler,
         processing: processing,
+        auth: auth,
         preview: preview,
-        auth: auth
+        setPreview: setPreview
       })
     })]
   });
@@ -10834,7 +10840,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }
 });
 _inertiajs_progress__WEBPACK_IMPORTED_MODULE_3__.InertiaProgress.init({
-  delay: 0,
   color: '#29d',
   includeCSS: true,
   showSpinner: true

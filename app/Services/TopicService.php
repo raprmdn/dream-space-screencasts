@@ -22,41 +22,27 @@ class TopicService {
         return new TopicCollection(Topic::onlyTrashed()->search($params));
     }
 
-    public function save($attributes) : Topic
+    public function save(array $attributes) : Topic
     {
         $picture = $attributes['picture'];
-        $slug = Str::slug($attributes['name']);
-        $pathPicture = $this->assignPicture('icon/topic', $picture, $slug);
+        $attributes['slug'] = Str::slug($attributes['name']);
+        $attributes['picture'] = $this->assignPicture('icon/topic', $picture, $attributes['slug']);
 
-        return Topic::create([
-            'name' => $attributes['name'],
-            'slug' => $slug,
-            'description' => $attributes['description'],
-            'picture' => $pathPicture,
-            'position' => $attributes['position'],
-            'is_archived' => $attributes['is_archived']
-        ]);
+        return Topic::create($this->fields($attributes));
     }
 
-    public function update($attributes, $topic)
+    public function update(array $attributes, $topic)
     {
         $picture = $attributes['picture'];
-        $slug = Str::slug($attributes['name']);
+        $attributes['slug'] = Str::slug($attributes['name']);
         if (request()->hasFile('picture')) {
             Storage::delete($topic->picture);
-            $pathPicture = $this->assignPicture('icon/topic', $picture, $slug);
+            $attributes['picture'] = $this->assignPicture('icon/topic', $picture, $attributes['slug']);
         } else {
-            $pathPicture = $topic->picture;
+            $attributes['picture'] = $topic->picture;
         }
 
-        return $topic->update([
-            'name' => $attributes['name'],
-            'slug' => $slug,
-            'description' => $attributes['description'],
-            'picture' => $pathPicture,
-            'position' => $attributes['position'],
-            'is_archived' => $attributes['is_archived']
-        ]);
+        return $topic->update($this->fields($attributes));
     }
 
     public function delete($topic)
@@ -71,8 +57,24 @@ class TopicService {
 
     public function forceDelete($topic): ?bool
     {
+        $topic = Topic::whereId($topic)->withTrashed()->first();
+        if ($topic->series()->exists()) return false;
+
         Storage::delete($topic->picture);
         return $topic->forceDelete();
+
+    }
+
+    private function fields(array $attributes): array
+    {
+        return [
+            'name' => $attributes['name'],
+            'slug' => $attributes['slug'],
+            'description' => $attributes['description'],
+            'picture' => $attributes['picture'],
+            'position' => $attributes['position'],
+            'is_archived' => $attributes['is_archived']
+        ];
     }
 
 }

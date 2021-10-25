@@ -9,7 +9,6 @@ class CreateSeriesTopicTable extends Migration
     public function up()
     {
         Schema::create('series_topic', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('series_id')->constrained('series');
             $table->foreignId('topic_id')->constrained('topics');
         });

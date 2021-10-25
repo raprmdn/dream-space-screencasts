@@ -27,7 +27,7 @@ export default function Create() {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        post(route('series.store'), data, {
+        post(route('series.store'), {
             onStart: () => {
                 KTApp.block('#kt_blockui_content', {
                     overlayColor: '#000000',

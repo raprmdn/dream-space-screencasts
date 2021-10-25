@@ -31,12 +31,11 @@ class TrashController extends Controller
 
     public function topicForce($topic)
     {
-        $topic = Topic::whereId($topic)->withTrashed()->first();
-        if ($topic->series()->exists()) {
-            return back()->with(['type' => 'error', 'message' => 'The action is denied.']);
-        }
-        $this->topicService->forceDelete($topic);
-        return back()->with(['type' => 'success', 'message' => 'Topic has been delete permanently.']);
+        $response = $this->topicService->forceDelete($topic);
+        return $response ?
+            back()->with(['type' => 'success', 'message' => 'Topic has been delete permanently.'])
+            :
+            back()->with(['type' => 'error', 'message' => 'Cannot delete the topic.']);
     }
 
     public function seriesTrashed()
