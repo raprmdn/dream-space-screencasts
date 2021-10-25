@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import App from "../../../../Layouts/App";
 import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
 import Breadcrumb from "../../../../Components/Breadcrumb";
@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 
 export default function Edit() {
     const { series, topics: topicsData } = usePage().props
-    const [ preview, setPreview ] = useState(series.id ? series.series_thumbnail : null)
     const { data, setData, post, delete: destroy, errors, processing } = useForm({
         title: series.title || '',
         topics: series.topics.map(topic => ({value: topic.id, label: topic.name})) || [],
@@ -20,7 +19,7 @@ export default function Edit() {
         preview_series: series.preview_series || '',
         source_code: series.source_code || '',
         project_demo: series.project_demo || '',
-        thumbnail: series.thumbnail || '',
+        thumbnail: series.series_thumbnail || '',
         is_discount: series.is_discount || false,
         is_free: series.is_free || false,
         archived_at: series.archived_at || false
@@ -48,11 +47,14 @@ export default function Edit() {
         post(route('series.update', series), {
             preserveScroll: true,
             onStart: () => {
-                KTApp.block('#kt_blockui_content', {
+                KTApp.block('#block_ui_form', {
                     overlayColor: '#000000',
                     state: 'danger',
                     message: 'Please wait...'
                 })
+            },
+            onFinish: () => {
+                KTApp.unblock('#block_ui_form')
             }
         })
     }
@@ -92,9 +94,7 @@ export default function Edit() {
                                 errors,
                                 submitLabel:"Submit",
                                 submitHandler,
-                                processing,
-                                preview,
-                                setPreview
+                                processing
                             }
                         }/>
                     </div>

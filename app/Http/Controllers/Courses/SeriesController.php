@@ -46,10 +46,8 @@ class SeriesController extends Controller
 
     public function edit(Series $series)
     {
-        $series = Series::whereId($series->id)->with('topics:id,name')->first();
-
         return inertia('Dashboard/Courses/Series/Edit', [
-            'series' => $series,
+            'series' => Series::whereId($series->id)->with('topics:id,name')->first(),
             'topics' => Topic::orderBy('position')->get(['id', 'name']),
         ]);
     }

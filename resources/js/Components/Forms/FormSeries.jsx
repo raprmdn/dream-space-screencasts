@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -6,25 +6,29 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const animatedComponents = makeAnimated();
 
-export default function FormSeries({topicsData, submitHandler, data, setData, errors, processing, submitLabel, preview, setPreview}) {
-
+export default function FormSeries({topicsData, submitHandler, data, setData, errors, processing, submitLabel}) {
+    const fileInput = useRef()
+    const [ preview, setPreview ] = useState(data.thumbnail ? data.thumbnail : null)
     const optionsTopics = topicsData.map(topic => ({value: topic.id, label: topic.name}))
 
     const changeHandler = (e) => {
-        let value
-        if (e.target.id === 'thumbnail') {
-            value = e.target.files[0]
-            setData({...data, thumbnail: value})
-            let reader = new FileReader()
-            reader.onload = () => {
-                setPreview(reader.result)
-            }
-            reader.readAsDataURL(value)
+        let value = e.target.files[0]
+        setData({...data, thumbnail: value})
+        let reader = new FileReader()
+        reader.onload = () => {
+            setPreview(reader.result)
         }
+        reader.readAsDataURL(value)
+    }
+
+    const removePicture = () => {
+        setData('picture', null)
+        setPreview(null)
+        fileInput.current.value = null
     }
 
     return (
-        <div id="kt_blockui_content">
+        <div id="block_ui_form">
             <form className="form" onSubmit={submitHandler}>
                 <div className="card-body">
                     <div className="form-group">
@@ -89,7 +93,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                             <select
                                 id="levels"
                                 name="levels"
-                                className="form-control"
+                                className={`form-control ${errors.levels && ('is-invalid')}`}
                                 value={data.levels}
                                 onChange={(e) => setData('levels', e.target.value)}
                                 placeholder="Select level"
@@ -99,24 +103,24 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                                 <option value="Intermediate">Intermediate</option>
                                 <option value="Advanced">Advanced</option>
                             </select>
-                            {errors.levels && (<span className="text-danger font-size-sm mb-n5">{errors.levels}</span>)}
+                            {errors.levels && (<div className="invalid-feedback mb-n5">{errors.levels}</div>)}
                         </div>
                         <div className="col-lg-6">
                             <label className="font-weight-bold">Series Status</label>
                             <span className="text-danger"> * </span>
                             <select
-                                id="levels"
-                                name="levels"
-                                className="form-control"
+                                id="status"
+                                name="status"
+                                className={`form-control ${errors.status && ('is-invalid')}`}
                                 value={data.status}
                                 onChange={(e) => setData('status', e.target.value)}
-                                placeholder="Select level"
+                                placeholder="Select status"
                             >
                                 <option disabled hidden value="">Select series status</option>
                                 <option value="Completed">Completed</option>
                                 <option value="Development">Development</option>
                             </select>
-                            {errors.status && (<span className="text-danger font-size-sm mb-n5">{errors.status}</span>)}
+                            {errors.status && (<div className="invalid-feedback mb-n5">{errors.status}</div>)}
                         </div>
                     </div>
                     <div className="form-group row">
@@ -201,16 +205,23 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                                className="form-control"
                                id="thumbnail"
                                name="thumbnail"
+                               accept=".png, .jpg, .jpeg, .svg"
                                onChange={changeHandler}
-                               accept="image/*"
+                               ref={fileInput}
                         />
                         {
                             preview && (
-                                <LazyLoadImage
-                                    effect="blur"
-                                    src={preview}
-                                    height={720}
-                                    className="w-100 h-100 mt-3 rounded-lg" />
+                                <div className="position-relative">
+                                    <LazyLoadImage
+                                        effect="blur"
+                                        src={preview}
+                                        width={1230}
+                                        height={720}
+                                        className="my-3 rounded-lg" />
+                                    <button onClick={removePicture} className="btn btn-xs btn-icon btn-circle btn-white btn-shadow position-absolute mt-3 top-0 right-0">
+                                        <i className="ki ki-bold-close icon-xs text-muted" />
+                                    </button>
+                                </div>
                             )
                         }
                         {errors.thumbnail && (<div className="text-danger font-size-sm mb-n5">{errors.thumbnail}</div>)}

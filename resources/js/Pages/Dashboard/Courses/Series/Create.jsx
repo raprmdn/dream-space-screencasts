@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import App from "../../../../Layouts/App";
 import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
 import Breadcrumb from "../../../../Components/Breadcrumb";
@@ -6,7 +6,6 @@ import FormSeries from "../../../../Components/Forms/FormSeries";
 
 export default function Create() {
     const { topics: topicsData } = usePage().props
-    const [ preview, setPreview ] = useState( null)
     const { data, setData, post, errors, processing } = useForm({
         title: '',
         topics: [],
@@ -29,11 +28,14 @@ export default function Create() {
         e.preventDefault()
         post(route('series.store'), {
             onStart: () => {
-                KTApp.block('#kt_blockui_content', {
+                KTApp.block('#block_ui_form', {
                     overlayColor: '#000000',
                     state: 'danger',
                     message: 'Please wait...'
                 })
+            },
+            onFinish: () => {
+                KTApp.unblock('#block_ui_form')
             }
         })
     }
@@ -69,9 +71,7 @@ export default function Create() {
                                 errors,
                                 submitLabel:"Submit",
                                 submitHandler,
-                                processing,
-                                preview,
-                                setPreview
+                                processing
                             }
                         }/>
                     </div>

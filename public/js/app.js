@@ -5187,6 +5187,18 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -5202,9 +5214,14 @@ function FormSeries(_ref) {
       setData = _ref.setData,
       errors = _ref.errors,
       processing = _ref.processing,
-      submitLabel = _ref.submitLabel,
-      preview = _ref.preview,
-      setPreview = _ref.setPreview;
+      submitLabel = _ref.submitLabel;
+  var fileInput = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(data.thumbnail ? data.thumbnail : null),
+      _useState2 = _slicedToArray(_useState, 2),
+      preview = _useState2[0],
+      setPreview = _useState2[1];
+
   var optionsTopics = topicsData.map(function (topic) {
     return {
       value: topic.id,
@@ -5213,25 +5230,27 @@ function FormSeries(_ref) {
   });
 
   var changeHandler = function changeHandler(e) {
-    var value;
+    var value = e.target.files[0];
+    setData(_objectSpread(_objectSpread({}, data), {}, {
+      thumbnail: value
+    }));
+    var reader = new FileReader();
 
-    if (e.target.id === 'thumbnail') {
-      value = e.target.files[0];
-      setData(_objectSpread(_objectSpread({}, data), {}, {
-        thumbnail: value
-      }));
-      var reader = new FileReader();
+    reader.onload = function () {
+      setPreview(reader.result);
+    };
 
-      reader.onload = function () {
-        setPreview(reader.result);
-      };
+    reader.readAsDataURL(value);
+  };
 
-      reader.readAsDataURL(value);
-    }
+  var removePicture = function removePicture() {
+    setData('picture', null);
+    setPreview(null);
+    fileInput.current.value = null;
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-    id: "kt_blockui_content",
+    id: "block_ui_form",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
       className: "form",
       onSubmit: submitHandler,
@@ -5361,7 +5380,7 @@ function FormSeries(_ref) {
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
               id: "levels",
               name: "levels",
-              className: "form-control",
+              className: "form-control ".concat(errors.levels && 'is-invalid'),
               value: data.levels,
               onChange: function onChange(e) {
                 return setData('levels', e.target.value);
@@ -5382,8 +5401,8 @@ function FormSeries(_ref) {
                 value: "Advanced",
                 children: "Advanced"
               })]
-            }), errors.levels && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-              className: "text-danger font-size-sm mb-n5",
+            }), errors.levels && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
               children: errors.levels
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
@@ -5395,14 +5414,14 @@ function FormSeries(_ref) {
               className: "text-danger",
               children: " * "
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("select", {
-              id: "levels",
-              name: "levels",
-              className: "form-control",
+              id: "status",
+              name: "status",
+              className: "form-control ".concat(errors.status && 'is-invalid'),
               value: data.status,
               onChange: function onChange(e) {
                 return setData('status', e.target.value);
               },
-              placeholder: "Select level",
+              placeholder: "Select status",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("option", {
                 disabled: true,
                 hidden: true,
@@ -5415,8 +5434,8 @@ function FormSeries(_ref) {
                 value: "Development",
                 children: "Development"
               })]
-            }), errors.status && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-              className: "text-danger font-size-sm mb-n5",
+            }), errors.status && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
               children: errors.status
             })]
           })]
@@ -5572,13 +5591,24 @@ function FormSeries(_ref) {
             className: "form-control",
             id: "thumbnail",
             name: "thumbnail",
+            accept: ".png, .jpg, .jpeg, .svg",
             onChange: changeHandler,
-            accept: "image/*"
-          }), preview && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_2__.LazyLoadImage, {
-            effect: "blur",
-            src: preview,
-            height: 720,
-            className: "w-100 h-100 mt-3 rounded-lg"
+            ref: fileInput
+          }), preview && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "position-relative",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_2__.LazyLoadImage, {
+              effect: "blur",
+              src: preview,
+              width: 1230,
+              height: 720,
+              className: "my-3 rounded-lg"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+              onClick: removePicture,
+              className: "btn btn-xs btn-icon btn-circle btn-white btn-shadow position-absolute mt-3 top-0 right-0",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("i", {
+                className: "ki ki-bold-close icon-xs text-muted"
+              })
+            })]
           }), errors.thumbnail && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
             className: "text-danger font-size-sm mb-n5",
             children: errors.thumbnail
@@ -8086,18 +8116,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../Components/Breadcrumb */ "./resources/js/Components/Breadcrumb.jsx");
 /* harmony import */ var _Components_Forms_FormSeries__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../Components/Forms/FormSeries */ "./resources/js/Components/Forms/FormSeries.jsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -8108,11 +8126,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function Create() {
   var topicsData = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props.topics;
-
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-      _useState2 = _slicedToArray(_useState, 2),
-      preview = _useState2[0],
-      setPreview = _useState2[1];
 
   var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
     title: '',
@@ -8141,11 +8154,14 @@ function Create() {
     e.preventDefault();
     post(route('series.store'), {
       onStart: function onStart() {
-        KTApp.block('#kt_blockui_content', {
+        KTApp.block('#block_ui_form', {
           overlayColor: '#000000',
           state: 'danger',
           message: 'Please wait...'
         });
+      },
+      onFinish: function onFinish() {
+        KTApp.unblock('#block_ui_form');
       }
     });
   };
@@ -8188,9 +8204,7 @@ function Create() {
             errors: errors,
             submitLabel: "Submit",
             submitHandler: submitHandler,
-            processing: processing,
-            preview: preview,
-            setPreview: setPreview
+            processing: processing
           })]
         })
       })
@@ -8225,18 +8239,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -8250,11 +8252,6 @@ function Edit() {
   var _usePage$props = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props,
       series = _usePage$props.series,
       topicsData = _usePage$props.topics;
-
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(series.id ? series.series_thumbnail : null),
-      _useState2 = _slicedToArray(_useState, 2),
-      preview = _useState2[0],
-      setPreview = _useState2[1];
 
   var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
     title: series.title || '',
@@ -8273,7 +8270,7 @@ function Edit() {
     preview_series: series.preview_series || '',
     source_code: series.source_code || '',
     project_demo: series.project_demo || '',
-    thumbnail: series.thumbnail || '',
+    thumbnail: series.series_thumbnail || '',
     is_discount: series.is_discount || false,
     is_free: series.is_free || false,
     archived_at: series.archived_at || false
@@ -8307,11 +8304,14 @@ function Edit() {
     post(route('series.update', series), {
       preserveScroll: true,
       onStart: function onStart() {
-        KTApp.block('#kt_blockui_content', {
+        KTApp.block('#block_ui_form', {
           overlayColor: '#000000',
           state: 'danger',
           message: 'Please wait...'
         });
+      },
+      onFinish: function onFinish() {
+        KTApp.unblock('#block_ui_form');
       }
     });
   };
@@ -8362,9 +8362,7 @@ function Edit() {
             errors: errors,
             submitLabel: "Submit",
             submitHandler: submitHandler,
-            processing: processing,
-            preview: preview,
-            setPreview: setPreview
+            processing: processing
           })]
         })
       })
@@ -8486,7 +8484,7 @@ function Index(props) {
                       style: {
                         minWidth: '70px'
                       },
-                      children: "Paid Series"
+                      children: "Archived"
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("th", {
                       style: {
                         minWidth: '100px'
@@ -8514,9 +8512,9 @@ function Index(props) {
                           children: series.title
                         })
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
-                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
                           className: "font-weight-bold",
-                          children: ["Rp. ", series.price_formatter, ",-"]
+                          children: series.price ? "Rp. ".concat(series.price_formatter, ",-") : '-'
                         })
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
@@ -8534,10 +8532,10 @@ function Index(props) {
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                           className: "font-weight-bold text-center",
-                          children: series.is_free ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("i", {
-                            className: "flaticon2-cancel text-danger"
-                          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("i", {
+                          children: series.archived_at ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("i", {
                             className: "flaticon2-check-mark text-success"
+                          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("i", {
+                            className: "flaticon2-cancel text-danger"
                           })
                         })
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {

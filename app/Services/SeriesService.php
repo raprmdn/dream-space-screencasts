@@ -17,7 +17,7 @@ class SeriesService
         return new SeriesCollection(Series::search($params));
     }
 
-    public function findAllOnlyTrash($params)
+    public function findAllOnlyTrash($params): SeriesCollection
     {
         return new SeriesCollection(Series::onlyTrashed()->search($params));
     }
@@ -25,26 +25,9 @@ class SeriesService
     public function save($attributes): array
     {
         $picture = $attributes['thumbnail'];
-        $slug = Str::slug($attributes['title']);
-        $pathPicture = $this->assignPicture('thumbnail/series', $picture, $slug);
-
-        $series = Series::create([
-            'title' => $attributes['title'],
-            'slug' => $slug,
-            'description' => $attributes['description'],
-            'episodes' => $attributes['episodes'],
-            'price' => $attributes['price'],
-            'discount_price' => $attributes['discount_price'],
-            'levels' => $attributes['levels'],
-            'status' => $attributes['status'],
-            'preview_series' => $attributes['preview_series'],
-            'source_code' => $attributes['source_code'],
-            'project_demo' => $attributes['project_demo'],
-            'thumbnail' => $pathPicture,
-            'is_discount' => $attributes['is_discount'],
-            'is_free' => $attributes['is_free'],
-            'archived_at' => $attributes['archived_at'] ? now() : null
-        ]);
+        $attributes['slug'] = Str::slug($attributes['title']);
+        $attributes['thumbnail'] = $this->assignPicture('thumbnail/series', $picture, $attributes['slug']);
+        $series = Series::create($this->fields($attributes));
 
         return $series->topics()->sync(collect($attributes['topics'])->pluck('value'));
     }
@@ -52,31 +35,14 @@ class SeriesService
     public function update($attributes, $series) : array
     {
         $picture = $attributes['thumbnail'];
-        $slug = Str::slug($attributes['title']);
+        $attributes['slug'] = Str::slug($attributes['title']);
         if (request()->hasFile('thumbnail')) {
             Storage::delete($series->thumbnail);
-            $pathPicture = $this->assignPicture('thumbnail/series', $picture, $slug);
+            $attributes['thumbnail'] = $this->assignPicture('thumbnail/series', $picture, $attributes['slug']);
         } else {
-            $pathPicture = $series->thumbnail;
+            $attributes['thumbnail'] = $series->thumbnail;
         }
-
-        $series->update([
-            'title' => $attributes['title'],
-            'slug' => $slug,
-            'description' => $attributes['description'],
-            'episodes' => $attributes['episodes'],
-            'price' => $attributes['price'],
-            'discount_price' => $attributes['discount_price'],
-            'levels' => $attributes['levels'],
-            'status' => $attributes['status'],
-            'preview_series' => $attributes['preview_series'],
-            'source_code' => $attributes['source_code'],
-            'project_demo' => $attributes['project_demo'],
-            'thumbnail' => $pathPicture,
-            'is_discount' => $attributes['is_discount'],
-            'is_free' => $attributes['is_free'],
-            'archived_at' => $attributes['archived_at'] ? now() : null
-        ]);
+        $series->update($this->fields($attributes));
 
         return $series->topics()->sync(collect($attributes['topics'])->pluck('value'));
     }
@@ -89,5 +55,26 @@ class SeriesService
     public function restore($series)
     {
         return Series::whereId($series)->withTrashed()->restore();
+    }
+
+    private function fields(array $attributes) : array
+    {
+        return [
+            'title' => $attributes['title'],
+            'slug' => $attributes['slug'],
+            'description' => $attributes['description'],
+            'episodes' => $attributes['episodes'],
+            'price' => $attributes['price'],
+            'discount_price' => $attributes['discount_price'],
+            'levels' => $attributes['levels'],
+            'status' => $attributes['status'],
+            'preview_series' => $attributes['preview_series'],
+            'source_code' => $attributes['source_code'],
+            'project_demo' => $attributes['project_demo'],
+            'thumbnail' => $attributes['thumbnail'],
+            'is_discount' => $attributes['is_discount'],
+            'is_free' => $attributes['is_free'],
+            'archived_at' => $attributes['archived_at'] ? now() : null
+        ];
     }
 }

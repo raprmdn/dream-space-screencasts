@@ -40,7 +40,7 @@ export default function Index(props) {
                                         <th style={{minWidth : '100px'}}>Price</th>
                                         <th style={{minWidth : '100px'}}>Discount Price</th>
                                         <th className="text-center" style={{minWidth : '70px'}}>Videos</th>
-                                        <th className="text-center" style={{minWidth : '70px'}}>Paid Series</th>
+                                        <th className="text-center" style={{minWidth : '70px'}}>Archived</th>
                                         <th style={{minWidth : '100px'}}>Created</th>
                                         <th className="pr-0 text-right" style={{minWidth: '100px'}}>action</th>
                                     </tr>
@@ -57,7 +57,9 @@ export default function Index(props) {
                                                         <span className="font-weight-bold">{series.title}</span>
                                                     </td>
                                                     <td>
-                                                        <span className="font-weight-bold">Rp. {series.price_formatter},-</span>
+                                                        <span className="font-weight-bold">
+                                                            {series.price ? `Rp. ${series.price_formatter},-` : '-'}
+                                                        </span>
                                                     </td>
                                                     <td>
                                                         <span className="font-weight-bold">
@@ -71,10 +73,10 @@ export default function Index(props) {
                                                     </td>
                                                     <td>
                                                         <div className="font-weight-bold text-center">
-                                                            {series.is_free ?
-                                                                (<i className="flaticon2-cancel text-danger"/>)
-                                                                :
+                                                            {series.archived_at ?
                                                                 (<i className="flaticon2-check-mark text-success"/>)
+                                                                :
+                                                                (<i className="flaticon2-cancel text-danger"/>)
                                                             }
                                                         </div>
                                                     </td>
