@@ -9979,8 +9979,6 @@ function SeriesTrashed(props) {
       links = _props$series$meta.links,
       from = _props$series$meta.from;
 
-  var restoreHandler = function restoreHandler(e, series) {};
-
   var deleteHandler = function deleteHandler(series) {};
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
@@ -10084,9 +10082,9 @@ function SeriesTrashed(props) {
                           children: series.title
                         })
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
-                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("span", {
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
                           className: "font-weight-bold",
-                          children: ["Rp. ", series.price_formatter, ",-"]
+                          children: series.price ? "Rp. ".concat(series.price_formatter, ",-") : '-'
                         })
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
@@ -10119,10 +10117,11 @@ function SeriesTrashed(props) {
                         className: "pr-0 text-right",
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                           className: "btn-group",
-                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
-                            onClick: function onClick(e) {
-                              return restoreHandler(e, series);
-                            },
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                            preserveScroll: true,
+                            as: "button",
+                            method: "post",
+                            href: route('trash.series_restore', series),
                             className: "btn btn-sm btn-clean btn-icon",
                             "data-toggle": "tooltip",
                             title: "Restore",

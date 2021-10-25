@@ -55,5 +55,6 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
         Route::post('topic/{topic}', [TrashController::class, 'topicRestore'])->name('trash.topic_restore');
         Route::delete('topic/{topic}', [TrashController::class, 'topicForce'])->name('trash.topic_force');
         Route::get('series', [TrashController::class, 'seriesTrashed'])->name('trash.series_index');
+        Route::post('series/{series}', [TrashController::class, 'seriesRestore'])->name('trash.series_restore');
     });
 });

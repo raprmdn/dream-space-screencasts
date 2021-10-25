@@ -85,4 +85,9 @@ class SeriesService
     {
         return $series->delete();
     }
+
+    public function restore($series)
+    {
+        return Series::whereId($series)->withTrashed()->restore();
+    }
 }

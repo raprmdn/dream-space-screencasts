@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Topic;
 use App\Services\SeriesService;
 use App\Services\TopicService;
 
@@ -32,6 +31,7 @@ class TrashController extends Controller
     public function topicForce($topic)
     {
         $response = $this->topicService->forceDelete($topic);
+
         return $response ?
             back()->with(['type' => 'success', 'message' => 'Topic has been delete permanently.'])
             :
@@ -43,5 +43,11 @@ class TrashController extends Controller
         return inertia('Dashboard/Trashed/SeriesTrashed' , [
             'series' => $this->seriesService->findAllOnlyTrash(request()->search),
         ]);
+    }
+
+    public function seriesRestore($series)
+    {
+        $this->seriesService->restore($series);
+        return redirect()->back()->with(['type' => 'success', 'message' => 'Series has been restore.']);
     }
 }
