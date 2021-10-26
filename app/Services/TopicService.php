@@ -14,12 +14,12 @@ class TopicService {
 
     public function findAllWithParams($params) : TopicCollection
     {
-        return new TopicCollection(Topic::search($params));
+        return new TopicCollection(Topic::withCount('series')->search($params));
     }
 
     public function findAllOnlyTrashed($params) : TopicCollection
     {
-        return new TopicCollection(Topic::onlyTrashed()->search($params));
+        return new TopicCollection(Topic::onlyTrashed()->withCount('series')->search($params));
     }
 
     public function save(array $attributes) : Topic

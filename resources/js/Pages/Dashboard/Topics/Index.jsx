@@ -135,7 +135,7 @@ export default function Index() {
                                                         <div className="font-weight-bold">{topic.description.substring(0, 50)}</div>
                                                     </td>
                                                     <td className="text-center">
-                                                        <span className="font-weight-bold">30</span>
+                                                        <span className="font-weight-bold">{topic.series_count}</span>
                                                     </td>
                                                     <td>
                                                         <div className="font-weight-bold text-center">

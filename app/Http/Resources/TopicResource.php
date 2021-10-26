@@ -21,7 +21,8 @@ class TopicResource extends JsonResource
             'description' => $this->description,
             'picture' => $this->topicPicture,
             'is_archived' => $this->is_archived,
-            'position' => $this->position
+            'position' => $this->position,
+            'series_count' => $this->when(isset($this->series_count), $this->series_count)
         ];
     }
 }
