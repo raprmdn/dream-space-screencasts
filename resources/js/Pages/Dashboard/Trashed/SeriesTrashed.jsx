@@ -4,12 +4,28 @@ import {Head, Link} from "@inertiajs/inertia-react";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import SearchFilter from "../../../Components/SearchFilter";
 import SmallPagination from "../../../Components/SmallPagination";
+import Swal from "sweetalert2";
+import {Inertia} from "@inertiajs/inertia";
 
 export default function SeriesTrashed(props) {
     const { data: series, meta:{ links, from } } = props.series
 
     const deleteHandler = (series) => {
-
+        Swal.fire({
+            title: `Are you sure want to delete Series "${series.title}"?`,
+            text: 'You will not be able to revert this!.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Discard',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Inertia.delete(route('trash.series_force', series) , {
+                    preserveScroll: true,
+                })
+            }
+        })
     }
     return (
         <>
@@ -29,9 +45,6 @@ export default function SeriesTrashed(props) {
                             </h3>
                             <div className="card-toolbar">
                                 <SearchFilter placeholder={"Search series . . ."}/>
-                                <Link href={route('series.create')} className="btn btn-primary font-weight-bold ml-2">
-                                    <i className="flaticon2-plus icon-1x"/> Add Series
-                                </Link>
                             </div>
                         </div>
                         <div className="card-body py-0">
@@ -44,7 +57,7 @@ export default function SeriesTrashed(props) {
                                         <th style={{minWidth : '100px'}}>Price</th>
                                         <th style={{minWidth : '100px'}}>Discount Price</th>
                                         <th className="text-center" style={{minWidth : '70px'}}>Videos</th>
-                                        <th className="text-center" style={{minWidth : '70px'}}>Paid Series</th>
+                                        <th className="text-center" style={{minWidth : '70px'}}>Archived</th>
                                         <th style={{minWidth : '100px'}}>Created</th>
                                         <th className="pr-0 text-right" style={{minWidth: '100px'}}>action</th>
                                     </tr>
@@ -77,10 +90,10 @@ export default function SeriesTrashed(props) {
                                                     </td>
                                                     <td>
                                                         <div className="font-weight-bold text-center">
-                                                            {series.is_free ?
-                                                                (<i className="flaticon2-cancel text-danger"/>)
-                                                                :
+                                                            {series.archived_at ?
                                                                 (<i className="flaticon2-check-mark text-success"/>)
+                                                                :
+                                                                (<i className="flaticon2-cancel text-danger"/>)
                                                             }
                                                         </div>
                                                     </td>

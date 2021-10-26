@@ -148,7 +148,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                             <input type="text" id="source_code" name="source_code"
                                    value={data.source_code} onChange={(e) => setData('source_code', e.target.value)}
                                    className={`form-control ${errors.source_code && ('is-invalid')}`}
-                                   placeholder="Enter a series source code. ex: https://github.com/Rafi1112/dream-space-screencasts" />
+                                   placeholder="Enter a series source code. ex: https://github.com/raprmdn/dream-space-screencasts" />
                             {errors.source_code && (<div className="invalid-feedback mb-n5">{errors.source_code}</div>)}
                         </div>
                         <div className="col-lg-6">

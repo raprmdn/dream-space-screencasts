@@ -50,4 +50,14 @@ class TrashController extends Controller
         $this->seriesService->restore($series);
         return redirect()->back()->with(['type' => 'success', 'message' => 'Series has been restore.']);
     }
+
+    public function seriesForce($series)
+    {
+        $response = $this->seriesService->forceDelete($series);
+
+        return $response ?
+            back()->with(['type' => 'success', 'message' => 'Series has been delete permanently.'])
+            :
+            back()->with(['type' => 'error', 'message' => 'Cannot delete the Series.']);
+    }
 }

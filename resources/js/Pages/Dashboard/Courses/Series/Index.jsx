@@ -95,7 +95,7 @@ export default function Index(props) {
                                                             </button>
                                                             <button className="btn btn-sm btn-clean btn-icon"
                                                                     data-toggle="tooltip" title="View">
-                                                                <i className="far fa-eye text-muted" />
+                                                                <i className="fas fa-share text-muted" />
                                                             </button>
                                                         </div>
                                                     </td>

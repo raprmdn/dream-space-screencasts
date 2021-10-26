@@ -57,6 +57,13 @@ class SeriesService
         return Series::whereId($series)->withTrashed()->restore();
     }
 
+    public function forceDelete($series)
+    {
+        $series = Series::whereId($series)->withTrashed()->first();
+        Storage::delete($series->thumbnail);
+        return $series->forceDelete();
+    }
+
     private function fields(array $attributes) : array
     {
         return [
