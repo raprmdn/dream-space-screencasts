@@ -35,7 +35,7 @@ class SeriesService
     public function update($attributes, $series) : array
     {
         $picture = $attributes['thumbnail'];
-        $attributes['slug'] = Str::slug($attributes['title']);
+        $attributes['slug'] = $series->slug;
         if (request()->hasFile('thumbnail')) {
             Storage::delete($series->thumbnail);
             $attributes['thumbnail'] = $this->assignPicture('thumbnail/series', $picture, $attributes['slug']);
@@ -68,7 +68,7 @@ class SeriesService
     {
         return [
             'title' => $attributes['title'],
-            'slug' => $attributes['slug'],
+            'slug' => $attributes['slug'] . '-' . now()->format('His'),
             'description' => $attributes['description'],
             'episodes' => $attributes['episodes'],
             'price' => $attributes['price'],
