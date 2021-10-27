@@ -69,21 +69,31 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                     <div className="form-group row">
                         <div className="col-lg-6">
                             <label className="font-weight-bold">Series Price</label>
-                            <input type="number" id="price" name="price"
-                                   value={data.price} onChange={(e) => setData('price', e.target.value)}
-                                   className={`form-control ${errors.price && ('is-invalid')}`}
-                                   min={1}
-                                   placeholder="Enter a series price" />
-                            {errors.price && (<div className="invalid-feedback mb-n5">{errors.price}</div>)}
+                            <div className="input-group">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">Rp.</span>
+                                </div>
+                                <input type="number" id="price" name="price"
+                                       value={data.price} onChange={(e) => setData('price', e.target.value)}
+                                       className={`form-control ${errors.price && ('is-invalid')}`}
+                                       min={1}
+                                       placeholder="Enter a series price" />
+                                {errors.price && (<div className="invalid-feedback mb-n5">{errors.price}</div>)}
+                            </div>
                         </div>
                         <div className="col-lg-6">
                             <label className="font-weight-bold">Series Discount Price</label>
-                            <input type="number" id="discount_price" name="discount_price"
-                                   value={data.discount_price} onChange={(e) => setData('discount_price', e.target.value)}
-                                   className={`form-control ${errors.discount_price && ('is-invalid')}`}
-                                   min={1}
-                                   placeholder="Enter a series discount price" />
-                            {errors.discount_price && (<div className="invalid-feedback mb-n5">{errors.discount_price}</div>)}
+                            <div className="input-group">
+                                <div className="input-group-prepend">
+                                    <span className="input-group-text">Rp.</span>
+                                </div>
+                                <input type="number" id="discount_price" name="discount_price"
+                                       value={data.discount_price} onChange={(e) => setData('discount_price', e.target.value)}
+                                       className={`form-control ${errors.discount_price && ('is-invalid')}`}
+                                       min={1}
+                                       placeholder="Enter a series discount price" />
+                                {errors.discount_price && (<div className="invalid-feedback mb-n5">{errors.discount_price}</div>)}
+                            </div>
                         </div>
                     </div>
                     <div className="form-group row">

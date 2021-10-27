@@ -5331,40 +5331,58 @@ function FormSeries(_ref) {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
               className: "font-weight-bold",
               children: "Series Price"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-              type: "number",
-              id: "price",
-              name: "price",
-              value: data.price,
-              onChange: function onChange(e) {
-                return setData('price', e.target.value);
-              },
-              className: "form-control ".concat(errors.price && 'is-invalid'),
-              min: 1,
-              placeholder: "Enter a series price"
-            }), errors.price && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-              className: "invalid-feedback mb-n5",
-              children: errors.price
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "input-group",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "input-group-prepend",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "input-group-text",
+                  children: "Rp."
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "number",
+                id: "price",
+                name: "price",
+                value: data.price,
+                onChange: function onChange(e) {
+                  return setData('price', e.target.value);
+                },
+                className: "form-control ".concat(errors.price && 'is-invalid'),
+                min: 1,
+                placeholder: "Enter a series price"
+              }), errors.price && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "invalid-feedback mb-n5",
+                children: errors.price
+              })]
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
             className: "col-lg-6",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
               className: "font-weight-bold",
               children: "Series Discount Price"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
-              type: "number",
-              id: "discount_price",
-              name: "discount_price",
-              value: data.discount_price,
-              onChange: function onChange(e) {
-                return setData('discount_price', e.target.value);
-              },
-              className: "form-control ".concat(errors.discount_price && 'is-invalid'),
-              min: 1,
-              placeholder: "Enter a series discount price"
-            }), errors.discount_price && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-              className: "invalid-feedback mb-n5",
-              children: errors.discount_price
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              className: "input-group",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "input-group-prepend",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+                  className: "input-group-text",
+                  children: "Rp."
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+                type: "number",
+                id: "discount_price",
+                name: "discount_price",
+                value: data.discount_price,
+                onChange: function onChange(e) {
+                  return setData('discount_price', e.target.value);
+                },
+                className: "form-control ".concat(errors.discount_price && 'is-invalid'),
+                min: 1,
+                placeholder: "Enter a series discount price"
+              }), errors.discount_price && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+                className: "invalid-feedback mb-n5",
+                children: errors.discount_price
+              })]
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
