@@ -13,7 +13,7 @@ export default function Footer() {
                             <div className="rounded-lg px-10 py-8 mr-lg-15 mb-7" style={{border: '1px dashed #2b3e5a'}}>
                                 <h3 className="mb-3 text-white font-weight-bolder">Having any trouble ?</h3>
                                 <div className="font-size-3 text-muted">
-                                    Let us to know <a className="text-dark-50 text-hover-white font-weight-bold" href="/">me@rvimys.com</a>
+                                    Let me to know <a className="text-dark-50 text-hover-white font-weight-bold" href="/">raprmdn@gmail.com</a>
                                 </div>
                             </div>
                         </div>

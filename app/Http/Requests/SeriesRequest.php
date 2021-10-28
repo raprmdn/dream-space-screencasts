@@ -20,7 +20,10 @@ class SeriesRequest extends FormRequest
             'levels' => ['required'],
             'status' => ['required'],
             'episodes' => ['required', 'min:1', 'integer'],
-            'thumbnail' =>  $rules
+            'thumbnail' =>  $rules,
+            'is_discount' => ['boolean'] ,
+            'is_free' => ['boolean'],
+            'archived_at' => ['boolean']
         ];
     }
 

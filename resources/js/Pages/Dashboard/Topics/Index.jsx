@@ -186,7 +186,7 @@ export default function Index() {
                     </div>
                 </div>
             </div>
-            <Modal trigger={"addTopicModal"} title={"Add new topic"}>
+            <Modal trigger={"addTopicModal"} title={"Add new topic"} size={"modal-lg"}>
                 <FormTopic
                     {...{
                         submitHandler:storeHandler,
@@ -201,7 +201,7 @@ export default function Index() {
                     }}
                 />
             </Modal>
-            <Modal trigger={"updateTopicModal"} title={`Update Topic : ${data.name}`}>
+            <Modal trigger={"updateTopicModal"} title={`Update Topic : ${data.name}`} size={"modal-lg"}>
                 <FormTopic
                     {...{
                         submitHandler:updateHandler,
