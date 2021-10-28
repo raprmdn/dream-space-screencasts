@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\{Courses\SeriesController,
+    Courses\VideoController,
     IndexController,
     Topic\TopicController,
     TopicsController,
@@ -22,6 +23,12 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
             Route::get('{series:slug}/edit', [SeriesController::class, 'edit'])->name('series.edit');
             Route::put('{series:slug}/edit', [SeriesController::class, 'update'])->name('series.update');
             Route::delete('{series:slug}', [SeriesController::class, 'destroy'])->name('series.delete');
+        });
+        Route::prefix('videos')->group(function () {
+            Route::get('', [VideoController::class, 'index'])->name('videos.index');
+//            Route::get('create', [VideoController::class, 'create'])->name('videos.create');
+            Route::post('', [VideoController::class, 'store'])->name('videos.store');
+            Route::put('{video}', [VideoController::class, 'update'])->name('videos.update');
         });
     });
     Route::prefix('topics')->middleware(['can:topics'])->group(function () {

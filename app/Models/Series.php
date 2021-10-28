@@ -60,5 +60,13 @@ class Series extends Model
         return $this->belongsToMany(Topic::class, 'series_topic', 'series_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function videos()
+    {
+        return $this->hasMany(Video::class, 'series_id');
+    }
+
 
 }

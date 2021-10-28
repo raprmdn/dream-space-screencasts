@@ -71,8 +71,8 @@ export default function Header() {
                                                                                         <span className="menu-text">Series</span>
                                                                                     </Link>
                                                                                 </li>
-                                                                                <li className={`menu-item ${route().current('users.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
-                                                                                    <Link href={route('users.index')} className="menu-link">
+                                                                                <li className={`menu-item ${route().current('videos.index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('videos.index')} className="menu-link">
                                                                                         <i className="menu-bullet menu-bullet-dot">
                                                                                             <span />
                                                                                         </i>
