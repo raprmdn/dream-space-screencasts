@@ -48,7 +48,7 @@ export default function Index(props) {
         <>
             <Head title="Dream Space | Videos"/>
             <Breadcrumb
-                titleHeading="Series"
+                titleHeading="Videos"
                 item1="Dashboard"
                 item2="Courses"
                 item3="Videos" linkItem3={route('videos.index')}
@@ -78,6 +78,7 @@ export default function Index(props) {
                                         <th style={{minWidth : '150px'}}>Title</th>
                                         <th style={{minWidth : '100px'}}>Series</th>
                                         <th style={{minWidth : '100px'}}>Source</th>
+                                        <th className="text-center" style={{minWidth : '70px'}}>Runtime</th>
                                         <th className="text-center" style={{minWidth : '70px'}}>Episode</th>
                                         <th className="text-center" style={{minWidth : '70px'}}>Free</th>
                                         <th className="text-center" style={{minWidth : '70px'}}>Archived</th>
@@ -108,6 +109,11 @@ export default function Index(props) {
                                                                target="_blank">
                                                                 {video.source}
                                                             </a>
+                                                        </span>
+                                                    </td>
+                                                    <td className="text-center">
+                                                        <span className="font-weight-bold">
+                                                            {video.runtime_formatted}
                                                         </span>
                                                     </td>
                                                     <td>

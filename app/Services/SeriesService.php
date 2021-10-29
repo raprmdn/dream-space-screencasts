@@ -14,7 +14,7 @@ class SeriesService
 
     public function findAllWithParams($params): SeriesCollection
     {
-        return new SeriesCollection(Series::search($params));
+        return new SeriesCollection(Series::withCount('videos')->search($params));
     }
 
     public function findAllOnlyTrash($params): SeriesCollection

@@ -68,7 +68,7 @@ export default function Index(props) {
                                                     </td>
                                                     <td>
                                                         <div className="font-weight-bold text-center">
-                                                            <span className="label label-rounded label-dark">15</span>
+                                                            <span className="label label-rounded label-dark">{series.videos_count}</span>
                                                         </div>
                                                     </td>
                                                     <td>

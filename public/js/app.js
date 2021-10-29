@@ -8752,7 +8752,7 @@ function Index(props) {
                           className: "font-weight-bold text-center",
                           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
                             className: "label label-rounded label-dark",
-                            children: "15"
+                            children: series.videos_count
                           })
                         })
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
@@ -8916,7 +8916,7 @@ function Index(props) {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
       title: "Dream Space | Videos"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      titleHeading: "Series",
+      titleHeading: "Videos",
       item1: "Dashboard",
       item2: "Courses",
       item3: "Videos",
@@ -8985,6 +8985,12 @@ function Index(props) {
                       style: {
                         minWidth: '70px'
                       },
+                      children: "Runtime"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("th", {
+                      className: "text-center",
+                      style: {
+                        minWidth: '70px'
+                      },
                       children: "Episode"
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("th", {
                       className: "text-center",
@@ -9038,6 +9044,12 @@ function Index(props) {
                             target: "_blank",
                             children: video.source
                           })
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("td", {
+                        className: "text-center",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
+                          className: "font-weight-bold",
+                          children: video.runtime_formatted
                         })
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("td", {
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
