@@ -13,6 +13,11 @@ class VideoService
         return new VideoCollection(Video::with(['series:id,title'])->search($params));
     }
 
+    public function findAllOnlyTrashed($params): VideoCollection
+    {
+        return new VideoCollection(Video::onlyTrashed()->with('series:id,title')->search($params));
+    }
+
     public function save(array $attributes)
     {
         $series = Series::whereId($attributes['series']['value'])->firstOrFail();
@@ -22,6 +27,22 @@ class VideoService
     public function update(array $attributes, $video)
     {
         return $video->update($this->fields($attributes));
+    }
+
+    public function delete($video)
+    {
+        return $video->delete();
+    }
+
+    public function restore($video)
+    {
+        return Video::whereId($video)->withTrashed()->restore();
+    }
+
+    public function forceDelete($video)
+    {
+        $video = Video::whereId($video)->withTrashed()->first();
+        return $video->forceDelete();
     }
 
     private function fields(array $attributes)

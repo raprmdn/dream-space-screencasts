@@ -13,7 +13,7 @@ class VideoRequest extends FormRequest
             'title' => ['required'],
             'source' => ['required'],
             'episode' => ['numeric', 'required'],
-            'runtime' => ['required'],
+            'runtime' => ['required', 'date_format:H:i:s'],
             'is_free' => ['boolean'],
             'is_archived' => ['boolean']
         ];

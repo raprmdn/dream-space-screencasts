@@ -44,4 +44,14 @@ class VideoController extends Controller
         }
         return back()->with(['type' => 'success', 'message' => 'Video has been updated.']);
     }
+
+    public function destroy(Video $video)
+    {
+        try {
+            $this->videoService->delete($video);
+        } catch (\Exception $e) {
+            return back()->with(['type' => 'error', 'message' => 'Something went wrong.']);
+        }
+        return back()->with(['type' => 'success', 'message' => 'Video has been deleted.']);
+    }
 }

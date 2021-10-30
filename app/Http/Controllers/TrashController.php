@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Services\SeriesService;
 use App\Services\TopicService;
+use App\Services\VideoService;
 
 class TrashController extends Controller
 {
-    protected $topicService, $seriesService;
+    protected $topicService, $seriesService, $videoService;
 
-    public function __construct(TopicService $topicService, SeriesService $seriesService)
+    public function __construct(TopicService $topicService, SeriesService $seriesService, VideoService $videoService)
     {
         $this->topicService = $topicService;
         $this->seriesService = $seriesService;
+        $this->videoService = $videoService;
     }
 
     public function topicTrashed()
@@ -59,5 +61,24 @@ class TrashController extends Controller
             back()->with(['type' => 'success', 'message' => 'Series has been delete permanently.'])
             :
             back()->with(['type' => 'error', 'message' => 'Cannot delete the Series.']);
+    }
+
+    public function videosTrashed()
+    {
+        return inertia('Dashboard/Trashed/VideoTrashed', [
+            'videos' => $this->videoService->findAllOnlyTrashed(request()->search)
+        ]);
+    }
+
+    public function videosRestore($video)
+    {
+        $this->videoService->restore($video);
+        return redirect()->back()->with(['type' => 'success', 'message' => 'Videos has been restore.']);
+    }
+
+    public function videosForce($video)
+    {
+        $this->videoService->forceDelete($video);
+        return back()->with(['type' => 'success', 'message' => 'Videos has been delete permanently.']);
     }
 }

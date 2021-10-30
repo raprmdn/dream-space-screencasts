@@ -26,9 +26,9 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
         });
         Route::prefix('videos')->group(function () {
             Route::get('', [VideoController::class, 'index'])->name('videos.index');
-//            Route::get('create', [VideoController::class, 'create'])->name('videos.create');
             Route::post('', [VideoController::class, 'store'])->name('videos.store');
             Route::put('{video}', [VideoController::class, 'update'])->name('videos.update');
+            Route::delete('{video}', [VideoController::class, 'destroy'])->name('videos.delete');
         });
     });
     Route::prefix('topics')->middleware(['can:topics'])->group(function () {
@@ -58,11 +58,14 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
         });
     });
     Route::prefix('trash')->middleware(['can:topic'])->group(function () {
-        Route::get('topic', [TrashController::class, 'topicTrashed'])->name('trash.topic_index');
-        Route::post('topic/{topic}', [TrashController::class, 'topicRestore'])->name('trash.topic_restore');
-        Route::delete('topic/{topic}', [TrashController::class, 'topicForce'])->name('trash.topic_force');
         Route::get('series', [TrashController::class, 'seriesTrashed'])->name('trash.series_index');
         Route::post('series/{series}', [TrashController::class, 'seriesRestore'])->name('trash.series_restore');
         Route::delete('series/{series}', [TrashController::class, 'seriesForce'])->name('trash.series_force');
+        Route::get('videos', [TrashController::class, 'videosTrashed'])->name('trash.videos_index');
+        Route::post('videos/{video}', [TrashController::class, 'videosRestore'])->name('trash.videos_restore');
+        Route::delete('videos/{video}', [TrashController::class, 'videosForce'])->name('trash.videos_force');
+        Route::get('topic', [TrashController::class, 'topicTrashed'])->name('trash.topic_index');
+        Route::post('topic/{topic}', [TrashController::class, 'topicRestore'])->name('trash.topic_restore');
+        Route::delete('topic/{topic}', [TrashController::class, 'topicForce'])->name('trash.topic_force');
     });
 });

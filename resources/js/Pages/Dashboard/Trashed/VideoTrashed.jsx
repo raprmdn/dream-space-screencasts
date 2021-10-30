@@ -1,41 +1,19 @@
 import React from 'react';
-import App from "../../../../Layouts/App";
-import {Head, useForm, usePage} from "@inertiajs/inertia-react";
-import Breadcrumb from "../../../../Components/Breadcrumb";
-import SearchFilter from "../../../../Components/SearchFilter";
-import SmallPagination from "../../../../Components/SmallPagination";
-import Modal from "../../../../Components/Modal";
-import FormVideos from "../../../../Components/Forms/FormVideos";
+import App from "../../../Layouts/App";
+import {Head, Link} from "@inertiajs/inertia-react";
+import Breadcrumb from "../../../Components/Breadcrumb";
+import SearchFilter from "../../../Components/SearchFilter";
+import SmallPagination from "../../../Components/SmallPagination";
 import Swal from "sweetalert2";
+import {Inertia} from "@inertiajs/inertia";
 
-export default function Index(props) {
+export default function VideoTrashed(props) {
     const { data: videos, meta:{ links, from } } = props.videos
-    const { series: seriesData } = usePage().props
-    const { data, setData, post, put, delete: destroy, reset, errors, clearErrors, processing } = useForm({
-        series: '',
-        title: '',
-        source: '',
-        episode: '',
-        runtime: '',
-        is_free: false,
-        is_archived: false
-    });
-
-    const updateHandler = (e) => {
-        e.preventDefault()
-        put(route('videos.update', data), {
-            preserveScroll: true,
-            onSuccess: () => {
-                reset()
-                window.$('#updateVideoModal').modal('hide')
-            }
-        })
-    }
 
     const deleteHandler = (video) => {
         Swal.fire({
-            title: `Are you sure want to delete the "${video.title}" video?`,
-            text: `Video not delete permanently. But User won't be able to watching the Video. Please be wise.`,
+            title: `Are you sure want to delete Video "${video.title}"?`,
+            text: 'You will not be able to revert this!.',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Yes, delete it!',
@@ -43,35 +21,20 @@ export default function Index(props) {
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                destroy(route('videos.delete', video) , {
+                Inertia.delete(route('trash.videos_force', video) , {
                     preserveScroll: true,
-                    resetOnSuccess: false,
                 })
             }
         })
     }
-
-    const storeHandler = (e) => {
-        e.preventDefault()
-        post(route('videos.store'), {
-            data,
-            preserveScroll: true,
-            onSuccess: () => {
-                reset()
-                window.$('#addVideoModal').modal('hide')
-            }
-        })
-    }
-
-
     return (
         <>
-            <Head title="Dream Space | Videos"/>
+            <Head title="Dream Space | Trashed"/>
             <Breadcrumb
-                titleHeading="Videos"
+                titleHeading="Trash Videos"
                 item1="Dashboard"
-                item2="Courses"
-                item3="Videos" linkItem3={route('videos.index')}
+                item2="Trash"
+                item3="Videos" linkItem3={route('trash.videos_index')}
             />
             <div className="d-flex flex-column-fluid mb-11">
                 <div className="container">
@@ -82,11 +45,6 @@ export default function Index(props) {
                             </h3>
                             <div className="card-toolbar">
                                 <SearchFilter placeholder={"Search videos . . ."}/>
-                                <a href="#" className="btn btn-primary font-weight-bold ml-2"
-                                   data-toggle="modal" data-target="#addVideoModal"
-                                   onClick={() => {reset(); clearErrors();}}>
-                                    <i className="flaticon2-plus icon-1x"/> Add Video
-                                </a>
                             </div>
                         </div>
                         <div className="card-body py-0">
@@ -164,25 +122,15 @@ export default function Index(props) {
                                                     </td>
                                                     <td className="pr-0 text-right">
                                                         <div className="btn-group">
-                                                            <button onClick={() => {
-                                                                        setData({
-                                                                            ...video,
-                                                                            series: {value: video.series.id, label: video.series.title}
-                                                                        });
-                                                                        clearErrors();}
-                                                                    }
-                                                                    className="btn btn-sm btn-clean btn-icon"
-                                                                    data-toggle="modal" data-target="#updateVideoModal">
-                                                                <i className="flaticon-settings-1 text-primary" />
-                                                            </button>
-                                                            <button className="btn btn-sm btn-clean btn-icon"
-                                                                    data-toggle="tooltip" title="Delete"
-                                                                    onClick={() => deleteHandler(video)}>
-                                                                <i className="flaticon2-trash text-danger icon-1x" />
-                                                            </button>
-                                                            <button className="btn btn-sm btn-clean btn-icon"
-                                                                    data-toggle="tooltip" title="View">
-                                                                <i className="fas fa-share text-muted" />
+                                                            <Link preserveScroll={true}
+                                                                  as="button"
+                                                                  method="post"
+                                                                  href={route('trash.videos_restore', video)}
+                                                                  className="btn btn-sm btn-clean btn-icon" data-toggle="tooltip" title="Restore">
+                                                                <i className="la la-redo-alt text-success" />
+                                                            </Link>
+                                                            <button onClick={() => deleteHandler(video)} className="btn btn-sm btn-clean btn-icon" data-toggle="tooltip" title="Delete permanent">
+                                                                <i className="la la-trash text-danger" />
                                                             </button>
                                                         </div>
                                                     </td>
@@ -201,34 +149,8 @@ export default function Index(props) {
                     </div>
                 </div>
             </div>
-            <Modal trigger={"addVideoModal"} title={"Add new Video"} size={"modal-lg"}>
-                <FormVideos
-                    {...{
-                        seriesData,
-                        data,
-                        setData,
-                        submitHandler:storeHandler,
-                        errors,
-                        processing,
-                        submitLabel:"Submit"
-                    }}
-                />
-            </Modal>
-            <Modal trigger={"updateVideoModal"} title={`Update videos : ${data.title}`} size={"modal-lg"}>
-                <FormVideos
-                    {...{
-                        seriesData,
-                        data,
-                        setData,
-                        submitHandler:updateHandler,
-                        errors,
-                        processing,
-                        submitLabel:"Update"
-                    }}
-                />
-            </Modal>
         </>
     )
 }
 
-Index.layout = (page) => <App children={page}/>
+VideoTrashed.layout = (page) => <App children={page}/>
