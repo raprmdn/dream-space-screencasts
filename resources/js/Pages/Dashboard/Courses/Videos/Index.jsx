@@ -133,7 +133,7 @@ export default function Index(props) {
                                                     </td>
                                                     <td className="text-center">
                                                         <span className="font-weight-bold">
-                                                            {video.runtime_formatted}
+                                                            {video.runtime.runtime_formatted}
                                                         </span>
                                                     </td>
                                                     <td>
@@ -167,6 +167,7 @@ export default function Index(props) {
                                                             <button onClick={() => {
                                                                         setData({
                                                                             ...video,
+                                                                            runtime: video.runtime.runtime_unformatted,
                                                                             series: {value: video.series.id, label: video.series.title}
                                                                         });
                                                                         clearErrors();}
@@ -190,7 +191,7 @@ export default function Index(props) {
                                             ))
                                             :
                                             <tr>
-                                                <td colSpan={8} className="text-center p-7 font-weight-bolder">No records found in table</td>
+                                                <td colSpan={10} className="text-center p-7 font-weight-bolder">No records found in table</td>
                                             </tr>
                                     }
                                     </tbody>

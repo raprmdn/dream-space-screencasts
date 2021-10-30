@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\SeriesCollection;
+use App\Http\Resources\SeriesResource;
 use App\Models\Series;
 use App\Traits\ImageTrait;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,16 @@ class SeriesService
     public function findAllOnlyTrash($params): SeriesCollection
     {
         return new SeriesCollection(Series::onlyTrashed()->search($params));
+    }
+
+    public function findBySlug($slug): SeriesResource
+    {
+        return new SeriesResource(
+            Series::where('slug', $slug)
+            ->with(['topics:id,name', 'videos'])
+            ->withCount('videos')
+            ->first()
+        );
     }
 
     public function save($attributes): array

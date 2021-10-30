@@ -138,7 +138,7 @@ export default function VideoTrashed(props) {
                                             ))
                                             :
                                             <tr>
-                                                <td colSpan={8} className="text-center p-7 font-weight-bolder">No records found in table</td>
+                                                <td colSpan={10} className="text-center p-7 font-weight-bolder">No records found in table</td>
                                             </tr>
                                     }
                                     </tbody>

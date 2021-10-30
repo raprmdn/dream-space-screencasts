@@ -36,12 +36,19 @@ class SeriesController extends Controller
         try {
             $this->seriesService->save($request->all());
         } catch (\Exception $e) {
-            return redirect()->back()->with(['type' => 'error', 'message' => 'Something went wrong. ' . $e]);
+            return redirect()->back()->with(['type' => 'error', 'message' => 'Something went wrong.']);
         }
 
         return redirect()
             ->route('series.index')
             ->with(['type' => 'success', 'message' => 'Series has been created.']);
+    }
+
+    public function show(Series $series)
+    {
+        return inertia('Dashboard/Courses/Series/Show', [
+            'series' => $this->seriesService->findBySlug($series->slug)
+        ]);
     }
 
     public function edit(Series $series)
@@ -57,7 +64,7 @@ class SeriesController extends Controller
         try {
             $this->seriesService->update($request->all(), $series);
         } catch (\Exception $e) {
-            return redirect()->back()->with(['type' => 'error', 'message' => 'Something went wrong. ' . $e]);
+            return redirect()->back()->with(['type' => 'error', 'message' => 'Something went wrong.']);
         }
 
         return redirect()

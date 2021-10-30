@@ -58,12 +58,12 @@ export default function Index(props) {
                                                     </td>
                                                     <td>
                                                         <span className="font-weight-bold">
-                                                            {series.price ? `Rp. ${series.price_formatter},-` : '-'}
+                                                            {series.price.price_unformatted ? `Rp. ${series.price.price_formatted},-` : '-'}
                                                         </span>
                                                     </td>
                                                     <td>
                                                         <span className="font-weight-bold">
-                                                            {series.discount ? `Rp. ${series.discount_formatter},-` : '-'}
+                                                            {series.discount.discount_unformatted ? `Rp. ${series.discount.discount_formatted},-` : '-'}
                                                         </span>
                                                     </td>
                                                     <td>
@@ -89,10 +89,10 @@ export default function Index(props) {
                                                                     data-toggle="tooltip" title="Edit">
                                                                 <i className="flaticon-settings-1 text-primary" />
                                                             </Link>
-                                                            <button className="btn btn-sm btn-clean btn-icon"
+                                                            <Link href={route('series.add_videos', series.slug)} className="btn btn-sm btn-clean btn-icon"
                                                                     data-toggle="tooltip" title="Add Videos">
                                                                 <i className="fas fa-video text-success" />
-                                                            </button>
+                                                            </Link>
                                                             <button className="btn btn-sm btn-clean btn-icon"
                                                                     data-toggle="tooltip" title="View">
                                                                 <i className="fas fa-share text-muted" />

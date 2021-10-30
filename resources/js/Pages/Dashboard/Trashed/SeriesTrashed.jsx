@@ -75,12 +75,12 @@ export default function SeriesTrashed(props) {
                                                     </td>
                                                     <td>
                                                         <span className="font-weight-bold">
-                                                            {series.price ? `Rp. ${series.price_formatter},-` : '-'}
+                                                            {series.price.price_unformatted ? `Rp. ${series.price.price_formatted},-` : '-'}
                                                         </span>
                                                     </td>
                                                     <td>
                                                         <span className="font-weight-bold">
-                                                            {series.discount ? `Rp. ${series.discount_formatter},-` : '-'}
+                                                            {series.discount.discount_unformatted ? `Rp. ${series.discount.discount_formatted},-` : '-'}
                                                         </span>
                                                     </td>
                                                     <td>

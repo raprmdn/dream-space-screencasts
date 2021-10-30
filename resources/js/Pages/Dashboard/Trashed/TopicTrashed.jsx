@@ -118,7 +118,7 @@ export default function TopicTrashed() {
                                             ))
                                             :
                                             <tr>
-                                                <td colSpan={7} className="text-center p-7 font-weight-bolder">No records found in table</td>
+                                                <td colSpan={8} className="text-center p-7 font-weight-bolder">No records found in table</td>
                                             </tr>
                                     }
                                     </tbody>

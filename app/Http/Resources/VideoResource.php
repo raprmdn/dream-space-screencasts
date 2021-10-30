@@ -25,8 +25,10 @@ class VideoResource extends JsonResource
             'title' => $this->title,
             'source' => $this->source,
             'episode' => $this->episode,
-            'runtime' => $this->runtime,
-            'runtime_formatted' => $runtimeFormatted,
+            'runtime' =>[
+                'runtime_unformatted' => $this->runtime,
+                'runtime_formatted' => $runtimeFormatted,
+            ],
             'is_free' => $this->is_free,
             'is_archived' => $this->is_archived,
             'series' => $this->whenLoaded('series'),

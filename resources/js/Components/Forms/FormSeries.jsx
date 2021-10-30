@@ -225,9 +225,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                                     <LazyLoadImage
                                         effect="blur"
                                         src={preview}
-                                        width={1230}
-                                        height={720}
-                                        className="my-3 rounded-lg" />
+                                        className="my-3 rounded-lg mw-100" />
                                     <button onClick={removePicture} className="btn btn-xs btn-icon btn-circle btn-white btn-shadow position-absolute mt-3 top-0 right-0">
                                         <i className="ki ki-bold-close icon-xs text-muted" />
                                     </button>

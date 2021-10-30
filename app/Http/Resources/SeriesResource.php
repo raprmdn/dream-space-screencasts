@@ -21,10 +21,14 @@ class SeriesResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'episodes' => $this->episodes,
-            'price' => $this->price,
-            'price_formatter' => Helper::rupiahFormat($this->price),
-            'discount' => $this->discount_price,
-            'discount_formatter' => Helper::rupiahFormat($this->discount_price),
+            'price' => [
+                'price_unformatted' => $this->price,
+                'price_formatted' => Helper::rupiahFormat($this->price)
+            ],
+            'discount' => [
+                'discount_unformatted' => $this->discount_price,
+                'discount_formatted' => Helper::rupiahFormat($this->discount_price),
+            ],
             'levels' => $this->levels,
             'status' => $this->status,
             'preview_url' => $this->preview_series,
@@ -36,7 +40,7 @@ class SeriesResource extends JsonResource
             'archived_at' => $this->archived_at,
             'created_at' => $this->created_at->format('d M Y, H:i A'),
             'topics' => $this->whenLoaded('topics'),
-            'videos' => $this->whenLoaded('videos'),
+            'videos' => VideoResource::collection($this->whenLoaded('videos')),
             'videos_count' => $this->when(isset($this->videos_count), $this->videos_count)
         ];
     }
