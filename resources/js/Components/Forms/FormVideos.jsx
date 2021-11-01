@@ -3,24 +3,41 @@ import Select from "react-select";
 import NumberFormat from 'react-number-format';
 
 export default function FormVideos({seriesData, data, setData, submitHandler, errors, processing, submitLabel}) {
-    const options = seriesData.map(series => ({value: series.id, label: series.title}))
+    let options = null;
+    if (route().current() !== 'series.add_videos') {
+        options = seriesData.map(series => ({value: series.id, label: series.title}))
+    }
 
     return (
         <div id="block_ui_form">
             <form className="form" onSubmit={submitHandler}>
                 <div className="card-body">
                     <div className="form-group">
-                        <label className="font-weight-bold">Select Series</label>
-                        <span className="text-danger"> * </span>
-                        <Select
-                            id="series"
-                            name="series"
-                            value={data.series}
-                            onChange={(e) => setData('series', e)}
-                            options={options}
-                            placeholder="Select Series"
-                        />
-                        {errors.series && (<span className="text-danger font-size-sm mb-n5">{errors.series}</span>)}
+                        {
+                            route().current() !== 'series.add_videos'
+                                ?
+                                (<>
+                                    <label className="font-weight-bold">Select Series</label>
+                                    <span className="text-danger"> * </span>
+                                    <Select
+                                        id="series"
+                                        name="series"
+                                        value={data.series}
+                                        onChange={(e) => setData('series', e)}
+                                        options={options}
+                                        placeholder="Select Series"
+                                    />
+                                    {errors.series && (<span className="text-danger font-size-sm mb-n5">{errors.series}</span>)}
+                                </>)
+                                :
+                            (<>
+                                <label className="font-weight-bold">Series</label>
+                                <h5 className="font-weight-bolder text-dark">
+                                    {seriesData.title}
+                                </h5>
+                            </>)
+                        }
+
                     </div>
                     <div className="form-group">
                         <label className="font-weight-bold">Video Title</label>

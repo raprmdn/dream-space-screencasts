@@ -21,6 +21,7 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
             Route::get('create', [SeriesController::class, 'create'])->name('series.create');
             Route::post('create', [SeriesController::class, 'store'])->name('series.store');
             Route::get('{series:slug}/add-videos', [SeriesController::class, 'show'])->name('series.add_videos');
+            Route::post('{series:slug}/add-videos', [VideoController::class, 'store'])->name('series.add_videos_store');
             Route::get('{series:slug}/edit', [SeriesController::class, 'edit'])->name('series.edit');
             Route::put('{series:slug}/edit', [SeriesController::class, 'update'])->name('series.update');
             Route::delete('{series:slug}', [SeriesController::class, 'destroy'])->name('series.delete');

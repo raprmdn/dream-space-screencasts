@@ -27,7 +27,9 @@ class SeriesService
     {
         return new SeriesResource(
             Series::where('slug', $slug)
-            ->with(['topics:id,name', 'videos'])
+            ->with(['topics:id,name', 'videos' => function($q) {
+                $q->orderBy('episode');
+            }])
             ->withCount('videos')
             ->first()
         );
@@ -36,7 +38,7 @@ class SeriesService
     public function save($attributes): array
     {
         $picture = $attributes['thumbnail'];
-        $attributes['slug'] = Str::slug($attributes['title']);
+        $attributes['slug'] = Str::slug($attributes['title']) . '-' . now()->format('His');
         $attributes['thumbnail'] = $this->assignPicture('thumbnail/series', $picture, $attributes['slug']);
         $series = Series::create($this->fields($attributes));
 
@@ -79,7 +81,7 @@ class SeriesService
     {
         return [
             'title' => $attributes['title'],
-            'slug' => $attributes['slug'] . '-' . now()->format('His'),
+            'slug' => $attributes['slug'],
             'description' => $attributes['description'],
             'episodes' => $attributes['episodes'],
             'price' => $attributes['price'],
