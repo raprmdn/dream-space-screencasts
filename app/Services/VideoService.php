@@ -39,13 +39,13 @@ class VideoService
         return Video::whereId($video)->withTrashed()->restore();
     }
 
-    public function forceDelete($video)
+    public function forceDelete($video): ?bool
     {
         $video = Video::whereId($video)->withTrashed()->first();
         return $video->forceDelete();
     }
 
-    private function fields(array $attributes)
+    private function fields(array $attributes): array
     {
         return [
             isset($attributes['id']), 'series_id' => $attributes['series']['value'],

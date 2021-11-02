@@ -20,12 +20,23 @@ export default function Show() {
 
     const storeHandler = (e) => {
         e.preventDefault();
-        post(route('series.add_videos_store', series.slug), {
+        post(route('videos.store'), {
             data,
             preserveScroll: true,
             onSuccess: () => {
                 reset()
                 window.$('#addVideoModal').modal('hide')
+            }
+        })
+    }
+
+    const updateHandler = (e) => {
+        e.preventDefault()
+        put(route('videos.update', data), {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset()
+                window.$('#updateVideoModal').modal('hide')
             }
         })
     }
@@ -152,7 +163,8 @@ export default function Show() {
                             <div className="d-flex justify-content-between align-items-center">
                                 <h3 className="font-weight-bolder text-dark">List Videos</h3>
                                 <a href="#" className="btn btn-primary font-weight-bold ml-2"
-                                   data-toggle="modal" data-target="#addVideoModal">
+                                   data-toggle="modal" data-target="#addVideoModal"
+                                   onClick={() => clearErrors()}>
                                     <i className="flaticon2-plus icon-1x"/> Add Video
                                 </a>
                             </div>
@@ -228,7 +240,7 @@ export default function Show() {
                                                                         setData({
                                                                             ...video,
                                                                             runtime: video.runtime.runtime_unformatted,
-                                                                            series: {value: video.series.id, label: video.series.title}
+                                                                            series: {value: series.id}
                                                                         });
                                                                         clearErrors();}
                                                                     }
@@ -271,6 +283,19 @@ export default function Show() {
                         errors,
                         processing,
                         submitLabel:"Submit"
+                    }}
+                />
+            </Modal>
+            <Modal trigger={"updateVideoModal"} title={`Update Video : ${data.title}`} size={"modal-lg"}>
+                <FormVideos
+                    {...{
+                        seriesData:series,
+                        data,
+                        setData,
+                        submitHandler:updateHandler,
+                        errors,
+                        processing,
+                        submitLabel:"Update"
                     }}
                 />
             </Modal>

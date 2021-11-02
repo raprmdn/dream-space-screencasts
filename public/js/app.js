@@ -8917,12 +8917,23 @@ function Show() {
 
   var storeHandler = function storeHandler(e) {
     e.preventDefault();
-    post(route('series.add_videos_store', series.slug), {
+    post(route('videos.store'), {
       data: data,
       preserveScroll: true,
       onSuccess: function onSuccess() {
         reset();
         window.$('#addVideoModal').modal('hide');
+      }
+    });
+  };
+
+  var updateHandler = function updateHandler(e) {
+    e.preventDefault();
+    put(route('videos.update', data), {
+      preserveScroll: true,
+      onSuccess: function onSuccess() {
+        reset();
+        window.$('#updateVideoModal').modal('hide');
       }
     });
   };
@@ -9125,6 +9136,9 @@ function Show() {
                 className: "btn btn-primary font-weight-bold ml-2",
                 "data-toggle": "modal",
                 "data-target": "#addVideoModal",
+                onClick: function onClick() {
+                  return clearErrors();
+                },
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("i", {
                   className: "flaticon2-plus icon-1x"
                 }), " Add Video"]
@@ -9258,8 +9272,7 @@ function Show() {
                               setData(_objectSpread(_objectSpread({}, video), {}, {
                                 runtime: video.runtime.runtime_unformatted,
                                 series: {
-                                  value: video.series.id,
-                                  label: video.series.title
+                                  value: series.id
                                 }
                               }));
                               clearErrors();
@@ -9316,6 +9329,19 @@ function Show() {
         errors: errors,
         processing: processing,
         submitLabel: "Submit"
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      trigger: "updateVideoModal",
+      title: "Update Video : ".concat(data.title),
+      size: "modal-lg",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_Components_Forms_FormVideos__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        seriesData: series,
+        data: data,
+        setData: setData,
+        submitHandler: updateHandler,
+        errors: errors,
+        processing: processing,
+        submitLabel: "Update"
       })
     })]
   });
