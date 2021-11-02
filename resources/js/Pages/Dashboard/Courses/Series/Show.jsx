@@ -5,6 +5,7 @@ import Breadcrumb from "../../../../Components/Breadcrumb";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import Modal from "../../../../Components/Modal";
 import FormVideos from "../../../../Components/Forms/FormVideos";
+import Swal from "sweetalert2";
 
 export default function Show() {
     const { data: series } = usePage().props.series
@@ -37,6 +38,25 @@ export default function Show() {
             onSuccess: () => {
                 reset()
                 window.$('#updateVideoModal').modal('hide')
+            }
+        })
+    }
+
+    const deleteHandler = (video) => {
+        Swal.fire({
+            title: `Are you sure want to delete the "${video.title}" video?`,
+            text: `Video not delete permanently. But User won't be able to watching the Video. Please be wise.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Discard',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                destroy(route('videos.delete', video) , {
+                    preserveScroll: true,
+                    resetOnSuccess: false,
+                })
             }
         })
     }
