@@ -12,8 +12,8 @@ export default function Header() {
                         <div className="d-flex align-items-stretch mr-3">
                             <div className="header-logo">
                                 <Link href="/">
-                                    <img alt="Logo" src="/assets/media/logos/logo-letter-9.png" className="logo-default max-h-40px" />
-                                    <img alt="Logo" src="/assets/media/logos/logo-letter-1.png" className="logo-sticky max-h-40px" />
+                                    <img alt="Logo" src="/assets/media/startup.png" className="logo-default max-h-50px" />
+                                    <img alt="Logo" src="/assets/media/startup.png" className="logo-sticky max-h-50px" />
                                 </Link>
                             </div>
                             <div className="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
@@ -358,65 +358,60 @@ export default function Header() {
                                                     <img alt="Logo" src="/assets/media/users/100_1.jpg" />
                                                 </div>
                                                 <div className="d-flex flex-column">
-                                                    <div className="d-flex align-items-center font-weight-bolder">{auth.user.name}
-                                                        {
-                                                            !auth.user.email_verified_at &&
-                                                            (
-                                                                <span className="label label-light-danger label-pill" data-container="body" data-toggle="tooltip" data-placement="right" title="Please verify your email.">
-                                                                    <i className="fas fa-exclamation-circle font-size-sm text-danger"/>
-                                                                </span>
-                                                            )
-                                                        }
-                                                    </div>
+                                                    <div className="d-flex align-items-center font-weight-bolder">{auth.user.name}</div>
                                                     <span className="font-weight-bold text-muted">{auth.user.email}</span>
                                                 </div>
                                             </div>
                                             <div className="separator separator-solid"/>
-                                            <div className="navi navi-bold navi-hover navi-link-rounded py-5">
-                                                <div className="navi-item px-5">
-                                                    <a href="#" className="navi-link">
-                                                        <span className="navi-icon ml-n2">
-                                                            <i className="far fa-user"/>
-                                                        </span>
+                                            <div className="navi navi-hover navi-active navi-accent navi-link-rounded-lg">
+                                                <li className="navi-item px-5 my-2">
+                                                    <a className="navi-link" href="#">
+                                                        <span className="navi-icon"><i className="flaticon2-user" /></span>
                                                         <span className="navi-text font-weight-bold">Profile</span>
+                                                        {
+                                                            !auth.user.email_verified_at &&
+                                                            (
+                                                                <span className="label label-light-danger font-weight-bold label-inline"
+                                                                      data-container="body"
+                                                                      data-toggle="tooltip"
+                                                                      data-placement="right"
+                                                                      title="Please verify your email.">Unverified</span>
+                                                            )
+                                                        }
                                                     </a>
-                                                    <a href="#" className="navi-link">
-                                                        <span className="navi-icon ml-n2">
-                                                            <i className="far fa-bookmark"/>
-                                                        </span>
+                                                </li>
+                                                <li className="navi-item px-5 mb-2">
+                                                    <a className="navi-link" href="#">
+                                                        <span className="navi-icon"><i className="fas fa-bookmark" /></span>
                                                         <span className="navi-text font-weight-bold">Watchlist</span>
                                                     </a>
-                                                </div>
-                                                <div className="separator separator-solid my-4"/>
-                                                <div className="navi-item px-5">
-                                                    <a href="#" className="navi-link">
-                                                            <span className="navi-icon ml-n2">
-                                                                <i className="far fa-file-video"/>
-                                                            </span>
-                                                        <span className="navi-text font-weight-bold">Purchased Series</span>
+                                                </li>
+                                                <div className="separator separator-solid"/>
+                                                <li className="navi-item px-5 my-2">
+                                                    <a className="navi-link" href="#">
+                                                        <span className="navi-icon"><i className="flaticon-medal" /></span>
+                                                        <span className="navi-text font-weight-bold">Series</span>
                                                     </a>
-                                                    <a href="#" className="navi-link">
-                                                            <span className="navi-icon ml-n2">
-                                                                <i className="fas fa-file-invoice"/>
-                                                            </span>
+                                                </li>
+                                                <li className="navi-item px-5 mb-2">
+                                                    <a className="navi-link" href="#">
+                                                        <span className="navi-icon"><i className="flaticon-price-tag" /></span>
                                                         <span className="navi-text font-weight-bold">Invoice</span>
                                                     </a>
-                                                </div>
-                                                <div className="separator separator-solid my-4"/>
-                                                <div className="navi-item px-5">
-                                                    <a href="#" className="navi-link">
-                                                            <span className="navi-icon ml-n2">
-                                                                <i className="flaticon2-gear"/>
-                                                            </span>
+                                                </li>
+                                                <div className="separator separator-solid"/>
+                                                <li className="navi-item px-5 my-2">
+                                                    <a className="navi-link" href="#">
+                                                        <span className="navi-icon"><i className="flaticon2-settings" /></span>
                                                         <span className="navi-text font-weight-bold">Settings</span>
                                                     </a>
+                                                </li>
+                                                <li className="navi-item px-5 mb-7">
                                                     <Link as="button" method="post" href={route('logout')} className="navi-link btn btn-block text-left">
-                                                            <span className="navi-icon ml-n2">
-                                                                <i className="fas fa-sign-out-alt"/>
-                                                            </span>
+                                                        <span className="navi-icon"><i className="fas fa-sign-out-alt" /></span>
                                                         <span className="navi-text font-weight-bold">Sign Out</span>
                                                     </Link>
-                                                </div>
+                                                </li>
                                             </div>
                                         </div>
                                     </div>

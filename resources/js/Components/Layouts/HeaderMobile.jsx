@@ -6,7 +6,7 @@ export default function HeaderMobile() {
         <>
             <div id="kt_header_mobile" className="header-mobile" style={{backgroundColor: '#13263c'}}>
                 <Link href="/">
-                    <img alt="Logo" src="/assets/media/logos/logo-letter-1.png" className="logo-default max-h-30px" />
+                    <img alt="Logo" src="/assets/media/startup.png" className="logo-default max-h-40px" />
                 </Link>
                 <div className="d-flex align-items-center">
                     <button className="btn btn-icon btn-hover-transparent-white p-0 ml-3" id="kt_header_mobile_topbar_toggle">
