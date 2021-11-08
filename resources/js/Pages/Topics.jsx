@@ -1,11 +1,11 @@
 import React from 'react';
 import App from "../Layouts/App";
 import Jumbotron from "../Components/Jumbotron";
-import {Head} from "@inertiajs/inertia-react"
-import CourseCard from "../Components/CourseCard";
+import {Head, usePage} from "@inertiajs/inertia-react"
 import ListTopics from "../Components/ListTopics";
 
 export default function Topics() {
+    const { data: topics } = usePage().props.topics
     return (
         <>
             <Head title="Dream Space - Topics"/>
@@ -32,14 +32,11 @@ export default function Topics() {
             <div className="d-flex flex-column-fluid mt-10">
                 <div className="container">
                     <div className="row">
-                        <ListTopics/>
-                        <ListTopics/>
-                        <ListTopics/>
-                        <ListTopics/>
-                        <ListTopics/>
-                        <ListTopics/>
-                        <ListTopics/>
-                        <ListTopics/>
+                        {
+                            topics.map((topic) => (
+                                <ListTopics key={topic.id} topic={topic}/>
+                            ))
+                        }
                     </div>
                 </div>
             </div>

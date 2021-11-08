@@ -12,6 +12,27 @@ class TopicService {
 
     use ImageTrait;
 
+    public function findAll(): TopicCollection
+    {
+        $topics = new TopicCollection(Topic::with(['series' => function($query) {
+                $query->withCount('videos');
+            }])
+            ->withCount(['series'])
+            ->orderBy('position')
+            ->get());
+
+        foreach ($topics as $topic) {
+            $sum = 0;
+            foreach ($topic['series'] as $topic_series) {
+                $sum += $topic_series['videos_count'];
+                $topic['videos_count'] = $sum;
+            }
+            unset($topic['series']);
+        }
+
+        return $topics;
+    }
+
     public function findAllWithParams($params) : TopicCollection
     {
         return new TopicCollection(Topic::withCount('series')->search($params));

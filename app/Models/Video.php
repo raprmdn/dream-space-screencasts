@@ -16,7 +16,7 @@ class Video extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function series()
+    public function series(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Series::class, 'series_id');
     }

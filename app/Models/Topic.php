@@ -44,7 +44,7 @@ class Topic extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function series()
+    public function series(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Series::class, 'series_topic', 'topic_id');
     }

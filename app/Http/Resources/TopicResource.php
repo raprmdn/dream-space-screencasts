@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Video;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TopicResource extends JsonResource
@@ -22,7 +23,8 @@ class TopicResource extends JsonResource
             'picture' => $this->topicPicture,
             'is_archived' => $this->is_archived,
             'position' => $this->position,
-            'series_count' => $this->when(isset($this->series_count), $this->series_count)
+            'series_count' => $this->when(isset($this->series_count), $this->series_count),
+            'videos_count' => $this->when(isset($this->videos_count), $this->videos_count),
         ];
     }
 }

@@ -55,7 +55,7 @@ class Series extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function topics()
+    public function topics(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Topic::class, 'series_topic', 'series_id');
     }
@@ -63,10 +63,9 @@ class Series extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function videos()
+    public function videos(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Video::class, 'series_id');
     }
-
 
 }

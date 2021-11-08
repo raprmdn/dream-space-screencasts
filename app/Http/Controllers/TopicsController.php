@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\TopicService;
 
 class TopicsController extends Controller
 {
+    protected $topicService;
+
+    public function __construct(TopicService $topicService)
+    {
+        $this->topicService = $topicService;
+    }
+
     public function topics()
     {
-        return inertia('Topics');
+        return inertia('Topics', [
+            'topics' => $this->topicService->findAll()
+        ]);
     }
 }
