@@ -14,19 +14,20 @@ class TopicService {
 
     public function findAll(): TopicCollection
     {
-        $topics = new TopicCollection(Topic::with(['series' => function($query) {
-                $query->withCount('videos');
-            }])
-            ->withCount(['series'])
-            ->orderBy('position')
-            ->get());
+        $topics = new TopicCollection(
+            Topic::with(['series' => function($query) {
+                    $query->select('id')->withCount('videos');
+                }])
+                ->withCount('series')
+                ->orderBy('position')
+                ->get()
+                ->map(function ($topic) {
+                    $topic->videos_count = $topic->series->sum('videos_count');
+                    return $topic;
+                })
+        );
 
         foreach ($topics as $topic) {
-            $sum = 0;
-            foreach ($topic['series'] as $topic_series) {
-                $sum += $topic_series['videos_count'];
-                $topic['videos_count'] = $sum;
-            }
             unset($topic['series']);
         }
 
