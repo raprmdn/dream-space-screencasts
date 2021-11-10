@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\TopicCollection;
+use App\Http\Resources\TopicResource;
 use App\Models\Topic;
 use App\Traits\ImageTrait;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,8 @@ class TopicService {
     public function findAll(): TopicCollection
     {
         $topics = new TopicCollection(
-            Topic::with(['series' => function($query) {
+            Topic::notArchived()
+                ->with(['series' => function($query) {
                     $query->select('id')->withCount('videos');
                 }])
                 ->withCount('series')
@@ -42,6 +44,11 @@ class TopicService {
     public function findAllOnlyTrashed($params) : TopicCollection
     {
         return new TopicCollection(Topic::onlyTrashed()->withCount('series')->search($params));
+    }
+
+    public function findBySlug($slug): Topic
+    {
+        return Topic::where('slug', $slug)->firstOrFail();
     }
 
     public function save(array $attributes) : Topic

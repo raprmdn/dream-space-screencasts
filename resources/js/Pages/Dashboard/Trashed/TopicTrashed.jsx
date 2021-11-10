@@ -32,17 +32,17 @@ export default function TopicTrashed() {
         <>
             <Head title="Dream Space | Trashed"/>
             <Breadcrumb
-                titleHeading="Trash Topics"
+                titleHeading="Trash Index"
                 item1="Dashboard"
                 item2="Trash"
-                item3="Topics" linkItem3={route('trash.topic_index')}
+                item3="Index" linkItem3={route('trash.topic_index')}
             />
             <div className="d-flex flex-column-fluid mb-11">
                 <div className="container">
                     <div className="card card-custom gutter-b">
                         <div className="card-header border-0 py-5">
                             <h3 className="card-title font-weight-bolder text-dark">
-                                Topics
+                                Index
                             </h3>
                             <div className="card-toolbar">
                                 <SearchFilter placeholder={"Search topics . . ."}/>

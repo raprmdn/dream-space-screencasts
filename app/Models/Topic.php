@@ -42,6 +42,18 @@ class Topic extends Model
     }
 
     /**
+     * Make sure topic not archived.
+     *
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeNotArchived($query)
+    {
+        return $query->where('is_archived', false);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function series(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

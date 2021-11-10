@@ -34,7 +34,7 @@ export default function Header() {
                                                 <span className="menu-text">Series</span>
                                             </Link>
                                         </li>
-                                        <li className={`menu-item menu-item-open menu-item-rel ${route().current('topics') ? 'menu-item-here' : ''}`}>
+                                        <li className={`menu-item menu-item-open menu-item-rel ${segmentUrl.split("/")[1] === 'topics' ? 'menu-item-here' : ''}`}>
                                             <Link href={route('topics')} className="menu-link">
                                                 <span className="menu-text">Topics</span>
                                             </Link>

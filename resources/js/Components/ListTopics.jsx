@@ -1,12 +1,13 @@
 import React from 'react';
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import {Link} from "@inertiajs/inertia-react";
 
 export default function ListTopics({topic}) {
     return (
         <>
             <div className="col-lg-3">
-                <a href="">
+                <Link href={route('topics.show', topic.slug)}>
                     <div className="d-flex align-items-center mb-5 bg-light-white bg-hover-white-o-3 rounded p-5 shadow-sm">
                         <span className="symbol symbol-35 overflow-hidden">
                             <LazyLoadImage
@@ -24,7 +25,7 @@ export default function ListTopics({topic}) {
                             </span>
                         </div>
                     </div>
-                </a>
+                </Link>
             </div>
         </>
     )

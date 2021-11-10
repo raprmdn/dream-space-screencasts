@@ -1,10 +1,10 @@
 import React from 'react';
-import App from "../Layouts/App";
-import Jumbotron from "../Components/Jumbotron";
+import App from "../../Layouts/App";
+import Jumbotron from "../../Components/Jumbotron";
 import {Head, usePage} from "@inertiajs/inertia-react"
-import ListTopics from "../Components/ListTopics";
+import ListTopics from "../../Components/ListTopics";
 
-export default function Topics() {
+export default function Index() {
     const { data: topics } = usePage().props.topics
     return (
         <>
@@ -44,4 +44,4 @@ export default function Topics() {
     )
 }
 
-Topics.layout = (page) => <App children={page}/>
+Index.layout = (page) => <App children={page}/>

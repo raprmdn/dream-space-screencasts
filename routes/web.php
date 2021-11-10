@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('home');
 Route::get('topics', [TopicsController::class, 'topics'])->name('topics');
+Route::get('topics/{topic:slug}', [TopicsController::class, 'show'])->name('topics.show');
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {
     Route::prefix('courses')->middleware('can:courses')->group(function () {
@@ -70,3 +71,5 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
         Route::delete('topic/{topic}', [TrashController::class, 'topicForce'])->name('trash.topic_force');
     });
 });
+
+
