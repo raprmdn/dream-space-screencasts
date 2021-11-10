@@ -20,7 +20,7 @@ class SeriesService
 
     public function findAllOnlyTrash($params): SeriesCollection
     {
-        return new SeriesCollection(Series::onlyTrashed()->search($params));
+        return new SeriesCollection(Series::withCount('videos')->onlyTrashed()->search($params));
     }
 
     public function findBySlug($slug): SeriesResource
@@ -37,7 +37,36 @@ class SeriesService
 
     public function findByTopic($topic): SeriesCollection
     {
-        return new SeriesCollection($topic->series()->latest()->paginate(9));
+        $series = $topic->series()->with(['videos'])
+            ->latest()
+            ->paginate(9);
+
+        $series->getCollection()
+            ->transform(function ($series) {
+                $series->hours = $series->videos->map(function ($times) {
+                    return $times->runtime;
+                });
+                $sum = strtotime('00:00:00');
+                $totals = 0;
+                foreach ($series->hours as $element) {
+                    $timeinsec = strtotime($element) - $sum;
+                    $totals = $totals + $timeinsec;
+                }
+                $h = intval($totals / 3600);
+                $totals = $totals - ($h * 3600);
+                $m = intval($totals / 60);
+                $s = $totals - ($m * 60);
+                unset($series->videos, $series->hours, $series->pivot);
+                $series->runtime = [
+                    'h' => $h,
+                    'm' => $m,
+                    's' => $s
+                ];
+
+                return $series;
+            });
+
+        return new SeriesCollection($series);
     }
 
     public function save($attributes): array

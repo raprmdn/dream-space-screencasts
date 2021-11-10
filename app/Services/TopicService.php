@@ -14,7 +14,7 @@ class TopicService {
 
     public function findAll(): TopicCollection
     {
-        $topics = new TopicCollection(
+        return new TopicCollection(
             Topic::notArchived()
                 ->with(['series' => function($query) {
                     $query->select('id')->withCount('videos');
@@ -24,15 +24,10 @@ class TopicService {
                 ->get()
                 ->map(function ($topic) {
                     $topic->videos_count = $topic->series->sum('videos_count');
+                    unset($topic->series);
                     return $topic;
                 })
         );
-
-        foreach ($topics as $topic) {
-            unset($topic['series']);
-        }
-
-        return $topics;
     }
 
     public function findAllWithParams($params) : TopicCollection

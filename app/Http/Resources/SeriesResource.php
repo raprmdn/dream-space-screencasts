@@ -41,7 +41,8 @@ class SeriesResource extends JsonResource
             'created_at' => $this->created_at->format('d M Y, H:i A'),
             'topics' => $this->whenLoaded('topics'),
             'videos' => VideoResource::collection($this->whenLoaded('videos')),
-            'videos_count' => $this->when(isset($this->videos_count), $this->videos_count)
+            'videos_count' => $this->when(isset($this->videos_count), $this->videos_count),
+            'runtime' => $this->runtime
         ];
     }
 }

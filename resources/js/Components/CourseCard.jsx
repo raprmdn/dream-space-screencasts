@@ -57,7 +57,11 @@ export default function CourseCard({course}) {
                         </span>
                         <span className="align-items-center">
                           <i className="flaticon2-hourglass-1 icon-1x mr-1" />
-                          2h 10m
+                            <span>
+                                <span>{course.runtime.h !== 0 ? `${course.runtime.h}h ` : ''}</span>
+                                <span>{course.runtime.m !== 0 ? `${course.runtime.m}m ` : ''}</span>
+                                <span>{course.runtime.s}s </span>
+                            </span>
                         </span>
                     </div>
                 </div>
