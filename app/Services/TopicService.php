@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Http\Resources\TopicCollection;
-use App\Http\Resources\TopicResource;
 use App\Models\Topic;
 use App\Traits\ImageTrait;
 use Illuminate\Support\Facades\Storage;
@@ -48,7 +47,7 @@ class TopicService {
 
     public function findBySlug($slug): Topic
     {
-        return Topic::where('slug', $slug)->firstOrFail();
+        return Topic::whereSlug($slug)->firstOrFail();
     }
 
     public function save(array $attributes) : Topic

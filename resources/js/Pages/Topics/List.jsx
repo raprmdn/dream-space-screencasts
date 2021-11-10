@@ -1,10 +1,14 @@
 import React from 'react';
 import App from "../../Layouts/App";
-import {Head} from "@inertiajs/inertia-react";
+import {Head, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
+import CourseCard from "../../Components/CourseCard";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function List({topic}) {
-    console.log(topic)
+    const { data: series, meta:{ links, from } } = usePage().props.series
+    // console.log(series)
     return (
         <>
             <Head title={`Dream Space - ${topic.name}`}/>
@@ -33,33 +37,56 @@ export default function List({topic}) {
                         </div>
                     </div>
                     <div className="col-lg-4">
-                        <div className="card card-custom card-stretch gutter-b bg-transparent shadow-sm">
-                            <div className="card-body d-flex flex-column">
-                                <div className="text-center text-white">
-                                    <span>
-                                        <img src="/assets/media/stock-600x400/img-12.jpg" className="mw-100 rounded-lg" />
-                                    </span>
-                                    <div className="mt-2">
-                                        <span className="font-weight-boldest font-size-h3 m-0 mb-1">
-                                            Mari Kita Bangun Screencasts
-                                        </span>
-                                    </div>
-                                    <div className="mt-2">
-                                        <span className="font-weight-bold m-0 mb-1">
-                                            The latest Series in {topic.name}
-                                        </span>
-                                    </div>
-                                    <div className="mt-4">
-                                        <a href="#" className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
-                                            Preview
-                                        </a>
+                        {
+                            series.slice(0, 1).map((course) => (
+                                <div key={course.id}>
+                                    <div className="card card-custom card-stretch gutter-b bg-transparent shadow-sm">
+                                        <div className="card-body d-flex flex-column">
+                                            <div className="text-center text-white">
+                                                <span>
+                                                    <LazyLoadImage
+                                                        src={course.thumbnail}
+                                                        effect="blur"
+                                                        width={350}
+                                                        height={200}
+                                                        alt={course.slug}
+                                                        className="mw-100 rounded-lg" />
+                                                </span>
+                                                <div className="mt-2">
+                                                    <span className="font-weight-boldest font-size-h3 m-0 mb-1">
+                                                        {course.title}
+                                                    </span>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <div className="text-muted">
+                                                        <small>Added {course.created_at}</small>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-4">
+                                                    <a href="#" className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
+                                                        Preview
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            ))
+                        }
                     </div>
                 </div>
             </Jumbotron>
+            <div className="d-flex flex-column-fluid mt-10">
+                <div className="container">
+                    <div className="row">
+                        {
+                            series.map((course) => (
+                                <CourseCard key={course.id} course={course}/>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
         </>
     )
 }

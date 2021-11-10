@@ -26,13 +26,18 @@ class SeriesService
     public function findBySlug($slug): SeriesResource
     {
         return new SeriesResource(
-            Series::where('slug', $slug)
+            Series::whereSlug($slug)
             ->with(['topics:id,name', 'videos' => function($q) {
                 $q->orderBy('episode');
             }])
             ->withCount('videos')
             ->first()
         );
+    }
+
+    public function findByTopic($topic): SeriesCollection
+    {
+        return new SeriesCollection($topic->series()->latest()->paginate(9));
     }
 
     public function save($attributes): array

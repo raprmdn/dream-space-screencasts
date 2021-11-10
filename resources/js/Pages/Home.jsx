@@ -30,25 +30,25 @@ export default function Home() {
                         title={"Starter"}
                         description={"Temukan courses yang diminati untuk membantu Anda agar dapat menemukan pengalaman yang lebih jauh."}/>
                     <div className="row">
-                        <CourseCard/>
-                        <CourseCard/>
-                        <CourseCard/>
+                        {/*<CourseCard/>*/}
+                        {/*<CourseCard/>*/}
+                        {/*<CourseCard/>*/}
                     </div>
                     <SectionFeature
                         title={"Recently Updated"}
                         description={"Penasaran terhadap apa saja courses terbaru? berikut di bawah ini adalah courses yang baru saja diperbarui."}/>
                     <div className="row">
-                        <CourseCard/>
-                        <CourseCard/>
-                        <CourseCard/>
+                        {/*<CourseCard/>*/}
+                        {/*<CourseCard/>*/}
+                        {/*<CourseCard/>*/}
                     </div>
                     <SectionFeature
                         title={"Top Courses"}
                         description={"Mungkin Anda akan penasaran, apa saja courses yang paling banyak diminati."}/>
                     <div className="row">
-                        <CourseCard/>
-                        <CourseCard/>
-                        <CourseCard/>
+                        {/*<CourseCard/>*/}
+                        {/*<CourseCard/>*/}
+                        {/*<CourseCard/>*/}
                     </div>
                 </div>
             </div>
