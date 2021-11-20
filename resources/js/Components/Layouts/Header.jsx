@@ -29,8 +29,8 @@ export default function Header() {
                                         {/*        <span className="menu-text">Flash Sale</span>*/}
                                         {/*    </Link>*/}
                                         {/*</li>*/}
-                                        <li className="menu-item menu-item-submenu menu-item-rel">
-                                            <Link href="/" className="menu-link">
+                                        <li className={`menu-item menu-item-open menu-item-rel ${segmentUrl.split("/")[1] === 'series' ? 'menu-item-here' : ''}`}>
+                                            <Link href={route('series')} className="menu-link">
                                                 <span className="menu-text">Series</span>
                                             </Link>
                                         </li>

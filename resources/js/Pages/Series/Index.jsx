@@ -1,32 +1,31 @@
 import React from 'react';
 import App from "../../Layouts/App";
-import {Head, usePage} from "@inertiajs/inertia-react";
+import {Head, Link, usePage} from "@inertiajs/inertia-react";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 import Jumbotron from "../../Components/Jumbotron";
 import CourseCard from "../../Components/CourseCard";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 
-export default function List({topic}) {
+export default function Index() {
     const { data: series, meta:{ links, from } } = usePage().props.series
     return (
         <>
-            <Head title={`Dream Space - ${topic.name}`}/>
+            <Head title="Dream Space - Series"/>
             <Jumbotron>
                 <div className="container row d-flex align-items-center align-center">
                     <div className="col-lg-8">
                         <div className="d-flex flex-column">
-                            <h1 className="text-white font-weight-boldest mb-10">Explore Topic
+                            <h1 className="text-white font-weight-boldest mb-10">Explore
                                 <span style={{background: 'linear-gradient(to right, #06b6d4 0%, #4ade80 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
-                                <span> {topic.name}!</span>
-                            </span>
+                                    <span> Series</span>
+                                </span>
                             </h1>
                             <p className="font-weight-bold font-size-h5 text-muted">
-                                Di bawah ini merupakan Series yang berkaitan dengan Topic <span className="text-white"><b>{topic.name}</b></span> yang tersedia pada Platform
-                                <span className="text-white"> <b>Dream Space Screencasts</b>. </span>
+                                Di bawah ini merupakan Series yang tersedia pada Platform <span className="text-white"><b> Dream Space Screencasts</b>. </span>
                                 Pasti-nya akan berguna untuk menambah keterampilan maupun pengalaman Anda.
                             </p>
-                            <p className="font-weight-bold font-size-h5 text-muted">Setiap Topic yang tersedia diharapkan dapat
-                                mempermudah Anda untuk memutuskan apa yang akan Anda harus pelajari selanjutnya.</p>
+                            <p className="font-weight-bold font-size-h5 text-muted">Jika Anda bingung ingin memulainya dari mana,
+                                Anda bisa melihat pada Menu <Link href={route('topics')} className="text-white text-hover-info"><b>Topics</b>. </Link>
+                            </p>
                             <p className="font-weight-bold font-size-h5 text-muted">Tips dan teknik apapun itu yang telah
                                 Anda pelajari, jangan ragu untuk selalu memperbarui kemampuan sesuai keinginan Anda, karena itu akan sangat
                                 bermanfaat bagi Anda untuk menggapai Masa Depan yang diinginkan.
@@ -90,4 +89,4 @@ export default function List({topic}) {
     )
 }
 
-List.layout = (page) => <App children={page}/>
+Index.layout = (page) => <App children={page}/>

@@ -10,9 +10,13 @@ export default function CourseCard({course}) {
                 <div className="ribbon ribbon-clip ribbon-left">
                     <div className="ribbon-target" style={{top: '12px'}}>
                         <span className="ribbon-inner bg-success" />
-                        <Link href="#" className="text-white text-hover-white">
-                            Laravel
-                        </Link>
+                        {
+                            course.topics.slice(0, 1).map((topic) => (
+                                <Link href="#" className="text-white text-hover-white" key={topic.id}>
+                                    {topic.name}
+                                </Link>
+                            ))
+                        }
                     </div>
                 </div>
                 {

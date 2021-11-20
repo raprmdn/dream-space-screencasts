@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\{Courses\SeriesController,
+use App\Http\Controllers\{CourseController,
+    Courses\SeriesController,
     Courses\VideoController,
     IndexController,
     Topic\TopicController,
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', IndexController::class)->name('home');
 Route::get('topics', [TopicsController::class, 'topics'])->name('topics');
 Route::get('topics/{topic:slug}', [TopicsController::class, 'show'])->name('topics.show');
+Route::get('series', [CourseController::class, 'index'])->name('series');
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {
     Route::prefix('courses')->middleware('can:courses')->group(function () {

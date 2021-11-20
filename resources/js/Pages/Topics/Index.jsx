@@ -14,8 +14,8 @@ export default function Index() {
                     <div className="d-flex flex-column">
                             <h1 className="text-white font-weight-boldest mb-10">Explore Topics</h1>
                             <p className="font-weight-bold font-size-h5 text-muted">
-                                Ini merupakan <span className="text-white"><u><b>Topics</b></u></span> yang tersedia pada Platform
-                                <span className="text-white"> <u><b>Dream Space Screencasts</b></u>. </span>
+                                Ini merupakan <span className="text-white"><b>Topics</b></span> yang tersedia pada Platform
+                                <span className="text-white"> <b>Dream Space Screencasts</b>. </span>
                                 Pasti-nya akan berguna untuk menambah keterampilan maupun pengalaman Anda.
                             </p>
                             <p className="font-weight-bold font-size-h5 text-muted">Setiap Topic yang tersedia diharapkan dapat

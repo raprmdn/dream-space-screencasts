@@ -13,6 +13,19 @@ class SeriesService
 {
     use ImageTrait;
 
+    public function findAll(): SeriesCollection
+    {
+        $series = Series::with(['topics:id,name,slug', 'videos'])
+            ->latest()
+            ->paginate(9);
+        $this->castingRuntime($series);
+        foreach ($series as $course) {
+            unset($course->videos);
+        }
+
+        return new SeriesCollection($series);
+    }
+
     public function findAllWithParams($params): SeriesCollection
     {
         return new SeriesCollection(Series::withCount('videos')->search($params));
@@ -37,34 +50,13 @@ class SeriesService
 
     public function findByTopic($topic): SeriesCollection
     {
-        $series = $topic->series()->with(['videos'])
+        $series = $topic->series()->with(['topics:id,name,slug', 'videos'])
             ->latest()
             ->paginate(9);
-
-        $series->getCollection()
-            ->transform(function ($series) {
-                $series->hours = $series->videos->map(function ($times) {
-                    return $times->runtime;
-                });
-                $sum = strtotime('00:00:00');
-                $totals = 0;
-                foreach ($series->hours as $element) {
-                    $timeinsec = strtotime($element) - $sum;
-                    $totals = $totals + $timeinsec;
-                }
-                $h = intval($totals / 3600);
-                $totals = $totals - ($h * 3600);
-                $m = intval($totals / 60);
-                $s = $totals - ($m * 60);
-                unset($series->videos, $series->hours, $series->pivot);
-                $series->runtime = [
-                    'h' => $h,
-                    'm' => $m,
-                    's' => $s
-                ];
-
-                return $series;
-            });
+        $this->castingRuntime($series);
+        foreach ($series as $course) {
+            unset($course->videos, $course->hours, $series->pivot);
+        }
 
         return new SeriesCollection($series);
     }
@@ -130,5 +122,32 @@ class SeriesService
             'is_free' => $attributes['is_free'],
             'archived_at' => $attributes['archived_at'] ? now() : null
         ];
+    }
+
+    private function castingRuntime($series)
+    {
+        $series->getCollection()
+            ->transform(function ($series) {
+                $series->hours = $series->videos->map(function ($times) {
+                    return $times->runtime;
+                });
+                $sum = strtotime('00:00:00');
+                $totals = 0;
+                foreach ($series->hours as $element) {
+                    $timeinsec = strtotime($element) - $sum;
+                    $totals = $totals + $timeinsec;
+                }
+                $h = intval($totals / 3600);
+                $totals = $totals - ($h * 3600);
+                $m = intval($totals / 60);
+                $s = $totals - ($m * 60);
+                $series->runtime = [
+                    'h' => $h,
+                    'm' => $m,
+                    's' => $s
+                ];
+
+                return $series;
+            });
     }
 }
