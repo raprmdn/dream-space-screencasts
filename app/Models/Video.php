@@ -32,7 +32,7 @@ class Video extends Model
     public function scopeSearch($query, $params)
     {
         return $query->where('title', 'ilike', '%' . $params . '%')
-            ->latest()->paginate(10)
+            ->latest()->paginate(20)
             ->appends(request()->only('search'));
     }
 }

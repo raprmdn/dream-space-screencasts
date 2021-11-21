@@ -42,7 +42,7 @@ class TopicService {
 
     public function findBySlug($slug): Topic
     {
-        return Topic::whereSlug($slug)->firstOrFail();
+        return Topic::whereSlug($slug)->firstOrFail(['id', 'name', 'slug']);
     }
 
     public function save(array $attributes) : Topic

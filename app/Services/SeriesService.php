@@ -16,6 +16,7 @@ class SeriesService
     public function findAll(): SeriesCollection
     {
         $series = Series::with(['topics:id,name,slug', 'videos'])
+            ->notArchived()
             ->latest()
             ->paginate(9);
         $this->castingRuntime($series);
@@ -51,6 +52,7 @@ class SeriesService
     public function findByTopic($topic): SeriesCollection
     {
         $series = $topic->series()->with(['topics:id,name,slug', 'videos'])
+            ->notArchived()
             ->latest()
             ->paginate(9);
         $this->castingRuntime($series);

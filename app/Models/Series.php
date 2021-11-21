@@ -38,6 +38,18 @@ class Series extends Model
     }
 
     /**
+     * Make sure the Series not archived.
+     *
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeNotArchived($query)
+    {
+        return $query->where('archived_at', null);
+    }
+
+    /**
      * Query searching title series.
      *
      * @param $query
@@ -48,7 +60,7 @@ class Series extends Model
     public function scopeSearch($query, $params)
     {
         return $query->where('title', 'ilike', '%' . $params . '%')
-            ->latest()->paginate(10)
+            ->latest()->paginate(20)
             ->appends(request()->only('search'));
     }
 
