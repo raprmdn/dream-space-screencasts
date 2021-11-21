@@ -46,7 +46,6 @@ export default function List({topic}) {
                                                     <LazyLoadImage
                                                         src={course.thumbnail}
                                                         effect="blur"
-                                                        width={350}
                                                         height={200}
                                                         alt={course.slug}
                                                         className="mw-100 rounded-lg" />

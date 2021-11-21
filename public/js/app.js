@@ -4790,30 +4790,13 @@ function CourseCard(_ref) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
     className: "col-xl-4 mb-5",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-      className: "card card-custom card-stretch gutter-b",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "card card-custom card-stretch gutter-b shadow-sm",
+      children: [course.is_discount && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
         className: "ribbon ribbon-clip ribbon-left",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           className: "ribbon-target",
           style: {
             top: '12px'
-          },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
-            className: "ribbon-inner bg-success"
-          }), course.topics.slice(0, 1).map(function (topic) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-              href: "#",
-              className: "text-white text-hover-white",
-              children: topic.name
-            }, topic.id);
-          })]
-        })
-      }), course.is_discount && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-        className: "ribbon ribbon-clip ribbon-left",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-          className: "ribbon-target",
-          style: {
-            top: '50px'
           },
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
             className: "ribbon-inner bg-danger"
@@ -4832,17 +4815,23 @@ function CourseCard(_ref) {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_2__.LazyLoadImage, {
               src: course.thumbnail,
               effect: "blur",
-              width: 350,
-              height: 200,
+              height: 210,
               alt: course.slug,
               className: "mw-100 rounded-lg"
             })
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           className: "align-items-center py-5",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
+          children: [course.topics.map(function (topic) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+              href: route('topics.show', topic.slug),
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("small", {
+                children: [topic.name, " \xA0"]
+              })
+            }, topic.id);
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("a", {
             href: "#",
-            className: "text-dark-75 text-hover-primary font-weight-bolder font-size-h6-md m-0",
+            className: "text-dark-75 text-hover-primary font-weight-bolder font-size-h6-md m-0 mt-1",
             style: {
               display: '-webkit-box',
               WebkitBoxOrient: 'vertical',
@@ -12328,7 +12317,6 @@ function Index() {
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_3__.LazyLoadImage, {
                         src: course.thumbnail,
                         effect: "blur",
-                        width: 350,
                         height: 200,
                         alt: course.slug,
                         className: "mw-100 rounded-lg"
@@ -12570,7 +12558,6 @@ function List(_ref) {
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_5__.LazyLoadImage, {
                         src: course.thumbnail,
                         effect: "blur",
-                        width: 350,
                         height: 200,
                         alt: course.slug,
                         className: "mw-100 rounded-lg"

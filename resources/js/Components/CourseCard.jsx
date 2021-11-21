@@ -6,23 +6,11 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 export default function CourseCard({course}) {
     return (
         <div className="col-xl-4 mb-5">
-            <div className="card card-custom card-stretch gutter-b">
-                <div className="ribbon ribbon-clip ribbon-left">
-                    <div className="ribbon-target" style={{top: '12px'}}>
-                        <span className="ribbon-inner bg-success" />
-                        {
-                            course.topics.slice(0, 1).map((topic) => (
-                                <Link href="#" className="text-white text-hover-white" key={topic.id}>
-                                    {topic.name}
-                                </Link>
-                            ))
-                        }
-                    </div>
-                </div>
+            <div className="card card-custom card-stretch gutter-b shadow-sm">
                 {
                     course.is_discount && (
                         <div className="ribbon ribbon-clip ribbon-left">
-                            <div className="ribbon-target" style={{top: '50px'}}>
+                            <div className="ribbon-target" style={{top: '12px'}}>
                                 <span className="ribbon-inner bg-danger" />
                                 <a href="#" className="text-white text-hover-white">
                                     Discount
@@ -37,15 +25,21 @@ export default function CourseCard({course}) {
                             <LazyLoadImage
                                 src={course.thumbnail}
                                 effect="blur"
-                                width={350}
-                                height={200}
+                                height={210}
                                 alt={course.slug}
                                 className="mw-100 rounded-lg" />
                         </a>
                     </div>
                     <div className="align-items-center py-5">
+                        {
+                            course.topics.map((topic) => (
+                                <Link href={route('topics.show', topic.slug)} key={topic.id}>
+                                    <small>{topic.name} &nbsp;</small>
+                                </Link>
+                            ))
+                        }
                         <a href="#"
-                           className="text-dark-75 text-hover-primary font-weight-bolder font-size-h6-md m-0"
+                           className="text-dark-75 text-hover-primary font-weight-bolder font-size-h6-md m-0 mt-1"
                            style={{display: '-webkit-box',WebkitBoxOrient: 'vertical',
                                WebkitLineClamp: 1, overflow: 'hidden', textOverflow: 'ellipsis'}}>
                             {course.title}
