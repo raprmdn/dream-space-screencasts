@@ -21,14 +21,14 @@ export default function CourseCard({course}) {
                 }
                 <div className="card-body d-flex flex-column">
                     <div className="text-center">
-                        <a href="#">
+                        <Link href={route('series.show', course.slug)}>
                             <LazyLoadImage
                                 src={course.thumbnail}
                                 effect="blur"
                                 height={210}
                                 alt={course.slug}
                                 className="mw-100 rounded-lg" />
-                        </a>
+                        </Link>
                     </div>
                     <div className="align-items-center py-5">
                         {
@@ -38,12 +38,12 @@ export default function CourseCard({course}) {
                                 </Link>
                             ))
                         }
-                        <a href="#"
+                        <Link href={route('series.show', course.slug)}
                            className="text-dark-75 text-hover-primary font-weight-bolder font-size-h6-md m-0 mt-1"
                            style={{display: '-webkit-box',WebkitBoxOrient: 'vertical',
                                WebkitLineClamp: 1, overflow: 'hidden', textOverflow: 'ellipsis'}}>
                             {course.title}
-                        </a>
+                        </Link>
                         <div className="d-flex mt-3">
                             <p className="font-weight-bold text-dark-50 text-hover-dark-75">Rp. {course.price.price_formatted},-</p>
                         </div>

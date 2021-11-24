@@ -1,6 +1,6 @@
 import React from 'react';
 import App from "../../Layouts/App";
-import {Head, usePage} from "@inertiajs/inertia-react";
+import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
 import CourseCard from "../../Components/CourseCard";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -13,7 +13,7 @@ export default function List({topic}) {
             <Head title={`Dream Space - ${topic.name}`}/>
             <Jumbotron>
                 <div className="container row d-flex align-items-center align-center">
-                    <div className="col-lg-8">
+                    <div className="col-lg-8 py-10">
                         <div className="d-flex flex-column">
                             <h1 className="text-white font-weight-boldest mb-10">Explore Topic
                                 <span style={{background: 'linear-gradient(to right, #06b6d4 0%, #4ade80 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
@@ -35,7 +35,7 @@ export default function List({topic}) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-4">
+                    <div className="col-lg-4 d-none d-lg-flex">
                         {
                             series.slice(0, 1).map((course) => (
                                 <div key={course.id}>
@@ -61,9 +61,9 @@ export default function List({topic}) {
                                                     </div>
                                                 </div>
                                                 <div className="mt-4">
-                                                    <a href="#" className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
+                                                    <Link href={route('series.show', course.slug)} className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
                                                         Preview
-                                                    </a>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -78,9 +78,18 @@ export default function List({topic}) {
                 <div className="container">
                     <div className="row">
                         {
-                            series.map((course) => (
-                                <CourseCard key={course.id} course={course}/>
-                            ))
+                            series.length > 0
+                            ?
+                                series.map((course) => (
+                                    <CourseCard key={course.id} course={course}/>
+                                ))
+
+                            :
+                                <div className="d-flex flex-column flex-center w-100">
+                                    <h1 className="text-center mb-5 font-size-h1-lg font-weight-boldest">
+                                        Stay Tuned! New Series is Coming Soon!
+                                    </h1>
+                                </div>
                         }
                     </div>
                 </div>

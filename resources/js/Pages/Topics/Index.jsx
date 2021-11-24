@@ -11,7 +11,7 @@ export default function Index() {
             <Head title="Dream Space - Topics"/>
             <Jumbotron>
                 <div className="container">
-                    <div className="d-flex flex-column">
+                    <div className="d-flex flex-column py-10">
                             <h1 className="text-white font-weight-boldest mb-10">Explore Topics</h1>
                             <p className="font-weight-bold font-size-h5 text-muted">
                                 Ini merupakan <span className="text-white"><b>Topics</b></span> yang tersedia pada Platform

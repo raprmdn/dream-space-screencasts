@@ -19,7 +19,12 @@ class SeriesService
             ->notArchived()
             ->latest()
             ->paginate(9);
-        $this->castingRuntime($series);
+
+        $series->getCollection()->transform(function ($series) {
+            $this->castingRuntime($series);
+            return $series;
+        });
+
         foreach ($series as $course) {
             unset($course->videos);
         }
@@ -39,14 +44,17 @@ class SeriesService
 
     public function findBySlug($slug): SeriesResource
     {
-        return new SeriesResource(
-            Series::whereSlug($slug)
-            ->with(['topics:id,name', 'videos' => function($q) {
+        $series = Series::whereSlug($slug)
+            ->with(['topics:id,name,slug', 'videos' => function($q) {
                 $q->orderBy('episode');
             }])
             ->withCount('videos')
-            ->first()
-        );
+            ->first();
+
+        $this->castingRuntime($series);
+        unset($series->hours);
+
+        return new SeriesResource($series);
     }
 
     public function findByTopic($topic): SeriesCollection
@@ -55,7 +63,12 @@ class SeriesService
             ->notArchived()
             ->latest()
             ->paginate(9);
-        $this->castingRuntime($series);
+
+        $series->getCollection()->transform(function ($series) {
+            $this->castingRuntime($series);
+            return $series;
+        });
+
         foreach ($series as $course) {
             unset($course->videos, $course->hours, $series->pivot);
         }
@@ -128,28 +141,27 @@ class SeriesService
 
     private function castingRuntime($series)
     {
-        $series->getCollection()
-            ->transform(function ($series) {
-                $series->hours = $series->videos->map(function ($times) {
-                    return $times->runtime;
-                });
-                $sum = strtotime('00:00:00');
-                $totals = 0;
-                foreach ($series->hours as $element) {
-                    $timeinsec = strtotime($element) - $sum;
-                    $totals = $totals + $timeinsec;
-                }
-                $h = intval($totals / 3600);
-                $totals = $totals - ($h * 3600);
-                $m = intval($totals / 60);
-                $s = $totals - ($m * 60);
-                $series->runtime = [
-                    'h' => $h,
-                    'm' => $m,
-                    's' => $s
-                ];
+        $series->hours = $series->videos->map(function ($times) {
+            return $times->runtime;
+        });
 
-                return $series;
-            });
+        $sum = strtotime('00:00:00');
+        $totals = 0;
+
+        foreach ($series->hours as $element) {
+            $timeinsec = strtotime($element) - $sum;
+            $totals = $totals + $timeinsec;
+        }
+
+        $h = intval($totals / 3600);
+        $totals = $totals - ($h * 3600);
+        $m = intval($totals / 60);
+        $s = $totals - ($m * 60);
+
+        $series->runtime = [
+            'h' => $h,
+            'm' => $m,
+            's' => $s
+        ];
     }
 }

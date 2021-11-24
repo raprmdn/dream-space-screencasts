@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Series;
 use App\Services\SeriesService;
 
 class CourseController extends Controller
@@ -17,6 +18,13 @@ class CourseController extends Controller
     {
         return inertia('Series/Index', [
             'series' => $this->seriesService->findAll()
+        ]);
+    }
+
+    public function show(Series $series)
+    {
+        return inertia('Series/Show', [
+            'series' => $this->seriesService->findBySlug($series->slug)
         ]);
     }
 }

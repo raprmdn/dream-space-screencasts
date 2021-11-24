@@ -12,7 +12,7 @@ export default function Index() {
             <Head title="Dream Space - Series"/>
             <Jumbotron>
                 <div className="container row d-flex align-items-center align-center">
-                    <div className="col-lg-8">
+                    <div className="col-lg-8 py-10">
                         <div className="d-flex flex-column">
                             <h1 className="text-white font-weight-boldest mb-10">Explore
                                 <span style={{background: 'linear-gradient(to right, #06b6d4 0%, #4ade80 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
@@ -34,7 +34,7 @@ export default function Index() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-4">
+                    <div className="col-lg-4 d-none d-lg-flex">
                         {
                             series.slice(0, 1).map((course) => (
                                 <div key={course.id}>
@@ -60,9 +60,9 @@ export default function Index() {
                                                     </div>
                                                 </div>
                                                 <div className="mt-4">
-                                                    <a href="#" className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
+                                                    <Link href={route('series.show', course.slug)} className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
                                                         Preview
-                                                    </a>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>

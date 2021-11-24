@@ -45,7 +45,6 @@ export default function Edit() {
         e.preventDefault()
         data._method = 'put'
         post(route('series.update', series), {
-            preserveScroll: true,
             onStart: () => {
                 KTApp.block('#block_ui_form', {
                     overlayColor: '#000000',
