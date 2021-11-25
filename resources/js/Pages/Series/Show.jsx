@@ -2,11 +2,11 @@ import React from 'react';
 import App from "../../Layouts/App";
 import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
-import {LazyLoadImage} from "react-lazy-load-image-component";
 
 export default function Show() {
     const { auth } = usePage().props
     const { data: series } = usePage().props.series
+    const latestVideo = series.videos[series.videos.length - 1] ?? null;
     return (
         <>
             <Head title={`Dream Space - ${series.title}`}>
@@ -37,7 +37,24 @@ export default function Show() {
                             <div className="d-block d-lg-flex mt-2">
                                 <div className="d-flex align-items-center pr-5 pt-2">
                                     <i className="flaticon-price-tag pr-3"/>
-                                    <span className="text-muted font-weight-bold">Rp.{series.price.price_formatted},-</span>
+                                    <span className="text-muted font-weight-bold">
+                                        {
+                                            series.discount.discount_unformatted
+                                            ?
+                                                <>Rp. {series.discount.discount_formatted},-</>
+                                            :
+                                                <>
+                                                    {
+                                                        series.price.price_unformatted
+                                                        ?
+                                                            <>Rp.{series.price.price_formatted},-</>
+                                                        :
+                                                            <>Free Series</>
+                                                    }
+                                                </>
+
+                                        }
+                                    </span>
                                 </div>
                                 <div className="d-flex align-items-center pr-5 pt-2">
                                     <i className="far fa-calendar-plus pr-3"/>
@@ -80,13 +97,20 @@ export default function Show() {
                                         <i className="fas fa-play-circle mr-1"/>
                                         Start
                                     </Link>
-                                    <Link href={"#"} className="btn btn-light font-weight-bold mr-5">
-                                        <i className="flaticon-shopping-basket mr-1"/>
-                                        Add to Carts
-                                    </Link>
+                                    {
+                                        series.price.price_unformatted
+                                        ?
+                                            <Link href={"#"} className="btn btn-light font-weight-bold mr-5">
+                                                <i className="flaticon-shopping-basket mr-1"/>
+                                                Add Carts
+                                            </Link>
+                                        :
+                                            <></>
+
+                                    }
                                     <Link href={"#"} className="btn btn-light font-weight-bold mr-5">
                                         <i className="far fa-bookmark mr-1"/>
-                                        Add to Watchlist
+                                        Add Watchlist
                                     </Link>
                                 </div>
                                 :
@@ -97,37 +121,38 @@ export default function Show() {
                         </div>
                     </div>
                     <div className="col-lg-4 d-none d-lg-flex">
-                        <div key={series.id}>
-                            <div className="card card-custom card-stretch gutter-b bg-transparent shadow-sm">
-                                <div className="card-body d-flex flex-column">
-                                    <div className="text-center text-white">
-                                        <span>
-                                            <LazyLoadImage
-                                                src={series.thumbnail}
-                                                effect="blur"
-                                                height={200}
-                                                alt={series.slug}
-                                                className="mw-100 rounded-lg" />
-                                        </span>
-                                        <div className="mt-2">
-                                            <span className="font-weight-boldest font-size-h3 m-0 mb-1">
-                                                {series.title}
+                        {
+                            latestVideo && (
+                                <div>
+                                    <div className="card card-custom card-stretch gutter-b bg-transparent shadow-sm">
+                                        <div className="card-body d-flex flex-column">
+                                            <div className="text-center text-white">
+                                            <span className="font-weight-boldest"
+                                                  style={{fontSize: '6rem', background: 'linear-gradient(to right, #06b6d4 0%, #4ade80 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
+                                                {latestVideo.episode}
                                             </span>
-                                        </div>
-                                        <div className="mt-2">
-                                            <div className="text-muted">
-                                                <small>Added {series.created_at}</small>
+                                                <div className="mt-2">
+                                                <span className="font-weight-boldest font-size-h3 m-0 mb-1">
+                                                    {latestVideo.title}
+                                                </span>
+                                                </div>
+                                                <div className="mt-2">
+                                                    <div className="text-muted">
+                                                        <span>Latest Episode in this Series <br/></span>
+                                                        <small>Added {latestVideo.created_at}</small>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-4">
+                                                    <Link href={"#"} className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
+                                                        Watch
+                                                    </Link>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="mt-4">
-                                            <Link href={route('series.show', series.slug)} className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
-                                                Watch
-                                            </Link>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            )
+                        }
                     </div>
                 </div>
             </Jumbotron>
@@ -135,30 +160,84 @@ export default function Show() {
                 <div className="container">
                     <div className="row">
                         <div className="col-xl-6">
-                            <div className="card card-custom card-stretch gutter-b">
-                                <div className="card-body pt-7">
-                                    <div data-scroll="true" data-height="800">
-                                        {
-                                            series.videos.map((video) => (
-                                                <Link key={video.id} href={"#"} className="d-flex align-items-center bg-hover-light-o-2 border border-1 rounded p-5 mb-4">
-                                                    <div className="symbol symbol-circle mr-5">
-                                                        <span className="symbol-label font-size-h5">{video.episode}</span>
-                                                    </div>
-                                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                        <span className="text-dark mb-1 font-size-lg font-weight-bolder">{video.title}</span>
-                                                        <div>
-                                                            <span className="label label-light label-pill label-inline font-weight-bold">Episode {video.episode}</span>
-                                                            <span className="label label-dot label-sm bg-dark opacity-50 mx-1"/>
-                                                            <span className="label label-light label-pill label-inline font-weight-bold">{video.runtime.runtime_formatted}</span>
-                                                        </div>
-                                                    </div>
-                                                    <i className="flaticon2-start-up icon-2x" />
-                                                </Link>
-                                            ))
-                                        }
+                            {
+                                series.status === 'Development' && (
+                                    <div className="alert alert-custom alert-warning alert-shadow fade show gutter-b"
+                                         role="alert">
+                                        <div className="alert-icon">
+                                            <i className="flaticon-exclamation"/>
+                                        </div>
+                                        <div className="alert-text font-weight-bolder">This series is still development.
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                )
+                            }
+                            {
+                                series.videos.length > 0
+                                ?
+                                    <div className="card card-custom card-stretch gutter-b">
+                                        <div className="card-body pt-7">
+                                            {
+                                                series.videos.length > 8
+                                                    ?
+                                                    <div data-scroll="true" data-height="800">
+                                                        {
+                                                            series.videos.map((video) => (
+                                                                <Link key={video.id} href={"#"} className="d-flex align-items-center bg-hover-light-o-2 border border-1 rounded p-5 mb-4">
+                                                                    <div className="symbol symbol-circle mr-5">
+                                                                        <span className="symbol-label font-size-h5">{video.episode}</span>
+                                                                    </div>
+                                                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
+                                                                        <span className="text-dark mb-1 font-size-lg font-weight-bolder">{video.title}</span>
+                                                                        <div>
+                                                                            <span className="label label-light label-pill label-inline font-weight-bold">Episode {video.episode}</span>
+                                                                            <span className="label label-dot label-sm bg-dark opacity-50 mx-1"/>
+                                                                            <span className="label label-light label-pill label-inline font-weight-bold">{video.runtime.runtime_formatted} minutes</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    {
+                                                                        !video.is_free ? <i className="flaticon2-start-up icon-2x text-primary" /> : <></>
+                                                                    }
+                                                                </Link>
+                                                            ))
+                                                        }
+                                                    </div>
+                                                    :
+                                                    <div>
+                                                        {
+                                                            series.videos.map((video) => (
+                                                                <Link key={video.id} href={"#"} className="d-flex align-items-center bg-hover-light-o-2 border border-1 rounded p-5 mb-4">
+                                                                    <div className="symbol symbol-circle mr-5">
+                                                                        <span className="symbol-label font-size-h5">{video.episode}</span>
+                                                                    </div>
+                                                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
+                                                                        <span className="text-dark mb-1 font-size-lg font-weight-bolder">{video.title}</span>
+                                                                        <div>
+                                                                            <span className="label label-light label-pill label-inline font-weight-bold">Episode {video.episode}</span>
+                                                                            <span className="label label-dot label-sm bg-dark opacity-50 mx-1"/>
+                                                                            <span className="label label-light label-pill label-inline font-weight-bold">{video.runtime.runtime_formatted} minutes</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    {
+                                                                        !video.is_free ? <i className="flaticon2-start-up icon-2x text-primary" /> : <></>
+                                                                    }
+                                                                </Link>
+                                                            ))
+                                                        }
+                                                    </div>
+                                            }
+                                        </div>
+                                    </div>
+                                :
+                                    <div className="alert alert-custom alert-warning alert-shadow fade show gutter-b"
+                                         role="alert">
+                                        <div className="alert-icon">
+                                            <i className="flaticon-exclamation"/>
+                                        </div>
+                                        <div className="alert-text font-weight-bolder">Videos are available coming soon.
+                                        </div>
+                                    </div>
+                            }
                         </div>
 
                     </div>

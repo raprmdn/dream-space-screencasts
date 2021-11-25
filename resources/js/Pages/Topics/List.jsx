@@ -86,9 +86,14 @@ export default function List({topic}) {
 
                             :
                                 <div className="d-flex flex-column flex-center w-100">
-                                    <h1 className="text-center mb-5 font-size-h1-lg font-weight-boldest">
-                                        Stay Tuned! New Series is Coming Soon!
-                                    </h1>
+                                    <div className="alert alert-custom alert-white alert-shadow fade show gutter-b"
+                                         role="alert">
+                                        <div className="alert-icon">
+                                            <i className="flaticon-exclamation"/>
+                                        </div>
+                                        <div className="alert-text font-weight-bolder">Stay Tuned! New Series are available coming soon!
+                                        </div>
+                                    </div>
                                 </div>
                         }
                     </div>

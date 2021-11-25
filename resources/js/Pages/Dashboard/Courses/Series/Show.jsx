@@ -184,7 +184,7 @@ export default function Show() {
                                 <h3 className="font-weight-bolder text-dark">List Videos</h3>
                                 <a href="#" className="btn btn-primary font-weight-bold ml-2"
                                    data-toggle="modal" data-target="#addVideoModal"
-                                   onClick={() => clearErrors()}>
+                                   onClick={() => {reset(); clearErrors();}}>
                                     <i className="flaticon2-plus icon-1x"/> Add Video
                                 </a>
                             </div>

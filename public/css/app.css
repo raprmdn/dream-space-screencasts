@@ -2,3 +2,16 @@
     margin: 2.5em auto .6em !important;
 }
 
+.blink_me {
+    -webkit-animation: blinker 1s linear infinite;
+            animation: blinker 1s linear infinite;
+}
+
+@-webkit-keyframes blinker {
+    50% { opacity: 0; }
+}
+
+@keyframes blinker {
+    50% { opacity: 0; }
+}
+

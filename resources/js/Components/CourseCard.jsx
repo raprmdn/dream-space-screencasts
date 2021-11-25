@@ -45,7 +45,25 @@ export default function CourseCard({course}) {
                             {course.title}
                         </Link>
                         <div className="d-flex mt-3">
-                            <p className="font-weight-bold text-dark-50 text-hover-dark-75">Rp. {course.price.price_formatted},-</p>
+                            {
+                                course.discount.discount_unformatted
+                                ?
+                                    <>
+                                        <p className="font-weight-bold text-dark-50 text-hover-dark-75">
+                                            <s>Rp. {course.price.price_formatted},-</s>
+                                        </p>
+                                        &nbsp;
+                                        <p className="font-weight-bold text-danger blink_me">
+                                            Rp. {course.discount.discount_formatted},-
+                                        </p>
+                                    </>
+                                :
+                                    <>
+                                        <p className="font-weight-bold text-dark-50 text-hover-dark-75">
+                                            Rp. {course.price.price_formatted},-
+                                        </p>
+                                    </>
+                            }
                         </div>
                     </div>
                     <div className="d-flex justify-content-between mb-n5 mt-n5 text-dark-50">

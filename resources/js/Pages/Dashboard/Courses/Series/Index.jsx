@@ -93,10 +93,10 @@ export default function Index(props) {
                                                                     data-toggle="tooltip" title="Add Videos">
                                                                 <i className="fas fa-video text-success" />
                                                             </Link>
-                                                            <button className="btn btn-sm btn-clean btn-icon"
-                                                                    data-toggle="tooltip" title="View">
+                                                            <a href={route('series.show', series.slug)} className="btn btn-sm btn-clean btn-icon"
+                                                                    data-toggle="tooltip" title="View" target="_blank">
                                                                 <i className="fas fa-share text-muted" />
-                                                            </button>
+                                                            </a>
                                                         </div>
                                                     </td>
                                                 </tr>

@@ -165,10 +165,10 @@ export default function Index() {
                                                                     </button>
                                                                 )
                                                             }
-                                                            <button className="btn btn-sm btn-clean btn-icon"
-                                                                    data-toggle="tooltip" title="View">
+                                                            <a href={route('topics.show', topic.slug)} className="btn btn-sm btn-clean btn-icon"
+                                                                    data-toggle="tooltip" title="View" target="_blank">
                                                                 <i className="far fa-eye text-muted" />
-                                                            </button>
+                                                            </a>
                                                         </div>
                                                     </td>
                                                 </tr>
