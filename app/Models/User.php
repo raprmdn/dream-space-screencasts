@@ -72,4 +72,49 @@ class User extends Authenticatable
                     ->latest()->paginate(16)
                     ->appends(request()->only('search'));
     }
+
+    /**
+     * User adding series to watchlist
+     *
+     * @param Series $series
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function addSeriesToWatchlist(Series $series): \Illuminate\Database\Eloquent\Model
+    {
+        return $this->watchlist()->save($series);
+    }
+
+    /**
+     * User removing series from the watchlist
+     *
+     * @param Series $series
+     *
+     * @return bool
+     */
+    public function removeSeriesFromWatchlist(Series $series): bool
+    {
+        return $this->watchlist()->detach($series);
+    }
+
+    /**
+     * Check series exists in watchlist
+     *
+     * @param $series
+     *
+     * @return bool
+     */
+    public function seriesAlreadyInWatchlist($series): bool
+    {
+        return (bool) $this->watchlist()->find($series);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function watchlist(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Series::class, 'user_watchlist', 'user_id', 'series_id');
+    }
+
 }

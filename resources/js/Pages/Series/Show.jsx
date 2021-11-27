@@ -2,11 +2,22 @@ import React from 'react';
 import App from "../../Layouts/App";
 import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
+import {Inertia} from "@inertiajs/inertia";
 
 export default function Show() {
     const { auth } = usePage().props
     const { data: series } = usePage().props.series
     const latestVideo = series.videos[series.videos.length - 1] ?? null;
+
+    const saves = (e) => {
+        e.preventDefault()
+        Inertia.post(route('saves'),{
+            series_id: series.id,
+        }, {
+            preserveScroll: true,
+        })
+    }
+
     return (
         <>
             <Head title={`Dream Space - ${series.title}`}>
@@ -89,33 +100,39 @@ export default function Show() {
                                     </span>
                                 </div>
                             </div>
-                            {
-                                auth.user !== null
-                                ?
                                 <div className="d-lg-flex mt-6">
                                     <Link href={"#"} className="btn btn-success font-weight-bold mr-5">
                                         <i className="fas fa-play-circle mr-1"/>
                                         Start
                                     </Link>
-                                    {
-                                        series.price.price_unformatted
-                                        ?
-                                            <Link href={"#"} className="btn btn-light font-weight-bold mr-5">
-                                                <i className="flaticon-shopping-basket mr-1"/>
-                                                Add Carts
-                                            </Link>
-                                        :
-                                            <></>
-
-                                    }
-                                    <Link href={"#"} className="btn btn-light font-weight-bold mr-5">
-                                        <i className="far fa-bookmark mr-1"/>
-                                        Add Watchlist
-                                    </Link>
+                                {
+                                    auth.user !== null && (
+                                        <>
+                                            {
+                                                series.price.price_unformatted && (
+                                                    <Link href={"#"} className="btn btn-light font-weight-bold mr-5">
+                                                        <i className="flaticon-shopping-basket mr-1"/>
+                                                        Add Carts
+                                                    </Link>
+                                                )
+                                            }
+                                            {
+                                                series.viewing_status.is_watch_later
+                                                ?
+                                                    <button onClick={saves} className="btn btn-danger font-weight-bold mr-5">
+                                                        <i className="fas fa-bookmark mr-1"/>
+                                                        Added to Watchlist
+                                                    </button>
+                                                :
+                                                    <button onClick={saves} className="btn btn-light font-weight-bold mr-5">
+                                                        <i className="far fa-bookmark mr-1"/>
+                                                        Add to Watchlist
+                                                    </button>
+                                            }
+                                        </>
+                                    )
+                                }
                                 </div>
-                                :
-                                <></>
-                            }
                             <div className="row m-0 pt-5 mb-5">
                             </div>
                         </div>

@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\SeriesCollection;
-use App\Http\Resources\SeriesResource;
+use App\Http\Resources\SeriesSingleResource;
 use App\Models\Series;
 use App\Traits\ImageTrait;
 use Illuminate\Support\Facades\Storage;
@@ -42,7 +42,7 @@ class SeriesService
         return new SeriesCollection(Series::withCount('videos')->onlyTrashed()->search($params));
     }
 
-    public function findBySlug($slug): SeriesResource
+    public function findBySlug($slug): SeriesSingleResource
     {
         $series = Series::whereSlug($slug)
             ->with(['topics:id,name,slug', 'videos' => function($q) {
@@ -54,7 +54,7 @@ class SeriesService
         $this->castingRuntime($series);
         unset($series->hours);
 
-        return new SeriesResource($series);
+        return new SeriesSingleResource($series);
     }
 
     public function findByTopic($topic): SeriesCollection
