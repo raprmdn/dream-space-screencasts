@@ -46,7 +46,7 @@ class SeriesService
     {
         $series = Series::whereSlug($slug)
             ->with(['topics:id,name,slug', 'videos' => function($q) {
-                $q->orderBy('episode');
+                $q->notArchived()->orderBy('episode');
             }])
             ->withCount('videos')
             ->first();

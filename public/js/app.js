@@ -12675,6 +12675,9 @@ function Show() {
                             children: [video.runtime.runtime_formatted, " minutes"]
                           })]
                         })]
+                      }), video.newest && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "label label-success label-pill label-inline font-weight-bold mr-2",
+                        children: "Newest"
                       }), !video.is_free ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
                         className: "flaticon2-start-up icon-2x text-primary"
                       }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {})]
@@ -12707,6 +12710,9 @@ function Show() {
                             children: [video.runtime.runtime_formatted, " minutes"]
                           })]
                         })]
+                      }), video.newest && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "label label-success label-pill label-inline font-weight-bold mr-2",
+                        children: "Newest"
                       }), !video.is_free ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
                         className: "flaticon2-start-up icon-2x text-primary"
                       }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {})]

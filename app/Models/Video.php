@@ -14,11 +14,15 @@ class Video extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Make sure video not archived.
+     *
+     * @param $query
+     *
+     * @return mixed
      */
-    public function series(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function scopeNotArchived($query)
     {
-        return $this->belongsTo(Series::class, 'series_id');
+        return $query->where('is_archived', false);
     }
 
     /**
@@ -34,5 +38,13 @@ class Video extends Model
         return $query->where('title', 'ilike', '%' . $params . '%')
             ->latest()->paginate(20)
             ->appends(request()->only('search'));
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function series(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Series::class, 'series_id');
     }
 }

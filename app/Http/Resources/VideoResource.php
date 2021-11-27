@@ -20,6 +20,7 @@ class VideoResource extends JsonResource
         $exploded[0] === '12'
             ? $runtimeFormatted = Carbon::parse($this->runtime)->format('i:s')
             : $runtimeFormatted = Carbon::parse($this->runtime)->format('h:i:s');
+
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -33,6 +34,7 @@ class VideoResource extends JsonResource
             'is_archived' => $this->is_archived,
             'series' => $this->whenLoaded('series'),
             'created_at' => $this->created_at->format('d M Y, H:i A'),
+            'newest' => Carbon::now()->lte(Carbon::parse($this->created_at)->addDay())
         ];
     }
 }

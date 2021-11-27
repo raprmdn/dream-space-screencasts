@@ -213,6 +213,9 @@ export default function Show() {
                                                                         </div>
                                                                     </div>
                                                                     {
+                                                                        video.newest && (<span className="label label-success label-pill label-inline font-weight-bold mr-2">Newest</span>)
+                                                                    }
+                                                                    {
                                                                         !video.is_free ? <i className="flaticon2-start-up icon-2x text-primary" /> : <></>
                                                                     }
                                                                 </Link>
@@ -235,6 +238,9 @@ export default function Show() {
                                                                             <span className="label label-light label-pill label-inline font-weight-bold">{video.runtime.runtime_formatted} minutes</span>
                                                                         </div>
                                                                     </div>
+                                                                    {
+                                                                        video.newest && (<span className="label label-success label-pill label-inline font-weight-bold mr-2">Newest</span>)
+                                                                    }
                                                                     {
                                                                         !video.is_free ? <i className="flaticon2-start-up icon-2x text-primary" /> : <></>
                                                                     }
