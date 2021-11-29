@@ -36,8 +36,6 @@ class SeriesSingleResource extends JsonResource
             'source_code_url' => $this->source_code,
             'demo_url' => $this->project_demo,
             'thumbnail' => $this->seriesThumbnail,
-            'is_discount' => $this->is_discount,
-            'is_free' => $this->is_free,
             'archived_at' => $this->archived_at,
             'created_at' => $this->created_at->format('d M Y, H:i A'),
             'topics' => $this->whenLoaded('topics'),
@@ -45,7 +43,11 @@ class SeriesSingleResource extends JsonResource
             'videos_count' => $this->when(isset($this->videos_count), $this->videos_count),
             'runtime' => $this->runtime,
             'viewing_status' => [
-                'is_watch_later' => Auth::check() ? Auth::user()->seriesAlreadyInWatchlist($this->id) : false,
+                'is_discount' => $this->is_discount,
+                'is_free' => $this->is_free,
+                'is_watch_later' => Auth::check() ? Auth::user()->seriesExistsInWatchlist($this->id) : false,
+                'is_exists_in_carts' => Auth::check() ? Auth::user()->existsInCarts($this->id) : false,
+                'is_buyable' => true,
             ]
         ];
     }

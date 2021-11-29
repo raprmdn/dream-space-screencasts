@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\{CourseController,
+use App\Http\Controllers\{CartController,
+    CourseController,
     Courses\SeriesController,
     Courses\VideoController,
     IndexController,
@@ -18,7 +19,9 @@ Route::get('topics', [TopicsController::class, 'topics'])->name('topics');
 Route::get('topics/{topic:slug}', [TopicsController::class, 'show'])->name('topics.show');
 Route::get('series', [CourseController::class, 'index'])->name('series');
 Route::get('series/{series:slug}', [CourseController::class, 'show'])->name('series.show');
-Route::post('saves', [WatchlistController::class, 'save'])->name('saves');
+
+Route::post('add-to-carts', [CartController::class, 'create'])->name('add.carts');
+Route::post('saves', [WatchlistController::class, 'save'])->middleware('auth')->name('saves');
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {
     Route::prefix('courses')->middleware('can:courses')->group(function () {

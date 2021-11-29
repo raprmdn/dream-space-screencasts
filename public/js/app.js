@@ -6412,6 +6412,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function Header() {
   var auth = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.usePage)().props.auth;
+  console.log(auth.carts);
   var segmentUrl = window.location.pathname;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
@@ -6958,91 +6959,55 @@ function Header() {
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h4", {
                         className: "text-white m-0 flex-grow-1 mr-3",
                         children: "My Cart"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("button", {
                         type: "button",
                         className: "btn btn-success btn-sm",
-                        children: "2 Items"
+                        children: [auth.carts.length, " Items"]
                       })]
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                       className: "scroll scroll-push",
                       "data-scroll": "true",
-                      "data-height": 250,
+                      "data-height": 300,
                       "data-mobile-height": 200,
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                        className: "separator separator-solid"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                        className: "d-flex align-items-center justify-content-between p-8",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                          className: "d-flex flex-column mr-2",
-                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-                            href: "#",
-                            className: "font-weight-bold text-dark-75 font-size-lg text-hover-primary",
-                            children: "SmartCleaner"
-                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                            className: "text-muted",
-                            children: "Smart tool for cooking"
+                      children: auth.carts.map(function (cart) {
+                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                            className: "separator separator-solid"
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                            className: "d-flex align-items-center justify-content-between p-8",
+                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+                              className: "d-flex flex-column mr-2",
+                              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                                href: "#",
+                                className: "font-weight-bold text-dark-75 font-size-lg text-hover-primary",
+                                children: cart.series.title
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                                className: "d-flex align-items-center mt-2",
+                                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("span", {
+                                  className: "font-weight-bold mr-1 text-dark-75 font-size-lg",
+                                  children: ["Rp. ", cart.price, ",-"]
+                                })
+                              })]
+                            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
+                              href: "#",
+                              className: "symbol symbol-70 flex-shrink-0",
+                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                                src: cart.series.series_thumbnail,
+                                alt: ""
+                              })
+                            })]
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                            className: "d-flex align-items-center mt-2",
-                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                              className: "font-weight-bold mr-1 text-dark-75 font-size-lg",
-                              children: "$ 650"
-                            })
+                            className: "separator separator-solid"
                           })]
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-                          href: "#",
-                          className: "symbol symbol-70 flex-shrink-0",
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-                            src: "/assets/media/stock-600x400/img-2.jpg",
-                            alt: ""
-                          })
-                        })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                        className: "separator separator-solid"
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                        className: "d-flex align-items-center justify-content-between p-8",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                          className: "d-flex flex-column mr-2",
-                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-                            href: "#",
-                            className: "font-weight-bold text-dark-75 font-size-lg text-hover-primary",
-                            children: "SmartCleaner"
-                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                            className: "text-muted",
-                            children: "Smart tool for cooking"
-                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                            className: "d-flex align-items-center mt-2",
-                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                              className: "font-weight-bold mr-1 text-dark-75 font-size-lg",
-                              children: "$ 650"
-                            })
-                          })]
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-                          href: "#",
-                          className: "symbol symbol-70 flex-shrink-0",
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-                            src: "/assets/media/stock-600x400/img-2.jpg",
-                            alt: ""
-                          })
-                        })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-                        className: "separator separator-solid"
-                      })]
+                        }, cart.id);
+                      })
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                       className: "p-8",
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-                        className: "d-flex align-items-center justify-content-between mb-4",
-                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                          className: "font-weight-bold text-muted font-size-sm mr-2",
-                          children: "Total"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-                          className: "font-weight-bolder text-dark-50 text-right",
-                          children: "$1840.00"
-                        })]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                         className: "d-flex align-items-center justify-content-between mb-7",
                         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
                           className: "font-weight-bold text-muted font-size-sm mr-2",
-                          children: "Sub total"
+                          children: "Total"
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
                           className: "font-weight-bolder text-primary text-right",
                           children: "$5640.00"
@@ -7052,7 +7017,7 @@ function Header() {
                         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
                           type: "button",
                           className: "btn btn-primary text-weight-bold",
-                          children: "Place Order"
+                          children: "Carts Detail"
                         })
                       })]
                     })]
@@ -12433,6 +12398,15 @@ function Show() {
     });
   };
 
+  var addToCarts = function addToCarts(e) {
+    e.preventDefault();
+    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_4__.Inertia.post(route('add.carts'), {
+      series_id: series.id
+    }, {
+      preserveScroll: true
+    });
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
       title: "Dream Space - ".concat(series.title),
@@ -12486,7 +12460,7 @@ function Show() {
                     children: ["Rp. ", series.discount.discount_formatted, ",-"]
                   }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
                     children: series.price.price_unformatted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-                      children: ["Rp.", series.price.price_formatted, ",-"]
+                      children: ["Rp. ", series.price.price_formatted, ",-"]
                     }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
                       children: "Free Series"
                     })
@@ -12550,13 +12524,19 @@ function Show() {
                   className: "fas fa-play-circle mr-1"
                 }), "Start"]
               }), auth.user !== null && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-                children: [series.price.price_unformatted && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
-                  href: "#",
+                children: [!series.viewing_status.is_free && series.viewing_status.is_buyable && (series.viewing_status.is_exists_in_carts ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
+                  onClick: addToCarts,
+                  className: "btn btn-danger font-weight-bold mr-5",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                    className: "flaticon-shopping-basket mr-1"
+                  }), "Added to Carts"]
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
+                  onClick: addToCarts,
                   className: "btn btn-light font-weight-bold mr-5",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
                     className: "flaticon-shopping-basket mr-1"
-                  }), "Add Carts"]
-                }), series.viewing_status.is_watch_later ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
+                  }), "Add to Carts"]
+                })), series.viewing_status.is_watch_later ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
                   onClick: saves,
                   className: "btn btn-danger font-weight-bold mr-5",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {

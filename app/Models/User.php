@@ -104,10 +104,55 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function seriesAlreadyInWatchlist($series): bool
+    public function seriesExistsInWatchlist($series): bool
     {
         return (bool) $this->watchlist()->find($series);
     }
+
+    /**
+     * Added series to carts.
+     *
+     * @param Series $series
+     *
+     * @return Cart|\Illuminate\Database\Eloquent\Model
+     */
+    public function addToCarts(Series $series)
+    {
+        $price = !$series->discount_price ? $series->price : $series->discount_price;
+
+        return $this->carts()->create([
+            'series_id' => $series->id,
+            'price' => $price
+        ]);
+    }
+
+    /**
+     * Removing series in carts.
+     *
+     * @param Series $series
+     *
+     * @return bool|null
+     */
+    public function removeFromCarts(Series $series): ?bool
+    {
+        return $this->carts()->where('series_id', $series->id)->first()->delete();
+    }
+
+    /**
+     * Check if series exists in carts.
+     *
+     * @param $series
+     *
+     * @return bool
+     */
+    public function existsInCarts($series): bool
+    {
+        return (bool) $this->carts()->where('series_id', $series)->first();
+    }
+
+    /*
+     *  Table Relation.
+     */
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -115,6 +160,14 @@ class User extends Authenticatable
     public function watchlist(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Series::class, 'user_watchlist', 'user_id', 'series_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function carts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Cart::class, 'user_id');
     }
 
 }

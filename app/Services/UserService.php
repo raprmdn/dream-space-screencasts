@@ -10,7 +10,7 @@ class UserService
     public function saveSeries($series): string
     {
         $series = Series::findOrFail($series);
-        if (!Auth::user()->seriesAlreadyInWatchlist($series)) {
+        if (!Auth::user()->seriesExistsInWatchlist($series)) {
             Auth::user()->addSeriesToWatchlist($series);
             return 'Added to Watchlist';
         } else {

@@ -3,6 +3,7 @@ import {Link, usePage} from "@inertiajs/inertia-react";
 
 export default function Header() {
     const { auth } = usePage().props;
+    console.log(auth.carts)
     let segmentUrl = window.location.pathname;
     return (
         <>
@@ -295,48 +296,36 @@ export default function Header() {
                                                         <i className="flaticon2-shopping-cart-1 text-success" />
                                                     </span>
                                                         <h4 className="text-white m-0 flex-grow-1 mr-3">My Cart</h4>
-                                                        <button type="button" className="btn btn-success btn-sm">2 Items</button>
+                                                        <button type="button" className="btn btn-success btn-sm">{auth.carts.length} Items</button>
                                                 </div>
-                                                <div className="scroll scroll-push" data-scroll="true" data-height={250} data-mobile-height={200}>
-                                                    <div className="separator separator-solid" />
-                                                    <div className="d-flex align-items-center justify-content-between p-8">
-                                                        <div className="d-flex flex-column mr-2">
-                                                            <a href="#" className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">SmartCleaner</a>
-                                                            <span className="text-muted">Smart tool for cooking</span>
-                                                            <div className="d-flex align-items-center mt-2">
-                                                                <span className="font-weight-bold mr-1 text-dark-75 font-size-lg">$ 650</span>
+                                                <div className="scroll scroll-push" data-scroll="true" data-height={300} data-mobile-height={200}>
+                                                    {
+                                                        auth.carts.map((cart) => (
+                                                            <div key={cart.id}>
+                                                                <div className="separator separator-solid" />
+                                                                <div className="d-flex align-items-center justify-content-between p-8">
+                                                                    <div className="d-flex flex-column mr-2">
+                                                                        <a href="#" className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">{cart.series.title}</a>
+                                                                        <div className="d-flex align-items-center mt-2">
+                                                                            <span className="font-weight-bold mr-1 text-dark-75 font-size-lg">Rp. {cart.price},-</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <a href="#" className="symbol symbol-70 flex-shrink-0">
+                                                                        <img src={cart.series.series_thumbnail} alt="" />
+                                                                    </a>
+                                                                </div>
+                                                                <div className="separator separator-solid" />
                                                             </div>
-                                                        </div>
-                                                        <a href="#" className="symbol symbol-70 flex-shrink-0">
-                                                            <img src="/assets/media/stock-600x400/img-2.jpg" alt="" />
-                                                        </a>
-                                                    </div>
-                                                    <div className="separator separator-solid" />
-                                                    <div className="d-flex align-items-center justify-content-between p-8">
-                                                        <div className="d-flex flex-column mr-2">
-                                                            <a href="#" className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">SmartCleaner</a>
-                                                            <span className="text-muted">Smart tool for cooking</span>
-                                                            <div className="d-flex align-items-center mt-2">
-                                                                <span className="font-weight-bold mr-1 text-dark-75 font-size-lg">$ 650</span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="#" className="symbol symbol-70 flex-shrink-0">
-                                                            <img src="/assets/media/stock-600x400/img-2.jpg" alt="" />
-                                                        </a>
-                                                    </div>
-                                                    <div className="separator separator-solid" />
+                                                        ))
+                                                    }
                                                 </div>
                                                 <div className="p-8">
-                                                    <div className="d-flex align-items-center justify-content-between mb-4">
-                                                        <span className="font-weight-bold text-muted font-size-sm mr-2">Total</span>
-                                                        <span className="font-weight-bolder text-dark-50 text-right">$1840.00</span>
-                                                    </div>
                                                     <div className="d-flex align-items-center justify-content-between mb-7">
-                                                        <span className="font-weight-bold text-muted font-size-sm mr-2">Sub total</span>
+                                                        <span className="font-weight-bold text-muted font-size-sm mr-2">Total</span>
                                                         <span className="font-weight-bolder text-primary text-right">$5640.00</span>
                                                     </div>
                                                     <div className="text-right">
-                                                        <button type="button" className="btn btn-primary text-weight-bold">Place Order</button>
+                                                        <button type="button" className="btn btn-primary text-weight-bold">Carts Detail</button>
                                                     </div>
                                                 </div>
                                             </form>

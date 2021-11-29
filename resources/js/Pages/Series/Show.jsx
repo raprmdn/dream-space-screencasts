@@ -18,6 +18,15 @@ export default function Show() {
         })
     }
 
+    const addToCarts = (e) => {
+        e.preventDefault()
+        Inertia.post(route('add.carts'),{
+            series_id: series.id,
+        }, {
+            preserveScroll: true,
+        })
+    }
+
     return (
         <>
             <Head title={`Dream Space - ${series.title}`}>
@@ -58,7 +67,7 @@ export default function Show() {
                                                     {
                                                         series.price.price_unformatted
                                                         ?
-                                                            <>Rp.{series.price.price_formatted},-</>
+                                                            <>Rp. {series.price.price_formatted},-</>
                                                         :
                                                             <>Free Series</>
                                                     }
@@ -109,11 +118,20 @@ export default function Show() {
                                     auth.user !== null && (
                                         <>
                                             {
-                                                series.price.price_unformatted && (
-                                                    <Link href={"#"} className="btn btn-light font-weight-bold mr-5">
-                                                        <i className="flaticon-shopping-basket mr-1"/>
-                                                        Add Carts
-                                                    </Link>
+                                                !series.viewing_status.is_free && (
+                                                    series.viewing_status.is_buyable && (
+                                                        series.viewing_status.is_exists_in_carts
+                                                        ?
+                                                            <button onClick={addToCarts} className="btn btn-danger font-weight-bold mr-5">
+                                                                <i className="flaticon-shopping-basket mr-1"/>
+                                                                Added to Carts
+                                                            </button>
+                                                        :
+                                                            <button onClick={addToCarts} className="btn btn-light font-weight-bold mr-5">
+                                                                <i className="flaticon-shopping-basket mr-1"/>
+                                                                Add to Carts
+                                                            </button>
+                                                    )
                                                 )
                                             }
                                             {
