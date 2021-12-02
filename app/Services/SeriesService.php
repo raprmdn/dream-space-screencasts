@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Resources\SeriesCollection;
 use App\Http\Resources\SeriesSingleResource;
+use App\Models\Cart;
 use App\Models\Series;
 use App\Traits\ImageTrait;
 use Illuminate\Support\Facades\Storage;
@@ -97,6 +98,11 @@ class SeriesService
             $attributes['thumbnail'] = $series->thumbnail;
         }
         $series->update($this->fields($attributes));
+
+        $price = !$series->discount_price ? $series->price : $series->discount_price;
+        Cart::where('series_id', $series->id)->update([
+            'price' => $price
+        ]);
 
         return $series->topics()->sync(collect($attributes['topics'])->pluck('value'));
     }

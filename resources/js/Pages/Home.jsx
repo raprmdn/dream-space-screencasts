@@ -1,6 +1,6 @@
 import React from 'react';
 import App from "../Layouts/App";
-import {Head} from "@inertiajs/inertia-react"
+import {Head, Link} from "@inertiajs/inertia-react"
 import Jumbotron from "../Components/Jumbotron";
 import MenuTopics from "../Components/MenuTopics";
 import CourseCard from "../Components/CourseCard";
@@ -20,7 +20,7 @@ export default function Home() {
                     <span> A Robust Platform for Developer!</span>
                 </span>
                     </h1>
-                    <a href="#" className="btn btn-primary font-size-h6 font-weight-bolder py-3 px-6">Browse Courses</a>
+                    <Link href={route('series')} className="btn font-size-h6 text-hover-white font-weight-bold py-3 px-6 text-white" style={{background: 'linear-gradient(to right top, #a855f7 0%, #6366f1 100%)'}}>Browse Series</Link>
                 </div>
             </Jumbotron>
             <MenuTopics/>

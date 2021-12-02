@@ -12,7 +12,7 @@ class CreateCartsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('series_id')->constrained('series')->cascadeOnDelete();
-            $table->unsignedDouble('price')->nullable();
+            $table->unsignedBigInteger('price')->nullable();
             $table->timestamps();
         });
     }

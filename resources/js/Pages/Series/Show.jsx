@@ -202,8 +202,7 @@ export default function Show() {
                                         <div className="alert-icon">
                                             <i className="flaticon-exclamation"/>
                                         </div>
-                                        <div className="alert-text font-weight-bolder">This series is still development.
-                                        </div>
+                                        <div className="alert-text font-weight-bolder">This series is still in development.</div>
                                     </div>
                                 )
                             }

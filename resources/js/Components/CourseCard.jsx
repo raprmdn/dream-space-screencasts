@@ -60,7 +60,11 @@ export default function CourseCard({course}) {
                                 :
                                     <>
                                         <p className="font-weight-bold text-dark-50 text-hover-dark-75">
-                                            Rp. {course.price.price_formatted},-
+                                            {
+                                                course.price.price_unformatted
+                                                ? <>Rp. {course.price.price_formatted},-</>
+                                                : <>Free Series</>
+                                            }
                                         </p>
                                     </>
                             }

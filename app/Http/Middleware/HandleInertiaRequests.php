@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\CartCollection;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Middleware;
@@ -37,14 +38,16 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        $carts = $request->user() ? $request->user()->carts()->with('series:id,title,thumbnail')->latest()->get() : [];
+        $carts = $request->user()
+            ? $request->user()->carts()->with('series:id,title,slug,thumbnail')->latest()->get()
+            : [];
         $permissions = $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') : [];
 
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
                 'can' => $permissions,
-                'carts' => $carts
+                'carts' => new CartCollection($carts)
             ],
             'flash' => [
                 'type' => $request->session()->get('type'),
