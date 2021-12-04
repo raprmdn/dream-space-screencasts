@@ -14,10 +14,22 @@ class CartController extends Controller
         $this->cartService = $cartService;
     }
 
+    public function index()
+    {
+        return inertia('Carts');
+    }
+
     public function create(Request $request)
     {
         $message = $this->cartService->create($request->series_id);
 
         return back()->with(['type' => 'success', 'message' => $message]);
+    }
+
+    public function remove(Request $request)
+    {
+        $this->cartService->remove($request->series_id);
+
+        return back()->with(['type' => 'success', 'message' => 'Removed from Carts.']);
     }
 }

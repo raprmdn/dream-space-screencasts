@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link, usePage} from "@inertiajs/inertia-react";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function Header() {
     const { auth } = usePage().props;
@@ -307,13 +309,19 @@ export default function Header() {
                                                                         <div className="separator separator-solid" />
                                                                         <div className="d-flex align-items-center justify-content-between p-8">
                                                                             <div className="d-flex flex-column mr-2">
-                                                                                <Link href={route('series.show', cart.series.slug)} className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">{cart.series.title}</Link>
+                                                                                <Link href={route('series.show', cart.series.slug)} className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">
+                                                                                    {cart.series.title}
+                                                                                </Link>
                                                                                 <div className="d-flex align-items-center mt-2">
-                                                                                    <span className="font-weight-bold mr-1 text-dark-75 font-size-lg">Rp {cart.price.price_formatted},-</span>
+                                                                                    <span className="font-weight-bold mr-1 text-dark-75 font-size-lg">Rp {cart.price.price_formatted},- &nbsp;
+                                                                                        {
+                                                                                            cart.series.is_discount && (<span className="label label-danger label-inline font-weight-bold">Discount</span>)
+                                                                                        }
+                                                                                    </span>
                                                                                 </div>
                                                                             </div>
                                                                             <Link href={route('series.show', cart.series.slug)} className="symbol symbol-70 flex-shrink-0">
-                                                                                <img src={cart.series.series_thumbnail} alt={cart.series.slug} />
+                                                                                <LazyLoadImage effect="blur" width={70} height={70} src={cart.series.series_thumbnail} alt={cart.series.slug} className="rounded-sm" />
                                                                             </Link>
                                                                         </div>
                                                                         <div className="separator separator-solid" />
@@ -329,13 +337,19 @@ export default function Header() {
                                                                         <div className="separator separator-solid" />
                                                                         <div className="d-flex align-items-center justify-content-between p-8">
                                                                             <div className="d-flex flex-column mr-2">
-                                                                                <Link href={route('series.show', cart.series.slug)} className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">{cart.series.title}</Link>
+                                                                                <Link href={route('series.show', cart.series.slug)} className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">
+                                                                                    {cart.series.title}
+                                                                                </Link>
                                                                                 <div className="d-flex align-items-center mt-2">
-                                                                                    <span className="font-weight-bold mr-1 text-dark-75 font-size-lg">Rp {cart.price.price_formatted},-</span>
+                                                                                    <span className="font-weight-bold mr-1 text-dark-75 font-size-lg">Rp {cart.price.price_formatted},- &nbsp;
+                                                                                        {
+                                                                                            cart.series.is_discount && (<span className="label label-danger label-inline font-weight-bold">Discount</span>)
+                                                                                        }
+                                                                                    </span>
                                                                                 </div>
                                                                             </div>
                                                                             <Link href={route('series.show', cart.series.slug)} className="symbol symbol-70 flex-shrink-0">
-                                                                                <img src={cart.series.series_thumbnail} alt={cart.series.slug} />
+                                                                                <LazyLoadImage effect="blur" width={70} height={70} src={cart.series.series_thumbnail} alt={cart.series.slug} className="rounded-sm" />
                                                                             </Link>
                                                                         </div>
                                                                         <div className="separator separator-solid" />
@@ -353,7 +367,7 @@ export default function Header() {
                                                                 <span className="font-weight-bolder text-primary text-right">Rp {auth.carts.total_price.price_formatted},-</span>
                                                             </div>
                                                             <div className="text-right">
-                                                                <button type="button" className="btn btn-primary text-weight-bold">Carts Detail</button>
+                                                                <Link href={route('carts')} className="btn btn-primary text-weight-bold">Carts Detail</Link>
                                                             </div>
                                                         </div>
                                                     :

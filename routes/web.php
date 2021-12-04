@@ -21,7 +21,12 @@ Route::get('series', [CourseController::class, 'index'])->name('series');
 Route::get('series/{series:slug}', [CourseController::class, 'show'])->name('series.show');
 
 Route::post('add-to-carts', [CartController::class, 'create'])->name('add.carts');
-Route::post('saves', [WatchlistController::class, 'save'])->middleware('auth')->name('saves');
+
+Route::middleware('auth')->group(function () {
+    Route::post('saves', [WatchlistController::class, 'save'])->name('saves');
+    Route::get('carts', [CartController::class, 'index'])->name('carts');
+    Route::post('remove', [CartController::class, 'remove'])->name('remove.carts');
+});
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {
     Route::prefix('courses')->middleware('can:courses')->group(function () {
