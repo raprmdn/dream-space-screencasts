@@ -4,6 +4,7 @@ import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import Jumbotron from "../../Components/Jumbotron";
 import CourseCard from "../../Components/CourseCard";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function Index() {
     const { data: series, meta:{ links, from } } = usePage().props.series

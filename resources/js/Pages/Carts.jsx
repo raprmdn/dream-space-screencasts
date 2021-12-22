@@ -49,7 +49,7 @@ export default function Carts() {
                                         {
                                             carts.data.map((series) => (
                                                 <tr key={series.series.id}>
-                                                    <td className="d-flex align-items-center font-weight-bolder">
+                                                    <td className="d-flex align-items-center font-weight-bold">
                                                         <div className="symbol symbol-60 flex-shrink-0 mr-4">
                                                             <div className="symbol-label">
                                                                 <LazyLoadImage
@@ -66,23 +66,24 @@ export default function Carts() {
                                                         }
                                                     </td>
                                                     <td className="text-center align-middle">
-                                                        <span className="mr-2 font-weight-bolder">1</span>
+                                                        <span className="mr-2 font-weight-bold">1</span>
                                                     </td>
-                                                    <td className="text-right align-middle font-weight-bolder font-size-h5">Rp. {series.price.price_formatted},-</td>
+                                                    <td className="text-right align-middle font-weight-bold">Rp. {series.price.price_formatted},-</td>
                                                     <td className="text-right align-middle">
-                                                        <button onClick={(e) => remove(e, series.series.id)} type="button" className="btn btn-danger font-weight-bolder font-size-sm">Remove</button>
+                                                        <button onClick={(e) => remove(e, series.series.id)} type="button" className="btn btn-icon btn-xs btn-outline-light">
+                                                            <i className="flaticon2-delete"/>
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             ))
                                         }
                                         <tr>
-                                            <td colSpan={2} />
-                                            <td className="font-weight-bolder font-size-h4 text-right">Total</td>
-                                            <td className="font-weight-bolder font-size-h4 text-right">Rp. {carts.total_price.price_formatted},-</td>
+                                            <td colSpan={2} className="font-weight-bolder font-size-h4 text-right">Total</td>
+                                            <td colSpan={2} className="font-weight-bolder font-size-h4 text-right">Rp. {carts.total_price.price_formatted},-</td>
                                         </tr>
                                         <tr>
                                             <td colSpan={4} className="border-0 text-right pt-10">
-                                                <a href="#" className="btn btn-success font-weight-bolder px-8">Proceed to Checkout</a>
+                                                <a href="#" className="btn btn-success font-weight-bolder px-8">Select payment</a>
                                             </td>
                                         </tr>
                                         </tbody>

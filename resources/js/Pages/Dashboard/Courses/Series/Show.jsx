@@ -154,7 +154,7 @@ export default function Show() {
                                         <tr>
                                             <td className="font-weight-bold text-dark-50 w-150px">Is Discount</td>
                                             <td className="font-weight-bold text-dark">
-                                                {series.is_discount ?
+                                                {series.viewing_status.is_discount ?
                                                     (<i className="flaticon2-check-mark text-success"/>)
                                                     :
                                                     (<i className="flaticon2-cancel text-danger"/>)
@@ -164,7 +164,7 @@ export default function Show() {
                                         <tr>
                                             <td className="font-weight-bold text-dark-50 w-150px">Free Series</td>
                                             <td className="font-weight-bold text-dark">
-                                                {series.is_free ?
+                                                {series.viewing_status.is_free ?
                                                     (<i className="flaticon2-check-mark text-success"/>)
                                                     :
                                                     (<i className="flaticon2-cancel text-danger"/>)
@@ -289,6 +289,15 @@ export default function Show() {
                                     </tbody>
                                 </table>
                             </div>
+                            {
+                                series.videos.length > 9 && (
+                                    <a href="#" className="btn btn-primary btn-block font-weight-bold ml-2"
+                                       data-toggle="modal" data-target="#addVideoModal"
+                                       onClick={() => {reset(); clearErrors();}}>
+                                        <i className="flaticon2-plus icon-1x"/> Add Video
+                                    </a>
+                                )
+                            }
                         </div>
                     </div>
                 </div>

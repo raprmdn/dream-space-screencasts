@@ -34,7 +34,7 @@ class VideoResource extends JsonResource
             'is_archived' => $this->is_archived,
             'series' => $this->whenLoaded('series'),
             'created_at' => $this->created_at->format('d M Y, H:i A'),
-            'newest' => Carbon::now()->lte(Carbon::parse($this->created_at)->addDay())
+            'newest' => Carbon::now()->lte(Carbon::parse($this->created_at)->addDays(2))
         ];
     }
 }

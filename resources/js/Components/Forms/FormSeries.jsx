@@ -13,16 +13,16 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
 
     const changeHandler = (e) => {
         let value = e.target.files[0]
-        setData({...data, thumbnail: value})
         let reader = new FileReader()
         reader.onload = () => {
             setPreview(reader.result)
         }
         reader.readAsDataURL(value)
+        setData('thumbnail', value)
     }
 
     const removePicture = () => {
-        setData('picture', null)
+        setData('thumbnail', null)
         setPreview(null)
         fileInput.current.value = null
     }

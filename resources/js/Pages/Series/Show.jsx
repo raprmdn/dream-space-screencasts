@@ -3,6 +3,10 @@ import App from "../../Layouts/App";
 import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
 import {Inertia} from "@inertiajs/inertia";
+import Alert from "../../Components/Alert";
+import CardVideoLink from "../../Components/CardVideoLink";
+import SeriesBannerMeta from "../../Components/SeriesBannerMeta";
+import ButtonIcon from "../../Components/ButtonIcon";
 
 export default function Show() {
     const { auth } = usePage().props
@@ -55,59 +59,36 @@ export default function Show() {
                                 {series.description}
                             </p>
                             <div className="d-block d-lg-flex mt-2">
-                                <div className="d-flex align-items-center pr-5 pt-2">
-                                    <i className="flaticon-price-tag pr-3"/>
-                                    <span className="text-muted font-weight-bold">
-                                        {
-                                            series.discount.discount_unformatted
+                                <SeriesBannerMeta
+                                    icon={'flaticon-price-tag'}
+                                    label={
+                                        series.discount.discount_unformatted
                                             ?
-                                                <>Rp. {series.discount.discount_formatted},-</>
+                                            <>Rp. {series.discount.discount_formatted},-</>
                                             :
-                                                <>
-                                                    {
-                                                        series.price.price_unformatted
+                                            <>
+                                                {
+                                                    series.price.price_unformatted
                                                         ?
-                                                            <>Rp. {series.price.price_formatted},-</>
+                                                        <>Rp. {series.price.price_formatted},-</>
                                                         :
-                                                            <>Free Series</>
-                                                    }
-                                                </>
+                                                        <>Free Series</>
+                                                }
+                                            </>
 
-                                        }
-                                    </span>
-                                </div>
-                                <div className="d-flex align-items-center pr-5 pt-2">
-                                    <i className="far fa-calendar-plus pr-3"/>
-                                    <span className="text-muted font-weight-bold">{series.created_at}</span>
-                                </div>
-                                <div className="d-flex align-items-center pr-5 pt-2">
-                                    <i className="flaticon2-layers pr-3"/>
-                                    <span className="text-muted font-weight-bold">{series.levels}</span>
-                                </div>
-                                <div className="d-flex align-items-center pr-5 pt-2">
-                                    <i className="flaticon2-open-text-book pr-3"/>
-                                    <span className="text-muted font-weight-bold">{series.episodes} episodes</span>
-                                </div>
-                                <div className="d-flex align-items-center pr-5 pt-2">
-                                    <i className="far fa-clock pr-3"/>
-                                    <span className="text-muted font-weight-bold">
+                                    }/>
+                                <SeriesBannerMeta icon={'far fa-calendar-plus'} label={series.created_at} />
+                                <SeriesBannerMeta icon={'flaticon2-layers'} label={series.levels} />
+                                <SeriesBannerMeta icon={'flaticon2-open-text-book'} label={`${series.episodes} episodes`} />
+                                <SeriesBannerMeta icon={'far fa-clock'} label={
+                                    <>
                                         <span>{series.runtime.h !== 0 ? `${series.runtime.h}h ` : ''}</span>
                                         <span>{series.runtime.m !== 0 ? `${series.runtime.m}m ` : ''}</span>
                                         <span>{series.runtime.s}s </span>
-                                    </span>
-                                </div>
-                                <div className="d-flex align-items-center pr-5 pt-2">
-                                    {
-                                        series.status === 'Completed'
-                                        ?
-                                        <i className="far fa-check-circle pr-3"/>
-                                        :
-                                        <i className="fas fa-code pr-3"/>
-                                    }
-                                    <span className="text-muted font-weight-bold">
-                                        {series.status}
-                                    </span>
-                                </div>
+                                    </>
+                                }/>
+                                <SeriesBannerMeta icon={series.status === 'Completed'
+                                    ? 'far fa-check-circle pr-3' : 'fas fa-code pr-3'} label={series.status} />
                             </div>
                                 <div className="d-lg-flex mt-6">
                                     <Link href={"#"} className="btn btn-success font-weight-bold mr-5">
@@ -122,30 +103,26 @@ export default function Show() {
                                                     series.viewing_status.is_buyable && (
                                                         series.viewing_status.is_exists_in_carts
                                                         ?
-                                                            <button onClick={addToCarts} className="btn btn-danger font-weight-bold mr-5">
-                                                                <i className="flaticon-shopping-basket mr-1"/>
-                                                                Added to Carts
-                                                            </button>
+                                                            <ButtonIcon
+                                                                onClick={addToCarts} type={'danger'}
+                                                                icon={'flaticon-shopping-basket'} label={'Added to Carts'} />
                                                         :
-                                                            <button onClick={addToCarts} className="btn btn-light font-weight-bold mr-5">
-                                                                <i className="flaticon-shopping-basket mr-1"/>
-                                                                Add to Carts
-                                                            </button>
+                                                            <ButtonIcon
+                                                                onClick={addToCarts} type={'light'}
+                                                                icon={'flaticon-shopping-basket'} label={'Add to Carts'} />
                                                     )
                                                 )
                                             }
                                             {
                                                 series.viewing_status.is_watch_later
                                                 ?
-                                                    <button onClick={saves} className="btn btn-danger font-weight-bold mr-5">
-                                                        <i className="fas fa-bookmark mr-1"/>
-                                                        Added to Watchlist
-                                                    </button>
+                                                    <ButtonIcon
+                                                        onClick={saves} type={'danger'}
+                                                        icon={'fas fa-bookmark'} label={'Added to Watchlist'} />
                                                 :
-                                                    <button onClick={saves} className="btn btn-light font-weight-bold mr-5">
-                                                        <i className="far fa-bookmark mr-1"/>
-                                                        Add to Watchlist
-                                                    </button>
+                                                    <ButtonIcon
+                                                        onClick={saves} type={'light'}
+                                                        icon={'far fa-bookmark'} label={'Add to Watchlist'} />
                                             }
                                         </>
                                     )
@@ -173,7 +150,7 @@ export default function Show() {
                                                 </div>
                                                 <div className="mt-2">
                                                     <div className="text-muted">
-                                                        <span>Latest Episode in this Series <br/></span>
+                                                        <span>Latest Episode <br/></span>
                                                         <small>Added {latestVideo.created_at}</small>
                                                     </div>
                                                 </div>
@@ -197,13 +174,10 @@ export default function Show() {
                         <div className="col-xl-6">
                             {
                                 series.status === 'Development' && (
-                                    <div className="alert alert-custom alert-warning alert-shadow fade show gutter-b"
-                                         role="alert">
-                                        <div className="alert-icon">
-                                            <i className="flaticon-exclamation"/>
-                                        </div>
-                                        <div className="alert-text font-weight-bolder">This series is still in development.</div>
-                                    </div>
+                                    <Alert
+                                        type={'warning'}
+                                        icon={'flaticon-exclamation'}
+                                        message={'This series is still in development.'} />
                                 )
                             }
                             {
@@ -214,28 +188,12 @@ export default function Show() {
                                             {
                                                 series.videos.length > 8
                                                     ?
-                                                    <div data-scroll="true" data-height="800">
+                                                    <div data-scroll="true" data-height="1000">
                                                         {
                                                             series.videos.map((video) => (
-                                                                <Link key={video.id} href={"#"} className="d-flex align-items-center bg-hover-light-o-2 border border-1 rounded p-5 mb-4">
-                                                                    <div className="symbol symbol-circle mr-5">
-                                                                        <span className="symbol-label font-size-h5">{video.episode}</span>
-                                                                    </div>
-                                                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                                        <span className="text-dark mb-1 font-size-lg font-weight-bolder">{video.title}</span>
-                                                                        <div>
-                                                                            <span className="label label-light label-pill label-inline font-weight-bold">Episode {video.episode}</span>
-                                                                            <span className="label label-dot label-sm bg-dark opacity-50 mx-1"/>
-                                                                            <span className="label label-light label-pill label-inline font-weight-bold">{video.runtime.runtime_formatted} minutes</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    {
-                                                                        video.newest && (<span className="label label-success label-pill label-inline font-weight-bold mr-2">Newest</span>)
-                                                                    }
-                                                                    {
-                                                                        !video.is_free ? <i className="flaticon2-start-up icon-2x text-primary" /> : <></>
-                                                                    }
-                                                                </Link>
+                                                                <span key={video.id}>
+                                                                    <CardVideoLink video={video}/>
+                                                                </span>
                                                             ))
                                                         }
                                                     </div>
@@ -243,25 +201,9 @@ export default function Show() {
                                                     <div>
                                                         {
                                                             series.videos.map((video) => (
-                                                                <Link key={video.id} href={"#"} className="d-flex align-items-center bg-hover-light-o-2 border border-1 rounded p-5 mb-4">
-                                                                    <div className="symbol symbol-circle mr-5">
-                                                                        <span className="symbol-label font-size-h5">{video.episode}</span>
-                                                                    </div>
-                                                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                                        <span className="text-dark mb-1 font-size-lg font-weight-bolder">{video.title}</span>
-                                                                        <div>
-                                                                            <span className="label label-light label-pill label-inline font-weight-bold">Episode {video.episode}</span>
-                                                                            <span className="label label-dot label-sm bg-dark opacity-50 mx-1"/>
-                                                                            <span className="label label-light label-pill label-inline font-weight-bold">{video.runtime.runtime_formatted} minutes</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    {
-                                                                        video.newest && (<span className="label label-success label-pill label-inline font-weight-bold mr-2">Newest</span>)
-                                                                    }
-                                                                    {
-                                                                        !video.is_free ? <i className="flaticon2-start-up icon-2x text-primary" /> : <></>
-                                                                    }
-                                                                </Link>
+                                                                <span key={video.id}>
+                                                                    <CardVideoLink video={video}/>
+                                                                </span>
                                                             ))
                                                         }
                                                     </div>
@@ -269,17 +211,12 @@ export default function Show() {
                                         </div>
                                     </div>
                                 :
-                                    <div className="alert alert-custom alert-warning alert-shadow fade show gutter-b"
-                                         role="alert">
-                                        <div className="alert-icon">
-                                            <i className="flaticon-exclamation"/>
-                                        </div>
-                                        <div className="alert-text font-weight-bolder">Videos are available coming soon.
-                                        </div>
-                                    </div>
+                                    <Alert
+                                        type={'warning'}
+                                        icon={'flaticon-exclamation'}
+                                        message={'Videos are available coming soon.'} />
                             }
                         </div>
-
                     </div>
                 </div>
             </div>

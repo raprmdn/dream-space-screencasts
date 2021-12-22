@@ -5,6 +5,7 @@ import Jumbotron from "../../Components/Jumbotron";
 import CourseCard from "../../Components/CourseCard";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Alert from "../../Components/Alert";
 
 export default function List({topic}) {
     const { data: series, meta:{ links, from } } = usePage().props.series
@@ -86,14 +87,8 @@ export default function List({topic}) {
 
                             :
                                 <div className="d-flex flex-column flex-center w-100">
-                                    <div className="alert alert-custom alert-white alert-shadow fade show gutter-b"
-                                         role="alert">
-                                        <div className="alert-icon">
-                                            <i className="flaticon-exclamation"/>
-                                        </div>
-                                        <div className="alert-text font-weight-bolder">Stay Tuned! New Series are available coming soon!
-                                        </div>
-                                    </div>
+                                    <Alert type={'white'} icon={'flaticon-exclamation'}
+                                           message={'Stay Tuned! New Series are available coming soon!'} />
                                 </div>
                         }
                     </div>
