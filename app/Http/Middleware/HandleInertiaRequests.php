@@ -38,16 +38,13 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        $carts = $request->user()
-            ? $request->user()->carts()->with('series:id,title,slug,thumbnail,is_discount')->latest()->get()
-            : [];
         $permissions = $request->user() ? $request->user()->getPermissionsViaRoles()->pluck('name') : [];
 
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
                 'can' => $permissions,
-                'carts' => new CartCollection($carts)
+                'cart_item_length' => $request->user()->carts()->count()
             ],
             'flash' => [
                 'type' => $request->session()->get('type'),

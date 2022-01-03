@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CartCollection;
 use App\Services\CartService;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,9 @@ class CartController extends Controller
 
     public function index()
     {
-        return inertia('Carts');
+        return inertia('Carts', [
+            'carts' => $this->cartService->carts(),
+        ]);
     }
 
     public function create(Request $request)

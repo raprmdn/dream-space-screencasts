@@ -276,9 +276,9 @@ export default function Header() {
                             {auth.user !== null
                                 ?
                                 <>
-                                    <div className="dropdown">
-                                        <div className="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
-                                            <div className="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg mr-2">
+                                    <div className="d-flex align-items-center">
+                                        <div className="position-relative mr-1">
+                                            <Link href={route('carts')} className="btn btn-icon btn-hover-transparent-white btn-dropdown btn-lg">
                                               <span className="svg-icon svg-icon-xl">
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                   <g stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
@@ -288,96 +288,12 @@ export default function Header() {
                                                   </g>
                                                 </svg>
                                               </span>
-                                            </div>
-                                        </div>
-                                        <div className="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-xl dropdown-menu-anim-up">
-                                            <form>
-                                                <div className="d-flex align-items-center py-10 px-8 bgi-size-cover bgi-no-repeat rounded-top" style={{backgroundImage: 'url(/assets/media/misc/bg-1.jpg)'}}>
-                                                    <span className="btn btn-md btn-icon bg-white-o-15 mr-4">
-                                                        <i className="flaticon2-shopping-cart-1 text-success" />
-                                                    </span>
-                                                    <h4 className="text-white m-0 flex-grow-1 mr-3">My Cart</h4>
-                                                    <button type="button" className="btn btn-success btn-sm">{auth.carts.data.length} Items</button>
-                                                </div>
-                                                {
-                                                    auth.carts.data.length > 2
-                                                    ?
-                                                        <div className="scroll scroll-push" data-scroll="true" data-height={300} data-mobile-height={200}>
-                                                            {
-                                                                auth.carts.data.map((cart) => (
-                                                                    <div key={cart.id}>
-                                                                        <div className="separator separator-solid" />
-                                                                        <div className="d-flex align-items-center justify-content-between p-8">
-                                                                            <div className="d-flex flex-column mr-2">
-                                                                                <Link href={route('series.show', cart.series.slug)} className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">
-                                                                                    {cart.series.title}
-                                                                                </Link>
-                                                                                <div className="d-flex align-items-center mt-2">
-                                                                                    <span className="font-weight-bold mr-1 text-dark-75 font-size-lg">Rp {cart.price.price_formatted},- &nbsp;
-                                                                                        {
-                                                                                            cart.series.is_discount && (<span className="label label-danger label-inline font-weight-bold">Discount</span>)
-                                                                                        }
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <Link href={route('series.show', cart.series.slug)} className="symbol symbol-70 flex-shrink-0">
-                                                                                <LazyLoadImage effect="blur" width={70} height={70} src={cart.series.series_thumbnail} alt={cart.series.slug} className="rounded-sm" />
-                                                                            </Link>
-                                                                        </div>
-                                                                        <div className="separator separator-solid" />
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                        </div>
-                                                    :
-                                                        <>
-                                                            {
-                                                                auth.carts.data.map((cart) => (
-                                                                    <div key={cart.id}>
-                                                                        <div className="separator separator-solid" />
-                                                                        <div className="d-flex align-items-center justify-content-between p-8">
-                                                                            <div className="d-flex flex-column mr-2">
-                                                                                <Link href={route('series.show', cart.series.slug)} className="font-weight-bold text-dark-75 font-size-lg text-hover-primary">
-                                                                                    {cart.series.title}
-                                                                                </Link>
-                                                                                <div className="d-flex align-items-center mt-2">
-                                                                                    <span className="font-weight-bold mr-1 text-dark-75 font-size-lg">Rp {cart.price.price_formatted},- &nbsp;
-                                                                                        {
-                                                                                            cart.series.is_discount && (<span className="label label-danger label-inline font-weight-bold">Discount</span>)
-                                                                                        }
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <Link href={route('series.show', cart.series.slug)} className="symbol symbol-70 flex-shrink-0">
-                                                                                <LazyLoadImage effect="blur" width={70} height={70} src={cart.series.series_thumbnail} alt={cart.series.slug} className="rounded-sm" />
-                                                                            </Link>
-                                                                        </div>
-                                                                        <div className="separator separator-solid" />
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                        </>
-                                                }
-                                                {
-                                                    auth.carts.data.length > 0
-                                                    ?
-                                                        <div className="p-8">
-                                                            <div className="d-flex align-items-center justify-content-between mb-7">
-                                                                <span className="font-weight-bold text-muted font-size-sm mr-2">Total</span>
-                                                                <span className="font-weight-bolder text-primary text-right">Rp {auth.carts.total_price.price_formatted},-</span>
-                                                            </div>
-                                                            <div className="text-right">
-                                                                <Link href={route('carts')} className="btn btn-primary text-weight-bold">Carts Detail</Link>
-                                                            </div>
-                                                        </div>
-                                                    :
-                                                        <div className="p-10">
-                                                            <div className="text-center font-weight-bold">
-                                                                Wah, keranjang belanjamu kosong!
-                                                            </div>
-                                                        </div>
-                                                }
-                                            </form>
+                                            </Link>
+                                            {
+                                                auth.cart_item_length > 0 && (
+                                                    <span className="label label-sm label-danger label-rounded font-weight-bolder position-absolute top-0 right-0 mt-1 mr-1">{auth.cart_item_length}</span>
+                                                )
+                                            }
                                         </div>
                                     </div>
                                     <div className="dropdown">

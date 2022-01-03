@@ -10,6 +10,8 @@ class Topic extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $hidden = ['pivot'];
+
     protected $fillable = [
         'name', 'slug', 'description',
         'picture', 'position', 'is_archived'

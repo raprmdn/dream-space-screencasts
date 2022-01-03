@@ -70,10 +70,13 @@ export default function CourseCard({course}) {
                             }
                         </div>
                     </div>
-                    <div className="d-flex justify-content-between mb-n5 mt-n5 text-dark-50">
+                    <div className="d-flex justify-content-between mt-n5 text-dark-50">
                         <span className="align-items-center">
                           <i className="flaticon2-open-text-book icon-1x mr-1" />
                             {course.episodes} Lessons
+                            {
+                                course.status === 'Development' && <span className="text-danger font-weight-bold"> // {course.status}</span>
+                            }
                         </span>
                         <span className="align-items-center">
                           <i className="flaticon2-hourglass-1 icon-1x mr-1" />
@@ -84,19 +87,6 @@ export default function CourseCard({course}) {
                             </span>
                         </span>
                     </div>
-                </div>
-                <div className="card-footer d-flex justify-content-between flex-wrap flex-sm-nowrap">
-                    <div className="d-flex">
-                        <div className="d-flex align-items-center">
-                            <i className="flaticon2-check-mark icon-1x text-success" />
-                            <span className="font-weight-bold ml-2">
-                                {course.is_free ? 'Free' : 'Paid'} Series
-                            </span>
-                        </div>
-                    </div>
-                    {
-                        course.status === 'Development' && <div className="label label-danger label-inline font-weight-bold">{course.status}</div>
-                    }
                 </div>
             </div>
         </div>

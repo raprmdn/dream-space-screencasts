@@ -15,13 +15,16 @@ class CartCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $price = $this->collection->sum(function ($value) {return $value->price;});
+        $subtotal = $this->collection->sum(function ($value) {return $value->price;});
+        $originalPrice = $this->collection->sum(function ($value) {return $value->series->price;});
 
         return [
             'data' => $this->collection,
-            'total_price' => [
-                'price_formatted' => Helper::rupiahFormat($price),
-                'price_unformatted' => $price
+            'cart_summary' => [
+                'price' => Helper::rupiahFormat($originalPrice),
+                'sale_discount' => Helper::rupiahFormat($originalPrice - $subtotal),
+                'subtotal' => $subtotal,
+                'subtotal_formatted' => Helper::rupiahFormat($subtotal)
             ]
         ];
     }
