@@ -13,5 +13,4 @@ createInertiaApp({
 InertiaProgress.init({
     color: '#29d',
     includeCSS: true,
-    showSpinner: true,
 })

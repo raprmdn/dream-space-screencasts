@@ -20,7 +20,7 @@ export default function Login({flash}) {
     }
     return (
         <div>
-            <Head title="Dream Space | Login"/>
+            <Head title="Dream Space - Login"/>
             <div className="mb-20">
                 <h3 className="opacity-50 font-weight-normal">Sign In To Dream Space</h3>
                 <p className="opacity-50">Enter your credentials to login your account.</p>

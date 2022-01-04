@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import App from "../../Layouts/App";
 import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
@@ -12,6 +12,7 @@ export default function Show() {
     const { auth } = usePage().props
     const { data: series } = usePage().props.series
     const latestVideo = series.videos[series.videos.length - 1] ?? null;
+    const [ loading, setLoading ] = useState(false)
 
     const saves = (e) => {
         e.preventDefault()
@@ -19,6 +20,12 @@ export default function Show() {
             series_id: series.id,
         }, {
             preserveScroll: true,
+            onStart: () => {
+                setLoading(true)
+            },
+            onFinish: () => {
+                setLoading(false)
+            }
         })
     }
 
@@ -28,6 +35,12 @@ export default function Show() {
             series_id: series.id,
         }, {
             preserveScroll: true,
+            onStart: () => {
+                setLoading(true)
+            },
+            onFinish: () => {
+                setLoading(false)
+            }
         })
     }
 
@@ -104,11 +117,11 @@ export default function Show() {
                                                         series.viewing_status.is_exists_in_carts
                                                         ?
                                                             <ButtonIcon
-                                                                onClick={addToCarts} type={'danger'}
+                                                                onClick={addToCarts} type={'danger'} loading={loading}
                                                                 icon={'flaticon-shopping-basket'} label={'Added to Carts'} />
                                                         :
                                                             <ButtonIcon
-                                                                onClick={addToCarts} type={'light'}
+                                                                onClick={addToCarts} type={'light'} loading={loading}
                                                                 icon={'flaticon-shopping-basket'} label={'Add to Carts'} />
                                                     )
                                                 )
@@ -117,11 +130,11 @@ export default function Show() {
                                                 series.viewing_status.is_watch_later
                                                 ?
                                                     <ButtonIcon
-                                                        onClick={saves} type={'danger'}
+                                                        onClick={saves} type={'danger'} loading={loading}
                                                         icon={'fas fa-bookmark'} label={'Added to Watchlist'} />
                                                 :
                                                     <ButtonIcon
-                                                        onClick={saves} type={'light'}
+                                                        onClick={saves} type={'light'} loading={loading}
                                                         icon={'far fa-bookmark'} label={'Add to Watchlist'} />
                                             }
                                         </>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {useForm} from "@inertiajs/inertia-react";
+import {Head, useForm} from "@inertiajs/inertia-react";
 import Guest from "../../Layouts/Guest";
 
 export default function ResetPassword({request}) {
@@ -21,6 +21,7 @@ export default function ResetPassword({request}) {
     }
     return (
         <div>
+            <Head title="Dream Space - Reset Password"/>
             <div className="mb-20">
                 <h3 className="opacity-50 font-weight-normal">Reset Password</h3>
                 <p className="opacity-50">Enter your new password to get back your account.</p>
@@ -28,7 +29,8 @@ export default function ResetPassword({request}) {
             <form className="form text-center" onSubmit={submitHandler}>
                 <input type="hidden" name="token" defaultValue={data.token} />
                 <div className="form-group">
-                    <input className="form-control h-auto text-white bg-white-o-10 rounded-pill border-0 py-4 px-8"
+                    <input className={`form-control h-auto text-white bg-white-o-10 rounded-pill border-0 py-4 px-8
+                                        ${errors.email ? 'is-invalid' : ''}`}
                            type="text" placeholder="Email" name="email" autoComplete="off" id="email"
                            defaultValue={data.email} onChange={changeHandler} />
                     {errors.email && (<div className="invalid-feedback mb-n5">{errors.email}</div>)}

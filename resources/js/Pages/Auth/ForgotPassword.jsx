@@ -18,7 +18,7 @@ export default function ForgotPassword({flash}) {
     }
     return (
         <div>
-            <Head title="Dream Space | Forgot Password"/>
+            <Head title="Dream Space - Forgot Password"/>
             <div className="mb-20">
                 <h3 className="opacity-50 font-weight-normal">Forgotten Password ?</h3>
                 <p className="opacity-50">Enter your email to reset your password</p>

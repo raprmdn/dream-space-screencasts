@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function ButtonIcon({ type, icon, label, ...props}) {
+export default function ButtonIcon({ type, loading = false, icon, label, ...props}) {
     return (
-        <button {...props} className={`btn btn-${type} font-weight-bold mr-5`}>
+        <button {...props} className={`btn btn-${type} font-weight-bold mr-5`} disabled={loading}>
             <i className={`${icon} mr-1`}/>
             {label}
         </button>

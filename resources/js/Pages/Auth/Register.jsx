@@ -23,7 +23,7 @@ export default function Register() {
 
     return (
         <div>
-            <Head title="Dream Space | Register"/>
+            <Head title="Dream Space - Register"/>
             <div className="mb-20">
                 <h3 className="opacity-50 font-weight-normal">Sign Up</h3>
                 <p className="opacity-50">Enter your credentials to create your account.</p>
