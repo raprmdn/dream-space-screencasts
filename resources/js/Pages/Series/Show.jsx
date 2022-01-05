@@ -7,12 +7,15 @@ import Alert from "../../Components/Alert";
 import CardVideoLink from "../../Components/CardVideoLink";
 import SeriesBannerMeta from "../../Components/SeriesBannerMeta";
 import ButtonIcon from "../../Components/ButtonIcon";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import YouTube from 'react-youtube';
 
 export default function Show() {
     const { auth } = usePage().props
     const { data: series } = usePage().props.series
     const latestVideo = series.videos[series.videos.length - 1] ?? null;
     const [ loading, setLoading ] = useState(false)
+    const [ player, setPlayer ] = useState(null)
 
     const saves = (e) => {
         e.preventDefault()
@@ -44,6 +47,19 @@ export default function Show() {
         })
     }
 
+    const _onReady = (e) => {
+        console.log('Preview is ready to watch.');
+        setPlayer(e.target)
+    }
+
+    const _onClickPreview = () => {
+        player.playVideo();
+    }
+
+    const _onClose = () => {
+        player.pauseVideo();
+    }
+
     return (
         <>
             <Head title={`Dream Space - ${series.title}`}>
@@ -71,7 +87,7 @@ export default function Show() {
                                align="justify" style={{whiteSpace: 'pre-line'}}>
                                 {series.description}
                             </p>
-                            <div className="d-block d-lg-flex mt-2">
+                            <div className="d-lg-flex mt-2">
                                 <SeriesBannerMeta
                                     icon={'flaticon-price-tag'}
                                     label={
@@ -103,52 +119,50 @@ export default function Show() {
                                 <SeriesBannerMeta icon={series.status === 'Completed'
                                     ? 'far fa-check-circle pr-3' : 'fas fa-code pr-3'} label={series.status} />
                             </div>
-                                <div className="d-lg-flex mt-6">
-                                    <Link href={"#"} className="btn btn-success font-weight-bold mr-5">
-                                        <i className="fas fa-play-circle mr-1"/>
-                                        Start
-                                    </Link>
-                                {
-                                    auth.user !== null && (
-                                        <>
-                                            {
-                                                !series.viewing_status.is_free && (
-                                                    series.viewing_status.is_buyable && (
-                                                        series.viewing_status.is_exists_in_carts
-                                                        ?
-                                                            <ButtonIcon
-                                                                onClick={addToCarts} type={'danger'} loading={loading}
-                                                                icon={'flaticon-shopping-basket'} label={'Added to Carts'} />
-                                                        :
-                                                            <ButtonIcon
-                                                                onClick={addToCarts} type={'light'} loading={loading}
-                                                                icon={'flaticon-shopping-basket'} label={'Add to Carts'} />
-                                                    )
+                            <div className="d-flex mt-6">
+                                <Link href={"#"} className="btn btn-success font-weight-bold mr-5">
+                                    <i className="fas fa-play-circle mr-1"/>
+                                    Start
+                                </Link>
+                            {
+                                auth.user !== null && (
+                                    <>
+                                        {
+                                            !series.viewing_status.is_free && (
+                                                series.viewing_status.is_buyable && (
+                                                    series.viewing_status.is_exists_in_carts
+                                                    ?
+                                                        <ButtonIcon
+                                                            onClick={addToCarts} type={'danger'} loading={loading}
+                                                            icon={'flaticon-shopping-basket'} label={'Added to Carts'} />
+                                                    :
+                                                        <ButtonIcon
+                                                            onClick={addToCarts} type={'light'} loading={loading}
+                                                            icon={'flaticon-shopping-basket'} label={'Add to Carts'} />
                                                 )
-                                            }
-                                            {
-                                                series.viewing_status.is_watch_later
-                                                ?
-                                                    <ButtonIcon
-                                                        onClick={saves} type={'danger'} loading={loading}
-                                                        icon={'fas fa-bookmark'} label={'Added to Watchlist'} />
-                                                :
-                                                    <ButtonIcon
-                                                        onClick={saves} type={'light'} loading={loading}
-                                                        icon={'far fa-bookmark'} label={'Add to Watchlist'} />
-                                            }
-                                        </>
-                                    )
-                                }
-                                </div>
-                            <div className="row m-0 pt-5 mb-5">
+                                            )
+                                        }
+                                        {
+                                            series.viewing_status.is_watch_later
+                                            ?
+                                                <ButtonIcon
+                                                    onClick={saves} type={'danger'} loading={loading}
+                                                    icon={'fas fa-bookmark'} label={'Added to Watchlist'} />
+                                            :
+                                                <ButtonIcon
+                                                    onClick={saves} type={'light'} loading={loading}
+                                                    icon={'far fa-bookmark'} label={'Add to Watchlist'} />
+                                        }
+                                    </>
+                                )
+                            }
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-4 d-none d-lg-flex">
+                    <div className="col-lg-4 d-none d-lg-flex justify-content-center">
                         {
                             latestVideo && (
-                                <div>
+                                <>
                                     <div className="card card-custom card-stretch gutter-b bg-transparent shadow-sm">
                                         <div className="card-body d-flex flex-column">
                                             <div className="text-center text-white">
@@ -175,7 +189,7 @@ export default function Show() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </>
                             )
                         }
                     </div>
@@ -183,8 +197,8 @@ export default function Show() {
             </Jumbotron>
             <div className="d-flex flex-column-fluid mt-10">
                 <div className="container">
-                    <div className="row">
-                        <div className="col-xl-6">
+                    <div className="d-flex flex-column-reverse flex-lg-row">
+                        <div className="col-xl-8">
                             {
                                 series.status === 'Development' && (
                                     <Alert
@@ -230,9 +244,105 @@ export default function Show() {
                                         message={'Videos are available coming soon.'} />
                             }
                         </div>
+                        <div className="col-xl-4">
+                            <div className="card card-custom gutter-b shadow-sm">
+                                <div className="card-body d-flex flex-column">
+                                    <div className="text-center">
+                                        <LazyLoadImage
+                                            src={series.thumbnail}
+                                            effect="blur"
+                                            height={180}
+                                            alt={series.slug}
+                                            className="mw-100 rounded-lg" />
+                                    </div>
+                                    {
+                                        series.preview_url
+                                        ?
+                                            <>
+                                                <button onClick={_onClickPreview}
+                                                        className="btn btn-success btn-block font-weight-bold mt-5"
+                                                        data-toggle="modal" data-target="#previewSeries">
+                                                    Preview Series
+                                                </button>
+                                            </>
+                                        :
+                                            <>
+                                                <button
+                                                    style={{cursor: "not-allowed"}}
+                                                    disabled={true}
+                                                    className="btn btn-success btn-block font-weight-bold mt-5">Preview Series</button>
+                                            </>
+                                    }
+                                    {
+                                        series.demo_url
+                                        ?
+                                            <>
+                                                <a href={series.demo_url}
+                                                   className="btn btn-success btn-block font-weight-bold" target="_blank">
+                                                    Project Demo
+                                                </a>
+                                            </>
+                                        :
+                                            <>
+                                                <button
+                                                    style={{cursor: "not-allowed"}}
+                                                    disabled={true}
+                                                    className="btn btn-success btn-block font-weight-bold">Project Demo</button>
+                                            </>
+                                    }
+                                    {
+                                        series.source_code_url
+                                            ?
+                                            <>
+                                                <a href={series.source_code_url}
+                                                   className="btn btn-success btn-block font-weight-bold" target="_blank">
+                                                    Source Code
+                                                </a>
+                                            </>
+                                            :
+                                            <>
+                                                <button
+                                                    style={{cursor: "not-allowed"}}
+                                                    disabled={true}
+                                                    className="btn btn-success btn-block font-weight-bold">Source Code</button>
+                                            </>
+                                    }
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {
+                series.preview_url && (
+                    <div className="modal fade" id="previewSeries" tabIndex="-1" role="dialog"
+                         aria-labelledby="staticBackdrop" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-centered modal-xl" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h3 className="font-weight-boldest mt-2" id="modalTitle">Preview {series.title}</h3>
+                                    <button onClick={_onClose} type="button" className="close btn-icon" data-dismiss="modal" aria-label="Close">
+                                        <i aria-hidden="true" className="ki ki-close"/>
+                                    </button>
+                                </div>
+                                <div className="card-body">
+                                    <div className="embed-responsive embed-responsive-16by9">
+                                        <YouTube
+                                            videoId={series.preview_url}
+                                            className={"embed-responsive-item rounded"}
+                                            title={series.title}
+                                            loading={"lazy"}
+                                            onReady={_onReady}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+
         </>
     )
 }
