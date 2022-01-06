@@ -6,6 +6,8 @@ import SearchFilter from "../../../Components/SearchFilter";
 import SmallPagination from "../../../Components/SmallPagination";
 import {Inertia} from "@inertiajs/inertia";
 import Swal from "sweetalert2";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function TopicTrashed() {
     const { data: topics, meta: {links, from} } = usePage().props.topics
@@ -75,11 +77,17 @@ export default function TopicTrashed() {
                                                         <div className="d-flex align-items-center">
                                                             <div className="symbol symbol-50 overflow-hidden mr-3">
                                                                 <div className="symbol-label">
-                                                                    <img src={topic.picture} width={50} height={50} alt={topic.slug} className="w-100" />
+                                                                    <LazyLoadImage
+                                                                        effect="blur"
+                                                                        src={topic.picture}
+                                                                        width={50}
+                                                                        height={50}
+                                                                        alt={topic.slug}
+                                                                        className="w-100" />
                                                                 </div>
                                                             </div>
                                                             <div className="d-flex flex-column">
-                                                                <a href="" className="text-dark-75 font-weight-bold text-hover-primary">{topic.name}</a>
+                                                                <a href={route('topics.show', topic.slug)} target="_blank" className="text-dark-75 font-weight-bold text-hover-primary">{topic.name}</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -87,18 +95,21 @@ export default function TopicTrashed() {
                                                         <span className="font-weight-bold">{topic.slug}</span>
                                                     </td>
                                                     <td>
-                                                        <div className="font-weight-bold">{topic.description.substring(0, 50)}...</div>
+                                                        <div className="font-weight-bold">{topic.description.substring(0, 50)}</div>
                                                     </td>
                                                     <td className="text-center">
                                                         <span className="font-weight-bold">{topic.series_count}</span>
                                                     </td>
                                                     <td>
-                                                        <span
-                                                            className={`label label-${topic.is_archived ? 'danger' : 'success'} label-pill label-inline mr-2`}>{topic.is_archived ? 'Archived' : 'Public'}
-                                                        </span>
+                                                        <div className="font-weight-bold text-center">
+                                                            <i className={topic.is_archived ?
+                                                                'flaticon2-check-mark text-success icon-1x'
+                                                                :
+                                                                'flaticon2-cancel text-danger icon-1x'}/>
+                                                        </div>
                                                     </td>
-                                                    <td className="text-center">
-                                                        <span className="font-weight-bold">{topic.position}</span>
+                                                    <td className="text-center font-weight-bold">
+                                                        <span className="label label-rounded label-dark">{topic.position}</span>
                                                     </td>
                                                     <td className="pr-0 text-center">
                                                         <div className="btn-group">

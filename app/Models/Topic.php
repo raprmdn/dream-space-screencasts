@@ -24,7 +24,7 @@ class Topic extends Model
      */
     public function getTopicPictureAttribute() : string
     {
-        return "/storage/" . $this->picture;
+        return $this->picture ? "/storage/" . $this->picture : false;
     }
 
 

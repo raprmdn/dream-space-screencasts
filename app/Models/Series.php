@@ -80,4 +80,12 @@ class Series extends Model
         return $this->hasMany(Video::class, 'series_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function carts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Cart::class, 'series_id');
+    }
+
 }

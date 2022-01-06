@@ -109,6 +109,7 @@ class SeriesService
 
     public function delete($series)
     {
+        $series->carts()->delete();
         return $series->delete();
     }
 

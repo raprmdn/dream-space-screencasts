@@ -29,6 +29,7 @@ export default function Index() {
         post(route('topic.update', data), {
             preserveScroll: true,
             onSuccess: () => {
+                setPreview(null)
                 window.$('#updateTopicModal').modal('hide')
             }
         })
@@ -124,7 +125,7 @@ export default function Index() {
                                                                 </div>
                                                             </div>
                                                             <div className="d-flex flex-column">
-                                                                <a href="" className="text-dark-75 font-weight-bold text-hover-primary">{topic.name}</a>
+                                                                <a href={route('topics.show', topic.slug)} target="_blank" className="text-dark-75 font-weight-bold text-hover-primary">{topic.name}</a>
                                                             </div>
                                                         </div>
                                                     </td>

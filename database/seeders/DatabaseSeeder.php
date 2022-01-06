@@ -13,11 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // Don't change the seeder position.
         $this->call([
             RoleAndPermissionTableSeeder::class,
             UserTableSeeder::class,
             TopicSeeder::class,
+            SeriesSeeder::class,
         ]);
     }
 }

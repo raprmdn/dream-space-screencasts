@@ -125,7 +125,7 @@ export default function Index(props) {
                                                     <td>
                                                         <span className="font-weight-bold">
                                                             <a href={`https://youtu.be/${video.source}`}
-                                                               className="text-dark-50 font-weight-bold text-hover-primary mb-1"
+                                                               className="text-primary font-weight-bold mb-1"
                                                                target="_blank">
                                                                 {video.source}
                                                             </a>
@@ -136,10 +136,10 @@ export default function Index(props) {
                                                             {video.runtime.runtime_formatted}
                                                         </span>
                                                     </td>
-                                                    <td>
-                                                        <div className="font-weight-bold text-center">
-                                                            <span className="label label-rounded label-dark">{video.episode}</span>
-                                                        </div>
+                                                    <td className="text-center">
+                                                        <span className="font-weight-bold text-success">
+                                                            {video.episode}
+                                                        </span>
                                                     </td>
                                                     <td>
                                                         <div className="font-weight-bold text-center">
