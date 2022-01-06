@@ -5,7 +5,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function CourseCard({course}) {
     return (
-        <div className="col-xl-4 mb-5">
+        <div className="col-12 col-md-6 col-xl-4 mb-5">
             <div className="card card-custom card-stretch gutter-b shadow-sm">
                 {
                     course.is_discount && (

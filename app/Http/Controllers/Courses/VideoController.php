@@ -6,22 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VideoRequest;
 use App\Models\Series;
 use App\Models\Video;
+use App\Services\SeriesService;
 use App\Services\VideoService;
 
 class VideoController extends Controller
 {
-    protected $videoService;
+    protected $videoService, $seriesService;
 
-    public function __construct(VideoService $videoService)
+    public function __construct(VideoService $videoService, SeriesService $seriesService)
     {
         $this->videoService = $videoService;
+        $this->seriesService = $seriesService;
     }
 
     public function index()
     {
         return inertia('Dashboard/Courses/Videos/Index', [
             'videos' => $this->videoService->findAllWithParams(request()->search),
-            'series' => Series::latest()->get(['id', 'title'])->makeHidden('series_thumbnail')
+            'series' => $this->seriesService->getSeriesIdAndTitle()
         ]);
     }
 

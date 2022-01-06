@@ -12,7 +12,12 @@ class TopicService {
 
     use ImageTrait;
 
-    public function findAll(): TopicCollection
+    public function findAll()
+    {
+        return Topic::orderBy('position')->get(['id', 'name']);
+    }
+
+    public function findAllWithSeries(): TopicCollection
     {
         return new TopicCollection(
             Topic::notArchived()

@@ -6,9 +6,10 @@ import CourseCard from "../../Components/CourseCard";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Alert from "../../Components/Alert";
+import SmallPagination from "../../Components/SmallPagination";
 
 export default function List({topic}) {
-    const { data: series, meta:{ links, from } } = usePage().props.series
+    const { data: series, meta:{ links } } = usePage().props.series
     return (
         <>
             <Head title={`Dream Space - ${topic.name}`}/>
@@ -92,6 +93,7 @@ export default function List({topic}) {
                                 </div>
                         }
                     </div>
+                    <SmallPagination links={links}/>
                 </div>
             </div>
         </>

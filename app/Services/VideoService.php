@@ -18,6 +18,11 @@ class VideoService
         return new VideoCollection(Video::onlyTrashed()->with('series:id,title')->search($params));
     }
 
+    public function findBySeries($series): VideoCollection
+    {
+        return new VideoCollection(Video::where('series_id', $series->id)->orderBy('episode')->get());
+    }
+
     public function save(array $attributes)
     {
         $series = Series::whereId($attributes['series']['value'])->firstOrFail();

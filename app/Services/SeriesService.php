@@ -77,6 +77,18 @@ class SeriesService
         return new SeriesCollection($series);
     }
 
+    public function findByIdWithTopics($id): SeriesSingleResource
+    {
+        $series = Series::whereId($id)->with('topics:id,name,slug')->first();
+
+        return new SeriesSingleResource($series);
+    }
+
+    public function getSeriesIdAndTitle()
+    {
+        return Series::latest()->get(['id', 'title'])->makeHidden('series_thumbnail');
+    }
+
     public function save($attributes): array
     {
         $picture = $attributes['thumbnail'];
@@ -118,7 +130,7 @@ class SeriesService
         return Series::whereId($series)->withTrashed()->restore();
     }
 
-    public function forceDelete($series)
+    public function forceDelete($series): ?bool
     {
         $series = Series::whereId($series)->withTrashed()->first();
         Storage::delete($series->thumbnail);

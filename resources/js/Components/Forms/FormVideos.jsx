@@ -62,7 +62,7 @@ export default function FormVideos({seriesData, data, setData, submitHandler, er
                             <label className="font-weight-bold">Video Episode</label>
                             <span className="text-danger"> * </span>
                             <input type="text" id="episode" name="episode"
-                                   defaultValue={data.episode} onChange={e => setData('episode', e.target.value)}
+                                   value={data.episode} onChange={e => setData('episode', e.target.value)}
                                    className={`form-control ${errors.episode && ('is-invalid')}`}
                                    placeholder="Enter a video episode" />
                             {errors.episode && (<div className="invalid-feedback mb-n5">{errors.episode}</div>)}

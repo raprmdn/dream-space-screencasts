@@ -7,14 +7,18 @@ use App\Http\Requests\SeriesRequest;
 use App\Models\Series;
 use App\Models\Topic;
 use App\Services\SeriesService;
+use App\Services\TopicService;
+use App\Services\VideoService;
 
 class SeriesController extends Controller
 {
-    protected $seriesService;
+    protected $seriesService, $videoService, $topicService;
 
-    public function __construct(SeriesService $seriesService)
+    public function __construct(SeriesService $seriesService, VideoService $videoService, TopicService $topicService)
     {
         $this->seriesService = $seriesService;
+        $this->videoService = $videoService;
+        $this->topicService = $topicService;
     }
 
     public function index()
@@ -27,7 +31,7 @@ class SeriesController extends Controller
     public function create()
     {
         return inertia('Dashboard/Courses/Series/Create', [
-            'topics' => Topic::orderBy('position')->get(['id', 'name']),
+            'topics' => $this->topicService->findAll(),
         ]);
     }
 
@@ -47,7 +51,8 @@ class SeriesController extends Controller
     public function show(Series $series)
     {
         return inertia('Dashboard/Courses/Series/Show', [
-            'series' => $this->seriesService->findBySlug($series->slug)
+            'series' => $this->seriesService->findByIdWithTopics($series->id),
+            'videos' => $this->videoService->findBySeries($series)
         ]);
     }
 
@@ -55,7 +60,7 @@ class SeriesController extends Controller
     {
         return inertia('Dashboard/Courses/Series/Edit', [
             'series' => Series::whereSlug($series->slug)->with('topics:id,name')->first(),
-            'topics' => Topic::orderBy('position')->get(['id', 'name']),
+            'topics' => $this->topicService->findAll(),
         ]);
     }
 

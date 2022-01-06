@@ -210,10 +210,10 @@ export default function Show() {
                             {
                                 series.videos.length > 0
                                 ?
-                                    <div className="card card-custom card-stretch gutter-b">
+                                    <div className="card card-custom gutter-b">
                                         <div className="card-body pt-7">
                                             {
-                                                series.videos.length > 8
+                                                series.videos.length > 10
                                                     ?
                                                     <div data-scroll="true" data-height="1000">
                                                         {

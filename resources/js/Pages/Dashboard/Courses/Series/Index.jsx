@@ -66,10 +66,10 @@ export default function Index(props) {
                                                             {series.discount.discount_unformatted ? `Rp. ${series.discount.discount_formatted},-` : '-'}
                                                         </span>
                                                     </td>
-                                                    <td>
-                                                        <div className="font-weight-bold text-center">
-                                                            <span className="label label-rounded label-dark">{series.videos_count}</span>
-                                                        </div>
+                                                    <td className="text-center">
+                                                        <span className="font-weight-bold text-success">
+                                                            {series.videos_count}
+                                                        </span>
                                                     </td>
                                                     <td>
                                                         <div className="font-weight-bold text-center">
@@ -89,7 +89,7 @@ export default function Index(props) {
                                                                     data-toggle="tooltip" title="Edit">
                                                                 <i className="flaticon-settings-1 text-primary" />
                                                             </Link>
-                                                            <Link href={route('series.add_videos', series.slug)} className="btn btn-sm btn-clean btn-icon"
+                                                            <Link href={route('series.add_videos', series.id)} className="btn btn-sm btn-clean btn-icon"
                                                                     data-toggle="tooltip" title="Add Videos">
                                                                 <i className="fas fa-video text-success" />
                                                             </Link>

@@ -19,7 +19,7 @@ class TopicsController extends Controller
     public function topics()
     {
         return inertia('Topics/Index', [
-            'topics' => $this->topicService->findAll()
+            'topics' => $this->topicService->findAllWithSeries()
         ]);
     }
 

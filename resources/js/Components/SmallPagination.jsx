@@ -9,7 +9,7 @@ export default function SmallPagination({links}) {
                     {links.map((link, key) => (
                         <span key={key}>
                             <Link as="button"
-                                  className={`btn btn-icon btn-sm border-0 mr-2 my-1 btn-hover-primary btn-light-primary
+                                  className={`btn btn-icon border-0 mr-2 my-1 btn-hover-primary btn-light-primary
                                   ${link.active && 'active'}
                                   ${link.url === null ? 'btn-light-dark disabled' : ''}`}
                                   disabled={link.url === null}

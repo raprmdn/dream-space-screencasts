@@ -5,15 +5,16 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import Jumbotron from "../../Components/Jumbotron";
 import CourseCard from "../../Components/CourseCard";
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import SmallPagination from "../../Components/SmallPagination";
 
 export default function Index() {
-    const { data: series, meta:{ links, from } } = usePage().props.series
+    const { data: series, meta:{ links } } = usePage().props.series
     return (
         <>
             <Head title="Dream Space - Series"/>
             <Jumbotron>
                 <div className="container row d-flex align-items-center align-center">
-                    <div className="col-lg-8 py-10">
+                    <div className="col-12 col-xl-8 py-10">
                         <div className="d-flex flex-column">
                             <h1 className="text-white font-weight-boldest mb-10">Explore
                                 <span style={{background: 'linear-gradient(to right, #06b6d4 0%, #4ade80 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
@@ -35,7 +36,7 @@ export default function Index() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-4 d-none d-lg-flex">
+                    <div className="d-none d-xl-flex col-xl-4">
                         {
                             series.slice(0, 1).map((course) => (
                                 <div key={course.id}>
@@ -83,6 +84,7 @@ export default function Index() {
                             ))
                         }
                     </div>
+                    <SmallPagination links={links}/>
                 </div>
             </div>
         </>

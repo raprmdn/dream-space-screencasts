@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 
 export default function Show() {
     const { data: series } = usePage().props.series
+    const { data: videos } = usePage().props.videos
     const { data, setData, post, put, delete: destroy, reset, errors, clearErrors, processing } = useForm({
         series: {value: series.id},
         title: '',
@@ -205,8 +206,8 @@ export default function Show() {
                                     </thead>
                                     <tbody className="text-dark-50">
                                     {
-                                        series.videos.length > 0 ?
-                                            series.videos.map((video, index) => (
+                                        videos.length > 0 ?
+                                            videos.map((video, index) => (
                                                 <tr key={video.id} className="odd">
                                                     <td className="pl-0">
                                                         { index + 1 }
@@ -217,7 +218,7 @@ export default function Show() {
                                                     <td>
                                                         <span className="font-weight-bold">
                                                             <a href={`https://youtu.be/${video.source}`}
-                                                               className="text-dark-50 font-weight-bold text-hover-primary mb-1"
+                                                               className="text-primary font-weight-bold mb-1"
                                                                target="_blank">
                                                                 {video.source}
                                                             </a>
@@ -228,10 +229,10 @@ export default function Show() {
                                                             {video.runtime.runtime_formatted}
                                                         </span>
                                                     </td>
-                                                    <td>
-                                                        <div className="font-weight-bold text-center">
-                                                            <span className="label label-rounded label-dark">{video.episode}</span>
-                                                        </div>
+                                                    <td className="text-center">
+                                                        <span className="font-weight-bold text-success">
+                                                            {video.episode}
+                                                        </span>
                                                     </td>
                                                     <td>
                                                         <div className="font-weight-bold text-center">
@@ -290,7 +291,7 @@ export default function Show() {
                                 </table>
                             </div>
                             {
-                                series.videos.length > 9 && (
+                                videos.length > 9 && (
                                     <a href="#" className="btn btn-primary btn-block font-weight-bold ml-2"
                                        data-toggle="modal" data-target="#addVideoModal"
                                        onClick={() => {reset(); clearErrors();}}>
