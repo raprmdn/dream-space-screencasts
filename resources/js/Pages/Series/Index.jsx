@@ -10,7 +10,6 @@ import SmallPagination from "../../Components/SmallPagination";
 export default function Index() {
     const { data: series, meta:{ links } } = usePage().props.series
     const { latestSeries } = usePage().props
-    console.log(latestSeries)
 
     return (
         <>
