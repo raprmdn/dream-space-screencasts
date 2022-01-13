@@ -1,4 +1,5 @@
 import React from 'react';
+import Label from "../Label";
 
 export default function FormRoles({permissionsData, data, submitHandler , changeHandler, checkedHandler, submitLabel, errors, processing}) {
     return (
@@ -6,7 +7,7 @@ export default function FormRoles({permissionsData, data, submitHandler , change
             <div className="modal-body">
                 <form onSubmit={submitHandler} className="form">
                     <div className="form-group">
-                        <label className="font-weight-bolder">Role Name</label>
+                        <Label labelFor={"name"} children={"Role Name"}/>
                         <span className="text-danger"> * </span>
                         <i className="fas fa-exclamation-circle font-size-sm"
                            data-container="body" data-toggle="tooltip" data-placement="right" title="Role names is required to be unique."/>
@@ -17,7 +18,7 @@ export default function FormRoles({permissionsData, data, submitHandler , change
                         {errors.name && (<div className="invalid-feedback mb-n5">{errors.name}</div>)}
                     </div>
                     <div className="form-group">
-                        <label className="font-weight-bolder">Guard Type</label>
+                        <Label labelFor={"guard_name"} children={"Guard Type"}/>
                         <i className="fas fa-exclamation-circle font-size-sm ml-1"
                            data-container="body" data-toggle="tooltip" data-placement="right" title="Guard name is default to web."/>
                         <input type="text" id="guard_name" name="guard_name"
@@ -27,7 +28,7 @@ export default function FormRoles({permissionsData, data, submitHandler , change
                         {errors.guard_name && (<div className="invalid-feedback mb-n5">{errors.guard_name}</div>)}
                     </div>
                     <div className="form-group">
-                        <label className="font-weight-bolder">Role Permissions</label>
+                        <Label children={"Role Permissions"}/>
                         <div className="checkbox-list">
                             {
                                 permissionsData.map((permission) => (

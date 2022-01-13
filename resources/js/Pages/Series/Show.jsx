@@ -331,7 +331,6 @@ export default function Show() {
                                         <YouTube
                                             videoId={series.preview_url}
                                             className={"embed-responsive-item rounded"}
-                                            title={series.title}
                                             loading={"lazy"}
                                             onReady={_onReady}
                                         />

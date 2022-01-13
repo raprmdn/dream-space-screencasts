@@ -50,13 +50,18 @@ class TopicService {
         return Topic::whereSlug($slug)->firstOrFail(['id', 'name', 'slug']);
     }
 
+    public function getTopicByValue($number)
+    {
+        return Topic::orderBy('position')->take($number)->get(['name', 'slug']);
+    }
+
     public function save(array $attributes) : Topic
     {
         $picture = $attributes['picture'];
         $attributes['slug'] = Str::slug($attributes['name']);
         $attributes['picture'] = $this->assignPicture('icon/topic', $picture, $attributes['slug']);
 
-        return Topic::create($this->fields($attributes));
+        return Topic::create($this->_fields($attributes));
     }
 
     public function update(array $attributes, $topic)
@@ -70,7 +75,7 @@ class TopicService {
             $attributes['picture'] = $topic->picture;
         }
 
-        return $topic->update($this->fields($attributes));
+        return $topic->update($this->_fields($attributes));
     }
 
     public function delete($topic)
@@ -93,7 +98,7 @@ class TopicService {
 
     }
 
-    private function fields(array $attributes): array
+    private function _fields(array $attributes): array
     {
         return [
             'name' => $attributes['name'],

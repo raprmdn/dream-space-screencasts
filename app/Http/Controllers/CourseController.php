@@ -17,7 +17,8 @@ class CourseController extends Controller
     public function index()
     {
         return inertia('Series/Index', [
-            'series' => $this->seriesService->findAll()
+            'series' => $this->seriesService->findAll(),
+            'latestSeries' => $this->seriesService->getSingleLatestSeries()
         ]);
     }
 

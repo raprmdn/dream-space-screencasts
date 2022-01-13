@@ -52,17 +52,12 @@ export default function List({topic}) {
                                                         alt={course.slug}
                                                         className="mw-100 rounded-lg" />
                                                 </span>
-                                                <div className="mt-2">
+                                                <div className="mt-4">
                                                     <span className="font-weight-boldest font-size-h3 m-0 mb-1">
                                                         {course.title}
                                                     </span>
                                                 </div>
-                                                <div className="mt-2">
-                                                    <div className="text-muted">
-                                                        <small>Added {course.created_at}</small>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-4">
+                                                <div className="mt-6">
                                                     <Link href={route('series.show', course.slug)} className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
                                                         Preview
                                                     </Link>

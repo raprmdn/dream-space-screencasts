@@ -1,4 +1,5 @@
 import React from 'react';
+import Label from "../Label";
 
 export default function FormPermissions({data, submitHandler , changeHandler, submitLabel, errors, processing}) {
     return (
@@ -6,7 +7,7 @@ export default function FormPermissions({data, submitHandler , changeHandler, su
             <div className="modal-body">
                 <form onSubmit={submitHandler} className="form">
                     <div className="form-group">
-                        <label className="font-weight-bolder">Permission Name</label>
+                        <Label labelFor={"name"} children={"Permission Name"}/>
                         <span className="text-danger"> * </span>
                         <i className="fas fa-exclamation-circle font-size-sm"
                            data-container="body" data-toggle="tooltip" data-placement="right" title="Permission names is required to be unique."/>
@@ -17,7 +18,7 @@ export default function FormPermissions({data, submitHandler , changeHandler, su
                         {errors.name && (<div className="invalid-feedback mb-n5">{errors.name}</div>)}
                     </div>
                     <div className="form-group">
-                        <label className="font-weight-bolder">Guard Type</label>
+                        <Label labelFor={"name"} children={"Guard Type"}/>
                         <i className="fas fa-exclamation-circle font-size-sm ml-1"
                            data-container="body" data-toggle="tooltip" data-placement="right" title="Guard name is default to web."/>
                         <input type="text" id="guard_name" name="guard_name"

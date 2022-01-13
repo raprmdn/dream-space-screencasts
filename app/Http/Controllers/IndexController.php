@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\TopicService;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
+    protected $topicService;
+
+    public function __construct(TopicService $topicService)
+    {
+        $this->topicService = $topicService;
+    }
+
     /**
      * Handle the incoming request.
      *
@@ -14,6 +22,8 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return inertia('Home');
+        return inertia('Home', [
+            'topics' => $this->topicService->getTopicByValue(8),
+        ]);
     }
 }

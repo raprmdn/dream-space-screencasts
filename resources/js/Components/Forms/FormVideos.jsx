@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from "react-select";
 import NumberFormat from 'react-number-format';
+import Label from "../Label";
 
 export default function FormVideos({seriesData, data, setData, submitHandler, errors, processing, submitLabel}) {
     let options = null;
@@ -17,7 +18,7 @@ export default function FormVideos({seriesData, data, setData, submitHandler, er
                             route().current() !== 'series.add_videos'
                                 ?
                                 (<>
-                                    <label className="font-weight-bold">Select Series</label>
+                                    <Label labelFor={"series"} children={"Select Series"}/>
                                     <span className="text-danger"> * </span>
                                     <Select
                                         id="series"
@@ -31,7 +32,7 @@ export default function FormVideos({seriesData, data, setData, submitHandler, er
                                 </>)
                                 :
                             (<>
-                                <label className="font-weight-bold">Series</label>
+                                <Label children={"Series Title"}/>
                                 <h5 className="font-weight-bolder text-dark">
                                     {seriesData.title}
                                 </h5>
@@ -40,7 +41,7 @@ export default function FormVideos({seriesData, data, setData, submitHandler, er
 
                     </div>
                     <div className="form-group">
-                        <label className="font-weight-bold">Video Title</label>
+                        <Label labelFor={"title"} children={"Video Title"}/>
                         <span className="text-danger"> * </span>
                         <input type="text" id="title" name="title"
                                value={data.title} onChange={e => setData('title', e.target.value)}
@@ -50,7 +51,7 @@ export default function FormVideos({seriesData, data, setData, submitHandler, er
                     </div>
                     <div className="form-group row">
                         <div className="col-lg-4">
-                            <label className="font-weight-bold">Video Source URL</label>
+                            <Label labelFor={"source"} children={"Video Source URL"}/>
                             <span className="text-danger"> * </span>
                             <input type="text" id="source" name="source"
                                    value={data.source} onChange={e => setData('source', e.target.value)}
@@ -59,7 +60,7 @@ export default function FormVideos({seriesData, data, setData, submitHandler, er
                             {errors.source && (<div className="invalid-feedback mb-n5">{errors.source}</div>)}
                         </div>
                         <div className="col-lg-4">
-                            <label className="font-weight-bold">Video Episode</label>
+                            <Label labelFor={"episode"} children={"Video Episode"}/>
                             <span className="text-danger"> * </span>
                             <input type="text" id="episode" name="episode"
                                    value={data.episode} onChange={e => setData('episode', e.target.value)}
@@ -68,7 +69,7 @@ export default function FormVideos({seriesData, data, setData, submitHandler, er
                             {errors.episode && (<div className="invalid-feedback mb-n5">{errors.episode}</div>)}
                         </div>
                         <div className="col-lg-4">
-                            <label className="font-weight-bold">Video Runtime</label>
+                            <Label labelFor={"runtime"} children={"Video Runtime"}/>
                             <span className="text-danger"> * </span>
                             <NumberFormat type="text" id="runtime" name="runtime"
                                           format="##:##:##" placeholder="hh:mm:ss"

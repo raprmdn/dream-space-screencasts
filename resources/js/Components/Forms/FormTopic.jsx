@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import Label from "../Label";
 
 export default function FormTopic({submitHandler, setData, data, errors, submitLabel, processing, auth, preview, setPreview}) {
     const fileInput = useRef()
@@ -25,7 +26,7 @@ export default function FormTopic({submitHandler, setData, data, errors, submitL
             <div className="modal-body">
                 <form onSubmit={submitHandler} className="form" encType="multipart/form-data">
                     <div className="form-group">
-                        <label className="font-weight-bold">Topic Name</label>
+                        <Label labelFor={"name"} children={"Topic Name"}/>
                         <span className="text-danger"> * </span>
                         <input type="text" id="name" name="name"
                                value={data.name}
@@ -35,7 +36,7 @@ export default function FormTopic({submitHandler, setData, data, errors, submitL
                         {errors.name && (<div className="invalid-feedback mb-n5">{errors.name}</div>)}
                     </div>
                     <div className="form-group">
-                        <label className="font-weight-bold">Topic Description</label>
+                        <Label labelFor={"description"} children={"Topic Description"}/>
                         <span className="text-danger"> * </span>
                         <textarea id="description" name="description"
                                value={data.description}
@@ -46,7 +47,7 @@ export default function FormTopic({submitHandler, setData, data, errors, submitL
                         {errors.description && (<div className="invalid-feedback mb-n5">{errors.description}</div>)}
                     </div>
                     <div className="form-group">
-                        <label className="font-weight-bold">Topic Position</label>
+                        <Label labelFor={"position"} children={"Topic Position"}/>
                         <span className="text-danger"> * </span>
                         <input type="number" id="position" name="position"
                                value={data.position}
@@ -56,7 +57,7 @@ export default function FormTopic({submitHandler, setData, data, errors, submitL
                         {errors.position && (<div className="invalid-feedback mb-n5">{errors.position}</div>)}
                     </div>
                     <div className="form-group">
-                        <label className="font-weight-bold">Topic Image</label>
+                        <Label labelFor={"picture"} children={"Topic Image"}/>
                         <span className="text-danger"> * </span>
                             {
                                 preview && (

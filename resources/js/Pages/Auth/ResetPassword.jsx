@@ -3,7 +3,7 @@ import {Head, useForm} from "@inertiajs/inertia-react";
 import Guest from "../../Layouts/Guest";
 
 export default function ResetPassword({request}) {
-    const { data, setData, errors, post } = useForm({
+    const { data, setData, errors, post, processing } = useForm({
         token: request.token,
         email: request.email,
         password: '',
@@ -48,7 +48,10 @@ export default function ResetPassword({request}) {
                            value={data.password_confirmation} onChange={changeHandler}/>
                 </div>
                 <div className="form-group">
-                    <button type="submit" className="btn btn-pill btn-primary opacity-90 px-15 py-3 m-2">Reset</button>
+                    <button type="submit" className="btn btn-pill btn-primary opacity-90 px-15 py-3 m-2" disabled={processing}>
+                        {processing && (<i className="spinner spinner-sm spinner-white px-4"/>)}
+                        Reset
+                    </button>
                 </div>
             </form>
         </div>

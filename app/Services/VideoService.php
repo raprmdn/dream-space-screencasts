@@ -26,12 +26,12 @@ class VideoService
     public function save(array $attributes)
     {
         $series = Series::whereId($attributes['series']['value'])->firstOrFail();
-        return $series->videos()->create($this->fields($attributes));
+        return $series->videos()->create($this->_fields($attributes));
     }
 
     public function update(array $attributes, $video)
     {
-        return $video->update($this->fields($attributes));
+        return $video->update($this->_fields($attributes));
     }
 
     public function delete($video)
@@ -50,7 +50,7 @@ class VideoService
         return $video->forceDelete();
     }
 
-    private function fields(array $attributes): array
+    private function _fields(array $attributes): array
     {
         return [
             isset($attributes['id']), 'series_id' => $attributes['series']['value'],

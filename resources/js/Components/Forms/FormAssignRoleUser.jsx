@@ -1,4 +1,5 @@
 import React from 'react';
+import Label from "../Label";
 
 export default function FormAssignRoleUser({data, submitHandler , changeHandler, submitLabel, errors, processing}) {
     return (
@@ -6,7 +7,7 @@ export default function FormAssignRoleUser({data, submitHandler , changeHandler,
             <div className="modal-body">
                 <form onSubmit={submitHandler} className="form">
                     <div className="form-group">
-                        <label className="font-weight-bolder">User Email</label>
+                        <Label labelFor={"email"} children={"User Email"}/>
                         <input type="email" id="email" name="email"
                                value={data.email} onChange={changeHandler}
                                className={`form-control form-control-solid ${errors.email ? 'is-invalid' : ''}`}

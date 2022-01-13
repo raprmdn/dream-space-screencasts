@@ -9,6 +9,9 @@ import SmallPagination from "../../Components/SmallPagination";
 
 export default function Index() {
     const { data: series, meta:{ links } } = usePage().props.series
+    const { latestSeries } = usePage().props
+    console.log(latestSeries)
+
     return (
         <>
             <Head title="Dream Space - Series"/>
@@ -37,41 +40,32 @@ export default function Index() {
                         </div>
                     </div>
                     <div className="d-none d-xl-flex col-xl-4">
-                        {
-                            series.slice(0, 1).map((course) => (
-                                <div key={course.id}>
-                                    <div className="card card-custom card-stretch gutter-b bg-transparent shadow-sm">
-                                        <div className="card-body d-flex flex-column">
-                                            <div className="text-center text-white">
-                                                <span>
-                                                    <LazyLoadImage
-                                                        src={course.thumbnail}
-                                                        effect="blur"
-                                                        height={200}
-                                                        alt={course.slug}
-                                                        className="mw-100 rounded-lg" />
-                                                </span>
-                                                <div className="mt-2">
-                                                    <span className="font-weight-boldest font-size-h3 m-0 mb-1">
-                                                        {course.title}
-                                                    </span>
-                                                </div>
-                                                <div className="mt-2">
-                                                    <div className="text-muted">
-                                                        <small>Added {course.created_at}</small>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-4">
-                                                    <Link href={route('series.show', course.slug)} className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
-                                                        Preview
-                                                    </Link>
-                                                </div>
-                                            </div>
+                        <div>
+                            <div className="card card-custom card-stretch gutter-b bg-transparent shadow-sm">
+                                <div className="card-body d-flex flex-column">
+                                    <div className="text-center text-white">
+                                        <span>
+                                            <LazyLoadImage
+                                                src={latestSeries.series_thumbnail}
+                                                effect="blur"
+                                                height={200}
+                                                alt={latestSeries.slug}
+                                                className="mw-100 rounded-lg" />
+                                        </span>
+                                        <div className="mt-4">
+                                            <span className="font-weight-boldest font-size-h3 m-0 mb-1">
+                                                {latestSeries.title}
+                                            </span>
+                                        </div>
+                                        <div className="mt-6">
+                                            <Link href={route('series.show', latestSeries.slug)} className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
+                                                Preview
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
-                            ))
-                        }
+                            </div>
+                        </div>
                     </div>
                 </div>
             </Jumbotron>

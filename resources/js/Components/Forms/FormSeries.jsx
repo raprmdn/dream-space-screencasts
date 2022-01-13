@@ -3,6 +3,7 @@ import Select from "react-select";
 import makeAnimated from 'react-select/animated';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Label from "../Label";
 
 const animatedComponents = makeAnimated();
 
@@ -32,7 +33,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
             <form className="form" onSubmit={submitHandler}>
                 <div className="card-body">
                     <div className="form-group">
-                        <label className="font-weight-bold">Series Title</label>
+                        <Label labelFor={"title"} children={"Series Title"}/>
                         <span className="text-danger"> * </span>
                         <input type="text" id="title" name="title"
                                value={data.title} onChange={(e) => setData('title', e.target.value)}
@@ -41,7 +42,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                         {errors.title && (<div className="invalid-feedback mb-n5">{errors.title}</div>)}
                     </div>
                     <div className="form-group">
-                        <label className="font-weight-bold">Series Topics</label>
+                        <Label labelFor={"topics"} children={"Series Topics"}/>
                         <span className="text-danger"> * </span>
                         <Select
                             closeMenuOnSelect={false}
@@ -57,7 +58,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                         {errors.topics && (<span className="text-danger font-size-sm mb-n5">{errors.topics}</span>)}
                     </div>
                     <div className="form-group">
-                        <label className="font-weight-bold">Series Description</label>
+                        <Label labelFor={"description"} children={"Series Description"}/>
                         <span className="text-danger"> * </span>
                         <textarea id="description" name="description"
                                   value={data.description} onChange={(e) => setData('description', e.target.value)}
@@ -68,7 +69,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                     </div>
                     <div className="form-group row">
                         <div className="col-lg-6">
-                            <label className="font-weight-bold">Series Price</label>
+                            <Label labelFor={"price"} children={"Series Price"}/>
                             <div className="input-group">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">Rp.</span>
@@ -82,7 +83,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                             </div>
                         </div>
                         <div className="col-lg-6">
-                            <label className="font-weight-bold">Series Discount Price</label>
+                            <Label labelFor={"discount_price"} children={"Series Discount Price"}/>
                             <div className="input-group">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">Rp.</span>
@@ -98,7 +99,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                     </div>
                     <div className="form-group row">
                         <div className="col-lg-6">
-                            <label className="font-weight-bold">Series Level</label>
+                            <Label labelFor={"levels"} children={"Series Level"}/>
                             <span className="text-danger"> * </span>
                             <select
                                 id="levels"
@@ -116,7 +117,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                             {errors.levels && (<div className="invalid-feedback mb-n5">{errors.levels}</div>)}
                         </div>
                         <div className="col-lg-6">
-                            <label className="font-weight-bold">Series Status</label>
+                            <Label labelFor={"status"} children={"Series Status"}/>
                             <span className="text-danger"> * </span>
                             <select
                                 id="status"
@@ -135,7 +136,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                     </div>
                     <div className="form-group row">
                         <div className="col-lg-6">
-                            <label className="font-weight-bold">Series Episode</label>
+                            <Label labelFor={"episodes"} children={"Series Episode"}/>
                             <span className="text-danger"> * </span>
                             <input type="number" id="episodes" name="episodes"
                                    value={data.episodes} onChange={(e) => setData('episodes', e.target.value)}
@@ -144,7 +145,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                             {errors.episodes && (<div className="invalid-feedback mb-n5">{errors.episodes}</div>)}
                         </div>
                         <div className="col-lg-6">
-                            <label className="font-weight-bold">Series Preview</label>
+                            <Label labelFor={"preview_series"} children={"Series Preview"}/>
                             <input type="text" id="preview_series" name="preview_series"
                                    value={data.preview_series} onChange={(e) => setData('preview_series', e.target.value)}
                                    className={`form-control ${errors.preview_series && ('is-invalid')}`}
@@ -154,7 +155,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                     </div>
                     <div className="form-group row">
                         <div className="col-lg-6">
-                            <label className="font-weight-bold">Series Source Code</label>
+                            <Label labelFor={"source_code"} children={"Series Source Code"}/>
                             <input type="text" id="source_code" name="source_code"
                                    value={data.source_code} onChange={(e) => setData('source_code', e.target.value)}
                                    className={`form-control ${errors.source_code && ('is-invalid')}`}
@@ -162,7 +163,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                             {errors.source_code && (<div className="invalid-feedback mb-n5">{errors.source_code}</div>)}
                         </div>
                         <div className="col-lg-6">
-                            <label className="font-weight-bold">Series Project Demo</label>
+                            <Label labelFor={"project_demo"} children={"Series Project Demo"}/>
                             <input type="text" id="project_demo" name="project_demo"
                                    value={data.project_demo} onChange={(e) => setData('project_demo', e.target.value)}
                                    className={`form-control ${errors.project_demo && ('is-invalid')}`}
@@ -209,7 +210,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                         </div>
                     </div>
                     <div className="form-group">
-                        <label className="font-weight-bold">Series Thumbnail</label>
+                        <Label labelFor={"thumbnail"} children={"Series Thumbnail"}/>
                         <span className="text-danger"> * Recommended 1280 x 720</span>
                         <input type="file"
                                className="form-control"

@@ -22,7 +22,7 @@ class SeriesService
             ->paginate(9);
 
         $series->getCollection()->transform(function ($series) {
-            $this->castingRuntime($series);
+            $this->_castingRuntime($series);
             return $series;
         });
 
@@ -52,7 +52,7 @@ class SeriesService
             ->withCount('videos')
             ->first();
 
-        $this->castingRuntime($series);
+        $this->_castingRuntime($series);
         unset($series->hours);
 
         return new SeriesSingleResource($series);
@@ -66,7 +66,7 @@ class SeriesService
             ->paginate(9);
 
         $series->getCollection()->transform(function ($series) {
-            $this->castingRuntime($series);
+            $this->_castingRuntime($series);
             return $series;
         });
 
@@ -89,12 +89,17 @@ class SeriesService
         return Series::latest()->get(['id', 'title'])->makeHidden('series_thumbnail');
     }
 
+    public function getSingleLatestSeries(): Series
+    {
+        return Series::latest()->notArchived()->take(1)->first(['id', 'title', 'slug', 'thumbnail']);
+    }
+
     public function save($attributes): array
     {
         $picture = $attributes['thumbnail'];
         $attributes['slug'] = Str::slug($attributes['title']) . '-' . now()->format('His');
         $attributes['thumbnail'] = $this->assignPicture('thumbnail/series', $picture, $attributes['slug']);
-        $series = Series::create($this->fields($attributes));
+        $series = Series::create($this->_fields($attributes));
 
         return $series->topics()->sync(collect($attributes['topics'])->pluck('value'));
     }
@@ -109,7 +114,7 @@ class SeriesService
         } else {
             $attributes['thumbnail'] = $series->thumbnail;
         }
-        $series->update($this->fields($attributes));
+        $series->update($this->_fields($attributes));
 
         $price = !$series->discount_price ? $series->price : $series->discount_price;
         Cart::where('series_id', $series->id)->update([
@@ -137,7 +142,7 @@ class SeriesService
         return $series->forceDelete();
     }
 
-    private function fields(array $attributes) : array
+    private function _fields(array $attributes) : array
     {
         return [
             'title' => $attributes['title'],
@@ -158,7 +163,7 @@ class SeriesService
         ];
     }
 
-    private function castingRuntime($series)
+    private function _castingRuntime($series)
     {
         $series->hours = $series->videos->map(function ($times) {
             return $times->runtime;
