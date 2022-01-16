@@ -5,6 +5,7 @@ use App\Http\Controllers\{CartController,
     Courses\SeriesController,
     Courses\VideoController,
     IndexController,
+    PaymentConfiguration\PaymentConfigurationController,
     Topic\TopicController,
     TopicsController,
     TrashController,
@@ -70,6 +71,13 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
             Route::post('', [PermissionController::class, 'store'])->name('permissions.store');
             Route::put('{permission}', [PermissionController::class, 'update'])->name('permissions.update');
             Route::delete('{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
+        });
+    });
+    Route::prefix('payment')->middleware(['can:payment configuration'])->group(function () {
+        Route::prefix('configuration')->group(function () {
+            Route::get('', [PaymentConfigurationController::class, 'index'])->name('payment.config_index');
+            Route::put('status-payment-configuration', [PaymentConfigurationController::class, 'statusPaymentConfig'])->name('payment.status_config');
+            Route::put('{midtrans_config}', [PaymentConfigurationController::class, 'update'])->name('payment.config_update');
         });
     });
     Route::prefix('trash')->middleware(['can:topic'])->group(function () {

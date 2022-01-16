@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             TopicSeeder::class,
             SeriesSeeder::class,
+            MidtransConfigSeeder::class,
         ]);
     }
 }

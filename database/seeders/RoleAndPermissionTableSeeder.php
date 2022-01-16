@@ -20,7 +20,8 @@ class RoleAndPermissionTableSeeder extends Seeder
         $permissions = collect([
             'user management', 'menu management', 'courses', 'topics',
             'deactivate user', 'view invoice', 'view dashboard', 'trash',
-            'create topics', 'update topics', 'archive topics', 'delete topics'
+            'create topics', 'update topics', 'archive topics', 'delete topics',
+            'payment configuration'
         ]);
 
         $permissions->each(function ($permission) {

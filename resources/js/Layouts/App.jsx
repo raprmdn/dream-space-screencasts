@@ -23,10 +23,7 @@ export default function App({children, title}) {
                             {flash.type && <Toaster position="top-right"/>}
                             {children}
                         </div>
-                        {auth.user !== null
-                            ? <></>
-                            : <BannerFooter/>
-                        }
+                        {!auth.user && ( <BannerFooter/> )}
                         <Footer/>
                     </div>
                 </div>

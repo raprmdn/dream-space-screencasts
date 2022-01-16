@@ -1,11 +1,10 @@
 import React from 'react';
 import {Link, usePage} from "@inertiajs/inertia-react";
-import {LazyLoadImage} from "react-lazy-load-image-component";
-import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function Header() {
     const { auth } = usePage().props;
     let segmentUrl = window.location.pathname;
+
     return (
         <>
             <div className="bgi-no-repeat" style={{backgroundColor: '#13263c'}}>
@@ -173,6 +172,32 @@ export default function Header() {
                                                                             </span>
                                                                             <span className="menu-text">Menu Management</span>
                                                                         </Link>
+                                                                    </li>
+                                                                )
+                                                            }
+                                                            {
+                                                                auth.can.includes('payment configuration') && (
+                                                                    <li className={`menu-item menu-item-submenu ${segmentUrl.split("/")[2] === 'payment' ? 'menu-item-open menu-item-here' : ''}`}
+                                                                        data-menu-toggle="hover" aria-haspopup="true">
+                                                                        <a href="" className="menu-link menu-toggle">
+                                                                            <div className="menu-icon">
+                                                                                <i className="flaticon-settings text-muted"/>
+                                                                            </div>
+                                                                            <span className="menu-text">Payment Configuration</span>
+                                                                            <i className="menu-arrow" />
+                                                                        </a>
+                                                                        <div className="menu-submenu menu-submenu-classic menu-submenu-right">
+                                                                            <ul className="menu-subnav">
+                                                                                <li className={`menu-item ${route().current('payment.config_index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('payment.config_index')} className="menu-link">
+                                                                                        <i className="menu-bullet menu-bullet-dot">
+                                                                                            <span />
+                                                                                        </i>
+                                                                                        <span className="menu-text">Midtrans Configuration</span>
+                                                                                    </Link>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
                                                                     </li>
                                                                 )
                                                             }
