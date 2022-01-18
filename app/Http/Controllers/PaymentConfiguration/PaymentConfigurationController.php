@@ -3,41 +3,37 @@
 namespace App\Http\Controllers\PaymentConfiguration;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PaymentConfigRequest;
 use App\Models\MidtransConfig;
-use App\Services\PaymentService;
+use App\Services\PaymentConfigService;
 use Illuminate\Http\Request;
 
 class PaymentConfigurationController extends Controller
 {
-    protected $paymentService;
+    protected $paymentConfigService;
 
-    public function __construct(PaymentService $paymentService)
+    public function __construct(PaymentConfigService $paymentConfigService)
     {
-        $this->paymentService = $paymentService;
+        $this->paymentConfigService = $paymentConfigService;
     }
 
     public function index()
     {
         return inertia('Dashboard/Payment/Index', [
-            'configuration' => $this->paymentService->getMidtransConfiguration()
+            'configuration' => $this->paymentConfigService->getMidtransConfiguration()
         ]);
     }
 
-    public function update(Request $request, MidtransConfig $midtransConfig)
+    public function update(PaymentConfigRequest $request, MidtransConfig $midtransConfig)
     {
-        $request->validate([
-            'environment' => ['in:true,false'],
-            'sanitized' => ['boolean'],
-            'enable_3d_secure' => ['boolean']
-        ]);
-        $this->paymentService->updateStatusPaymentConfiguration($request->all(), $midtransConfig);
+        $this->paymentConfigService->updatePaymentConfiguration($request->all(), $midtransConfig);
 
         return redirect()->back()->with(['type' => 'success', 'message' => 'Payment Configuration has been updated.']);
     }
 
     public function statusPaymentConfig(Request $request)
     {
-        $resp = $this->paymentService->setStatusPaymentConfiguration($request->only('status'));
+        $resp = $this->paymentConfigService->setStatusPaymentConfiguration($request->only('status'));
 
         return redirect()->back()->with(['type' => 'success', 'message' => "Payment Configuration has been $resp."]);
     }

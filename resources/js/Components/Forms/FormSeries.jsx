@@ -4,6 +4,7 @@ import makeAnimated from 'react-select/animated';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Label from "../Label";
+import ButtonSubmit from "../ButtonSubmit";
 
 const animatedComponents = makeAnimated();
 
@@ -237,10 +238,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                     </div>
                 </div>
                 <div className="card-footer border-0 text-right">
-                    <button type="submit" className="btn btn-primary btn-block font-weight-bold" disabled={processing}>
-                        {processing && (<i className="spinner spinner-sm spinner-white px-4"/>)}
-                        {submitLabel}
-                    </button>
+                    <ButtonSubmit label={submitLabel} optionalClass={"btn-block"} processing={processing}/>
                 </div>
             </form>
         </div>

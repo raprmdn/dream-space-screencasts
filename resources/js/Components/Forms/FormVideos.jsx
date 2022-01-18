@@ -2,6 +2,7 @@ import React from 'react';
 import Select from "react-select";
 import NumberFormat from 'react-number-format';
 import Label from "../Label";
+import ButtonSubmit from "../ButtonSubmit";
 
 export default function FormVideos({seriesData, data, setData, submitHandler, errors, processing, submitLabel}) {
     let options = null;
@@ -102,10 +103,7 @@ export default function FormVideos({seriesData, data, setData, submitHandler, er
                         <button type="button" data-dismiss="modal"
                                 aria-label="Close" className="btn btn-light mr-3 font-weight-bold">Discard
                         </button>
-                        <button type="submit" className="btn btn-primary font-weight-bold" disabled={processing}>
-                            {processing && (<i className="spinner spinner-sm spinner-white px-4"/>)}
-                            {submitLabel}
-                        </button>
+                        <ButtonSubmit label={submitLabel} processing={processing}/>
                     </div>
                 </div>
             </form>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Label from "../Label";
+import ButtonSubmit from "../ButtonSubmit";
 
 export default function FormPermissions({data, submitHandler , changeHandler, submitLabel, errors, processing}) {
     return (
@@ -31,10 +32,7 @@ export default function FormPermissions({data, submitHandler , changeHandler, su
                         <button type="button" data-dismiss="modal"
                                 aria-label="Close" className="btn btn-light mr-3 font-weight-bold">Discard
                         </button>
-                        <button type="submit" className="btn btn-primary font-weight-bold" disabled={processing}>
-                            {processing && (<i className="spinner spinner-sm spinner-white px-4"/>)}
-                            {submitLabel}
-                        </button>
+                        <ButtonSubmit label={submitLabel} processing={processing}/>
                     </div>
                 </form>
             </div>

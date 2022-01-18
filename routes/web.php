@@ -6,6 +6,7 @@ use App\Http\Controllers\{CartController,
     Courses\VideoController,
     IndexController,
     PaymentConfiguration\PaymentConfigurationController,
+    PaymentConfiguration\PaymentTypeController,
     Topic\TopicController,
     TopicsController,
     TrashController,
@@ -78,6 +79,14 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
             Route::get('', [PaymentConfigurationController::class, 'index'])->name('payment.config_index');
             Route::put('status-payment-configuration', [PaymentConfigurationController::class, 'statusPaymentConfig'])->name('payment.status_config');
             Route::put('{midtrans_config}', [PaymentConfigurationController::class, 'update'])->name('payment.config_update');
+        });
+        Route::prefix('payment-type')->group(function () {
+            Route::get('', [PaymentTypeController::class, 'index'])->name('payment.type_index');
+            Route::post('', [PaymentTypeController::class, 'store'])->name('payment.type_store');
+            Route::put('switching-status-payment', [PaymentTypeController::class, 'switchStatus'])->name('payment.switch_status');
+            Route::put('switching-archive-payment', [PaymentTypeController::class, 'switchArchived'])->name('payment.switch_archive');
+            Route::put('{payment_type}', [PaymentTypeController::class, 'update'])->name('payment.type_update');
+            Route::delete('{payment_type}', [PaymentTypeController::class, 'destroy'])->name('payment.type_destroy');
         });
     });
     Route::prefix('trash')->middleware(['can:topic'])->group(function () {

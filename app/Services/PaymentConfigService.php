@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\MidtransConfig;
 
-class PaymentService
+class PaymentConfigService
 {
 
     public function getMidtransConfiguration(): ?MidtransConfig
@@ -23,7 +23,7 @@ class PaymentService
         return $status;
     }
 
-    public function updateStatusPaymentConfiguration($attributes, $midtransConfig)
+    public function updatePaymentConfiguration($attributes, $midtransConfig)
     {
         return $midtransConfig->update([
             'environment' => $attributes['environment'],

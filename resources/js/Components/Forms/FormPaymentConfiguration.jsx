@@ -1,4 +1,5 @@
 import React from 'react';
+import ButtonSubmit from "../ButtonSubmit";
 
 export default function FormPaymentConfiguration({submitHandler, blocked, data, setData, errors, processing}) {
     return (
@@ -84,11 +85,7 @@ export default function FormPaymentConfiguration({submitHandler, blocked, data, 
                 {
                     !blocked && (
                         <div className="card-footer d-flex justify-content-end">
-                            <button type="submit"
-                                    className={`btn btn-primary font-weight-bold ${processing && ('spinner spinner-sm spinner-white spinner-right')}`}
-                                    disabled={processing}>
-                                Update
-                            </button>
+                            <ButtonSubmit label={"Update"} processing={processing}/>
                         </div>
                     )
                 }

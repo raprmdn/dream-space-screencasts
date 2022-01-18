@@ -91,7 +91,7 @@ export default function Edit() {
                                 data,
                                 setData,
                                 errors,
-                                submitLabel:"Submit",
+                                submitLabel:"Update",
                                 submitHandler,
                                 processing
                             }
