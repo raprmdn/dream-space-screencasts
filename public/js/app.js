@@ -5231,6 +5231,269 @@ function FormAssignRoleUser(_ref) {
 
 /***/ }),
 
+/***/ "./resources/js/Components/Forms/FormPaymentChannel.jsx":
+/*!**************************************************************!*\
+  !*** ./resources/js/Components/Forms/FormPaymentChannel.jsx ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ FormPaymentChannel)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Label__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Label */ "./resources/js/Components/Label.jsx");
+/* harmony import */ var _ButtonSubmit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ButtonSubmit */ "./resources/js/Components/ButtonSubmit.jsx");
+/* harmony import */ var react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-lazy-load-image-component */ "./node_modules/react-lazy-load-image-component/build/index.js");
+/* harmony import */ var react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_lazy_load_image_component_src_effects_blur_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-lazy-load-image-component/src/effects/blur.css */ "./node_modules/react-lazy-load-image-component/src/effects/blur.css");
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+
+function FormPaymentChannel(_ref) {
+  var submitHandler = _ref.submitHandler,
+      payment_type = _ref.payment_type,
+      data = _ref.data,
+      setData = _ref.setData,
+      errors = _ref.errors,
+      processing = _ref.processing,
+      submitLabel = _ref.submitLabel,
+      preview = _ref.preview,
+      setPreview = _ref.setPreview,
+      hidden = _ref.hidden,
+      selectPaymentTypeHandler = _ref.selectPaymentTypeHandler;
+  var options = payment_type.map(function (type) {
+    return {
+      value: type.id,
+      label: type.payment_type
+    };
+  });
+  var fileInput = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+
+  var changeHandler = function changeHandler(e) {
+    var value = e.target.files[0];
+    var reader = new FileReader();
+
+    reader.onload = function () {
+      setPreview(reader.result);
+    };
+
+    reader.readAsDataURL(value);
+    setData('image', value);
+  };
+
+  var removePicture = function removePicture() {
+    setData('image', null);
+    setPreview(null);
+    fileInput.current.value = null;
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "modal-body",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+        onSubmit: submitHandler,
+        encType: "multipart/form-data",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "payment_type_id",
+            children: "Payment Type"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "text-danger",
+            children: " * "
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_select__WEBPACK_IMPORTED_MODULE_6__["default"], {
+            id: "payment_type_id",
+            name: "payment_type_id",
+            value: data.payment_type_id,
+            onChange: function onChange(e) {
+              return selectPaymentTypeHandler(e);
+            },
+            options: options,
+            placeholder: "Select Payment Type"
+          }), errors.payment_type_id && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "text-danger font-size-sm mb-n5",
+            children: errors.payment_type_id
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "payment_channel",
+            children: "Payment Channel"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "text-danger",
+            children: " * "
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+            type: "text",
+            id: "payment_channel",
+            name: "payment_channel",
+            value: data.payment_channel,
+            onChange: function onChange(e) {
+              return setData('payment_channel', e.target.value);
+            },
+            className: "form-control ".concat(errors.payment_channel ? 'is-invalid' : ''),
+            placeholder: "Enter a payment channel"
+          }), errors.payment_channel && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "invalid-feedback mb-n5",
+            children: errors.payment_channel
+          })]
+        }), !hidden && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "form-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+              labelFor: "virtual_number",
+              children: "Virtual Number Channel"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+              className: "text-danger",
+              children: " * "
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+              type: "text",
+              id: "virtual_number",
+              name: "virtual_number",
+              value: data.virtual_number,
+              onChange: function onChange(e) {
+                return setData('virtual_number', e.target.value);
+              },
+              className: "form-control ".concat(errors.virtual_number ? 'is-invalid' : ''),
+              placeholder: "Enter a virtual number. e.g 08211XXXXXXX / 0998XXXXXXXXXXX"
+            }), errors.virtual_number && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.virtual_number
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "form-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+              labelFor: "payment_channel_owner",
+              children: "Payment Channel Owner"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+              className: "text-danger",
+              children: " * "
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+              type: "text",
+              id: "payment_channel_owner",
+              name: "payment_channel_owner",
+              value: data.payment_channel_owner,
+              onChange: function onChange(e) {
+                return setData('payment_channel_owner', e.target.value);
+              },
+              className: "form-control ".concat(errors.payment_channel_owner ? 'is-invalid' : ''),
+              placeholder: "Enter a payment channel owner. e.g RAFI PUTRA RAMADHAN"
+            }), errors.payment_channel_owner && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.payment_channel_owner
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "instruction",
+            children: "Payment Instruction"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "text-danger",
+            children: " * "
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("textarea", {
+            id: "instruction",
+            name: "instruction",
+            value: data.instruction,
+            onChange: function onChange(e) {
+              return setData('instruction', e.target.value);
+            },
+            className: "form-control ".concat(errors.instruction ? 'is-invalid' : ''),
+            placeholder: "Enter a payment instruction",
+            rows: 5
+          }), errors.instruction && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "invalid-feedback mb-n5",
+            children: errors.instruction
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "form-group",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "image",
+            children: "Payment Channel Image"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "text-danger",
+            children: " * "
+          }), preview && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "position-relative",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "my-2 rounded-lg",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_3__.LazyLoadImage, {
+                effect: "blur",
+                src: preview,
+                style: {
+                  boxShadow: "0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075)"
+                },
+                className: "symbol-label"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                onClick: removePicture,
+                className: "btn btn-xs btn-icon btn-circle btn-white btn-shadow m-1 position-absolute top-0 right-0",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "ki ki-bold-close icon-xs text-muted"
+                })
+              })]
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+            type: "file",
+            className: "form-control",
+            name: "image",
+            id: "image",
+            accept: ".png, .jpg, .jpeg, .svg",
+            onChange: changeHandler,
+            ref: fileInput
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "form-text text-muted",
+            children: "Allowed file types: png, jpg, jpeg, svg."
+          }), errors.image && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "text-danger font-size-sm mb-n5",
+            children: errors.image
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "form-group",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "checkbox-inline",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("label", {
+              className: "checkbox",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+                type: "checkbox",
+                name: "archived",
+                id: "archived",
+                checked: !!data.archived,
+                onChange: function onChange(e) {
+                  return setData('archived', e.target.checked);
+                }
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {}), "Archive Payment Channel?"]
+            })
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "text-center",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            onClick: removePicture,
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+            className: "btn btn-light mr-3 font-weight-bold",
+            children: "Discard"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ButtonSubmit__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            label: submitLabel,
+            processing: processing
+          })]
+        })]
+      })
+    })
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/Components/Forms/FormPaymentConfiguration.jsx":
 /*!********************************************************************!*\
   !*** ./resources/js/Components/Forms/FormPaymentConfiguration.jsx ***!
@@ -7324,6 +7587,20 @@ function Header() {
                                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
                                     className: "menu-text",
                                     children: "Payment Type"
+                                  })]
+                                })
+                              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+                                className: "menu-item ".concat(route().current('payment.channel_index') ? 'menu-item-active' : ''),
+                                "aria-haspopup": "true",
+                                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+                                  href: route('payment.channel_index'),
+                                  className: "menu-link",
+                                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+                                    className: "menu-bullet menu-bullet-dot",
+                                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {})
+                                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+                                    className: "menu-text",
+                                    children: "Payment Channel"
                                   })]
                                 })
                               })]
@@ -10934,6 +11211,355 @@ function Index() {
 
 Index.layout = function (page) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Layouts_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    children: page
+  });
+};
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Dashboard/Payment/PaymentChannelIndex.jsx":
+/*!**********************************************************************!*\
+  !*** ./resources/js/Pages/Dashboard/Payment/PaymentChannelIndex.jsx ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PaymentChannelIndex)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Layouts_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Layouts/App */ "./resources/js/Layouts/App.jsx");
+/* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
+/* harmony import */ var _Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Components/Breadcrumb */ "./resources/js/Components/Breadcrumb.jsx");
+/* harmony import */ var _Components_Modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Components/Modal */ "./resources/js/Components/Modal.jsx");
+/* harmony import */ var _Components_Forms_FormPaymentChannel__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../Components/Forms/FormPaymentChannel */ "./resources/js/Components/Forms/FormPaymentChannel.jsx");
+/* harmony import */ var react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-lazy-load-image-component */ "./node_modules/react-lazy-load-image-component/build/index.js");
+/* harmony import */ var react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_lazy_load_image_component_src_effects_blur_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-lazy-load-image-component/src/effects/blur.css */ "./node_modules/react-lazy-load-image-component/src/effects/blur.css");
+/* harmony import */ var _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+function PaymentChannelIndex() {
+  var payment_type = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props.payment_type.data;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState2 = _slicedToArray(_useState, 2),
+      preview = _useState2[0],
+      setPreview = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      hidden = _useState4[0],
+      setHidden = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      loading = _useState6[0],
+      setLoading = _useState6[1];
+
+  var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
+    payment_type_id: '',
+    payment_channel: '',
+    virtual_number: '',
+    payment_channel_owner: '',
+    image: '',
+    instruction: '',
+    archived: false
+  }),
+      data = _useForm.data,
+      setData = _useForm.setData,
+      post = _useForm.post,
+      errors = _useForm.errors,
+      clearErrors = _useForm.clearErrors,
+      reset = _useForm.reset,
+      processing = _useForm.processing;
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (data.payment_type_id.value === 1) {
+      setHidden(false);
+    } else {
+      setHidden(true);
+    }
+  });
+
+  var submitHandler = function submitHandler(e) {
+    e.preventDefault();
+    post(route('payment.channel_store'), {
+      preserveScroll: true,
+      onSuccess: function onSuccess() {
+        reset();
+        window.$('#addPaymentChannel').modal('hide');
+      }
+    });
+  };
+
+  var updateHandler = function updateHandler(e) {
+    e.preventDefault();
+    data._method = 'put';
+    post(route('payment.channel_update', data.identifier_code), {
+      data: data,
+      preserveScroll: true,
+      onSuccess: function onSuccess() {
+        setPreview(null);
+        window.$('#editPaymentChannel').modal('hide');
+      }
+    });
+  };
+
+  var selectPaymentTypeHandler = function selectPaymentTypeHandler(e) {
+    if (e.value === 1) {
+      setData(_objectSpread(_objectSpread({}, data), {}, {
+        payment_type_id: e
+      }));
+    } else {
+      setData(_objectSpread(_objectSpread({}, data), {}, {
+        payment_type_id: e,
+        virtual_number: '',
+        payment_channel_owner: ''
+      }));
+    }
+  };
+
+  var _switcherStatusPaymentChannel = function _switcherStatusPaymentChannel(e, id) {
+    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_8__.Inertia.put(route('payment.channel_status'), {
+      channel_id: id,
+      status: e.target.checked
+    }, {
+      preserveScroll: true,
+      onStart: function onStart() {
+        setLoading(true);
+      },
+      onFinish: function onFinish() {
+        setLoading(false);
+      }
+    });
+  };
+
+  var _switcherStatusPaymentType = function _switcherStatusPaymentType(e, id) {
+    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_8__.Inertia.put(route('payment.switch_status'), {
+      id: id,
+      status: e.target.checked
+    }, {
+      preserveScroll: true,
+      onStart: function onStart() {
+        setLoading(true);
+      },
+      onFinish: function onFinish() {
+        setLoading(false);
+      }
+    });
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
+      title: "Dream Space - Payment Channel"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      titleHeading: "Payment Channel",
+      item1: "Dashboard",
+      item2: "Payment",
+      item3: "Payment Channel",
+      linkItem3: route('payment.channel_index')
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+      className: "d-flex flex-column-fluid",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+        className: "container",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+          className: "row",
+          children: payment_type.map(function (type) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+              className: "col-xl-6",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                className: "card card-custom gutter-b",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                  className: "card-header border-bottom py-5",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("h3", {
+                    className: "card-title font-weight-bolder text-dark",
+                    children: type.payment_type
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                    className: "card-toolbar",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                      className: "switch switch-sm switch-outline switch-icon switch-brand",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+                          type: "checkbox",
+                          disabled: loading,
+                          onClick: function onClick(e) {
+                            return _switcherStatusPaymentType(e, type.id);
+                          },
+                          defaultChecked: type.status === 'Active',
+                          name: "status",
+                          id: "status"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {})]
+                      })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("button", {
+                      type: "button",
+                      className: "btn btn-primary btn-sm font-weight-bold ml-2",
+                      "data-toggle": "modal",
+                      "data-target": "#addPaymentChannel",
+                      disabled: type.status === 'Inactive',
+                      onClick: function onClick() {
+                        setData(_objectSpread(_objectSpread({}, data), {}, {
+                          payment_type_id: {
+                            value: type.id,
+                            label: type.payment_type
+                          },
+                          payment_channel: '',
+                          virtual_number: '',
+                          payment_channel_owner: '',
+                          image: '',
+                          instruction: '',
+                          archived: false
+                        }));
+                        setPreview(null);
+                        clearErrors();
+                      },
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("i", {
+                        className: "flaticon2-plus icon-1x"
+                      }), " Payment Channel"]
+                    })]
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+                  className: "card-body",
+                  children: type.payment_channels.length > 0 ? type.payment_channels.map(function (channel) {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("fieldset", {
+                        disabled: type.status === 'Inactive',
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                          className: "d-flex align-items-center border\n                                                                border-1 rounded p-5 mb-4 ".concat(type.status === 'Inactive' ? 'bg-gray-100' : ''),
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+                            className: "symbol mr-3",
+                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_6__.LazyLoadImage, {
+                              effect: "blur",
+                              height: 23,
+                              src: channel.image,
+                              className: "mw-100 rounded-lg"
+                            })
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+                            className: "d-flex flex-grow-1",
+                            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+                              className: "text-dark font-weight-bold mr-2",
+                              children: channel.payment_channel
+                            }), channel.archived && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                              className: "label label-pill label-danger label-inline font-weight-normal",
+                              children: "Archived"
+                            })]
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+                            className: "mr-2",
+                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+                              className: "switch switch-sm switch-outline switch-icon switch-brand",
+                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("label", {
+                                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
+                                  type: "checkbox",
+                                  id: "status",
+                                  name: "status",
+                                  onChange: function onChange(e) {
+                                    return _switcherStatusPaymentChannel(e, channel.id);
+                                  },
+                                  defaultChecked: channel.status === 'Active',
+                                  disabled: loading
+                                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {})]
+                              })
+                            })
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+                            className: "btn btn-sm btn-clean btn-icon",
+                            "data-toggle": "modal",
+                            "data-target": "#editPaymentChannel",
+                            onClick: function onClick() {
+                              setData(_objectSpread(_objectSpread({}, channel), {}, {
+                                payment_type_id: {
+                                  value: type.id,
+                                  label: type.payment_type
+                                }
+                              }));
+                              setPreview(channel.image);
+                              clearErrors();
+                            },
+                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("i", {
+                              className: "flaticon-settings-1 text-primary"
+                            })
+                          })]
+                        })
+                      })
+                    }, channel.id);
+                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.Fragment, {
+                    children: "There's no payment channel."
+                  })
+                })]
+              })
+            }, type.id);
+          })
+        })
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      trigger: "addPaymentChannel",
+      title: "Add Payment Channel",
+      size: "modal-lg",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Components_Forms_FormPaymentChannel__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        submitHandler: submitHandler,
+        payment_type: payment_type,
+        data: data,
+        setData: setData,
+        errors: errors,
+        processing: processing,
+        submitLabel: "Create",
+        preview: preview,
+        setPreview: setPreview,
+        hidden: hidden,
+        selectPaymentTypeHandler: selectPaymentTypeHandler
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      trigger: "editPaymentChannel",
+      title: "Edit Payment Channel : ".concat(data.payment_channel),
+      size: "modal-lg",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Components_Forms_FormPaymentChannel__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        submitHandler: updateHandler,
+        payment_type: payment_type,
+        data: data,
+        setData: setData,
+        errors: errors,
+        processing: processing,
+        submitLabel: "Update",
+        preview: preview,
+        setPreview: setPreview,
+        hidden: hidden,
+        selectPaymentTypeHandler: selectPaymentTypeHandler
+      })
+    })]
+  });
+}
+
+PaymentChannelIndex.layout = function (page) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Layouts_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
     children: page
   });
 };
@@ -83572,6 +84198,8 @@ var map = {
 	"./Dashboard/Courses/Videos/Index.jsx": "./resources/js/Pages/Dashboard/Courses/Videos/Index.jsx",
 	"./Dashboard/Payment/Index": "./resources/js/Pages/Dashboard/Payment/Index.jsx",
 	"./Dashboard/Payment/Index.jsx": "./resources/js/Pages/Dashboard/Payment/Index.jsx",
+	"./Dashboard/Payment/PaymentChannelIndex": "./resources/js/Pages/Dashboard/Payment/PaymentChannelIndex.jsx",
+	"./Dashboard/Payment/PaymentChannelIndex.jsx": "./resources/js/Pages/Dashboard/Payment/PaymentChannelIndex.jsx",
 	"./Dashboard/Payment/PaymentTypeIndex": "./resources/js/Pages/Dashboard/Payment/PaymentTypeIndex.jsx",
 	"./Dashboard/Payment/PaymentTypeIndex.jsx": "./resources/js/Pages/Dashboard/Payment/PaymentTypeIndex.jsx",
 	"./Dashboard/Permissions/Index": "./resources/js/Pages/Dashboard/Permissions/Index.jsx",

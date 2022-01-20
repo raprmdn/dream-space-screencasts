@@ -17,7 +17,7 @@ class SeriesRequest extends FormRequest
             'levels' => ['required'],
             'status' => ['required'],
             'episodes' => ['required', 'min:1', 'integer'],
-            'thumbnail' =>  $this->hasFile('thumbnail') ? ['required', 'image', 'mimes:png,jpg,jpeg,svg', 'max:3048'] : [],
+            'thumbnail' =>  $this->hasFile('thumbnail') ? ['required', 'image', 'mimes:png,jpg,jpeg,svg', 'max:3048'] : ['required'],
             'is_discount' => ['boolean'] ,
             'is_free' => ['boolean'],
             'archived_at' => ['boolean']

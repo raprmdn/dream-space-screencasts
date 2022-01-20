@@ -5,6 +5,7 @@ use App\Http\Controllers\{CartController,
     Courses\SeriesController,
     Courses\VideoController,
     IndexController,
+    PaymentConfiguration\PaymentChannelController,
     PaymentConfiguration\PaymentConfigurationController,
     PaymentConfiguration\PaymentTypeController,
     Topic\TopicController,
@@ -87,6 +88,12 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
             Route::put('switching-archive-payment', [PaymentTypeController::class, 'switchArchived'])->name('payment.switch_archive');
             Route::put('{payment_type}', [PaymentTypeController::class, 'update'])->name('payment.type_update');
             Route::delete('{payment_type}', [PaymentTypeController::class, 'destroy'])->name('payment.type_destroy');
+        });
+        Route::prefix('payment-channel')->group(function () {
+            Route::get('', [PaymentChannelController::class, 'index'])->name('payment.channel_index');
+            Route::post('', [PaymentChannelController::class, 'store'])->name('payment.channel_store');
+            Route::put('set-status-payment-channel', [PaymentChannelController::class, 'setStatusPaymentChannel'])->name('payment.channel_status');
+            Route::put('{payment_channel:identifier_code}', [PaymentChannelController::class, 'update'])->name('payment.channel_update');
         });
     });
     Route::prefix('trash')->middleware(['can:topic'])->group(function () {

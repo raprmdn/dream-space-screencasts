@@ -27,7 +27,7 @@ class TopicRequest extends FormRequest
             'name' => ['required'],
             'description' => ['required'],
             'position' => ['required', 'integer', 'min:1'],
-            'picture' => $this->hasFile('picture') ? ['required', 'image', 'mimes:png,jpg,jpeg,svg', 'max:3048'] : [],
+            'picture' => $this->hasFile('picture') ? ['required', 'image', 'mimes:png,jpg,jpeg,svg', 'max:3048'] : ['required'],
         ];
     }
 }

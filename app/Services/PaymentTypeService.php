@@ -14,6 +14,11 @@ class PaymentTypeService
         return new PaymentTypeCollection(PaymentType::oldest()->get());
     }
 
+    public function getPaymentTypeWithPaymentChannels(): PaymentTypeCollection
+    {
+        return new PaymentTypeCollection(PaymentType::oldest()->with('paymentChannels')->get());
+    }
+
     public function save($attributes): PaymentType
     {
         $attributes['identifier'] = Str::slug($attributes['payment_type']);

@@ -51,7 +51,7 @@ class PaymentTypeController extends Controller
 
         return redirect()->back()->with([
             'type' => 'success',
-            'message' => "$resp->payment_type has been $resp->status."
+            'message' => "$resp->payment_type has been set to $resp->status."
         ]);
     }
 

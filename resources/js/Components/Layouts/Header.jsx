@@ -204,6 +204,14 @@ export default function Header() {
                                                                                         <span className="menu-text">Payment Type</span>
                                                                                     </Link>
                                                                                 </li>
+                                                                                <li className={`menu-item ${route().current('payment.channel_index') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('payment.channel_index')} className="menu-link">
+                                                                                        <i className="menu-bullet menu-bullet-dot">
+                                                                                            <span />
+                                                                                        </i>
+                                                                                        <span className="menu-text">Payment Channel</span>
+                                                                                    </Link>
+                                                                                </li>
                                                                             </ul>
                                                                         </div>
                                                                     </li>

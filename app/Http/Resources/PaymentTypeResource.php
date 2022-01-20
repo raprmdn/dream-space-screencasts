@@ -21,7 +21,7 @@ class PaymentTypeResource extends JsonResource
             'description' => $this->description,
             'status' => $this->status,
             'archived' => $this->archived,
-            'payment_channel' => null,
+            'payment_channels' => PaymentChannelResource::collection($this->whenLoaded('paymentChannels')),
         ];
     }
 }
