@@ -166,7 +166,7 @@ export default function PaymentChannelIndex() {
                                                                             effect="blur"
                                                                             height={23}
                                                                             src={channel.image}
-                                                                            className="mw-100 rounded-lg" />
+                                                                            className="mw-100" />
                                                                     </div>
                                                                     <div className="d-flex flex-grow-1">
                                                                         <div className="text-dark font-weight-bold mr-2">

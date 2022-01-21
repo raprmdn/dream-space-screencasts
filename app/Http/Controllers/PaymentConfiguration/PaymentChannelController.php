@@ -22,7 +22,7 @@ class PaymentChannelController extends Controller
     public function index()
     {
         return inertia('Dashboard/Payment/PaymentChannelIndex', [
-            'payment_type' => $this->paymentTypeService->getPaymentTypeWithPaymentChannels()
+            'payment_type' => $this->paymentTypeService->getPaymentTypeAndChannels()
         ]);
     }
 

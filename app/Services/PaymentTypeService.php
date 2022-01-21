@@ -14,9 +14,22 @@ class PaymentTypeService
         return new PaymentTypeCollection(PaymentType::oldest()->get());
     }
 
+    public function getPaymentTypeAndChannels(): PaymentTypeCollection
+    {
+        return new PaymentTypeCollection(
+            PaymentType::oldest()->with(['paymentChannels' => function($q) {
+                $q->orderBy('id');
+            }])->get()
+        );
+    }
+
     public function getPaymentTypeWithPaymentChannels(): PaymentTypeCollection
     {
-        return new PaymentTypeCollection(PaymentType::oldest()->with('paymentChannels')->get());
+        return new PaymentTypeCollection(
+            PaymentType::oldest()->notArchived()->with(['paymentChannels' => function($q) {
+                $q->notArchived()->orderBy('id');
+            }])->get()
+        );
     }
 
     public function save($attributes): PaymentType

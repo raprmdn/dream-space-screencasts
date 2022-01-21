@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CartCollection;
 use App\Services\CartService;
+use App\Services\PaymentTypeService;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    protected $cartService;
+    protected $cartService, $paymentTypeService;
 
-    public function __construct(CartService $cartService)
+    public function __construct(CartService $cartService, PaymentTypeService $paymentTypeService)
     {
         $this->cartService = $cartService;
+        $this->paymentTypeService = $paymentTypeService;
     }
 
     public function index()
     {
         return inertia('Carts', [
             'carts' => $this->cartService->carts(),
+            'payment_type' => $this->paymentTypeService->getPaymentTypeWithPaymentChannels()
         ]);
     }
 
