@@ -376,10 +376,10 @@ export default function Header() {
                                                     </a>
                                                 </li>
                                                 <li className="navi-item px-5 mb-2">
-                                                    <a className="navi-link" href="#">
+                                                    <Link className={`navi-link ${route().current('watchlist.index') ? 'active' : ''}`} href={route('watchlist.index')}>
                                                         <span className="navi-icon"><i className="fas fa-bookmark" /></span>
                                                         <span className="navi-text font-weight-bold">Watchlist</span>
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                                 <div className="separator separator-solid"/>
                                                 <li className="navi-item px-5 my-2">

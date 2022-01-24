@@ -36,12 +36,12 @@ export default function PaymentTypeIndex() {
         })
     }
 
-    const deleteHandler = (e, type) => {
-        e.preventDefault()
-        destroy(route('payment.type_destroy', type.id), {
-            preserveScroll: true
-        })
-    }
+    // const deleteHandler = (e, type) => {
+    //     e.preventDefault()
+    //     destroy(route('payment.type_destroy', type.id), {
+    //         preserveScroll: true
+    //     })
+    // }
 
     const _switchingStatusHandler = (e, id) => {
         Inertia.put(route('payment.switch_status'), {
@@ -143,11 +143,11 @@ export default function PaymentTypeIndex() {
                                                                     onClick={() => {setData(type); clearErrors();}}>
                                                                 <i className="flaticon-settings-1 text-primary" />
                                                             </button>
-                                                            <button className="btn btn-sm btn-clean btn-icon"
-                                                                    data-toggle="tooltip" title="Delete"
-                                                                    onClick={(e) => deleteHandler(e, type)}>
-                                                                <i className="flaticon2-trash text-danger icon-1x" />
-                                                            </button>
+                                                            {/*<button className="btn btn-sm btn-clean btn-icon"*/}
+                                                            {/*        data-toggle="tooltip" title="Delete"*/}
+                                                            {/*        onClick={(e) => deleteHandler(e, type)}>*/}
+                                                            {/*    <i className="flaticon2-trash text-danger icon-1x" />*/}
+                                                            {/*</button>*/}
                                                         </div>
                                                     </td>
                                                 </tr>

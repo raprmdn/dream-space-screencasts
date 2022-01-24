@@ -23,9 +23,10 @@ Route::get('topics/{topic:slug}', [TopicsController::class, 'show'])->name('topi
 Route::get('series', [CourseController::class, 'index'])->name('series');
 Route::get('series/{series:slug}', [CourseController::class, 'show'])->name('series.show');
 
-Route::post('add-to-carts', [CartController::class, 'create'])->name('add.carts');
 
 Route::middleware('auth')->group(function () {
+    Route::post('add-to-carts', [CartController::class, 'create'])->name('add.carts');
+    Route::get('watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');
     Route::post('saves', [WatchlistController::class, 'save'])->name('saves');
     Route::get('carts', [CartController::class, 'index'])->name('carts');
     Route::post('remove', [CartController::class, 'remove'])->name('remove.carts');
@@ -87,7 +88,7 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
             Route::put('switching-status-payment', [PaymentTypeController::class, 'switchStatus'])->name('payment.switch_status');
             Route::put('switching-archive-payment', [PaymentTypeController::class, 'switchArchived'])->name('payment.switch_archive');
             Route::put('{payment_type}', [PaymentTypeController::class, 'update'])->name('payment.type_update');
-            Route::delete('{payment_type}', [PaymentTypeController::class, 'destroy'])->name('payment.type_destroy');
+//            Route::delete('{payment_type}', [PaymentTypeController::class, 'destroy'])->name('payment.type_destroy');
         });
         Route::prefix('payment-channel')->group(function () {
             Route::get('', [PaymentChannelController::class, 'index'])->name('payment.channel_index');

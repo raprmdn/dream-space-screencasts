@@ -20,7 +20,7 @@ class CartController extends Controller
     {
         return inertia('Carts', [
             'carts' => $this->cartService->carts(),
-            'payment_type' => $this->paymentTypeService->getPaymentTypeWithPaymentChannels()
+            'payment_type' => $this->paymentTypeService->getPaymentTypeWithChannelsNotArchived()
         ]);
     }
 

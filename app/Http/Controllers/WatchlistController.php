@@ -2,21 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\UserService;
+use App\Services\WatchlistService;
 use Illuminate\Http\Request;
 
 class WatchlistController extends Controller
 {
-    protected $userService;
+    protected $watchlistService;
 
-    public function __construct(UserService $userService)
+    public function __construct(WatchlistService $watchlistService)
     {
-        $this->userService = $userService;
+        $this->watchlistService = $watchlistService;
+    }
+
+    public function index()
+    {
+        return inertia('Watchlist/Index', [
+            'watchlist' => $this->watchlistService->getUserWatchlist()
+        ]);
     }
 
     public function save(Request $request)
     {
-        $message = $this->userService->saveSeries($request->series_id);
+        $message = $this->watchlistService->saveSeries($request->series_id);
         return redirect()->back()->with(['type' => 'success', 'message' => $message]);
     }
 }
