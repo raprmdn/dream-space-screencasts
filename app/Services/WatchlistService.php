@@ -11,7 +11,7 @@ class WatchlistService
 
     public function getUserWatchlist(): SeriesCollection
     {
-        $watchlist = Auth::user()->watchlist()->get();
+        $watchlist = Auth::user()->watchlist()->oldest()->get();
         return new SeriesCollection($watchlist);
     }
 

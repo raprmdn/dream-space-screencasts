@@ -88,24 +88,28 @@ export default function Show() {
                                 {series.description}
                             </p>
                             <div className="d-lg-flex mt-2">
-                                <SeriesBannerMeta
-                                    icon={'flaticon-price-tag'}
-                                    label={
-                                        series.discount.discount_unformatted
-                                            ?
-                                            <>Rp. {series.discount.discount_formatted},-</>
-                                            :
-                                            <>
-                                                {
-                                                    series.price.price_unformatted
-                                                        ?
-                                                        <>Rp. {series.price.price_formatted},-</>
-                                                        :
-                                                        <>Free Series</>
-                                                }
-                                            </>
+                                {
+                                    series.viewing_status.is_buyable ? (
+                                        <SeriesBannerMeta
+                                            icon={'flaticon-price-tag'}
+                                            label={
+                                                series.discount.discount_unformatted
+                                                    ?
+                                                    <>Rp. {series.discount.discount_formatted},-</>
+                                                    :
+                                                    <>
+                                                        {
+                                                            series.price.price_unformatted
+                                                                ?
+                                                                <>Rp. {series.price.price_formatted},-</>
+                                                                :
+                                                                <>Free Series</>
+                                                        }
+                                                    </>
 
-                                    }/>
+                                        }/>
+                                    ) : <SeriesBannerMeta icon={'flaticon-price-tag'} label={'Purchased'} />
+                                }
                                 <SeriesBannerMeta icon={'far fa-calendar-plus'} label={series.created_at} />
                                 <SeriesBannerMeta icon={'flaticon2-layers'} label={series.levels} />
                                 <SeriesBannerMeta icon={'flaticon2-open-text-book'} label={`${series.episodes} episodes`} />

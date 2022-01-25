@@ -45,9 +45,9 @@ class SeriesSingleResource extends JsonResource
             'viewing_status' => [
                 'is_discount' => $this->is_discount,
                 'is_free' => $this->is_free,
-                'is_watch_later' => Auth::check() ? Auth::user()->seriesExistsInWatchlist($this->id) : false,
-                'is_exists_in_carts' => Auth::check() ? Auth::user()->existsInCarts($this->id) : false,
-                'is_buyable' => true,
+                'is_watch_later' => Auth::check() && Auth::user()->seriesExistsInWatchlist($this->id),
+                'is_exists_in_carts' => Auth::check() && Auth::user()->existsInCarts($this->id),
+                'is_buyable' => Auth::check() && !Auth::user()->hasPurchased($this->id),
             ]
         ];
     }

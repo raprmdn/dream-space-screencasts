@@ -150,6 +150,30 @@ class User extends Authenticatable
         return (bool) $this->carts()->where('series_id', $series)->first();
     }
 
+    /**
+     * User purchasing the series.
+     *
+     * @param Series $series
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function purchasing(Series $series): \Illuminate\Database\Eloquent\Model
+    {
+        return $this->purchases()->save($series);
+    }
+
+    /**
+     * Check if User has already purchased the series.
+     *
+     * @param $series
+     *
+     * @return bool
+     */
+    public function hasPurchased($series): bool
+    {
+        return (bool) $this->purchases()->find($series);
+    }
+
     /*
      *  Table Relation.
      */
@@ -168,6 +192,14 @@ class User extends Authenticatable
     public function carts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Cart::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function purchases(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Series::class, 'purchased_series', 'user_id', 'series_id')->withTimestamps();
     }
 
 }

@@ -14520,7 +14520,7 @@ function Show() {
               children: series.description
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
               className: "d-lg-flex mt-2",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_SeriesBannerMeta__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              children: [series.viewing_status.is_buyable ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_SeriesBannerMeta__WEBPACK_IMPORTED_MODULE_7__["default"], {
                 icon: 'flaticon-price-tag',
                 label: series.discount.discount_unformatted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
                   children: ["Rp. ", series.discount.discount_formatted, ",-"]
@@ -14531,6 +14531,9 @@ function Show() {
                     children: "Free Series"
                   })
                 })
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_SeriesBannerMeta__WEBPACK_IMPORTED_MODULE_7__["default"], {
+                icon: 'flaticon-price-tag',
+                label: 'Purchased'
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_SeriesBannerMeta__WEBPACK_IMPORTED_MODULE_7__["default"], {
                 icon: 'far fa-calendar-plus',
                 label: series.created_at
