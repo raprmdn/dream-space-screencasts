@@ -53,7 +53,7 @@ export default function FormPaymentChannel({submitHandler, payment_type, data, s
                         {errors.payment_channel && (<div className="invalid-feedback mb-n5">{errors.payment_channel}</div>)}
                     </div>
                     {
-                        !hidden && (
+                        !hidden ? (
                             <>
                                 <div className="form-group">
                                     <Label labelFor={"virtual_number"} children={"Virtual Number Channel"}/>
@@ -72,11 +72,41 @@ export default function FormPaymentChannel({submitHandler, payment_type, data, s
                                            value={data.payment_channel_owner}
                                            onChange={e => setData('payment_channel_owner', e.target.value)}
                                            className={`form-control ${errors.payment_channel_owner ? 'is-invalid' : ''}`}
-                                           placeholder="Enter a payment channel owner. e.g RAFI PUTRA RAMADHAN" />
+                                           placeholder="Enter a payment channel owner. e.g. RAFI PUTRA RAMADHAN" />
                                     {errors.payment_channel_owner && (<div className="invalid-feedback mb-n5">{errors.payment_channel_owner}</div>)}
                                 </div>
                             </>
-                        )
+                        ) :
+                            <>
+                                <div className="form-group">
+                                    <Label labelFor={"identifier_channel"} children={"Identifier Payment Channel"}/>
+                                    <span className="text-danger"> * Reference on
+                                        <a href="https://docs.midtrans.com/en/core-api/bank-transfer?id=sample-request-and-request-body" target="_blank">
+                                            " Sample Request and Request Body " > " bank "
+                                        </a> Midtrans Website.
+                                    </span>
+                                    <input type="text" id="identifier_channel" name="identifier_channel"
+                                           value={data.identifier_channel}
+                                           onChange={e => setData('identifier_channel', e.target.value)}
+                                           className={`form-control ${errors.identifier_channel ? 'is-invalid' : ''}`}
+                                           placeholder="Enter a identifier payment channel. e.g. bri / bca" />
+                                    {errors.identifier_channel && (<div className="invalid-feedback mb-n5">{errors.identifier_channel}</div>)}
+                                </div>
+                                <div className="form-group">
+                                    <Label labelFor={"type"} children={"Type Payment Channel"}/>
+                                    <span className="text-danger"> * Reference on
+                                        <a href="https://docs.midtrans.com/en/core-api/bank-transfer?id=sample-request-and-request-body" target="_blank">
+                                            " Sample Request and Request Body " > " payment_type "
+                                        </a> Midtrans Website.
+                                    </span>
+                                    <input type="text" id="type" name="type"
+                                           value={data.type}
+                                           onChange={e => setData('type', e.target.value)}
+                                           className={`form-control ${errors.type ? 'is-invalid' : ''}`}
+                                           placeholder="Enter a type payment channel. e.g. bank_trasnfer / echannel" />
+                                    {errors.type && (<div className="invalid-feedback mb-n5">{errors.type}</div>)}
+                                </div>
+                            </>
                     }
                     <div className="form-group">
                         <Label labelFor={"instruction"} children={"Payment Instruction"}/>

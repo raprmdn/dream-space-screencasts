@@ -53,6 +53,8 @@ class PaymentChannelService
         return [
             isset($attributes['id']), 'payment_type_id' => $attributes['payment_type_id']['value'],
             'payment_channel' => $attributes['payment_channel'],
+            'identifier_channel' => $attributes['identifier_channel'],
+            'type' => $attributes['type'],
             'identifier_code' => $attributes['identifier_code'],
             'virtual_number' => $attributes['virtual_number'],
             'payment_channel_owner' => $attributes['payment_channel_owner'],

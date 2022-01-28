@@ -17,6 +17,8 @@ export default function PaymentChannelIndex() {
     const { data, setData, post, errors, clearErrors, reset, processing } = useForm({
         payment_type_id: '',
         payment_channel: '',
+        identifier_channel: '',
+        type: '',
         virtual_number: '',
         payment_channel_owner: '',
         image: '',
@@ -62,6 +64,8 @@ export default function PaymentChannelIndex() {
             setData({
                 ...data,
                 payment_type_id: e,
+                identifier_channel: '',
+                type: '',
             })
         } else {
             setData({

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PaymentChannel extends Model
 {
-    protected $fillable = ['payment_type_id', 'payment_channel', 'identifier_code',
+    protected $fillable = ['payment_type_id', 'payment_channel', 'identifier_channel', 'type' ,'identifier_code',
         'virtual_number', 'payment_channel_owner', 'image', 'instruction', 'status', 'archived'];
 
     /**

@@ -88,4 +88,12 @@ class Series extends Model
         return $this->hasMany(Cart::class, 'series_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function purchasedBy(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'purchased_series', 'series_id', 'user_id');
+    }
+
 }

@@ -18,6 +18,8 @@ class PaymentChannelResource extends JsonResource
             'id' => $this->id,
             'payment_type_id' => $this->payment_type_id,
             'payment_channel' => $this->payment_channel,
+            'identifier_channel' => $this->identifier_channel,
+            'type' => $this->type,
             'identifier_code' => $this->identifier_code,
             'virtual_number' => $this->virtual_number,
             'payment_channel_owner' => $this->payment_channel_owner,

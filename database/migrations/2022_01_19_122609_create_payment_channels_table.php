@@ -12,6 +12,8 @@ class CreatePaymentChannelsTable extends Migration
             $table->id();
             $table->foreignId('payment_type_id')->nullable();
             $table->string('payment_channel')->nullable();
+            $table->string('identifier_channel')->nullable();
+            $table->string('type')->nullable();
             $table->string('identifier_code')->nullable();
             $table->string('virtual_number')->nullable();
             $table->string('payment_channel_owner')->nullable();

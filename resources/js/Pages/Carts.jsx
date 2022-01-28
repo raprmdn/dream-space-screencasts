@@ -9,8 +9,9 @@ import SummaryLineItem from "../Components/SummaryLineItem";
 import Modal from "../Components/Modal";
 
 export default function Carts() {
-    const { carts } = usePage().props
+    const { carts, errors } = usePage().props
     const { data:payment_type } = usePage().props.payment_type
+    const [ paymentIdentifierCode, setPaymentIdentifierCode ] = useState(null)
     const [ loading, setLoading ] = useState(false)
 
     const remove = (e, series) => {
@@ -39,6 +40,24 @@ export default function Carts() {
             },
             onFinish: () => {
                 setLoading(false)
+            }
+        })
+    }
+
+    const _checkoutHandler = (e) => {
+        e.preventDefault()
+        Inertia.post(route('order'), {
+            payment_identifier_code: paymentIdentifierCode
+        }, {
+            preserveScroll: true,
+            onStart: () => {
+                setLoading(true)
+            },
+            onFinish: () => {
+                setLoading(false)
+            },
+            onSuccess: () => {
+                window.$('#selectPayment').modal('hide')
             }
         })
     }
@@ -212,7 +231,9 @@ export default function Carts() {
                                                                     ?
                                                                         <>
                                                                             <label className="radio">
-                                                                                <input type="radio" id="payment_channel"
+                                                                                <input type="radio"
+                                                                                       onChange={() => setPaymentIdentifierCode(channel.identifier_code)}
+                                                                                       id="payment_channel"
                                                                                        name="payment_channel" value={channel.identifier_code}/>
                                                                                 <span />
                                                                             </label>
@@ -235,6 +256,26 @@ export default function Carts() {
                                 </div>
                             ))
                         }
+                    </div>
+                </div>
+                <div className="card-footer bg-gray-100 border-top-0 p-7 mt-n5">
+                    {
+                        errors.payment_identifier_code && (
+                            <div className="text-center mb-2">
+                                <p className="text-danger">Please select the payment method.</p>
+                            </div>
+                        )
+                    }
+                    <div className="text-center">
+                        <button type="button" data-dismiss="modal"
+                                aria-label="Close" className="btn btn-white mr-3 font-weight-bold">Discard
+                        </button>
+                        <button type="submit"
+                                onClick={(e) => _checkoutHandler(e)}
+                                className={`btn btn-primary font-weight-bold ${loading && ('spinner spinner-sm spinner-white spinner-right')}`}
+                                disabled={paymentIdentifierCode === null || loading}>
+                            {loading ? 'Please wait...' : 'Checkout'}
+                        </button>
                     </div>
                 </div>
             </Modal>

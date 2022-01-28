@@ -5346,7 +5346,7 @@ function FormPaymentChannel(_ref) {
             className: "invalid-feedback mb-n5",
             children: errors.payment_channel
           })]
-        }), !hidden && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+        }), !hidden ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
             className: "form-group",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -5386,10 +5386,64 @@ function FormPaymentChannel(_ref) {
                 return setData('payment_channel_owner', e.target.value);
               },
               className: "form-control ".concat(errors.payment_channel_owner ? 'is-invalid' : ''),
-              placeholder: "Enter a payment channel owner. e.g RAFI PUTRA RAMADHAN"
+              placeholder: "Enter a payment channel owner. e.g. RAFI PUTRA RAMADHAN"
             }), errors.payment_channel_owner && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
               className: "invalid-feedback mb-n5",
               children: errors.payment_channel_owner
+            })]
+          })]
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "form-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+              labelFor: "identifier_channel",
+              children: "Identifier Payment Channel"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
+              className: "text-danger",
+              children: [" * Reference on", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
+                href: "https://docs.midtrans.com/en/core-api/bank-transfer?id=sample-request-and-request-body",
+                target: "_blank",
+                children: "\" Sample Request and Request Body \" > \" bank \""
+              }), " Midtrans Website."]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+              type: "text",
+              id: "identifier_channel",
+              name: "identifier_channel",
+              value: data.identifier_channel,
+              onChange: function onChange(e) {
+                return setData('identifier_channel', e.target.value);
+              },
+              className: "form-control ".concat(errors.identifier_channel ? 'is-invalid' : ''),
+              placeholder: "Enter a identifier payment channel. e.g. bri / bca"
+            }), errors.identifier_channel && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.identifier_channel
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "form-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+              labelFor: "type",
+              children: "Type Payment Channel"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
+              className: "text-danger",
+              children: [" * Reference on", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
+                href: "https://docs.midtrans.com/en/core-api/bank-transfer?id=sample-request-and-request-body",
+                target: "_blank",
+                children: "\" Sample Request and Request Body \" > \" payment_type \""
+              }), " Midtrans Website."]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+              type: "text",
+              id: "type",
+              name: "type",
+              value: data.type,
+              onChange: function onChange(e) {
+                return setData('type', e.target.value);
+              },
+              className: "form-control ".concat(errors.type ? 'is-invalid' : ''),
+              placeholder: "Enter a type payment channel. e.g. bank_trasnfer / echannel"
+            }), errors.type && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.type
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
@@ -9316,13 +9370,20 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function Carts() {
-  var carts = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props.carts;
+  var _usePage$props = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props,
+      carts = _usePage$props.carts,
+      errors = _usePage$props.errors;
   var payment_type = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props.payment_type.data;
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
       _useState2 = _slicedToArray(_useState, 2),
-      loading = _useState2[0],
-      setLoading = _useState2[1];
+      paymentIdentifierCode = _useState2[0],
+      setPaymentIdentifierCode = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      loading = _useState4[0],
+      setLoading = _useState4[1];
 
   var remove = function remove(e, series) {
     e.preventDefault();
@@ -9350,6 +9411,24 @@ function Carts() {
       },
       onFinish: function onFinish() {
         setLoading(false);
+      }
+    });
+  };
+
+  var _checkoutHandler = function _checkoutHandler(e) {
+    e.preventDefault();
+    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_6__.Inertia.post(route('order'), {
+      payment_identifier_code: paymentIdentifierCode
+    }, {
+      preserveScroll: true,
+      onStart: function onStart() {
+        setLoading(true);
+      },
+      onFinish: function onFinish() {
+        setLoading(false);
+      },
+      onSuccess: function onSuccess() {
+        window.$('#selectPayment').modal('hide');
       }
     });
   };
@@ -9521,11 +9600,11 @@ function Carts() {
           })
         })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Components_Modal__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_Components_Modal__WEBPACK_IMPORTED_MODULE_8__["default"], {
       trigger: "selectPayment",
       title: "Select Payment Method",
       size: "modal-lg",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
         className: "card-body bg-gray-100",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
           className: "accordion accordion-solid accordion-panel accordion-svg-toggle",
@@ -9609,6 +9688,9 @@ function Carts() {
                             className: "radio",
                             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("input", {
                               type: "radio",
+                              onChange: function onChange() {
+                                return setPaymentIdentifierCode(channel.identifier_code);
+                              },
                               id: "payment_channel",
                               name: "payment_channel",
                               value: channel.identifier_code
@@ -9631,7 +9713,33 @@ function Carts() {
             }, type.id);
           })
         })
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+        className: "card-footer bg-gray-100 border-top-0 p-7 mt-n5",
+        children: [errors.payment_identifier_code && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
+          className: "text-center mb-2",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("p", {
+            className: "text-danger",
+            children: "Please select the payment method."
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("div", {
+          className: "text-center",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+            className: "btn btn-white mr-3 font-weight-bold",
+            children: "Discard"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("button", {
+            type: "submit",
+            onClick: function onClick(e) {
+              return _checkoutHandler(e);
+            },
+            className: "btn btn-primary font-weight-bold ".concat(loading && 'spinner spinner-sm spinner-white spinner-right'),
+            disabled: paymentIdentifierCode === null || loading,
+            children: loading ? 'Please wait...' : 'Checkout'
+          })]
+        })]
+      })]
     })]
   });
 }
@@ -11282,6 +11390,8 @@ function PaymentChannelIndex() {
   var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
     payment_type_id: '',
     payment_channel: '',
+    identifier_channel: '',
+    type: '',
     virtual_number: '',
     payment_channel_owner: '',
     image: '',
@@ -11331,7 +11441,9 @@ function PaymentChannelIndex() {
   var selectPaymentTypeHandler = function selectPaymentTypeHandler(e) {
     if (e.value === 1) {
       setData(_objectSpread(_objectSpread({}, data), {}, {
-        payment_type_id: e
+        payment_type_id: e,
+        identifier_channel: '',
+        type: ''
       }));
     } else {
       setData(_objectSpread(_objectSpread({}, data), {}, {

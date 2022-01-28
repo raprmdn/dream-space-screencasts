@@ -5,6 +5,7 @@ use App\Http\Controllers\{CartController,
     Courses\SeriesController,
     Courses\VideoController,
     IndexController,
+    Order\OrderController,
     PaymentConfiguration\PaymentChannelController,
     PaymentConfiguration\PaymentConfigurationController,
     PaymentConfiguration\PaymentTypeController,
@@ -30,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::post('saves', [WatchlistController::class, 'save'])->name('saves');
     Route::get('carts', [CartController::class, 'index'])->name('carts');
     Route::post('remove', [CartController::class, 'remove'])->name('remove.carts');
+    Route::post('make-an-order', [OrderController::class, 'order'])->name('order');
 });
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {

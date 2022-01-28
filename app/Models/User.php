@@ -153,13 +153,13 @@ class User extends Authenticatable
     /**
      * User purchasing the series.
      *
-     * @param Series $series
+     * @param $series
      *
-     * @return \Illuminate\Database\Eloquent\Model
+     * @return void
      */
-    public function purchasing(Series $series): \Illuminate\Database\Eloquent\Model
+    public function purchasing($series): void
     {
-        return $this->purchases()->save($series);
+        $this->purchases()->attach($series);
     }
 
     /**
@@ -200,6 +200,14 @@ class User extends Authenticatable
     public function purchases(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Series::class, 'purchased_series', 'user_id', 'series_id')->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Order::class, 'user_id');
     }
 
 }
