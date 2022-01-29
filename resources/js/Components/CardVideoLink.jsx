@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "@inertiajs/inertia-react";
 
-export default function CardVideoLink({video}) {
+export default function CardVideoLink({video, buyable, auth}) {
     return (
         <Link href={"#"} className="d-flex align-items-center bg-hover-light-light border border-1 rounded p-5 mb-4">
             <div className="symbol symbol-circle mr-5">
@@ -24,7 +24,13 @@ export default function CardVideoLink({video}) {
                 </div>
             </div>
             {
-                !video.is_free && (<i className="flaticon2-start-up icon-2x text-primary" />)
+                auth ? (
+                    buyable && (
+                        !video.is_free && (<i className="flaticon2-start-up icon-2x text-primary" />)
+                    )
+                ) : (
+                    !video.is_free && (<i className="flaticon2-start-up icon-2x text-primary" />)
+                )
             }
         </Link>
     )

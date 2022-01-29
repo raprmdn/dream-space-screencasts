@@ -16,6 +16,7 @@ export default function Show() {
     const latestVideo = series.videos[series.videos.length - 1] ?? null;
     const [ loading, setLoading ] = useState(false)
     const [ player, setPlayer ] = useState(null)
+    const [ fetchingYoutubeVideo, setFetchingYoutubeVideo ] = useState(true)
 
     const saves = (e) => {
         e.preventDefault()
@@ -49,6 +50,7 @@ export default function Show() {
 
     const _onReady = (e) => {
         console.log('Preview is ready to watch.');
+        setFetchingYoutubeVideo(false)
         setPlayer(e.target)
     }
 
@@ -58,6 +60,34 @@ export default function Show() {
 
     const _onClose = () => {
         player.pauseVideo();
+    }
+
+    const _priceBannerMeta = (series) => {
+        return <SeriesBannerMeta
+            icon={'flaticon-price-tag'} label={
+            series.discount.discount_unformatted
+                ?
+                <>Rp. {series.discount.discount_formatted},-</>
+                :
+                <>
+                    {
+                        series.price.price_unformatted
+                            ?
+                            <>Rp. {series.price.price_formatted},-</>
+                            :
+                            <>Free Series</>
+                    }
+                </>
+        }/>
+    }
+
+    const _buttonNotAllowed = (label) => {
+        return (
+            <button
+                style={{cursor: "not-allowed"}}
+                disabled={true}
+                className="btn btn-success btn-block font-weight-bold">{label}</button>
+        )
     }
 
     return (
@@ -89,26 +119,14 @@ export default function Show() {
                             </p>
                             <div className="d-lg-flex mt-2">
                                 {
-                                    series.viewing_status.is_buyable ? (
-                                        <SeriesBannerMeta
-                                            icon={'flaticon-price-tag'}
-                                            label={
-                                                series.discount.discount_unformatted
-                                                    ?
-                                                    <>Rp. {series.discount.discount_formatted},-</>
-                                                    :
-                                                    <>
-                                                        {
-                                                            series.price.price_unformatted
-                                                                ?
-                                                                <>Rp. {series.price.price_formatted},-</>
-                                                                :
-                                                                <>Free Series</>
-                                                        }
-                                                    </>
+                                    auth.user !== null ? (
+                                        series.viewing_status.is_buyable ? (
+                                            _priceBannerMeta(series)
+                                        ) : <SeriesBannerMeta icon={'flaticon-price-tag'} label={'Purchased'} />
+                                    ) : (
+                                       _priceBannerMeta(series)
+                                    )
 
-                                        }/>
-                                    ) : <SeriesBannerMeta icon={'flaticon-price-tag'} label={'Purchased'} />
                                 }
                                 <SeriesBannerMeta icon={'far fa-calendar-plus'} label={series.created_at} />
                                 <SeriesBannerMeta icon={'flaticon2-layers'} label={series.levels} />
@@ -223,7 +241,9 @@ export default function Show() {
                                                         {
                                                             series.videos.map((video) => (
                                                                 <span key={video.id}>
-                                                                    <CardVideoLink video={video}/>
+                                                                    <CardVideoLink video={video}
+                                                                                   buyable={series.viewing_status.is_buyable}
+                                                                                   auth={auth.user !== null}/>
                                                                 </span>
                                                             ))
                                                         }
@@ -233,7 +253,9 @@ export default function Show() {
                                                         {
                                                             series.videos.map((video) => (
                                                                 <span key={video.id}>
-                                                                    <CardVideoLink video={video}/>
+                                                                    <CardVideoLink video={video}
+                                                                                   buyable={series.viewing_status.is_buyable}
+                                                                                   auth={auth.user !== null}/>
                                                                 </span>
                                                             ))
                                                         }
@@ -264,18 +286,14 @@ export default function Show() {
                                         ?
                                             <>
                                                 <button onClick={_onClickPreview}
-                                                        className="btn btn-success btn-block font-weight-bold mt-5"
-                                                        data-toggle="modal" data-target="#previewSeries">
-                                                    Preview Series
+                                                        className={`btn btn-success btn-block font-weight-bold mt-5
+                                                        ${fetchingYoutubeVideo && ('spinner spinner-sm spinner-white spinner-right')}`}
+                                                        data-toggle="modal" data-target="#previewSeries"
+                                                        disabled={fetchingYoutubeVideo}>
+                                                    {fetchingYoutubeVideo ? 'Getting preview...' : 'Preview Series'}
                                                 </button>
                                             </>
-                                        :
-                                            <>
-                                                <button
-                                                    style={{cursor: "not-allowed"}}
-                                                    disabled={true}
-                                                    className="btn btn-success btn-block font-weight-bold mt-5">Preview Series</button>
-                                            </>
+                                        : (_buttonNotAllowed("Preview Series"))
                                     }
                                     {
                                         series.demo_url
@@ -286,13 +304,7 @@ export default function Show() {
                                                     Project Demo
                                                 </a>
                                             </>
-                                        :
-                                            <>
-                                                <button
-                                                    style={{cursor: "not-allowed"}}
-                                                    disabled={true}
-                                                    className="btn btn-success btn-block font-weight-bold">Project Demo</button>
-                                            </>
+                                        : (_buttonNotAllowed("Project Demo"))
                                     }
                                     {
                                         series.source_code_url
@@ -303,13 +315,7 @@ export default function Show() {
                                                     Source Code
                                                 </a>
                                             </>
-                                            :
-                                            <>
-                                                <button
-                                                    style={{cursor: "not-allowed"}}
-                                                    disabled={true}
-                                                    className="btn btn-success btn-block font-weight-bold">Source Code</button>
-                                            </>
+                                            : (_buttonNotAllowed("Source Code"))
                                     }
                                 </div>
                             </div>
