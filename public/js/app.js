@@ -4985,7 +4985,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function CardVideoLink(_ref) {
-  var video = _ref.video;
+  var video = _ref.video,
+      buyable = _ref.buyable,
+      auth = _ref.auth;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
     href: "#",
     className: "d-flex align-items-center bg-hover-light-light border border-1 rounded p-5 mb-4",
@@ -5018,7 +5020,9 @@ function CardVideoLink(_ref) {
           })]
         })]
       })]
-    }), !video.is_free && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+    }), auth ? buyable && !video.is_free && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
+      className: "flaticon2-start-up icon-2x text-primary"
+    }) : !video.is_free && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
       className: "flaticon2-start-up icon-2x text-primary"
     })]
   });
@@ -14546,6 +14550,11 @@ function Show() {
       player = _useState4[0],
       setPlayer = _useState4[1];
 
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+      _useState6 = _slicedToArray(_useState5, 2),
+      fetchingYoutubeVideo = _useState6[0],
+      setFetchingYoutubeVideo = _useState6[1];
+
   var saves = function saves(e) {
     e.preventDefault();
     _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_4__.Inertia.post(route('saves'), {
@@ -14578,6 +14587,7 @@ function Show() {
 
   var _onReady = function _onReady(e) {
     console.log('Preview is ready to watch.');
+    setFetchingYoutubeVideo(false);
     setPlayer(e.target);
   };
 
@@ -14587,6 +14597,32 @@ function Show() {
 
   var _onClose = function _onClose() {
     player.pauseVideo();
+  };
+
+  var _priceBannerMeta = function _priceBannerMeta(series) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_SeriesBannerMeta__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      icon: 'flaticon-price-tag',
+      label: series.discount.discount_unformatted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
+        children: ["Rp. ", series.discount.discount_formatted, ",-"]
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
+        children: series.price.price_unformatted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
+          children: ["Rp. ", series.price.price_formatted, ",-"]
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
+          children: "Free Series"
+        })
+      })
+    });
+  };
+
+  var _buttonNotAllowed = function _buttonNotAllowed(label) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", {
+      style: {
+        cursor: "not-allowed"
+      },
+      disabled: true,
+      className: "btn btn-success btn-block font-weight-bold",
+      children: label
+    });
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
@@ -14632,21 +14668,10 @@ function Show() {
               children: series.description
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
               className: "d-lg-flex mt-2",
-              children: [series.viewing_status.is_buyable ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_SeriesBannerMeta__WEBPACK_IMPORTED_MODULE_7__["default"], {
-                icon: 'flaticon-price-tag',
-                label: series.discount.discount_unformatted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
-                  children: ["Rp. ", series.discount.discount_formatted, ",-"]
-                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
-                  children: series.price.price_unformatted ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
-                    children: ["Rp. ", series.price.price_formatted, ",-"]
-                  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
-                    children: "Free Series"
-                  })
-                })
-              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_SeriesBannerMeta__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              children: [auth.user !== null ? series.viewing_status.is_buyable ? _priceBannerMeta(series) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_SeriesBannerMeta__WEBPACK_IMPORTED_MODULE_7__["default"], {
                 icon: 'flaticon-price-tag',
                 label: 'Purchased'
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_SeriesBannerMeta__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              }) : _priceBannerMeta(series), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_SeriesBannerMeta__WEBPACK_IMPORTED_MODULE_7__["default"], {
                 icon: 'far fa-calendar-plus',
                 label: series.created_at
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_SeriesBannerMeta__WEBPACK_IMPORTED_MODULE_7__["default"], {
@@ -14777,7 +14802,9 @@ function Show() {
                   children: series.videos.map(function (video) {
                     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("span", {
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_CardVideoLink__WEBPACK_IMPORTED_MODULE_6__["default"], {
-                        video: video
+                        video: video,
+                        buyable: series.viewing_status.is_buyable,
+                        auth: auth.user !== null
                       })
                     }, video.id);
                   })
@@ -14785,7 +14812,9 @@ function Show() {
                   children: series.videos.map(function (video) {
                     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("span", {
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_CardVideoLink__WEBPACK_IMPORTED_MODULE_6__["default"], {
-                        video: video
+                        video: video,
+                        buyable: series.viewing_status.is_buyable,
+                        auth: auth.user !== null
                       })
                     }, video.id);
                   })
@@ -14814,53 +14843,27 @@ function Show() {
                 }), series.preview_url ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", {
                     onClick: _onClickPreview,
-                    className: "btn btn-success btn-block font-weight-bold mt-5",
+                    className: "btn btn-success btn-block font-weight-bold mt-5\n                                                        ".concat(fetchingYoutubeVideo && 'spinner spinner-sm spinner-white spinner-right'),
                     "data-toggle": "modal",
                     "data-target": "#previewSeries",
-                    children: "Preview Series"
+                    disabled: fetchingYoutubeVideo,
+                    children: fetchingYoutubeVideo ? 'Getting preview...' : 'Preview Series'
                   })
-                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", {
-                    style: {
-                      cursor: "not-allowed"
-                    },
-                    disabled: true,
-                    className: "btn btn-success btn-block font-weight-bold mt-5",
-                    children: "Preview Series"
-                  })
-                }), series.demo_url ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
+                }) : _buttonNotAllowed("Preview Series"), series.demo_url ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("a", {
                     href: series.demo_url,
                     className: "btn btn-success btn-block font-weight-bold",
                     target: "_blank",
                     children: "Project Demo"
                   })
-                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", {
-                    style: {
-                      cursor: "not-allowed"
-                    },
-                    disabled: true,
-                    className: "btn btn-success btn-block font-weight-bold",
-                    children: "Project Demo"
-                  })
-                }), series.source_code_url ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
+                }) : _buttonNotAllowed("Project Demo"), series.source_code_url ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("a", {
                     href: series.source_code_url,
                     className: "btn btn-success btn-block font-weight-bold",
                     target: "_blank",
                     children: "Source Code"
                   })
-                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.Fragment, {
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("button", {
-                    style: {
-                      cursor: "not-allowed"
-                    },
-                    disabled: true,
-                    className: "btn btn-success btn-block font-weight-bold",
-                    children: "Source Code"
-                  })
-                })]
+                }) : _buttonNotAllowed("Source Code")]
               })
             })
           })]

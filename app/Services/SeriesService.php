@@ -49,7 +49,6 @@ class SeriesService
             ->with(['topics:id,name,slug', 'videos' => function($q) {
                 $q->notArchived()->orderBy('episode');
             }])
-            ->withCount('videos')
             ->first();
 
         $this->_castingRuntime($series);
