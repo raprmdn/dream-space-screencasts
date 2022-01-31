@@ -19,7 +19,11 @@ class CreateOrdersTable extends Migration
             $table->string('payment_type')->nullable();
             $table->string('channel_name')->nullable();
             $table->string('virtual_number')->nullable();
+            $table->string('permata_va_number')->nullable();
+            $table->string('bill_key')->nullable();
+            $table->string('biller_code')->nullable();
             $table->string('payment_code')->nullable();
+            $table->json('actions')->nullable();
             $table->string('status')->nullable()->default('pending');
             $table->string('status_code')->nullable();
             $table->timestamp('transaction_time')->nullable();

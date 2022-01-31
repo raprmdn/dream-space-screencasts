@@ -39,7 +39,7 @@ class SeriesSingleResource extends JsonResource
             'archived_at' => $this->archived_at,
             'created_at' => $this->created_at->format('d M Y, H:i A'),
             'topics' => $this->whenLoaded('topics'),
-            'videos' => VideoResource::collection($this->whenLoaded('videos')),
+            'videos' => VideoSingleResource::collection($this->whenLoaded('videos')),
             'videos_count' => $this->when(isset($this->videos_count), $this->videos_count),
             'runtime' => $this->runtime,
             'viewing_status' => [

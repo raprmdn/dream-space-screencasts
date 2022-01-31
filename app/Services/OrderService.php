@@ -55,22 +55,24 @@ class OrderService
                 'gross_amount' => $grossAmount,
             ]);
 
-            $payloads = [
-                "payment_type" => $channel->type,
-                "transaction_details" => [
-                    'order_id' => $invoice,
-                    'gross_amount' => $grossAmount
-                ],
-                "customer_details" => [
-                    'first_name' => Auth::user()->name,
-                    'email' => Auth::user()->email
-                ],
-                "item_details" => $seriesItemsDetailsTransform,
-                "bank_transfer" => [
-                    "bank" => $channel->identifier_channel,
-                    "va_number" => ""
-                ]
-            ];
+            if (in_array($channel->identifier_channel, ['bri', 'bca', 'bni'])) {
+                $payloads = $this->_payloads(
+                    $channel, $invoice, $grossAmount,
+                    $seriesItemsDetailsTransform, $this->_request_BRI_BCA_BNI($channel)
+                );
+            } else if ($channel->identifier_channel === 'mandiri') {
+                $payloads = $this->_payloads(
+                    $channel, $invoice, $grossAmount,
+                    $seriesItemsDetailsTransform, $this->_request_Mandiri($channel, $invoice)
+                );
+            } else if ($channel->identifier_channel === 'permata') {
+                $payloads = $this->_payloads(
+                    $channel, $invoice, $grossAmount,
+                    $seriesItemsDetailsTransform, $this->_request_Permata($channel)
+                );
+            } else {
+                dd('stop');
+            }
 
             try {
                 $midtransResponse = CoreApi::charge($payloads);
@@ -102,34 +104,58 @@ class OrderService
             $order = Order::where('invoice', $invoice)->firstOrFail();
             $this->_midtransPaymentResponse($notification, json_encode($notification->getResponse()));
 
-            if ($status == 'capture') {
-                if ($paymentType == 'credit_card') {
-                    if ($fraudStatus == 'challenge') {
-                        $order->setStatusPending();
-                    } else {
-                        $order->setStatusSuccess();
-                        $this->_userSuccessPurchasing($order);
-                    }
-                    $order->update(['status_code' => $statusCode]);
-                }
-            } else if ($status == 'settlement') {
-                $order->setStatusSuccess();
-                $order->update(['status_code' => $statusCode]);
-                $this->_userSuccessPurchasing($order);
-            } else if ($status == 'pending') {
-                $order->setStatusPending();
-                $order->update(['status_code' => $statusCode]);
-            } else if ($status == 'deny') {
-                $order->setStatusFailed();
-                $order->update(['status_code' => $statusCode]);
-            } else if ($status == 'expire') {
-                $order->setStatusExpired();
-                $order->update(['status_code' => $statusCode]);
-            } else if ($status == 'cancel') {
-                $order->setStatusFailed();
-                $order->update(['status_code' => $statusCode]);
-            }
+            $this->_orderStatusHandling($status, $paymentType, $fraudStatus, $order, $statusCode);
         });
+    }
+
+    private function _request_BRI_BCA_BNI($channel): array
+    {
+        return [
+            $channel->type => [
+                "bank" => $channel->identifier_channel,
+                "va_number" => ""
+            ]
+        ];
+    }
+
+    private function _request_Mandiri($channel, $invoice): array
+    {
+        return [
+            $channel->type => [
+                "bill_info1" => "Payment : $invoice",
+                "bill_info2" => "Course purchase.",
+            ]
+        ];
+    }
+
+    private function _request_Permata($channel): array
+    {
+        return [
+            $channel->type => [
+                "bank" => $channel->identifier_channel,
+                "permata" => [
+                    "recipient_name" => Auth::user()->name
+                ]
+            ]
+        ];
+    }
+
+    private function _payloads($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform, $requestTransfer): array
+    {
+        $payloads = [
+            "payment_type" => $channel->type,
+            "transaction_details" => [
+                'order_id' => $invoice,
+                'gross_amount' => $grossAmount
+            ],
+            "customer_details" => [
+                'first_name' => Auth::user()->name,
+                'email' => Auth::user()->email
+            ],
+            "item_details" => $seriesItemsDetailsTransform,
+        ];
+
+        return array_replace_recursive($payloads, $requestTransfer);
     }
 
     private function _userSuccessPurchasing($order)
@@ -143,13 +169,60 @@ class OrderService
 
     private function _updateOrderTable($order, $response)
     {
+        $virtualNumber = null;
+
+        if (isset($response->va_numbers[0]->bank)) {
+            $channelName = $response->va_numbers[0]->bank;
+            $virtualNumber = $response->va_numbers[0]->va_number;
+        } else if (isset($response->bill_key)) {
+            $channelName = 'mandiri';
+        } else if (isset($response->permata_va_number)) {
+            $channelName = 'permata';
+        } else {
+            $channelName = null;
+        }
+
         $order->update([
             'payment_type' => $response->payment_type,
-            'channel_name' => $response->va_numbers[0]->bank,
-            'virtual_number' => $response->va_numbers[0]->va_number,
+            'channel_name' => $channelName,
+            'virtual_number' => $virtualNumber,
+            'permata_va_number' => $response->permata_va_number ?? null,
+            'bill_key' => $response->bill_key ?? null,
+            'biller_code' => $response->biller_code ?? null,
             'status_code' => $response->status_code,
             'transaction_time' => $response->transaction_time
         ]);
+    }
+
+    private function _orderStatusHandling($status, $paymentType, $fraudStatus, $order, $statusCode)
+    {
+        if ($status == 'capture') {
+            if ($paymentType == 'credit_card') {
+                if ($fraudStatus == 'challenge') {
+                    $order->setStatusPending();
+                } else {
+                    $order->setStatusSuccess();
+                    $this->_userSuccessPurchasing($order);
+                }
+                $order->update(['status_code' => $statusCode]);
+            }
+        } else if ($status == 'settlement') {
+            $order->setStatusSuccess();
+            $order->update(['status_code' => $statusCode]);
+            $this->_userSuccessPurchasing($order);
+        } else if ($status == 'pending') {
+            $order->setStatusPending();
+            $order->update(['status_code' => $statusCode]);
+        } else if ($status == 'deny') {
+            $order->setStatusFailed();
+            $order->update(['status_code' => $statusCode]);
+        } else if ($status == 'expire') {
+            $order->setStatusExpired();
+            $order->update(['status_code' => $statusCode]);
+        } else if ($status == 'cancel') {
+            $order->setStatusFailed();
+            $order->update(['status_code' => $statusCode]);
+        }
     }
 
     private function _midtransPaymentResponse($response, $responseBody)
@@ -159,8 +232,8 @@ class OrderService
             'bank' => $response->va_numbers[0]->bank ?? null,
             'va_number' => $response->va_numbers[0]->va_number ?? null,
             'payment_type' => $response->payment_type ?? null,
-            'store' => null,
-            'permata_va_number' => null,
+            'store' => $response->store ?? null,
+            'permata_va_number' => $response->permata_va_number ?? null,
             'status_code' => $response->status_code ?? null,
             'status_message' => $response->status_message ?? null,
             'transaction_id' => $response->transaction_id ?? null,
@@ -170,13 +243,13 @@ class OrderService
             'transaction_time' => $response->transaction_time ?? null,
             'transaction_status' => $response->transaction_status ?? null,
             'fraud_status' => $response->fraud_status ?? null,
-            'bill_key' => null,
-            'biller_code' => null,
-            'payment_code' => null,
+            'bill_key' => $response->bill_key ?? null,
+            'biller_code' => $response->biller_code ?? null,
+            'payment_code' => $response->payment_code ?? null,
             'signature_key' => $response->signature_key ?? null,
-            'acquirer' => null,
-            'settlement_time' => null,
-            'approval_code' => null,
+            'acquirer' => $response->acquirer ?? null,
+            'settlement_time' => $response-> settlement_time ?? null,
+            'approval_code' => $response->approval_code ?? null,
             'actions' => null,
             'response_body' => $responseBody ?? null,
         ]);

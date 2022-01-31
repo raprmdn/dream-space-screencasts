@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class VideoResource extends JsonResource
+class VideoSingleResource extends JsonResource
 {
     /**
      * @param Request $request
@@ -22,10 +22,21 @@ class VideoResource extends JsonResource
             ? $runtimeFormatted = Carbon::parse($this->runtime)->format('i:s')
             : $runtimeFormatted = Carbon::parse($this->runtime)->format('h:i:s');
 
+        if (Auth::user()) {
+            if (Auth::user()->hasPurchased($this->series_id)) {
+                $sourceURL = $this->source;
+            } else {
+                $sourceURL = $this->is_free ? $this->source : null;
+            }
+        } else {
+            $sourceURL = $this->is_free ? $this->source : null;
+        }
+
+
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'source' => $this->source,
+            'source' => $sourceURL,
             'episode' => $this->episode,
             'runtime' =>[
                 'runtime_unformatted' => $this->runtime,

@@ -171,7 +171,7 @@ class User extends Authenticatable
      */
     public function hasPurchased($series): bool
     {
-        return (bool) $this->purchases()->find($series);
+        return (bool) $this->purchases->find($series);
     }
 
     /*
