@@ -9,6 +9,13 @@ class PaymentTypeSeeder extends Seeder
 {
     public function run()
     {
+        /*
+         * This Payment Type cannot be deleted.
+         * Don't updating the "identifier" field.
+         * Updating the "identifier" field will affect to system functionality.
+         * Make sure in database, id for "Manual Transfer = 1" and "Instant Payment = 2"
+         */
+
         collect([
            [
                'title' => 'Manual Transfer',
