@@ -2,7 +2,7 @@
 
 > **Note:** Sneak peek and preview available coming soon.
 
-> **Note:** Currently Midtrans payment only available for BRI, BCA, BNI, Mandiri, Permata.
+> **Note:** Currently Midtrans payment only available for BRI, BCA, BNI, Mandiri, Permata, Gopay, Alfamart, Indomaret.
 ## Dream Space
 
 Dream Space Screencast is online learning platform for developer, specifically building the website app.
