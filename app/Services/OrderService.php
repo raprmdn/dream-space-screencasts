@@ -70,6 +70,16 @@ class OrderService
                     $channel, $invoice, $grossAmount,
                     $seriesItemsDetailsTransform, $this->_request_Permata($channel)
                 );
+            } else if ($channel->identifier_channel === 'gopay') {
+                $payloads = $this->_payloads(
+                    $channel, $invoice, $grossAmount,
+                    $seriesItemsDetailsTransform, $this->_request_Gopay($channel)
+                );
+            } else if ($channel->identifier_channel === 'alfamart' || $channel->identifier_channel === 'indomaret') {
+                $payloads = $this->_payloads(
+                    $channel, $invoice, $grossAmount,
+                    $seriesItemsDetailsTransform, $this->_request_Alfamart_Indomaret($channel)
+                );
             } else {
                 dd('stop');
             }
@@ -140,6 +150,26 @@ class OrderService
         ];
     }
 
+    private function _request_Gopay($channel): array
+    {
+        return [
+            $channel->type => [
+                "enable_callback" => false,
+                "callback_url" => "someapps://callback"
+            ]
+        ];
+    }
+
+    public function _request_Alfamart_Indomaret($channel): array
+    {
+        return [
+            $channel->type => [
+                "store" => $channel->identifier_channel,
+	            "message" => "Purchasing online course.",
+            ]
+        ];
+    }
+
     private function _payloads($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform, $requestTransfer): array
     {
         $payloads = [
@@ -170,6 +200,7 @@ class OrderService
     private function _updateOrderTable($order, $response)
     {
         $virtualNumber = null;
+        $actions = null;
 
         if (isset($response->va_numbers[0]->bank)) {
             $channelName = $response->va_numbers[0]->bank;
@@ -178,6 +209,11 @@ class OrderService
             $channelName = 'mandiri';
         } else if (isset($response->permata_va_number)) {
             $channelName = 'permata';
+        } else if (isset($response->actions)) {
+            $channelName = 'gopay';
+            $actions = json_encode($response->actions);
+        } else if (isset($response->payment_code)) {
+            $channelName = $response->store;
         } else {
             $channelName = null;
         }
@@ -189,6 +225,8 @@ class OrderService
             'permata_va_number' => $response->permata_va_number ?? null,
             'bill_key' => $response->bill_key ?? null,
             'biller_code' => $response->biller_code ?? null,
+            'actions' => $actions,
+            'payment_code' => $response->payment_code ?? null,
             'status_code' => $response->status_code,
             'transaction_time' => $response->transaction_time
         ]);
@@ -250,7 +288,7 @@ class OrderService
             'acquirer' => $response->acquirer ?? null,
             'settlement_time' => $response-> settlement_time ?? null,
             'approval_code' => $response->approval_code ?? null,
-            'actions' => null,
+            'actions' => isset($response->actions) ? json_encode($response->actions) : null,
             'response_body' => $responseBody ?? null,
         ]);
     }
