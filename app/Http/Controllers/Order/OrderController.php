@@ -22,22 +22,18 @@ class OrderController extends Controller
         ]);
 
         try {
-            $resp = $this->orderService->makeAnOrder($request->payment_identifier_code);
+            $identifierURL = $this->orderService->makeAnOrder($request->payment_identifier_code);
         } catch (\Exception $exception) {
-            error_log($exception);
-            throw $exception;
-//            return redirect()->back()->with([
-//                'type' => 'error',
-//                'message'  => $exception->getMessage()
-//            ]);
+            return redirect()->back()->with([
+                'type' => 'error',
+                'message'  => $exception->getMessage()
+            ]);
         }
 
-        return response()->json($resp);
-
-//        return redirect()->back()->with([
-//            'type' => 'success',
-//            'message' => 'Order has been created.'
-//        ]);
+        return redirect()->route('invoice.show', $identifierURL)->with([
+            'type' => 'success',
+            'message'  => 'Order has been created.',
+        ]);
     }
 
     public function notificationHandler()

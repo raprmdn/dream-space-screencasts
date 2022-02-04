@@ -5,6 +5,7 @@ use App\Http\Controllers\{CartController,
     Courses\SeriesController,
     Courses\VideoController,
     IndexController,
+    Invoice\InvoiceController,
     Order\OrderController,
     PaymentConfiguration\PaymentChannelController,
     PaymentConfiguration\PaymentConfigurationController,
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('carts', [CartController::class, 'index'])->name('carts');
     Route::post('remove', [CartController::class, 'remove'])->name('remove.carts');
     Route::post('make-an-order', [OrderController::class, 'order'])->name('order');
+    Route::get('invoice/{order:identifier}', [InvoiceController::class, 'show'])->name('invoice.show');
 });
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {

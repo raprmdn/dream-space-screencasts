@@ -94,7 +94,7 @@ class OrderService
             $this->_midtransPaymentResponse($midtransResponse, json_encode($midtransResponse));
             Auth::user()->carts()->delete();
 
-            $this->response = $midtransResponse;
+            $this->response = $identifier;
         });
 
         return $this->response;

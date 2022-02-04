@@ -39,6 +39,14 @@ class PaymentChannelSeeder extends Seeder
                 'identifier_channel' => 'bri',
                 'type' => 'bank_transfer',
                 'identifier_code' => Str::uuid(),
+                'instruction ' => '
+                    - Log in Aplikasi BRImo
+                    - Pilih menu "BRIVA"
+                    - Masukkan Virtual Number BRIVA
+                    - Pastikan nominal pembayaran sesuai
+                    - Lalu pilih "BAYAR" dan masukkan PIN Anda
+                    - Pembayaran selesai.
+                ',
                 'status' => 'Inactive',
                 'archived' => true,
             ],
@@ -47,6 +55,16 @@ class PaymentChannelSeeder extends Seeder
                 'identifier_channel' => 'bca',
                 'type' => 'bank_transfer',
                 'identifier_code' => Str::uuid(),
+                'instruction ' => '
+                    - Log in BCA Mobile App
+                    - Pilih m-BCA
+                    - Masukkan kode akses m-BCA
+                    - Pilih m-Transfer
+                    - Pilih BCA Virtual Account
+                    - Masukkan nomor Virtual Account sesuai yang ada di atas
+                    - Masukkan PIN m-BCA
+                    - Pembayaran selesai.
+                ',
                 'status' => 'Inactive',
                 'archived' => true,
             ],
@@ -55,6 +73,14 @@ class PaymentChannelSeeder extends Seeder
                 'identifier_channel' => 'bni',
                 'type' => 'bank_transfer',
                 'identifier_code' => Str::uuid(),
+                'instruction ' => '
+                    - Log in BNI Mobile Banking
+                    - Pilih menu "Transfer"
+                    - Pilih menu Virtual Account Billing
+                    - Masukkan nomor Virtual Account
+                    - Konfirmasi transaksi dan masukkan password transaksi
+                    - Pembayaran selesai.
+                ',
                 'status' => 'Inactive',
                 'archived' => true,
             ],
@@ -63,6 +89,15 @@ class PaymentChannelSeeder extends Seeder
                 'identifier_channel' => 'mandiri',
                 'type' => 'echannel',
                 'identifier_code' => Str::uuid(),
+                'instruction ' => '
+                    - Login Mandiri Internet Banking
+                    - Pilih menu Pembayaran
+                    - Pilih menu Multipayment
+                    - Pilih pada "Penyedia Jasa" Midtrans
+                    - Masukkan Payment Code
+                    - Konfirmasi pembayaran menggunakan Mandiri Token
+                    - Pembayaran selesai.
+                ',
                 'status' => 'Inactive',
                 'archived' => true,
             ],
@@ -71,6 +106,15 @@ class PaymentChannelSeeder extends Seeder
                 'identifier_channel' => 'permata',
                 'type' => 'bank_transfer',
                 'identifier_code' => Str::uuid(),
+                'instruction ' => '
+                    - Log in PermataMobile
+                    - Pilih pembayaran tagihan
+                    - Pilih Virtual Account
+                    - Masukkan nomor Virtual Account
+                    - Masukkan nominal tagihan pada total pembayaran
+                    - Konfirmasi pembayaran
+                    - Pembayaran selesai.
+                ',
                 'status' => 'Inactive',
                 'archived' => true,
             ],
@@ -79,6 +123,14 @@ class PaymentChannelSeeder extends Seeder
                 'identifier_channel' => 'gopay',
                 'type' => 'gopay',
                 'identifier_code' => Str::uuid(),
+                'instruction ' => '
+                    - Buka aplikasi Gojek
+                    - Lakukan Scan pada QR Code
+                    - Cek payment details pada aplikasi
+                    - Pilih Pay
+                    - Masukkan PIN
+                    - Pembayaran selesai.
+                ',
                 'status' => 'Inactive',
                 'archived' => true,
             ],
@@ -87,12 +139,26 @@ class PaymentChannelSeeder extends Seeder
                 'identifier_channel' => 'alfamart',
                 'type' => 'cstore',
                 'identifier_code' => Str::uuid(),
+                'instruction ' => '
+                    - Simpan Payment Code yang diberikan
+                    - Pergi ke Alfamart
+                    - Pergi ke kasir dan berikan Payment Code
+                    - Lakukan pembayaran
+                    - Pembayaran selesai
+                ',
                 'status' => 'Inactive',
                 'archived' => true,
             ],
             [
                 'payment_channel' => 'Indomaret',
                 'identifier_channel' => 'indomaret',
+                'instruction ' => '
+                    - Simpan Payment Code yang diberikan
+                    - Pergi ke Indomaret
+                    - Pergi ke kasir dan berikan Payment Code
+                    - Lakukan pembayaran
+                    - Pembayaran selesai
+                ',
                 'type' => 'cstore',
                 'identifier_code' => Str::uuid(),
                 'status' => 'Inactive',

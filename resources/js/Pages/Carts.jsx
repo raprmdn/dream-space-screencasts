@@ -52,11 +52,13 @@ export default function Carts() {
             preserveScroll: true,
             onStart: () => {
                 setLoading(true)
+                window.$('#selectPayment').modal('hide')
             },
             onFinish: () => {
                 setLoading(false)
             },
             onSuccess: () => {
+                setLoading(false)
                 window.$('#selectPayment').modal('hide')
             }
         })
@@ -151,8 +153,10 @@ export default function Carts() {
                                             <div className="separator separator-solid mb-5"/>
                                             <SummaryLineItem label={'Subtotal'} textType={'text-primary'}
                                                              labelPrice={`Rp. ${carts.cart_summary.subtotal_formatted},-`} />
-                                            <button className="btn btn-primary btn-block font-weight-bold mr-5 mt-8"
-                                                    data-toggle="modal" data-target="#selectPayment">Select Payment</button>
+                                            <button className={`btn btn-primary btn-block font-weight-bold mr-5 mt-8 ${loading && ('spinner spinner-sm spinner-white spinner-right')}`}
+                                                    data-toggle="modal" data-target="#selectPayment" disabled={loading}>
+                                                {loading ? 'Please wait...' : 'Select Payment'}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

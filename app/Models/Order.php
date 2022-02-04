@@ -8,6 +8,10 @@ class Order extends Model
 {
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'transaction_time' => 'datetime'
+    ];
+
     public function setStatusPending()
     {
         $this->attributes['status'] = 'pending';
@@ -38,5 +42,13 @@ class Order extends Model
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function channel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(PaymentChannel::class, 'payment_channel_id');
     }
 }
