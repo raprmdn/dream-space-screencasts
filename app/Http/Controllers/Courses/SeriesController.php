@@ -85,4 +85,19 @@ class SeriesController extends Controller
             ->route('series.index')
             ->with(['type' => 'success', 'message' => 'Series has been moved to trash.']);
     }
+
+    public function findAllSeries()
+    {
+        return inertia('Series/Index', [
+            'series' => $this->seriesService->findAll(),
+            'latestSeries' => $this->seriesService->getSingleLatestSeries()
+        ]);
+    }
+
+    public function showDetailSeries(Series $series)
+    {
+        return inertia('Series/Show', [
+            'series' => $this->seriesService->findBySlug($series->slug)
+        ]);
+    }
 }

@@ -3,6 +3,8 @@ import App from "../Layouts/App";
 import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Breadcrumb from "../Components/Breadcrumb";
 import VANumberLineItem from "../Components/VANumberLineItem";
+import InvoiceDetailLineItem from "../Components/InvoiceDetailLineItem";
+import InvoiceSeriesItems from "../Components/InvoiceSeriesItems";
 
 export default function Invoice() {
     const { data:invoice } = usePage().props.invoice
@@ -66,41 +68,7 @@ export default function Invoice() {
                                             </div>
                                             <div className="flex-grow-1">
                                                 <div className="table-responsive mb-9">
-                                                    <table className="table mb-3 table-borderless border-bottom">
-                                                        <thead>
-                                                            <tr className="text-dark-50 border-bottom">
-                                                                <th className="min-w-200px">Series</th>
-                                                                <th className="min-w-80px text-right">Qty</th>
-                                                                <th className="min-w-100px text-right">Price</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {
-                                                            invoice.series_items.map((series) => (
-                                                                <tr key={series.id} className="text-dark-75">
-                                                                    <td className="font-weight-bolder d-flex pt-6">
-                                                                        <i className="fa fa-genderless text-danger mr-2"/>
-                                                                        <Link href={route('series.show', series.slug)}
-                                                                              className="text-dark-75 text-hover-primary">
-                                                                            {series.title}
-                                                                        </Link>
-                                                                    </td>
-                                                                    <td className="pt-6 text-right">
-                                                                        1
-                                                                    </td>
-                                                                    <td className="pt-6 text-right">
-                                                                        {
-                                                                            series.is_discount
-                                                                                ? <span>Rp. {series.discount.discount_formatted},-</span>
-                                                                                : <span>Rp. {series.price.price_formatted},-</span>
-
-                                                                        }
-                                                                    </td>
-                                                                </tr>
-                                                            ))
-                                                        }
-                                                        </tbody>
-                                                    </table>
+                                                    <InvoiceSeriesItems invoice={invoice} />
                                                 </div>
                                                 <div className="d-flex justify-content-end">
                                                     <div className="d-flex justify-content-between">
@@ -124,25 +92,25 @@ export default function Invoice() {
                                             INVOICE TO
                                         </h6>
                                         <div className="mb-6">
-                                            <div className="text-dark-50">Name</div>
-                                            <div className="font-weight-bolder font-size-h5 text-dark">
-                                                {invoice.invoice_to.name_user_order}
-                                            </div>
+                                            <InvoiceDetailLineItem
+                                                label={'Name'}
+                                                text={invoice.invoice_to.name_user_order}
+                                            />
                                         </div>
                                         <div className="mb-15">
-                                            <div className="text-dark-50">Email</div>
-                                            <div className="font-weight-bolder font-size-h5 text-dark">
-                                                {invoice.invoice_to.email_user_order}
-                                            </div>
+                                            <InvoiceDetailLineItem
+                                                label={'Email'}
+                                                text={invoice.invoice_to.email_user_order}
+                                            />
                                         </div>
                                         <h6 className="mb-8 font-weight-boldest text-dark-50 text-hover-dark">
                                             PAYMENT DETAILS
                                         </h6>
                                         <div className="mb-6">
-                                            <div className="text-dark-50">Payment Method</div>
-                                            <div className="font-weight-bolder font-size-h5 text-dark">
-                                                {invoice.payment_channel}
-                                            </div>
+                                            <InvoiceDetailLineItem
+                                                label={'Payment Method'}
+                                                text={invoice.payment_channel}
+                                            />
                                         </div>
                                         {
                                             invoice.virtual_number !== null && (
@@ -180,10 +148,10 @@ export default function Invoice() {
                                             )
                                         }
                                         <div className="mb-6">
-                                            <div className="text-dark-50">Nominal Order</div>
-                                            <div className="font-weight-bolder font-size-h5 text-dark">
-                                                {invoice.total.total_formatted}
-                                            </div>
+                                            <InvoiceDetailLineItem
+                                                label={'Nominal Order'}
+                                                text={invoice.total.total_formatted}
+                                            />
                                         </div>
                                         {
                                             status && (

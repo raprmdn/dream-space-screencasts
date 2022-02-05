@@ -81,7 +81,7 @@ class OrderService
                     $seriesItemsDetailsTransform, $this->_request_Alfamart_Indomaret($channel)
                 );
             } else {
-                dd('stop');
+                dd('manual payment not available.');
             }
 
             try {

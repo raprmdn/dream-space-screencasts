@@ -5,15 +5,17 @@ namespace App\Http\Controllers\Topic;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
 use App\Models\Topic;
+use App\Services\SeriesService;
 use App\Services\TopicService;
 
 class TopicController extends Controller
 {
-    protected $topicService;
+    protected $topicService, $seriesService;
 
-    public function __construct(TopicService $topicService)
+    public function __construct(TopicService $topicService, SeriesService $seriesService)
     {
         $this->topicService = $topicService;
+        $this->seriesService = $seriesService;
     }
 
     public function index()
@@ -51,5 +53,20 @@ class TopicController extends Controller
             return back()->with(['type' => 'error', 'message' => 'Something went wrong. ' . $e]);
         }
         return back()->with(['type' => 'success', 'message' => 'Topic has been moved to trash.']);
+    }
+
+    public function topics()
+    {
+        return inertia('Topics/Index', [
+            'topics' => $this->topicService->findAllWithSeries()
+        ]);
+    }
+
+    public function show(Topic $topic)
+    {
+        return inertia('Topics/List', [
+            'topic' => $this->topicService->findBySlug($topic->slug),
+            'series' => $this->seriesService->findByTopic($topic)
+        ]);
     }
 }

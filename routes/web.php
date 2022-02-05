@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\{CartController,
-    CourseController,
     Courses\SeriesController,
     Courses\VideoController,
     IndexController,
@@ -11,7 +10,6 @@ use App\Http\Controllers\{CartController,
     PaymentConfiguration\PaymentConfigurationController,
     PaymentConfiguration\PaymentTypeController,
     Topic\TopicController,
-    TopicsController,
     TrashController,
     UserManagement\PermissionController,
     UserManagement\RoleController,
@@ -20,10 +18,10 @@ use App\Http\Controllers\{CartController,
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('home');
-Route::get('topics', [TopicsController::class, 'topics'])->name('topics');
-Route::get('topics/{topic:slug}', [TopicsController::class, 'show'])->name('topics.show');
-Route::get('series', [CourseController::class, 'index'])->name('series');
-Route::get('series/{series:slug}', [CourseController::class, 'show'])->name('series.show');
+Route::get('topics', [TopicController::class, 'topics'])->name('topics');
+Route::get('topics/{topic:slug}', [TopicController::class, 'show'])->name('topics.show');
+Route::get('series', [SeriesController::class, 'findAllSeries'])->name('series');
+Route::get('series/{series:slug}', [SeriesController::class, 'showDetailSeries'])->name('series.show');
 
 
 Route::middleware('auth')->group(function () {
