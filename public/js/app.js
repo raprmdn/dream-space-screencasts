@@ -4985,11 +4985,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function CardVideoLink(_ref) {
-  var video = _ref.video,
+  var seriesSlug = _ref.seriesSlug,
+      video = _ref.video,
       buyable = _ref.buyable,
       auth = _ref.auth;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
-    href: "#",
+    href: route('watch.video', [seriesSlug, video.episode]),
     className: "d-flex align-items-center bg-hover-light-light border border-1 rounded p-5 mb-4",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "symbol symbol-circle mr-5",
@@ -7094,9 +7095,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Jumbotron(_ref) {
-  var children = _ref.children;
+  var children = _ref.children,
+      _ref$sizeClass = _ref.sizeClass,
+      sizeClass = _ref$sizeClass === void 0 ? 'min-h-350px min-h-lg-500px' : _ref$sizeClass;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-    className: "d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px",
+    className: "d-flex flex-column flex-center w-100 ".concat(sizeClass),
     style: {
       backgroundColor: '#13263c'
     },
@@ -14439,7 +14442,7 @@ function Home() {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "text-center mb-5 mb-lg-10 py-10 py-lg-20",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("h1", {
-          className: "text-white lh-base font-weight-bolder fs-2x fs-lg-3x mb-15",
+          className: "text-white lh-base font-weight-bolder mb-15",
           children: ["Build An Outstanding Move", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("br", {}), "with", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("span", {
             style: {
               background: 'linear-gradient(to right, #12CE5D 0%, #FFD80C 100%)',
@@ -15105,7 +15108,7 @@ function Show() {
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
               className: "d-flex mt-6",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
-                href: "#",
+                href: route('watch.video', [series.slug, 1]),
                 className: "btn btn-success font-weight-bold mr-5",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("i", {
                   className: "fas fa-play-circle mr-1"
@@ -15209,6 +15212,7 @@ function Show() {
                   children: series.videos.map(function (video) {
                     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("span", {
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_CardVideoLink__WEBPACK_IMPORTED_MODULE_6__["default"], {
+                        seriesSlug: series.slug,
                         video: video,
                         buyable: series.viewing_status.is_buyable,
                         auth: auth.user !== null
@@ -15219,6 +15223,7 @@ function Show() {
                   children: series.videos.map(function (video) {
                     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("span", {
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Components_CardVideoLink__WEBPACK_IMPORTED_MODULE_6__["default"], {
+                        seriesSlug: series.slug,
                         video: video,
                         buyable: series.viewing_status.is_buyable,
                         auth: auth.user !== null
@@ -15569,6 +15574,177 @@ function List(_ref) {
 
 List.layout = function (page) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Layouts_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    children: page
+  });
+};
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Videos/Index.jsx":
+/*!*********************************************!*\
+  !*** ./resources/js/Pages/Videos/Index.jsx ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Index)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Layouts_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Layouts/App */ "./resources/js/Layouts/App.jsx");
+/* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
+/* harmony import */ var _Components_Jumbotron__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Components/Jumbotron */ "./resources/js/Components/Jumbotron.jsx");
+/* harmony import */ var react_youtube__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-youtube */ "./node_modules/react-youtube/dist/index.esm.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+function Index() {
+  var _usePage$props = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props,
+      video = _usePage$props.video,
+      series = _usePage$props.series;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+      _useState2 = _slicedToArray(_useState, 2),
+      loadingVideo = _useState2[0],
+      setLoadingVideo = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(!!video.current_video.source),
+      _useState4 = _slicedToArray(_useState3, 1),
+      watchable = _useState4[0];
+
+  var _onReady = function _onReady() {
+    console.log('Video ready to watch.');
+    setLoadingVideo(false);
+  };
+
+  var opts = {
+    playerVars: {
+      autoplay: 1
+    }
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
+      title: "".concat(video.current_video.episode, ". ").concat(video.current_video.title, " - ").concat(series.title)
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_Jumbotron__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      sizeClass: "min-h-350px min-h-lg-".concat(watchable ? '750' : '500', "px"),
+      children: watchable ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+        children: [loadingVideo && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "text-center",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "spinner spinner-white spinner-lg"
+            })
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "".concat(loadingVideo && 'd-none', " container"),
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "embed-responsive embed-responsive-16by9",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_youtube__WEBPACK_IMPORTED_MODULE_4__["default"], {
+              videoId: video.current_video.source,
+              className: "embed-responsive-item rounded",
+              loading: "lazy",
+              opts: opts,
+              onReady: _onReady
+            })
+          })
+        })]
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "text-center mb-5 mb-lg-10 py-10 py-lg-20",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("h4", {
+            className: "text-white lh-base font-weight-bolder mb-15",
+            children: ["Anda harus membeli Series ini sebelum menonton-nya ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+              className: "la la-hand-peace icon-2x text-white"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+            href: route('series.show', series.slug),
+            className: "btn font-size-h6 text-hover-white font-weight-bold py-3 px-6 text-white",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+              className: "flaticon2-left-arrow-1 text-white mr-1 icon-1x"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("u", {
+              children: "Kembali"
+            })]
+          })]
+        })
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "d-flex flex-column-fluid mt-10",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "container",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "card card-custom gutter-b mt-n8",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "card-body d-flex align-items-center justify-content-between flex-wrap py-3",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "symbol-group symbol-hover py-2",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                as: "button",
+                className: "btn btn-link",
+                href: video.has_prev && route('watch.video', [series.slug, video.prev_to]),
+                disabled: !video.has_prev,
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "flaticon2-back ".concat(video.has_prev ? 'text-dark' : 'text-muted')
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "d-flex align-items-center mr-2 py-2",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
+                className: "font-weight-bolder mb-0",
+                children: video.has_next ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+                  children: ["Next eps ", video.next_video_is.episode, ". ", video.next_video_is.title]
+                }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+                  children: ["Terima kasih, Anda telah menyelesaikan Series \"", series.title, "\". "]
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "symbol-group symbol-hover py-2",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                as: "button",
+                className: "btn btn-link",
+                href: video.has_next && route('watch.video', [series.slug, video.next_video_is.episode]),
+                disabled: !video.has_next,
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "flaticon2-next ".concat(video.has_next ? 'text-dark' : 'text-muted')
+                })
+              })
+            })]
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "col-xl-7",
+            children: "Description & Comment"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "col-xl-5",
+            children: "List Video"
+          })]
+        })]
+      })
+    })]
+  });
+}
+
+Index.layout = function (page) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Layouts_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
     children: page
   });
 };
@@ -84895,6 +85071,8 @@ var map = {
 	"./Topics/Index.jsx": "./resources/js/Pages/Topics/Index.jsx",
 	"./Topics/List": "./resources/js/Pages/Topics/List.jsx",
 	"./Topics/List.jsx": "./resources/js/Pages/Topics/List.jsx",
+	"./Videos/Index": "./resources/js/Pages/Videos/Index.jsx",
+	"./Videos/Index.jsx": "./resources/js/Pages/Videos/Index.jsx",
 	"./Watchlist/Index": "./resources/js/Pages/Watchlist/Index.jsx",
 	"./Watchlist/Index.jsx": "./resources/js/Pages/Watchlist/Index.jsx"
 };

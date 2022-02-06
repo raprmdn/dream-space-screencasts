@@ -22,6 +22,7 @@ Route::get('topics', [TopicController::class, 'topics'])->name('topics');
 Route::get('topics/{topic:slug}', [TopicController::class, 'show'])->name('topics.show');
 Route::get('series', [SeriesController::class, 'findAllSeries'])->name('series');
 Route::get('series/{series:slug}', [SeriesController::class, 'showDetailSeries'])->name('series.show');
+Route::get('series/{series:slug}/eps/{video:episode}', [VideoController::class, 'watchVideo'])->name('watch.video');
 
 
 Route::middleware('auth')->group(function () {

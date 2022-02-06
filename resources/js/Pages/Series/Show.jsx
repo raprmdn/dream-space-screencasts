@@ -142,7 +142,7 @@ export default function Show() {
                                     ? 'far fa-check-circle pr-3' : 'fas fa-code pr-3'} label={series.status} />
                             </div>
                             <div className="d-flex mt-6">
-                                <Link href={"#"} className="btn btn-success font-weight-bold mr-5">
+                                <Link href={route('watch.video', [series.slug, 1])} className="btn btn-success font-weight-bold mr-5">
                                     <i className="fas fa-play-circle mr-1"/>
                                     Start
                                 </Link>
@@ -241,7 +241,8 @@ export default function Show() {
                                                         {
                                                             series.videos.map((video) => (
                                                                 <span key={video.id}>
-                                                                    <CardVideoLink video={video}
+                                                                    <CardVideoLink seriesSlug={series.slug}
+                                                                                   video={video}
                                                                                    buyable={series.viewing_status.is_buyable}
                                                                                    auth={auth.user !== null}/>
                                                                 </span>
@@ -253,7 +254,8 @@ export default function Show() {
                                                         {
                                                             series.videos.map((video) => (
                                                                 <span key={video.id}>
-                                                                    <CardVideoLink video={video}
+                                                                    <CardVideoLink seriesSlug={series.slug}
+                                                                                   video={video}
                                                                                    buyable={series.viewing_status.is_buyable}
                                                                                    auth={auth.user !== null}/>
                                                                 </span>

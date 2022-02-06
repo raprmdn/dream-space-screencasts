@@ -14,11 +14,11 @@ export default function Home() {
             </Head>
             <Jumbotron>
                 <div className="text-center mb-5 mb-lg-10 py-10 py-lg-20">
-                    <h1 className="text-white lh-base font-weight-bolder fs-2x fs-lg-3x mb-15">Build An Outstanding Move
+                    <h1 className="text-white lh-base font-weight-bolder mb-15">Build An Outstanding Move
                         <br />with
                         <span style={{background: 'linear-gradient(to right, #12CE5D 0%, #FFD80C 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
-                    <span> A Robust Platform for Developer!</span>
-                </span>
+                            <span> A Robust Platform for Developer!</span>
+                        </span>
                     </h1>
                     <Link href={route('series')} className="btn font-size-h6 text-hover-white font-weight-bold py-3 px-6 text-white" style={{background: 'linear-gradient(to right top, #a855f7 0%, #6366f1 100%)'}}>Browse Series</Link>
                 </div>

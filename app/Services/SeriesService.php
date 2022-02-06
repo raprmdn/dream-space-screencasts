@@ -93,6 +93,11 @@ class SeriesService
         return Series::latest()->notArchived()->take(1)->first(['id', 'title', 'slug', 'thumbnail']);
     }
 
+    public function getCurrentSeries($series): SeriesSingleResource
+    {
+        return new SeriesSingleResource($series);
+    }
+
     public function save($attributes): array
     {
         $picture = $attributes['thumbnail'];

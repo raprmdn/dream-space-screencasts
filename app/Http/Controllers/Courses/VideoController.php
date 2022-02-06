@@ -56,4 +56,13 @@ class VideoController extends Controller
         }
         return back()->with(['type' => 'success', 'message' => 'Video has been deleted.']);
     }
+
+    public function watchVideo(Series $series, Video $video)
+    {
+        return inertia('Videos/Index', [
+            'series' => $this->seriesService->getCurrentSeries($series),
+            'video' =>  $this->videoService->getCurrentVideo($series->id, $video),
+            'videos' => $this->videoService->findVideosBySeries($series)
+        ]);
+    }
 }

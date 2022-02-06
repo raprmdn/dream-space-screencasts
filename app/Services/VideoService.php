@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\VideoCollection;
+use App\Http\Resources\VideoSingleResource;
 use App\Models\Series;
 use App\Models\Video;
 
@@ -21,6 +22,36 @@ class VideoService
     public function findBySeries($series): VideoCollection
     {
         return new VideoCollection(Video::where('series_id', $series->id)->orderBy('episode')->get());
+    }
+
+    public function findVideosBySeries($series)
+    {
+        VideoSingleResource::withoutWrapping();
+        $videos = Video::where('series_id', $series->id)->orderBy('episode')->notArchived()->get();
+
+        return VideoSingleResource::collection($videos);
+    }
+
+    public function getCurrentVideo($seriesID, $video): array
+    {
+        $nextTo = $video->episode + 1;
+        $prevTo = $video->episode - 1;
+        $hasNext = Video::where('series_id', $seriesID)->where('episode', $nextTo)
+                    ->notArchived()->exists();
+        $hasPrev = Video::where('series_id', $seriesID)->where('episode', $prevTo)
+                    ->notArchived()->exists();
+        $nextVideo = Video::where('series_id', $seriesID)
+                    ->where('episode', $nextTo)->notArchived()->first(['id', 'title', 'episode']);
+        VideoSingleResource::withoutWrapping();
+
+        return [
+            'has_next' => $hasNext,
+            'has_prev' => $hasPrev,
+            'next_to' => $hasNext ? $nextTo : null,
+            'prev_to' => $hasPrev ? $prevTo : null,
+            'next_video_is' => $hasNext ? $nextVideo : null,
+            'current_video' => new VideoSingleResource($video)
+        ];
     }
 
     public function save(array $attributes)

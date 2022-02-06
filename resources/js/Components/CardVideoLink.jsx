@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from "@inertiajs/inertia-react";
 
-export default function CardVideoLink({video, buyable, auth}) {
+export default function CardVideoLink({seriesSlug, video, buyable, auth}) {
     return (
-        <Link href={"#"} className="d-flex align-items-center bg-hover-light-light border border-1 rounded p-5 mb-4">
+        <Link href={route('watch.video', [seriesSlug, video.episode])} className="d-flex align-items-center bg-hover-light-light border border-1 rounded p-5 mb-4">
             <div className="symbol symbol-circle mr-5">
                 <span className="symbol-label font-size-h5">{video.episode}</span>
             </div>
