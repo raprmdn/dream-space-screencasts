@@ -3,11 +3,15 @@ import App from "../../Layouts/App";
 import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
 import YouTube from "react-youtube";
+import CardVideoLink from "../../Components/CardVideoLink";
 
 export default function Index() {
-    const { video, series } = usePage().props
+    const { video, series, videos, auth } = usePage().props
     const [ loadingVideo, setLoadingVideo ] = useState(true)
     const [ watchable ] = useState(!!video.current_video.source)
+    const [ currentEpisode ] = useState(video.current_video.episode)
+
+    console.log(videos.length > 10)
 
     const _onReady = () => {
         console.log('Video ready to watch.');
@@ -16,14 +20,14 @@ export default function Index() {
 
     const opts = {
         playerVars: {
-            autoplay: 1,
+            autoplay: 0,
         },
     };
 
     return (
         <>
             <Head title={`${video.current_video.episode}. ${video.current_video.title} - ${series.title}`}/>
-            <Jumbotron sizeClass={`min-h-350px min-h-lg-${watchable ? '750' : '500'}px`}>
+            <Jumbotron sizeClass="min-h-350px min-h-lg-750px">
                 {
                     watchable
                     ?
@@ -36,7 +40,7 @@ export default function Index() {
                                     </div>
                                 </>
                             }
-                            <div className={`${loadingVideo && 'd-none'} container`}>
+                            <div className={`${loadingVideo && 'd-none'} container mt-n7`}>
                                 <div className="embed-responsive embed-responsive-16by9">
                                     <YouTube
                                         videoId={video.current_video.source}
@@ -64,7 +68,7 @@ export default function Index() {
             </Jumbotron>
             <div className="d-flex flex-column-fluid mt-10">
                 <div className="container">
-                    <div className="card card-custom gutter-b mt-n8">
+                    <div className="card card-custom gutter-b mt-n17 shadow-sm">
                         <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                             <div className="symbol-group symbol-hover py-2">
                                 <Link as={"button"} className="btn btn-link"
@@ -95,10 +99,59 @@ export default function Index() {
                     </div>
                     <div className="row">
                         <div className="col-xl-7">
-                            Description & Comment
+                            <div className="card card-custom gutter-b shadow-sm">
+                                <div className="card-body d-flex align-items-center flex-wrap py-3">
+                                    <div className="mr-2 py-2">
+                                        <h5 className="font-weight-bolder text-dark">
+                                            {video.current_video.title}
+                                        </h5>
+                                        <div className="d-flex flex-wrap align-items-center mt-3 text-dark-50">
+                                            <span>Episode {video.current_video.episode}</span>
+                                            <span className="label label-dot bg-dark opacity-50 mx-3"/>
+                                            <span>{video.current_video.runtime.runtime_formatted}</span>
+                                            <span className="label label-dot bg-dark opacity-50 mx-3"/>
+                                            <span>{video.current_video.created_at}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className="col-xl-5">
-                            List Video
+                            <div className="card card-custom gutter-b shadow-sm">
+                                <div className="card-body">
+                                    {
+                                        videos.length > 10
+                                        ?
+                                            <div className="scrollable">
+                                            {
+                                                videos.map((video) => (
+                                                    <span key={video.id}>
+                                                        <CardVideoLink seriesSlug={series.slug}
+                                                                       video={video}
+                                                                       buyable={series.viewing_status.is_buyable}
+                                                                       auth={auth.user !== null}
+                                                                       current={currentEpisode === video.episode}/>
+                                                    </span>
+                                                ))
+                                            }
+                                            </div>
+                                        :
+                                            <div>
+                                            {
+                                                videos.map((video) => (
+                                                    <span key={video.id}>
+                                                        <CardVideoLink seriesSlug={series.slug}
+                                                                       video={video}
+                                                                       buyable={series.viewing_status.is_buyable}
+                                                                       auth={auth.user !== null}
+                                                                       current={currentEpisode === video.episode}/>
+                                                    </span>
+                                                ))
+                                            }
+                                            </div>
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

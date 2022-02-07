@@ -92,9 +92,7 @@ export default function Show() {
 
     return (
         <>
-            <Head title={`Dream Space - ${series.title}`}>
-                <script src="/assets/js/scripts.bundle.js"/>
-            </Head>
+            <Head title={`Dream Space - ${series.title}`}/>
             <Jumbotron>
                 <div className="container row d-flex align-items-center align-center">
                     <div className="col-lg-8 py-10">
@@ -204,7 +202,7 @@ export default function Show() {
                                                     </div>
                                                 </div>
                                                 <div className="mt-4">
-                                                    <Link href={"#"} className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
+                                                    <Link href={route('watch.video', [series.slug, latestVideo.episode])} className="btn btn-success btn-shadow-hover btn-block font-weight-bold btn-pill">
                                                         Watch
                                                     </Link>
                                                 </div>
@@ -237,7 +235,7 @@ export default function Show() {
                                             {
                                                 series.videos.length > 10
                                                     ?
-                                                    <div data-scroll="true" data-height="1000">
+                                                    <div className="scrollable">
                                                         {
                                                             series.videos.map((video) => (
                                                                 <span key={video.id}>
