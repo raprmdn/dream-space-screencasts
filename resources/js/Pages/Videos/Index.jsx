@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import App from "../../Layouts/App";
 import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
@@ -11,7 +11,12 @@ export default function Index() {
     const [ watchable ] = useState(!!video.current_video.source)
     const [ currentEpisode ] = useState(video.current_video.episode)
 
-    console.log(videos.length > 10)
+    useEffect(() => {
+        if (videos.length > 10) {
+            const curr2 = document.getElementById(`${currentEpisode}`);
+            document.getElementById('scrollable').scrollTo({top: curr2.offsetTop - 25, behavior: 'smooth'});
+        }
+    }, []);
 
     const _onReady = () => {
         console.log('Video ready to watch.');
@@ -122,10 +127,10 @@ export default function Index() {
                                     {
                                         videos.length > 10
                                         ?
-                                            <div className="scrollable">
+                                            <div className="scrollable" id="scrollable">
                                             {
                                                 videos.map((video) => (
-                                                    <span key={video.id}>
+                                                    <span key={video.id} id={video.episode}>
                                                         <CardVideoLink seriesSlug={series.slug}
                                                                        video={video}
                                                                        buyable={series.viewing_status.is_buyable}

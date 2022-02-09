@@ -15641,7 +15641,15 @@ function Index() {
       _useState6 = _slicedToArray(_useState5, 1),
       currentEpisode = _useState6[0];
 
-  console.log(videos.length > 10);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (videos.length > 10) {
+      var curr2 = document.getElementById("".concat(currentEpisode));
+      document.getElementById('scrollable').scrollTo({
+        top: curr2.offsetTop - 25,
+        behavior: 'smooth'
+      });
+    }
+  }, []);
 
   var _onReady = function _onReady() {
     console.log('Video ready to watch.');
@@ -15778,8 +15786,10 @@ function Index() {
                 className: "card-body",
                 children: videos.length > 10 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                   className: "scrollable",
+                  id: "scrollable",
                   children: videos.map(function (video) {
                     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
+                      id: video.episode,
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_CardVideoLink__WEBPACK_IMPORTED_MODULE_5__["default"], {
                         seriesSlug: series.slug,
                         video: video,
