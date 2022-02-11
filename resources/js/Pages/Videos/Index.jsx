@@ -13,8 +13,8 @@ export default function Index() {
 
     useEffect(() => {
         if (videos.length > 10) {
-            const curr2 = document.getElementById(`${currentEpisode}`);
-            document.getElementById('scrollable').scrollTo({top: curr2.offsetTop - 25, behavior: 'smooth'});
+            const cardPosition = document.getElementById(`${currentEpisode}`);
+            document.getElementById('scrollable').scrollTo({top: cardPosition.offsetTop - 25, behavior: 'smooth'});
         }
     }, []);
 
@@ -25,7 +25,7 @@ export default function Index() {
 
     const opts = {
         playerVars: {
-            autoplay: 0,
+            autoplay: 1,
         },
     };
 

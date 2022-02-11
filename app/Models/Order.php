@@ -12,6 +12,21 @@ class Order extends Model
         'transaction_time' => 'datetime'
     ];
 
+    /**
+     * Query searching order number.
+     *
+     * @param $query
+     * @param $params
+     *
+     * @return mixed
+     */
+    public function scopeSearch($query, $params)
+    {
+        return $query->where('invoice', 'ilike', '%' . $params . '%')
+            ->latest()->paginate(20)
+            ->appends(request()->only('search'));
+    }
+
     public function setStatusPending()
     {
         $this->attributes['status'] = 'pending';

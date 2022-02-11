@@ -158,6 +158,18 @@ export default function Header() {
                                                                 )
                                                             }
                                                             {
+                                                                auth.can.includes('invoice management') && (
+                                                                    <li className={`menu-item ${route().current('orders.list') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                        <Link href={route('orders.list')} className="menu-link">
+                                                                            <div className="menu-icon">
+                                                                                <i className="flaticon-price-tag text-dark-25"/>
+                                                                            </div>
+                                                                            <span className="menu-text">List Orders</span>
+                                                                        </Link>
+                                                                    </li>
+                                                                )
+                                                            }
+                                                            {
                                                                 auth.can.includes('menu management') && (
                                                                     <li className="menu-item" aria-haspopup="true">
                                                                         <Link href="/" className="menu-link">

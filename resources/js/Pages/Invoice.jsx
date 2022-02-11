@@ -5,10 +5,14 @@ import Breadcrumb from "../Components/Breadcrumb";
 import VANumberLineItem from "../Components/VANumberLineItem";
 import InvoiceDetailLineItem from "../Components/InvoiceDetailLineItem";
 import InvoiceSeriesItems from "../Components/InvoiceSeriesItems";
+import Modal from "../Components/Modal";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function Invoice() {
     const { data:invoice } = usePage().props.invoice
     const [ status ] = useState(invoice.status === 'PENDING')
+    const [ qr_code ] = useState(invoice.qr_code.url ?? null)
 
     const _copy = (number) => {
         navigator.clipboard.writeText(number)
@@ -16,9 +20,7 @@ export default function Invoice() {
 
     return (
         <>
-            <Head title={`Dream Space - Invoice #${invoice.invoice_number}`}>
-                <script src="/assets/js/scripts.bundle.js"/>
-            </Head>
+            <Head title={`Dream Space - Invoice #${invoice.invoice_number}`}/>
             <Breadcrumb
                 titleHeading={`Invoice #${invoice.invoice_number}`}
                 item1="Profile"
@@ -113,38 +115,58 @@ export default function Invoice() {
                                             />
                                         </div>
                                         {
-                                            invoice.virtual_number !== null && (
+                                            invoice.virtual_number && (
                                                 <VANumberLineItem onClick={() => _copy(invoice.virtual_number)}
                                                                   label={'Virtual Account Number'}
                                                                   number={invoice.virtual_number} />
                                             )
                                         }
                                         {
-                                            invoice.bill_key !== null && (
+                                            invoice.bill_key && (
                                                 <VANumberLineItem onClick={() => _copy(invoice.bill_key)}
                                                                   label={'Bill Key'}
                                                                   number={invoice.bill_key} />
                                             )
                                         }
                                         {
-                                            invoice.biller_code !== null && (
+                                            invoice.biller_code && (
                                                 <VANumberLineItem onClick={() => _copy(invoice.biller_code)}
                                                                   label={'Biller Code'}
                                                                   number={invoice.biller_code} />
                                             )
                                         }
                                         {
-                                            invoice.permata_va !== null && (
+                                            invoice.permata_va && (
                                                 <VANumberLineItem onClick={() => _copy(invoice.permata_va)}
                                                                   label={'Permata Virtual Account'}
                                                                   number={invoice.permata_va} />
                                             )
                                         }
                                         {
-                                            invoice.payment_code !== null && (
+                                            invoice.payment_code && (
                                                 <VANumberLineItem onClick={() => _copy(invoice.payment_code)}
                                                                   label={'Payment Code'}
                                                                   number={invoice.payment_code} />
+                                            )
+                                        }
+                                        {
+                                            qr_code && (
+                                                <>
+                                                    <div className="mb-6">
+                                                        <div className="text-dark-50">QR Code</div>
+                                                        <button className="btn btn-sm btn-primary mt-1"
+                                                                data-toggle="modal" data-target="#qrCode">
+                                                            <i className="la la-qrcode icon-lg" />
+                                                            Show QR Code
+                                                        </button>
+                                                    </div>
+                                                    <Modal trigger={"qrCode"} title={"QR Code"}>
+                                                        <LazyLoadImage
+                                                            effect="blur"
+                                                            src={qr_code}
+                                                            className="w-100" />
+                                                    </Modal>
+                                                </>
                                             )
                                         }
                                         <div className="mb-6">

@@ -15,6 +15,7 @@ class OrderResource extends JsonResource
      */
     public function toArray($request)
     {
+        $actions = json_decode($this->actions);
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
@@ -37,9 +38,10 @@ class OrderResource extends JsonResource
             'bill_key' => $this->bill_key,
             'biller_code' => $this->biller_code,
             'payment_code' => $this->payment_code,
+            'qr_code' => $actions[0] ?? null,
             'status' => strtoupper($this->status),
             'status_code' => $this->status_code,
-            'order_date' => $this->transaction_time->format('d F Y'),
+            'order_date' => $this->transaction_time->format('d F Y H:i'),
             'instruction' => $this->channel->instruction,
         ];
     }

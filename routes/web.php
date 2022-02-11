@@ -24,7 +24,6 @@ Route::get('series', [SeriesController::class, 'findAllSeries'])->name('series')
 Route::get('series/{series:slug}', [SeriesController::class, 'showDetailSeries'])->name('series.show');
 Route::get('series/{series:slug}/eps/{video:episode}', [VideoController::class, 'watchVideo'])->name('watch.video');
 
-
 Route::middleware('auth')->group(function () {
     Route::post('add-to-carts', [CartController::class, 'create'])->name('add.carts');
     Route::get('watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');
@@ -78,6 +77,9 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
             Route::put('{permission}', [PermissionController::class, 'update'])->name('permissions.update');
             Route::delete('{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
         });
+    });
+    Route::prefix('invoice-management')->group(function () {
+        Route::get('orders', [InvoiceController::class, 'index'])->name('orders.list');
     });
     Route::prefix('payment')->middleware(['can:payment configuration'])->group(function () {
         Route::prefix('configuration')->group(function () {

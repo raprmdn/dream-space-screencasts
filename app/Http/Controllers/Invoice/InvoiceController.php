@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Invoice;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
 use App\Services\InvoiceService;
 
 class InvoiceController extends Controller
@@ -17,13 +16,18 @@ class InvoiceController extends Controller
 
     public function index()
     {
-        //
+        return inertia('Dashboard/Invoice/Index', [
+            'orders' => $this->invoiceService->findAllWithParams(request()->search),
+        ]);
     }
 
     public function show($identifier)
     {
+        $invoice = $this->invoiceService->getDetailInvoice($identifier);
+        $this->authorize('viewInvoice', $invoice);
+
         return inertia('Invoice', [
-            'invoice' => $this->invoiceService->getDetailInvoice($identifier)
+            'invoice' => $invoice
         ]);
     }
 }
