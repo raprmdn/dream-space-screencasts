@@ -14767,15 +14767,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function Invoice() {
-  var _invoice$qr_code$url;
-
   var invoice = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props.invoice.data;
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(invoice.status === 'PENDING'),
       _useState2 = _slicedToArray(_useState, 1),
       status = _useState2[0];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((_invoice$qr_code$url = invoice.qr_code.url) !== null && _invoice$qr_code$url !== void 0 ? _invoice$qr_code$url : null),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(invoice.qr_code),
       _useState4 = _slicedToArray(_useState3, 1),
       qr_code = _useState4[0];
 

@@ -159,7 +159,7 @@ class User extends Authenticatable
      */
     public function purchasing($series): void
     {
-        $this->purchases()->attach($series);
+        $this->purchases()->syncWithoutDetaching($series);
     }
 
     /**

@@ -12,7 +12,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 export default function Invoice() {
     const { data:invoice } = usePage().props.invoice
     const [ status ] = useState(invoice.status === 'PENDING')
-    const [ qr_code ] = useState(invoice.qr_code.url ?? null)
+    const [ qr_code ] = useState(invoice.qr_code)
 
     const _copy = (number) => {
         navigator.clipboard.writeText(number)

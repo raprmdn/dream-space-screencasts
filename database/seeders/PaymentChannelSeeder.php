@@ -61,7 +61,7 @@ class PaymentChannelSeeder extends Seeder
                     - Masukkan kode akses m-BCA
                     - Pilih m-Transfer
                     - Pilih BCA Virtual Account
-                    - Masukkan nomor Virtual Account sesuai yang ada di atas
+                    - Masukkan nomor Virtual Account
                     - Masukkan PIN m-BCA
                     - Pembayaran selesai.
                 ',
@@ -78,7 +78,7 @@ class PaymentChannelSeeder extends Seeder
                     - Pilih menu "Transfer"
                     - Pilih menu Virtual Account Billing
                     - Masukkan nomor Virtual Account
-                    - Konfirmasi transaksi dan masukkan password transaksi
+                    - Konfirmasi transaksi dan masukkan password
                     - Pembayaran selesai.
                 ',
                 'status' => 'Inactive',
@@ -95,7 +95,7 @@ class PaymentChannelSeeder extends Seeder
                     - Pilih menu Multipayment
                     - Pilih pada "Penyedia Jasa" Midtrans
                     - Masukkan Payment Code
-                    - Konfirmasi pembayaran menggunakan Mandiri Token
+                    - Konfirmasi menggunakan Mandiri Token
                     - Pembayaran selesai.
                 ',
                 'status' => 'Inactive',
@@ -111,7 +111,8 @@ class PaymentChannelSeeder extends Seeder
                     - Pilih pembayaran tagihan
                     - Pilih Virtual Account
                     - Masukkan nomor Virtual Account
-                    - Masukkan nominal tagihan pada total pembayaran
+                    - Masukkan nominal tagihan pada
+                      total pembayaran
                     - Konfirmasi pembayaran
                     - Pembayaran selesai.
                 ',
