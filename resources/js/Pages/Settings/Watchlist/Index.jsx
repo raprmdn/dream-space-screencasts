@@ -1,7 +1,7 @@
 import React from 'react';
-import App from "../../Layouts/App";
+import App from "../../../Layouts/App";
 import {Head, Link, usePage} from "@inertiajs/inertia-react";
-import Breadcrumb from "../../Components/Breadcrumb";
+import Breadcrumb from "../../../Components/Breadcrumb";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import {Inertia} from "@inertiajs/inertia";
 

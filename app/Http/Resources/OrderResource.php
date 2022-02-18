@@ -42,6 +42,7 @@ class OrderResource extends JsonResource
             'status' => strtoupper($this->status),
             'status_code' => $this->status_code,
             'order_date' => $this->transaction_time->format('d F Y H:i'),
+            'paid_at' =>  isset($this->paid_at) ? $this->paid_at->format('d F Y H:i') : null,
             'instruction' => $this->channel->instruction,
         ];
     }

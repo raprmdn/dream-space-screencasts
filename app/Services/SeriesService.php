@@ -95,7 +95,7 @@ class SeriesService
 
     public function getCurrentSeries($series): SeriesSingleResource
     {
-        return new SeriesSingleResource($series);
+        return new SeriesSingleResource($series->load('topics:id,name,slug'));
     }
 
     public function save($attributes): array

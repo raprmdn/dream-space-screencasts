@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Invoice;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
 use App\Services\InvoiceService;
 
 class InvoiceController extends Controller
@@ -21,13 +22,20 @@ class InvoiceController extends Controller
         ]);
     }
 
+    public function invoiceMine()
+    {
+        return inertia('Settings/Invoice/Index', [
+            'invoices' => $this->invoiceService->getAuthUserInvoice()
+        ]);
+    }
+
     public function show($identifier)
     {
         $invoice = $this->invoiceService->getDetailInvoice($identifier);
         $this->authorize('viewInvoice', $invoice);
 
         return inertia('Invoice', [
-            'invoice' => $invoice
+            'invoice' => new OrderResource($invoice)
         ]);
     }
 }

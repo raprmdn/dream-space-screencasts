@@ -59,7 +59,7 @@ class VideoController extends Controller
 
     public function watchVideo(Series $series, Video $video)
     {
-        return inertia('Videos/Index', [
+        return inertia('Videos/Show', [
             'series' => $this->seriesService->getCurrentSeries($series),
             'video' =>  $this->videoService->getCurrentVideo($series->id, $video),
             'videos' => $this->videoService->findVideosBySeries($series)

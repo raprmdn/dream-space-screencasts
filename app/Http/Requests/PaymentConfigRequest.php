@@ -24,7 +24,7 @@ class PaymentConfigRequest extends FormRequest
     public function rules()
     {
         return [
-            'environment' => ['in:true,false'],
+//            'environment' => ['in:true,false'],
             'sanitized' => ['boolean'],
             'enable_3d_secure' => ['boolean']
         ];

@@ -25,8 +25,11 @@ Route::get('series/{series:slug}', [SeriesController::class, 'showDetailSeries']
 Route::get('series/{series:slug}/eps/{video:episode}', [VideoController::class, 'watchVideo'])->name('watch.video');
 
 Route::middleware('auth')->group(function () {
+    Route::prefix('settings')->group(function () {
+        Route::get('watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');
+        Route::get('invoices', [InvoiceController::class, 'invoiceMine'])->name('invoice.mine');
+    });
     Route::post('add-to-carts', [CartController::class, 'create'])->name('add.carts');
-    Route::get('watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');
     Route::post('saves', [WatchlistController::class, 'save'])->name('saves');
     Route::get('carts', [CartController::class, 'index'])->name('carts');
     Route::post('remove', [CartController::class, 'remove'])->name('remove.carts');

@@ -64,6 +64,18 @@ export default function Invoice() {
                                                             <div className="font-weight-bolder text-dark-75 font-size-h6">
                                                                 {invoice.order_date}
                                                             </div>
+                                                            {
+                                                                invoice.paid_at && (
+                                                                    <>
+                                                                        <div className="font-weight-bold text-dark-50 mt-6">
+                                                                            Paid at:
+                                                                        </div>
+                                                                        <div className="font-weight-bolder text-dark-75 font-size-h6">
+                                                                            {invoice.paid_at}
+                                                                        </div>
+                                                                    </>
+                                                                )
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
@@ -79,6 +91,16 @@ export default function Invoice() {
                                                     </div>
                                                 </div>
                                             </div>
+                                            {
+                                                status && (
+                                                    <div className="mb-6">
+                                                        <div className="text-dark-50">Payment Instruction</div>
+                                                        <p className="font-weight-bold mt-2 text-dark" align="justify" style={{whiteSpace: 'pre-line'}}>
+                                                            {invoice.instruction}
+                                                        </p>
+                                                    </div>
+                                                )
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -175,16 +197,6 @@ export default function Invoice() {
                                                 text={invoice.total.total_formatted}
                                             />
                                         </div>
-                                        {
-                                            status && (
-                                                <div className="mb-6">
-                                                    <div className="text-dark-50">Payment Instruction</div>
-                                                    <p className="font-weight-bold mt-2 text-dark" align="justify" style={{whiteSpace: 'pre-line'}}>
-                                                        {invoice.instruction}
-                                                    </p>
-                                                </div>
-                                            )
-                                        }
                                     </div>
                                 </div>
                             </div>

@@ -5,7 +5,7 @@ import Jumbotron from "../../Components/Jumbotron";
 import YouTube from "react-youtube";
 import CardVideoLink from "../../Components/CardVideoLink";
 
-export default function Index() {
+export default function Show() {
     const { video, series, videos, auth } = usePage().props
     const [ loadingVideo, setLoadingVideo ] = useState(true)
     const [ watchable ] = useState(!!video.current_video.source)
@@ -123,6 +123,30 @@ export default function Index() {
                         </div>
                         <div className="col-xl-5">
                             <div className="card card-custom gutter-b shadow-sm">
+                                <div className="card-body d-flex align-items-center flex-wrap py-3">
+                                    <div className="mr-2 py-2">
+                                        <Link href={route('series.show', series.slug)}
+                                              className="text-hover-primary text-dark font-size-h5 font-weight-bolder">
+                                            {series.title}
+                                        </Link>
+                                        <div className="d-flex flex-wrap align-items-center mt-3 text-dark-50">
+                                            <span>{series.episodes} episodes</span>
+                                            <span className="label label-dot bg-dark opacity-50 mx-3"/>
+                                            {
+                                                series.topics.map((topic) => (
+                                                    <div key={topic.id}>
+                                                        <Link href={route('topics.show', topic.slug)}
+                                                              className="text-primary">
+                                                            <u>{topic.name}</u> &nbsp;
+                                                        </Link>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card card-custom gutter-b shadow-sm">
                                 <div className="card-body">
                                     {
                                         videos.length > 10
@@ -165,4 +189,4 @@ export default function Index() {
     )
 }
 
-Index.layout = (page) => <App children={page}/>
+Show.layout = (page) => <App children={page}/>

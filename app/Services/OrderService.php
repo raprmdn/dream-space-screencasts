@@ -2,21 +2,12 @@
 
 namespace App\Services;
 
-use App\Http\Resources\ItemDetailsResource;
-use App\Http\Resources\SeriesResource;
-use App\Models\MidtransConfig;
-use App\Models\Order;
-use App\Models\PaymentChannel;
-use App\Models\PaymentMidtransResponse;
-use App\Models\Series;
-use App\Models\User;
+use App\Http\Resources\{ItemDetailsResource, SeriesResource};
+use App\Models\{MidtransConfig, Order, PaymentChannel, PaymentMidtransResponse, Series, User};
 use Auth;
 use Exception;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Midtrans\Config;
-use Midtrans\CoreApi;
-use Midtrans\Notification;
+use Illuminate\Support\{Facades\DB, Str};
+use Midtrans\{Config, CoreApi, Notification};
 
 class OrderService
 {
@@ -55,34 +46,16 @@ class OrderService
                 'gross_amount' => $grossAmount,
             ]);
 
-            if (in_array($channel->identifier_channel, ['bri', 'bca', 'bni'])) {
-                $payloads = $this->_payloads(
-                    $channel, $invoice, $grossAmount,
-                    $seriesItemsDetailsTransform, $this->_request_BRI_BCA_BNI($channel)
-                );
-            } else if ($channel->identifier_channel === 'mandiri') {
-                $payloads = $this->_payloads(
-                    $channel, $invoice, $grossAmount,
-                    $seriesItemsDetailsTransform, $this->_request_Mandiri($channel, $invoice)
-                );
-            } else if ($channel->identifier_channel === 'permata') {
-                $payloads = $this->_payloads(
-                    $channel, $invoice, $grossAmount,
-                    $seriesItemsDetailsTransform, $this->_request_Permata($channel)
-                );
-            } else if ($channel->identifier_channel === 'gopay') {
-                $payloads = $this->_payloads(
-                    $channel, $invoice, $grossAmount,
-                    $seriesItemsDetailsTransform, $this->_request_Gopay($channel)
-                );
-            } else if ($channel->identifier_channel === 'alfamart' || $channel->identifier_channel === 'indomaret') {
-                $payloads = $this->_payloads(
-                    $channel, $invoice, $grossAmount,
-                    $seriesItemsDetailsTransform, $this->_request_Alfamart_Indomaret($channel)
-                );
+            /*
+             *  ~ !! Important !! ~
+             *  Before made payment with Midtrans, first make sure u have to put client and server key in Midtrans Config.
+             */
+            if ($channel->identifier_channel !== null) {
+                $payloads = $this->_instantPaymentRequest($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform);
             } else {
-                dd('manual payment not available.');
+                $payloads = null;
             }
+
 
             try {
                 $midtransResponse = CoreApi::charge($payloads);
@@ -100,6 +73,38 @@ class OrderService
         return $this->response;
     }
 
+    public function _instantPaymentRequest($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform)
+    {
+        if (in_array($channel->identifier_channel, ['bri', 'bca', 'bni'])) {
+            return $this->_payloads(
+                $channel, $invoice, $grossAmount,
+                $seriesItemsDetailsTransform, $this->_request_BRI_BCA_BNI($channel)
+            );
+        } else if ($channel->identifier_channel === 'mandiri') {
+            return $this->_payloads(
+                $channel, $invoice, $grossAmount,
+                $seriesItemsDetailsTransform, $this->_request_Mandiri($channel, $invoice)
+            );
+        } else if ($channel->identifier_channel === 'permata') {
+            return $this->_payloads(
+                $channel, $invoice, $grossAmount,
+                $seriesItemsDetailsTransform, $this->_request_Permata($channel)
+            );
+        } else if ($channel->identifier_channel === 'gopay') {
+            return $this->_payloads(
+                $channel, $invoice, $grossAmount,
+                $seriesItemsDetailsTransform, $this->_request_Gopay($channel)
+            );
+        } else if ($channel->identifier_channel === 'alfamart' || $channel->identifier_channel === 'indomaret') {
+            return $this->_payloads(
+                $channel, $invoice, $grossAmount,
+                $seriesItemsDetailsTransform, $this->_request_Alfamart_Indomaret($channel)
+            );
+        } else {
+            dd('manual payment not available.');
+        }
+    }
+
     public function notificationHandler()
     {
         $notification = new Notification();
@@ -109,13 +114,31 @@ class OrderService
             $invoice = $notification->order_id;
             $fraudStatus = $notification->fraud_status;
             $statusCode = $notification->status_code;
+            $paidAt = $notification->settlement_time;
 
             \Log::info('notification from midtrans', [$notification->getResponse()]);
             $order = Order::where('invoice', $invoice)->firstOrFail();
             $this->_midtransPaymentResponse($notification, json_encode($notification->getResponse()));
-
-            $this->_orderStatusHandling($status, $paymentType, $fraudStatus, $order, $statusCode);
+            $this->_orderStatusHandling($status, $paymentType, $fraudStatus, $order, $statusCode, $paidAt);
         });
+    }
+
+    private function _payloads($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform, $requestTransfer): array
+    {
+        $payloads = [
+            "payment_type" => $channel->type,
+            "transaction_details" => [
+                'order_id' => $invoice,
+                'gross_amount' => $grossAmount
+            ],
+            "customer_details" => [
+                'first_name' => Auth::user()->name,
+                'email' => Auth::user()->email
+            ],
+            "item_details" => $seriesItemsDetailsTransform,
+        ];
+
+        return array_replace_recursive($payloads, $requestTransfer);
     }
 
     private function _request_BRI_BCA_BNI($channel): array
@@ -170,24 +193,6 @@ class OrderService
         ];
     }
 
-    private function _payloads($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform, $requestTransfer): array
-    {
-        $payloads = [
-            "payment_type" => $channel->type,
-            "transaction_details" => [
-                'order_id' => $invoice,
-                'gross_amount' => $grossAmount
-            ],
-            "customer_details" => [
-                'first_name' => Auth::user()->name,
-                'email' => Auth::user()->email
-            ],
-            "item_details" => $seriesItemsDetailsTransform,
-        ];
-
-        return array_replace_recursive($payloads, $requestTransfer);
-    }
-
     private function _userSuccessPurchasing($order)
     {
         $user = User::findOrFail($order->user_id);
@@ -232,7 +237,7 @@ class OrderService
         ]);
     }
 
-    private function _orderStatusHandling($status, $paymentType, $fraudStatus, $order, $statusCode)
+    private function _orderStatusHandling($status, $paymentType, $fraudStatus, $order, $statusCode, $paidAt)
     {
         if ($status == 'capture') {
             if ($paymentType == 'credit_card') {
@@ -242,11 +247,11 @@ class OrderService
                     $order->setStatusSuccess();
                     $this->_userSuccessPurchasing($order);
                 }
-                $order->update(['status_code' => $statusCode]);
+                $order->update(['status_code' => $statusCode, 'paid_at' => $paidAt]);
             }
         } else if ($status == 'settlement') {
             $order->setStatusSuccess();
-            $order->update(['status_code' => $statusCode]);
+            $order->update(['status_code' => $statusCode, 'paid_at' => $paidAt]);
             $this->_userSuccessPurchasing($order);
         } else if ($status == 'pending') {
             $order->setStatusPending();

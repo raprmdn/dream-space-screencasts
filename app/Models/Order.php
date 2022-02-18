@@ -9,7 +9,8 @@ class Order extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'transaction_time' => 'datetime'
+        'transaction_time' => 'datetime',
+        'paid_at' => 'datetime'
     ];
 
     /**

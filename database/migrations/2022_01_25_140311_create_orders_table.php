@@ -27,6 +27,7 @@ class CreateOrdersTable extends Migration
             $table->string('status')->nullable()->default('pending');
             $table->string('status_code')->nullable();
             $table->timestamp('transaction_time')->nullable();
+            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });
     }

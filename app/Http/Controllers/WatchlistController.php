@@ -16,7 +16,7 @@ class WatchlistController extends Controller
 
     public function index()
     {
-        return inertia('Watchlist/Index', [
+        return inertia('Settings/Watchlist/Index', [
             'watchlist' => $this->watchlistService->getUserWatchlist()
         ]);
     }

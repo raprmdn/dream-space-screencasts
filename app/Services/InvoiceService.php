@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Resources\OrderCollection;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceService
 {
@@ -15,9 +16,15 @@ class InvoiceService
         return new OrderCollection($orders);
     }
 
-    public function getDetailInvoice($identifier): OrderResource
+    public function getAuthUserInvoice(): OrderCollection
     {
-        $order = Order::where('identifier', $identifier)->with(['user', 'channel'])->firstOrFail();
-        return new OrderResource($order);
+        $invoices = Auth::user()->orders()->with(['channel', 'user'])->latest()->paginate(10);
+
+        return new OrderCollection($invoices);
+    }
+
+    public function getDetailInvoice($identifier)
+    {
+        return Order::where('identifier', $identifier)->with(['user', 'channel'])->firstOrFail();
     }
 }

@@ -20,8 +20,7 @@ class DatabaseSeeder extends Seeder
             TopicSeeder::class,
             SeriesSeeder::class,
             MidtransConfigSeeder::class,
-            PaymentTypeSeeder::class,
-            PaymentChannelSeeder::class,
+            PaymentTypeAndChannelSeeder::class,
         ]);
     }
 }

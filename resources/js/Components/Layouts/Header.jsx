@@ -401,10 +401,10 @@ export default function Header() {
                                                     </a>
                                                 </li>
                                                 <li className="navi-item px-5 mb-2">
-                                                    <a className="navi-link" href="#">
+                                                    <Link className={`navi-link ${route().current('invoice.mine') ? 'active' : ''}`} href={route('invoice.mine')}>
                                                         <span className="navi-icon"><i className="flaticon-price-tag" /></span>
                                                         <span className="navi-text font-weight-bold">Invoice</span>
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                                 <div className="separator separator-solid"/>
                                                 <li className="navi-item px-5 my-2">

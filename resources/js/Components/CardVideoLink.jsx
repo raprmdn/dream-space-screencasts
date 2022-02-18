@@ -10,7 +10,7 @@ export default function CardVideoLink({seriesSlug, video, buyable, auth, current
                     {
                         current
                         ?
-                            <i className="icon-xl far fa-pause-circle text-white"/>
+                            <i className="icon-lg fas fa-play-circle text-white"/>
                         :
                             <>{video.episode}</>
                     }
