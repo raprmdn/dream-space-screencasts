@@ -3,39 +3,28 @@ import App from "../../../Layouts/App";
 import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import {LazyLoadImage} from "react-lazy-load-image-component";
-import 'react-lazy-load-image-component/src/effects/blur.css';
-import {Inertia} from "@inertiajs/inertia";
 import SeriesBannerMeta from "../../../Components/SeriesBannerMeta";
 
 export default function Index() {
-    const { data:watchlists } = usePage().props.watchlist
-
-    const _removeFromWatchlist = (e, series) => {
-        e.preventDefault()
-        Inertia.post(route('saves'),{
-            series_id: series,
-        }, {
-            preserveScroll: true,
-        })
-    }
+    const { series: libraries } = usePage().props;
 
     return (
         <>
-            <Head title="Dream Space - Watchlist"/>
+            <Head title="Dream Space - My Library"/>
             <Breadcrumb
-                titleHeading="Watchlist"
+                titleHeading="My Library"
                 item1="Profile"
-                item2="Watchlist" linkItem2={route('watchlist.index')}
+                item2="My Library" linkItem2={route('my-library')}
             />
             <div className="d-flex flex-column-fluid">
                 <div className="container">
                     {
-                        watchlists.length > 0
-                        ?
+                        libraries.length > 0
+                            ?
                             <div className="row">
                                 <div className="col-lg-12">
                                     {
-                                        watchlists.map((series) => (
+                                        libraries.map((series) => (
                                             <div key={series.id} className="card card-custom gutter-b shadow">
                                                 <div className="card-body">
                                                     <div className="d-block d-md-flex flex-row-reverse">
@@ -84,10 +73,6 @@ export default function Index() {
                                                                     <i className="fas fa-play icon-1x mr-2 ml-2"/>
                                                                     Start Series
                                                                 </Link>
-                                                                <button onClick={(e) => _removeFromWatchlist(e, series.id)}
-                                                                        className="d-flex btn btn-icon btn-danger btn-sm align-items-center">
-                                                                    <i className="flaticon2-delete icon-1x"/>
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -97,19 +82,19 @@ export default function Index() {
                                     }
                                 </div>
                             </div>
-                        :
+                            :
                             <div className="card card-custom shadow">
                                 <div className="card-body p-0">
                                     <div className="text-center pt-20">
                                         <h3 className="font-weight-bolder mb-5">
-                                            Nothing yet!
+                                            Anda belum pernah membeli Series apapun.
                                         </h3>
                                         <Link href={route('series')} className="font-size-lg text-muted font-weight-bold mb-5">
                                             <u>Browse the Series</u>
                                         </Link>
                                     </div>
                                     <div className="text-center">
-                                        <img src="/assets/media/svg/illustrations/login-visual-5.svg" alt="Watchlist Empty"
+                                        <img src="/assets/media/svg/illustrations/login-visual-5.svg" alt="Library Empty"
                                              className="mw-100 max-h-300px"/>
                                     </div>
                                 </div>

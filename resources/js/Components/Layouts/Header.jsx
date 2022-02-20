@@ -395,10 +395,10 @@ export default function Header() {
                                                 </li>
                                                 <div className="separator separator-solid"/>
                                                 <li className="navi-item px-5 my-2">
-                                                    <a className="navi-link" href="#">
+                                                    <Link className={`navi-link ${route().current('my-library') ? 'active' : ''}`} href={route('my-library')}>
                                                         <span className="navi-icon"><i className="flaticon-medal" /></span>
-                                                        <span className="navi-text font-weight-bold">Series</span>
-                                                    </a>
+                                                        <span className="navi-text font-weight-bold">My Library</span>
+                                                    </Link>
                                                 </li>
                                                 <li className="navi-item px-5 mb-2">
                                                     <Link className={`navi-link ${route().current('invoice.mine') ? 'active' : ''}`} href={route('invoice.mine')}>

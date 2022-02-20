@@ -5,6 +5,7 @@ use App\Http\Controllers\{CartController,
     Courses\VideoController,
     IndexController,
     Invoice\InvoiceController,
+    MyLibrary\MyLibraryController,
     Order\OrderController,
     PaymentConfiguration\PaymentChannelController,
     PaymentConfiguration\PaymentConfigurationController,
@@ -28,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('settings')->group(function () {
         Route::get('watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');
         Route::get('invoices', [InvoiceController::class, 'invoiceMine'])->name('invoice.mine');
+        Route::get('library', MyLibraryController::class)->name('my-library');
     });
     Route::post('add-to-carts', [CartController::class, 'create'])->name('add.carts');
     Route::post('saves', [WatchlistController::class, 'save'])->name('saves');

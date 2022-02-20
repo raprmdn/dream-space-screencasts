@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Helper;
 use App\Http\Resources\SeriesCollection;
 use App\Models\Series;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,13 @@ class WatchlistService
 
     public function getUserWatchlist(): SeriesCollection
     {
-        $watchlist = Auth::user()->watchlist()->oldest()->get();
+        $watchlist = Auth::user()->watchlist()->with(['topics:id,name,slug', 'videos'])
+                    ->oldest()->get()->map(function ($series) {
+                        Helper::castingRuntime($series);
+                        unset($series->videos);
+                        return $series;
+                    });
+
         return new SeriesCollection($watchlist);
     }
 

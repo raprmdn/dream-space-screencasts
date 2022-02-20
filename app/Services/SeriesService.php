@@ -2,13 +2,11 @@
 
 namespace App\Services;
 
-use App\Http\Resources\SeriesCollection;
-use App\Http\Resources\SeriesSingleResource;
-use App\Models\Cart;
-use App\Models\Series;
+use App\Helpers\Helper;
+use App\Http\Resources\{SeriesCollection, SeriesResource, SeriesSingleResource};
+use App\Models\{Cart, Series};
 use App\Traits\ImageTrait;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Illuminate\Support\{Facades\Auth, Facades\Storage, Str};
 
 class SeriesService
 {
@@ -22,7 +20,7 @@ class SeriesService
             ->paginate(9);
 
         $series->getCollection()->transform(function ($series) {
-            $this->_castingRuntime($series);
+            Helper::castingRuntime($series);
             return $series;
         });
 
@@ -51,7 +49,7 @@ class SeriesService
             }])
             ->first();
 
-        $this->_castingRuntime($series);
+        Helper::castingRuntime($series);
         unset($series->hours);
 
         return new SeriesSingleResource($series);
@@ -65,7 +63,7 @@ class SeriesService
             ->paginate(9);
 
         $series->getCollection()->transform(function ($series) {
-            $this->_castingRuntime($series);
+            Helper::castingRuntime($series);
             return $series;
         });
 
@@ -96,6 +94,19 @@ class SeriesService
     public function getCurrentSeries($series): SeriesSingleResource
     {
         return new SeriesSingleResource($series->load('topics:id,name,slug'));
+    }
+
+    public function getUserPurchasedSeries()
+    {
+        $series = Auth::user()->purchases()->with(['topics:id,name,slug', 'videos'])
+                    ->latest()->get()->map(function ($series) {
+                        Helper::castingRuntime($series);
+                        unset($series->videos);
+                        return $series;
+                    });
+        SeriesResource::withoutWrapping();
+
+        return SeriesResource::collection($series);
     }
 
     public function save($attributes): array
@@ -164,32 +175,6 @@ class SeriesService
             'is_discount' => $attributes['is_discount'],
             'is_free' => $attributes['is_free'],
             'archived_at' => $attributes['archived_at'] ? now() : null
-        ];
-    }
-
-    private function _castingRuntime($series)
-    {
-        $series->hours = $series->videos->map(function ($times) {
-            return $times->runtime;
-        });
-
-        $sum = strtotime('00:00:00');
-        $totals = 0;
-
-        foreach ($series->hours as $element) {
-            $timeinsec = strtotime($element) - $sum;
-            $totals = $totals + $timeinsec;
-        }
-
-        $h = intval($totals / 3600);
-        $totals = $totals - ($h * 3600);
-        $m = intval($totals / 60);
-        $s = $totals - ($m * 60);
-
-        $series->runtime = [
-            'h' => $h,
-            'm' => $m,
-            's' => $s
         ];
     }
 }
