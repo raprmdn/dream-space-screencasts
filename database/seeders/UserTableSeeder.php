@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
             'name' => 'Dream Space',
             'email' => 'admin@dreamspace.com',
             'email_verified_at' => now(),
-            'username' => 'dream.space',
+            'username' => 'dream_space',
             'description' => 'Hey there, currently working for developing Dream Space platform!',
             'job_title' => 'Web Developer',
             'website' => 'dreamspace.com',

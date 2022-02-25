@@ -19,10 +19,10 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'username', 'description', 'job_title', 'website', 'github', 'instagram', 'twitter', 'facebook', 'profile_picture'
+        'name', 'email', 'password',
+        'username', 'description', 'job_title',
+        'website', 'github', 'instagram', 'twitter',
+        'facebook', 'profile_picture', 'email_verified_at'
     ];
 
     /**
@@ -45,6 +45,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get profile picture path.
+     *
+     * @return string
+     */
+    public function getPhotoProfileAttribute() : string
+    {
+        return $this->profile_picture ? "/storage/" . $this->profile_picture : false;
+    }
 
     /**
      * Assigned User to role student.

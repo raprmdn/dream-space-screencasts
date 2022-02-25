@@ -10,6 +10,7 @@ use App\Http\Controllers\{CartController,
     PaymentConfiguration\PaymentChannelController,
     PaymentConfiguration\PaymentConfigurationController,
     PaymentConfiguration\PaymentTypeController,
+    ProfileController,
     Topic\TopicController,
     TrashController,
     UserManagement\PermissionController,
@@ -30,6 +31,8 @@ Route::middleware('auth')->group(function () {
         Route::get('watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');
         Route::get('invoices', [InvoiceController::class, 'invoiceMine'])->name('invoice.mine');
         Route::get('library', MyLibraryController::class)->name('my-library');
+        Route::get('profile', [ProfileController::class, 'index'])->name('profile.settings');
+        Route::put('profile/{user:id}', [ProfileController::class, 'update'])->name('profile.update');
     });
     Route::post('add-to-carts', [CartController::class, 'create'])->name('add.carts');
     Route::post('saves', [WatchlistController::class, 'save'])->name('saves');

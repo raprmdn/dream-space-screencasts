@@ -12,7 +12,7 @@ export default function Index() {
             <Head title="Dream Space - Invoice"/>
             <Breadcrumb
                 titleHeading="Invoice"
-                item1="Profile"
+                item1="Settings" linkItem1={route('profile.settings')}
                 item2="Invoice" linkItem2={route('invoice.mine')}
             />
             <div className="d-flex flex-column-fluid">

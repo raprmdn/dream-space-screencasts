@@ -5948,6 +5948,426 @@ function FormPermissions(_ref) {
 
 /***/ }),
 
+/***/ "./resources/js/Components/Forms/FormProfileUpdate.jsx":
+/*!*************************************************************!*\
+  !*** ./resources/js/Components/Forms/FormProfileUpdate.jsx ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ FormProfileUpdate)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Label__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Label */ "./resources/js/Components/Label.jsx");
+/* harmony import */ var _ButtonSubmit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ButtonSubmit */ "./resources/js/Components/ButtonSubmit.jsx");
+/* harmony import */ var react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-lazy-load-image-component */ "./node_modules/react-lazy-load-image-component/build/index.js");
+/* harmony import */ var react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_lazy_load_image_component_src_effects_blur_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-lazy-load-image-component/src/effects/blur.css */ "./node_modules/react-lazy-load-image-component/src/effects/blur.css");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+function FormProfileUpdate(_ref) {
+  var updateHandler = _ref.updateHandler,
+      data = _ref.data,
+      setData = _ref.setData,
+      errors = _ref.errors,
+      processing = _ref.processing,
+      user = _ref.user,
+      preview = _ref.preview,
+      setPreview = _ref.setPreview;
+  var fileInput = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+
+  var changeHandler = function changeHandler(e) {
+    var value = e.target.files[0];
+    var reader = new FileReader();
+
+    reader.onload = function () {
+      setPreview(reader.result);
+    };
+
+    reader.readAsDataURL(value);
+    setData('picture', value);
+  };
+
+  var removePicture = function removePicture() {
+    setData('picture', null);
+    setPreview(null);
+    fileInput.current.value = null;
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+      onSubmit: updateHandler,
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "form-group",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          labelFor: "picture",
+          children: "Profile Picture"
+        }), preview && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "position-relative",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "symbol symbol-150 my-2 rounded-lg",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_lazy_load_image_component__WEBPACK_IMPORTED_MODULE_3__.LazyLoadImage, {
+              effect: "blur",
+              src: preview,
+              style: {
+                boxShadow: "0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075)"
+              },
+              className: "symbol-label"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              onClick: removePicture,
+              className: "btn btn-xs btn-icon btn-circle btn-white btn-shadow m-1 position-absolute top-0 right-0",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "ki ki-bold-close icon-xs text-muted"
+              })
+            })]
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+          type: "file",
+          className: "form-control",
+          name: "picture",
+          id: "picture",
+          accept: ".png, .jpg, .jpeg, .svg",
+          onChange: changeHandler,
+          ref: fileInput
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+          className: "form-text text-muted",
+          children: "Allowed file types: png, jpg, jpeg, svg. Allowed size: 100px x 100px, 2MB"
+        }), errors.picture && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "text-danger font-size-sm mb-n5",
+          children: errors.picture
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "form-group row",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "col-xl-6 mb-5 mb-xl-n5",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "name",
+            children: "Full Name"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "text-danger",
+            children: " * "
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+            type: "text",
+            id: "name",
+            name: "name",
+            value: data.name,
+            onChange: function onChange(e) {
+              return setData('name', e.target.value);
+            },
+            className: "form-control ".concat(errors.name && 'is-invalid'),
+            placeholder: "Enter a full name"
+          }), errors.name && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "invalid-feedback mb-n5",
+            children: errors.name
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "col-xl-6",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "username",
+            children: "Username"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "text-danger",
+            children: " * "
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "input-group-prepend",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "input-group-text",
+                children: "dreamspace.com/"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+              type: "text",
+              id: "username",
+              name: "username",
+              value: data.username,
+              onChange: function onChange(e) {
+                return setData('username', e.target.value);
+              },
+              className: "form-control ".concat(errors.username && 'is-invalid'),
+              placeholder: "Enter a username"
+            }), errors.username && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.username
+            })]
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "form-group row",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "col-lg-6",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "email",
+            children: "Email"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "text-danger",
+            children: " * "
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+            type: "text",
+            id: "email",
+            name: "email",
+            value: data.email,
+            onChange: function onChange(e) {
+              return setData('email', e.target.value);
+            },
+            className: "form-control ".concat(errors.email && 'is-invalid'),
+            placeholder: "Enter a email"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "form-text text-danger",
+            children: "By changing the email you have to verify the email again."
+          }), errors.email && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "invalid-feedback mb-n5",
+            children: errors.email
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "d-flex col-lg-6 align-items-center",
+          children: user.is_verified_email ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
+              className: "label label-xl label-pill label-success font-weight-bold label-inline",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "flaticon2-check-mark text-white mr-3"
+              }), "Verified"]
+            })
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
+              className: "label label-xl label-pill label-danger font-weight-bold label-inline",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                className: "flaticon2-cancel text-white mr-3"
+              }), "Unverified"]
+            })
+          })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "form-group",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          labelFor: "description",
+          children: "About You"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("textarea", {
+          id: "description",
+          name: "description",
+          value: data.description,
+          onChange: function onChange(e) {
+            return setData('description', e.target.value);
+          },
+          className: "form-control ".concat(errors.description && 'is-invalid'),
+          placeholder: "Tell me about Yourself . . .",
+          rows: 5,
+          style: {
+            resize: 'none'
+          }
+        }), errors.description && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "invalid-feedback mb-n5",
+          children: errors.description
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "form-group row",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "col-xl-6 mb-5 mb-xl-n5",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "job",
+            children: "Job Title"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "input-group-prepend",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "input-group-text",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "flaticon2-hangouts-logo text-dark"
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+              type: "text",
+              id: "job",
+              name: "job",
+              value: data.job,
+              onChange: function onChange(e) {
+                return setData('job', e.target.value);
+              },
+              className: "form-control ".concat(errors.job && 'is-invalid'),
+              placeholder: "Enter your job title"
+            }), errors.job && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.job
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "col-xl-6",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "website",
+            children: "Website"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "input-group-prepend",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "input-group-text",
+                children: "https://"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+              type: "text",
+              id: "website",
+              name: "website",
+              value: data.website,
+              onChange: function onChange(e) {
+                return setData('website', e.target.value);
+              },
+              className: "form-control ".concat(errors.website && 'is-invalid'),
+              placeholder: "Enter your website url"
+            }), errors.website && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.website
+            })]
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "form-group row",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "col-xl-6 mb-5 mb-xl-n5",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "github",
+            children: "Github"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "input-group-prepend",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "input-group-text",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "fab fa-github text-dark"
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+              type: "text",
+              id: "github",
+              name: "github",
+              value: data.github,
+              onChange: function onChange(e) {
+                return setData('github', e.target.value);
+              },
+              className: "form-control ".concat(errors.github && 'is-invalid'),
+              placeholder: "Enter your github url"
+            }), errors.github && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.github
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "col-xl-6",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "twitter",
+            children: "Twitter"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "input-group-prepend",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "input-group-text",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "fab fa-twitter text-dark"
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+              type: "text",
+              id: "twitter",
+              name: "twitter",
+              value: data.twitter,
+              onChange: function onChange(e) {
+                return setData('twitter', e.target.value);
+              },
+              className: "form-control ".concat(errors.twitter && 'is-invalid'),
+              placeholder: "Enter your twitter url"
+            }), errors.twitter && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.twitter
+            })]
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "form-group row",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "col-xl-6 mb-5 mb-xl-n5",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "instagram",
+            children: "Instagram"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "input-group-prepend",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "input-group-text",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "fab fa-instagram text-dark"
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+              type: "text",
+              id: "instagram",
+              name: "instagram",
+              value: data.instagram,
+              onChange: function onChange(e) {
+                return setData('instagram', e.target.value);
+              },
+              className: "form-control ".concat(errors.instagram && 'is-invalid'),
+              placeholder: "Enter your instagram url"
+            }), errors.instagram && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.instagram
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "col-xl-6",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Label__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            labelFor: "facebook",
+            children: "Facebook"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+            className: "input-group",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "input-group-prepend",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                className: "input-group-text",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                  className: "fab fa-facebook text-dark"
+                })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
+              type: "text",
+              id: "facebook",
+              name: "facebook",
+              value: data.facebook,
+              onChange: function onChange(e) {
+                return setData('facebook', e.target.value);
+              },
+              className: "form-control ".concat(errors.facebook && 'is-invalid'),
+              placeholder: "Enter your facebook url"
+            }), errors.facebook && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "invalid-feedback mb-n5",
+              children: errors.facebook
+            })]
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "text-right",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ButtonSubmit__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          label: 'Update Profile',
+          processing: processing
+        })
+      })]
+    })
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/js/Components/Forms/FormRoles.jsx":
 /*!*****************************************************!*\
   !*** ./resources/js/Components/Forms/FormRoles.jsx ***!
@@ -8140,9 +8560,9 @@ function Header() {
                       className: "separator separator-solid"
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
                       className: "navi-item px-5 my-2",
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("a", {
-                        className: "navi-link",
-                        href: "#",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+                        className: "navi-link ".concat(route().current('profile.settings') ? 'active' : ''),
+                        href: route('profile.settings'),
                         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
                           className: "navi-icon",
                           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("i", {
@@ -15630,7 +16050,8 @@ function Index() {
       title: "Dream Space - Invoice"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__["default"], {
       titleHeading: "Invoice",
-      item1: "Profile",
+      item1: "Settings",
+      linkItem1: route('profile.settings'),
       item2: "Invoice",
       linkItem2: route('invoice.mine')
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
@@ -15826,7 +16247,8 @@ function Index() {
       title: "Dream Space - My Library"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__["default"], {
       titleHeading: "My Library",
-      item1: "Profile",
+      item1: "Settings",
+      linkItem1: route('profile.settings'),
       item2: "My Library",
       linkItem2: route('my-library')
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
@@ -15958,6 +16380,240 @@ Index.layout = function (page) {
 
 /***/ }),
 
+/***/ "./resources/js/Pages/Settings/Profile/Index.jsx":
+/*!*******************************************************!*\
+  !*** ./resources/js/Pages/Settings/Profile/Index.jsx ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Profile)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Layouts_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Layouts/App */ "./resources/js/Layouts/App.jsx");
+/* harmony import */ var _inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
+/* harmony import */ var _Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../Components/Breadcrumb */ "./resources/js/Components/Breadcrumb.jsx");
+/* harmony import */ var _Components_Forms_FormProfileUpdate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../Components/Forms/FormProfileUpdate */ "./resources/js/Components/Forms/FormProfileUpdate.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+function Profile() {
+  var user = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.usePage)().props.user;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(user.picture || null),
+      _useState2 = _slicedToArray(_useState, 2),
+      preview = _useState2[0],
+      setPreview = _useState2[1];
+
+  var _useForm = (0,_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.useForm)({
+    id: user.id || '',
+    name: user.name || '',
+    username: user.username || '',
+    email: user.email || '',
+    description: user.description || '',
+    job: user.job || '',
+    website: user.website || '',
+    github: user.github || '',
+    twitter: user.twitter || '',
+    instagram: user.instagram || '',
+    facebook: user.facebook || '',
+    picture: user.picture || ''
+  }),
+      data = _useForm.data,
+      setData = _useForm.setData,
+      post = _useForm.post,
+      errors = _useForm.errors,
+      clearErrors = _useForm.clearErrors,
+      processing = _useForm.processing;
+
+  var updateHandler = function updateHandler(e) {
+    e.preventDefault();
+    data._method = 'put';
+    post(route('profile.update', data), {
+      preserveScroll: true,
+      onSuccess: function onSuccess() {
+        clearErrors();
+      }
+    });
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Head, {
+      title: "Dream Space - Profile Information"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      titleHeading: "Profile Information",
+      item1: "Settings",
+      linkItem1: route('profile.settings'),
+      item2: "Profile Information",
+      linkItem2: route('profile.settings')
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "d-flex flex-column-fluid",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "container",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "row",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "col-xl-3",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              className: "card card-custom gutter-b",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                className: "card-body pt-4",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                  className: "navi navi-bold navi-hover navi-active navi-link-rounded",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                    className: "navi-item mb-2 mt-5",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                      href: route('profile.settings'),
+                      className: "navi-link py-4 ".concat(route().current('profile.settings') ? 'active' : ''),
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "navi-icon",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                          className: "flaticon2-settings mr-4"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "navi-text font-size-lg",
+                        children: "Profile Information"
+                      })]
+                    })
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                  className: "navi navi-bold navi-hover navi-link-rounded",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                    className: "navi-item mb-2",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                      href: route('profile.settings'),
+                      className: "navi-link py-4",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "navi-icon",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                          className: "fas fa-shield-alt mr-4"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "navi-text font-size-lg",
+                        children: "Change Password"
+                      })]
+                    })
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                  className: "separator separator-solid"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                  className: "navi navi-bold navi-hover navi-link-rounded mt-2",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                    className: "navi-item mb-2",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                      href: route('watchlist.index'),
+                      className: "navi-link py-4",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "navi-icon",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                          className: "fas fa-bookmark mr-4"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "navi-text font-size-lg",
+                        children: "Watchlist"
+                      })]
+                    })
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                  className: "navi navi-bold navi-hover navi-link-rounded mt-2",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                    className: "navi-item mb-2",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                      href: route('my-library'),
+                      className: "navi-link py-4",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "navi-icon",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                          className: "flaticon-medal mr-4"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "navi-text font-size-lg",
+                        children: "My Library"
+                      })]
+                    })
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                  className: "separator separator-solid"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                  className: "navi navi-bold navi-hover navi-link-rounded mt-2",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                    className: "navi-item",
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_2__.Link, {
+                      href: route('invoice.mine'),
+                      className: "navi-link py-4",
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "navi-icon",
+                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                          className: "flaticon-price-tag mr-4"
+                        })
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+                        className: "navi-text font-size-lg",
+                        children: "Invoice"
+                      })]
+                    })
+                  })
+                })]
+              })
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "col-xl-9",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "card card-custom card-stretch gutter-b",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                className: "card-header border-bottom py-5",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h3", {
+                  className: "card-title font-weight-bolder text-dark",
+                  children: "Profile Information"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                className: "card-body",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Components_Forms_FormProfileUpdate__WEBPACK_IMPORTED_MODULE_4__["default"], {
+                  updateHandler: updateHandler,
+                  data: data,
+                  setData: setData,
+                  errors: errors,
+                  processing: processing,
+                  user: user,
+                  preview: preview,
+                  setPreview: setPreview
+                })
+              })]
+            })
+          })]
+        })
+      })
+    })]
+  });
+}
+
+Profile.layout = function (page) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_Layouts_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    children: page
+  });
+};
+
+/***/ }),
+
 /***/ "./resources/js/Pages/Settings/Watchlist/Index.jsx":
 /*!*********************************************************!*\
   !*** ./resources/js/Pages/Settings/Watchlist/Index.jsx ***!
@@ -16007,7 +16663,8 @@ function Index() {
       title: "Dream Space - Watchlist"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_Components_Breadcrumb__WEBPACK_IMPORTED_MODULE_3__["default"], {
       titleHeading: "Watchlist",
-      item1: "Profile",
+      item1: "Settings",
+      linkItem1: route('profile.settings'),
       item2: "Watchlist",
       linkItem2: route('watchlist.index')
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
@@ -85831,6 +86488,8 @@ var map = {
 	"./Settings/Invoice/Index.jsx": "./resources/js/Pages/Settings/Invoice/Index.jsx",
 	"./Settings/MyLibrary/Index": "./resources/js/Pages/Settings/MyLibrary/Index.jsx",
 	"./Settings/MyLibrary/Index.jsx": "./resources/js/Pages/Settings/MyLibrary/Index.jsx",
+	"./Settings/Profile/Index": "./resources/js/Pages/Settings/Profile/Index.jsx",
+	"./Settings/Profile/Index.jsx": "./resources/js/Pages/Settings/Profile/Index.jsx",
 	"./Settings/Watchlist/Index": "./resources/js/Pages/Settings/Watchlist/Index.jsx",
 	"./Settings/Watchlist/Index.jsx": "./resources/js/Pages/Settings/Watchlist/Index.jsx",
 	"./Topics/Index": "./resources/js/Pages/Topics/Index.jsx",

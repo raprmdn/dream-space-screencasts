@@ -408,10 +408,10 @@ export default function Header() {
                                                 </li>
                                                 <div className="separator separator-solid"/>
                                                 <li className="navi-item px-5 my-2">
-                                                    <a className="navi-link" href="#">
+                                                    <Link className={`navi-link ${route().current('profile.settings') ? 'active' : ''}`} href={route('profile.settings')}>
                                                         <span className="navi-icon"><i className="flaticon2-settings" /></span>
                                                         <span className="navi-text font-weight-bold">Settings</span>
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                                 <li className="navi-item px-5 mb-7">
                                                     <Link as="button" method="post" href={route('logout')} className="navi-link btn btn-block text-left">

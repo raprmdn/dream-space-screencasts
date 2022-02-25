@@ -13,7 +13,7 @@ export default function Index() {
             <Head title="Dream Space - My Library"/>
             <Breadcrumb
                 titleHeading="My Library"
-                item1="Profile"
+                item1="Settings" linkItem1={route('profile.settings')}
                 item2="My Library" linkItem2={route('my-library')}
             />
             <div className="d-flex flex-column-fluid">

@@ -24,7 +24,7 @@ export default function Index() {
             <Head title="Dream Space - Watchlist"/>
             <Breadcrumb
                 titleHeading="Watchlist"
-                item1="Profile"
+                item1="Settings" linkItem1={route('profile.settings')}
                 item2="Watchlist" linkItem2={route('watchlist.index')}
             />
             <div className="d-flex flex-column-fluid">
