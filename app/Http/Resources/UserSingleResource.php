@@ -15,6 +15,7 @@ class UserSingleResource extends JsonResource
     public function toArray($request)
     {
         $isVerified = (bool)$this->email_verified_at;
+
         return [
             'id' => $this->id,
             'username' => $this->username,
@@ -30,6 +31,7 @@ class UserSingleResource extends JsonResource
             'picture' => $this->photoProfile,
             'is_verified_email' => $isVerified,
             'verified_email' => $isVerified ? $this->email_verified_at->format('d F Y, H:i') : null,
+            'joined' => $this->created_at->diffForHumans()
         ];
     }
 }

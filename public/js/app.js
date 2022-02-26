@@ -8467,11 +8467,11 @@ function Header() {
                   className: "dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up w-300px mr-5",
                   children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                     className: "d-flex align-items-center p-8 rounded-lg",
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+                    children: [auth.user.profile_picture && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
                       className: "symbol symbol-50px mr-5",
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-                        alt: "Logo",
-                        src: "/assets/media/users/100_1.jpg"
+                        alt: "".concat(auth.user.name, " Profile Picture"),
+                        src: "/storage/".concat(auth.user.profile_picture)
                       })
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
                       className: "d-flex flex-column",
@@ -12213,7 +12213,9 @@ function PaymentChannelIndex() {
       processing = _useForm.processing;
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (data.payment_type_id.value === 1) {
+    var manualTransfer = data.payment_type_id.label === 'Manual Transfer';
+
+    if (manualTransfer) {
       setHidden(false);
     } else {
       setHidden(true);
@@ -12245,7 +12247,9 @@ function PaymentChannelIndex() {
   };
 
   var selectPaymentTypeHandler = function selectPaymentTypeHandler(e) {
-    if (e.value === 1) {
+    var manualTransfer = e.label === 'Manual Transfer';
+
+    if (manualTransfer) {
       setData(_objectSpread(_objectSpread({}, data), {}, {
         payment_type_id: e,
         identifier_channel: '',
@@ -12345,6 +12349,8 @@ function PaymentChannelIndex() {
                           },
                           payment_channel: '',
                           virtual_number: '',
+                          identifier_channel: '',
+                          type: '',
                           payment_channel_owner: '',
                           image: '',
                           instruction: '',

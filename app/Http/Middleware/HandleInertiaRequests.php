@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Resources\CartCollection;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Middleware;

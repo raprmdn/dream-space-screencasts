@@ -20,11 +20,7 @@ class UserService
 
     public function updateProfile($attributes)
     {
-        if ( $attributes['email'] === Auth::user()->email ) {
-            $attributes['email_verified_at'] = Auth::user()->email_verified_at;
-        } else {
-            $attributes['email_verified_at'] = null;
-        }
+        if ( $attributes['email'] !== Auth::user()->email ) Auth::user()->unverified();
 
         if (request()->hasFile('picture')) {
             Storage::delete(Auth::user()->profile_picture);
@@ -55,7 +51,6 @@ class UserService
             'instagram' => $attributes['instagram'],
             'facebook' => $attributes['facebook'],
             'profile_picture' => $attributes['picture'],
-            'email_verified_at' => $attributes['email_verified_at']
         ];
     }
 }

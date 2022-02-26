@@ -51,8 +51,10 @@ class OrderService
              *  Before made payment with Midtrans, first make sure u have to put client and server key in Midtrans Config.
              */
             if ($channel->identifier_channel !== null) {
+                // Do Instant Payment w/ Midtrans
                 $payloads = $this->_instantPaymentRequest($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform);
             } else {
+                // Do Manual Transfer
                 $payloads = null;
             }
 
@@ -73,35 +75,39 @@ class OrderService
         return $this->response;
     }
 
-    public function _instantPaymentRequest($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform)
+    private function _instantPaymentRequest($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform): array
     {
-        if (in_array($channel->identifier_channel, ['bri', 'bca', 'bni'])) {
-            return $this->_payloads(
-                $channel, $invoice, $grossAmount,
-                $seriesItemsDetailsTransform, $this->_request_BRI_BCA_BNI($channel)
-            );
-        } else if ($channel->identifier_channel === 'mandiri') {
-            return $this->_payloads(
-                $channel, $invoice, $grossAmount,
-                $seriesItemsDetailsTransform, $this->_request_Mandiri($channel, $invoice)
-            );
-        } else if ($channel->identifier_channel === 'permata') {
-            return $this->_payloads(
-                $channel, $invoice, $grossAmount,
-                $seriesItemsDetailsTransform, $this->_request_Permata($channel)
-            );
-        } else if ($channel->identifier_channel === 'gopay') {
-            return $this->_payloads(
-                $channel, $invoice, $grossAmount,
-                $seriesItemsDetailsTransform, $this->_request_Gopay($channel)
-            );
-        } else if ($channel->identifier_channel === 'alfamart' || $channel->identifier_channel === 'indomaret') {
-            return $this->_payloads(
-                $channel, $invoice, $grossAmount,
-                $seriesItemsDetailsTransform, $this->_request_Alfamart_Indomaret($channel)
-            );
-        } else {
-            dd('manual payment not available.');
+        switch ($channel->identifier_channel) {
+            case 'bri' :
+            case 'bca' :
+            case 'bni' :
+                return $this->_payloads(
+                    $channel, $invoice, $grossAmount,
+                    $seriesItemsDetailsTransform, $this->_request_BRI_BCA_BNI($channel)
+                );
+            case 'mandiri' :
+                return $this->_payloads(
+                    $channel, $invoice, $grossAmount,
+                    $seriesItemsDetailsTransform, $this->_request_Mandiri($channel, $invoice)
+                );
+            case 'permata' :
+                return $this->_payloads(
+                    $channel, $invoice, $grossAmount,
+                    $seriesItemsDetailsTransform, $this->_request_Permata($channel)
+                );
+            case 'gopay' :
+                return $this->_payloads(
+                    $channel, $invoice, $grossAmount,
+                    $seriesItemsDetailsTransform, $this->_request_Gopay($channel)
+                );
+            case 'alfamart' :
+            case 'indomaret' :
+                return $this->_payloads(
+                    $channel, $invoice, $grossAmount,
+                    $seriesItemsDetailsTransform, $this->_request_Alfamart_Indomaret($channel)
+                );
+            default :
+                throw new Exception("There's was an issue. Couldn't find the payment method.");
         }
     }
 

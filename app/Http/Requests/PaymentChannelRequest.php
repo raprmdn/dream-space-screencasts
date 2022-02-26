@@ -26,8 +26,8 @@ class PaymentChannelRequest extends FormRequest
         return [
             'payment_type_id' => ['required'],
             'payment_channel' => ['required'],
-            'identifier_channel' => $this->payment_type_id['label'] === 'Instant Transfer' ? ['required'] : [],
-            'type' => $this->payment_type_id['label'] === 'Instant Transfer' ? ['required'] : [],
+            'identifier_channel' => $this->payment_type_id['label'] === 'Instant Payment' ? ['required'] : [],
+            'type' => $this->payment_type_id['label'] === 'Instant Payment' ? ['required'] : [],
             'virtual_number' => $this->payment_type_id['label'] === 'Manual Transfer' ? ['required'] : [],
             'payment_channel_owner' => $this->payment_type_id['label'] === 'Manual Transfer' ? ['required'] : [],
             'image' => $this->hasFile('image') ? ['required', 'image', 'mimes:png,jpg,jpeg,svg', 'max:3048'] : ['required'],

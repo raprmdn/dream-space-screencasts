@@ -83,6 +83,18 @@ class User extends Authenticatable
                     ->appends(request()->only('search'));
     }
 
+
+    /**
+     * Make user email unverified.
+     *
+     * @return void
+     */
+    public function unverified()
+    {
+        $this->email_verified_at = null;
+        $this->save();
+    }
+
     /**
      * User adding series to watchlist
      *

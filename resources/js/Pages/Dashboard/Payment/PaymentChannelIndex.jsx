@@ -27,7 +27,9 @@ export default function PaymentChannelIndex() {
     })
 
     useEffect(() => {
-        if (data.payment_type_id.value === 1) {
+        const manualTransfer = data.payment_type_id.label === 'Manual Transfer'
+
+        if (manualTransfer) {
             setHidden(false)
         }
          else {
@@ -60,7 +62,9 @@ export default function PaymentChannelIndex() {
     }
 
     const selectPaymentTypeHandler = (e) => {
-        if (e.value === 1) {
+        const manualTransfer = e.label === 'Manual Transfer'
+
+        if (manualTransfer) {
             setData({
                 ...data,
                 payment_type_id: e,
@@ -144,6 +148,8 @@ export default function PaymentChannelIndex() {
                                                                 payment_type_id: {value: type.id, label: type.payment_type},
                                                                 payment_channel: '',
                                                                 virtual_number: '',
+                                                                identifier_channel: '',
+                                                                type: '',
                                                                 payment_channel_owner: '',
                                                                 image: '',
                                                                 instruction: '',

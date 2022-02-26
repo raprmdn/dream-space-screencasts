@@ -361,9 +361,14 @@ export default function Header() {
                                         </div>
                                         <div className="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up w-300px mr-5">
                                             <div className="d-flex align-items-center p-8 rounded-lg">
-                                                <div className="symbol symbol-50px mr-5">
-                                                    <img alt="Logo" src="/assets/media/users/100_1.jpg" />
-                                                </div>
+                                                {
+                                                    auth.user.profile_picture && (
+                                                        <div className="symbol symbol-50px mr-5">
+                                                            <img alt={`${auth.user.name} Profile Picture`}
+                                                                 src={`/storage/${auth.user.profile_picture}`} />
+                                                        </div>
+                                                    )
+                                                }
                                                 <div className="d-flex flex-column">
                                                     <div className="d-flex align-items-center font-weight-bolder">{auth.user.name}</div>
                                                     <span className="font-weight-bold text-muted">{auth.user.email}</span>
