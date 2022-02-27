@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name', 'email', 'password',
         'username', 'description', 'job_title',
         'website', 'github', 'instagram', 'twitter',
-        'facebook', 'profile_picture', 'email_verified_at'
+        'facebook', 'profile_picture'
     ];
 
     /**
@@ -62,7 +62,9 @@ class User extends Authenticatable
      */
     public static function booted()
     {
-        static::creating(fn (User $user) => $user->assignRole(3));
+        static::creating(function (User $user) {
+            return $user->assignRole(3);
+        });
     }
 
     /**
@@ -91,8 +93,9 @@ class User extends Authenticatable
      */
     public function unverified()
     {
-        $this->email_verified_at = null;
-        $this->save();
+        $this->forceFill([
+            'email_verified_at' => null
+        ])->save();
     }
 
     /**

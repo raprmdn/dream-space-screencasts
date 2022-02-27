@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
         Route::get('library', MyLibraryController::class)->name('my-library');
         Route::get('profile', [ProfileController::class, 'index'])->name('profile.settings');
         Route::put('profile/{user:id}', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
     });
     Route::post('add-to-carts', [CartController::class, 'create'])->name('add.carts');
     Route::post('saves', [WatchlistController::class, 'save'])->name('saves');

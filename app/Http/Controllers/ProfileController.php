@@ -27,4 +27,9 @@ class ProfileController extends Controller
 
         return redirect()->back()->with(['type' => 'success', 'message' => 'Profile has been updated.']);
     }
+
+    public function changePassword()
+    {
+        return inertia('Settings/Password/Index');
+    }
 }

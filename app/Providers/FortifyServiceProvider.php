@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
-use Laravel\Fortify\Contracts\{LoginResponse, LogoutResponse, RegisterResponse};
+use Laravel\Fortify\Contracts\{LoginResponse, LogoutResponse, PasswordUpdateResponse, RegisterResponse};
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -48,6 +48,16 @@ class FortifyServiceProvider extends ServiceProvider
                 return redirect()->route('home')->with([
                     'type' => 'success',
                     'message' => 'Successfully registered. Please confirm your email address.'
+                ]);
+            }
+        });
+
+        $this->app->instance(PasswordUpdateResponse::class, new class implements PasswordUpdateResponse {
+            public function toResponse($request)
+            {
+                return redirect()->back()->with([
+                    'type' => 'success',
+                    'message' => 'Password has been changed.'
                 ]);
             }
         });
