@@ -107,15 +107,146 @@ export default function Show() {
                             <div className="card card-custom gutter-b shadow-sm">
                                 <div className="card-body d-flex align-items-center flex-wrap py-3">
                                     <div className="mr-2 py-2">
-                                        <h5 className="font-weight-bolder text-dark">
+                                        <div className="font-size-h5 font-weight-bolder text-dark">
                                             {video.current_video.title}
-                                        </h5>
+                                        </div>
                                         <div className="d-flex flex-wrap align-items-center mt-3 text-dark-50">
                                             <span>Episode {video.current_video.episode}</span>
                                             <span className="label label-dot bg-dark opacity-50 mx-3"/>
                                             <span>{video.current_video.runtime.runtime_formatted}</span>
                                             <span className="label label-dot bg-dark opacity-50 mx-3"/>
                                             <span>{video.current_video.created_at}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="card card-custom card-transparent gutter-b" style={{border: '1px dashed #9CA3AF'}}>
+                                <button className="btn btn-link text-decoration-none text-dark-50"
+                                        data-toggle="modal" data-target="#add_comment">
+                                    <div className="card-body py-1 ml-n5">
+                                        <div className="d-flex align-items-center">
+                                            <div className="symbol symbol-40 symbol-lg-35 symbol-circle mr-4">
+                                                <img alt="Pic" src="/assets/media/users/100_1.jpg"/>
+                                            </div>
+                                            <div>
+                                                Add a comment . . .
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                            <div className="gutter-b">
+                                <div className="timeline timeline-3">
+                                    <div className="timeline-items">
+                                        <div className="timeline-item border-left-0">
+                                            <div className="timeline-media">
+                                                <i className="flaticon2-shield text-danger" />
+                                            </div>
+                                            <div className="timeline-content ml-n5 pseudo-before-none bg-white">
+                                                <div className="d-flex align-items-center justify-content-between mb-3">
+                                                    <div className="mr-2 mt-2">
+                                                        <a href="#" className="text-dark-75 text-hover-primary font-weight-bolder font-size-h6">Rafi Putra Ramadhan</a>
+                                                        <small className="text-muted ml-2">2 hours ago</small>
+                                                    </div>
+                                                    <div className="dropdown ml-2 mt-2">
+                                                        <a href="#" className="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i className="ki ki-more-hor icon-md" />
+                                                        </a>
+                                                        <div className="dropdown-menu p-0 m-0 dropdown-menu-anim dropdown-menu-right" style={{}}>
+                                                            <ul className="navi navi-hover navi-active navi-accent navi-link-rounded-lg">
+                                                                <li className="navi-item mx-2 my-1">
+                                                                    <a href="#" className="navi-link">
+                                                                      <span className="navi-text">
+                                                                          Edit
+                                                                      </span>
+                                                                    </a>
+                                                                </li>
+                                                                <li className="navi-item mx-2 my-1">
+                                                                    <a href="#" className="navi-link">
+                                                                      <span className="navi-text">
+                                                                          Delete
+                                                                      </span>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p className="p-0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
+                                                <div className="d-flex align-items-center ml-n2 mt-n1">
+                                                    <a href="#" className="btn btn-hover-text-primary btn-hover-icon-primary btn-sm btn-text-dark-50 rounded font-weight-bolder font-size-sm p-2 mr-2">
+                                                        <div className="d-flex align-items-center">
+                                                            <i className="far fa-comment-alt icon-1x mr-1" />
+                                                            12
+                                                        </div>
+                                                    </a>
+                                                    <a href="#" className="btn btn-sm btn-text-dark-50 btn-hover-icon-danger btn-hover-text-danger font-weight-bolder rounded font-size-sm p-2">
+                                                        <div className="d-flex align-items-center">
+                                                            <i className="far fa-heart icon-1x mr-1" />
+                                                            75
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className="timeline-reply">
+                                                <div className="timeline-item border-left-0">
+                                                    <div className="timeline-media">
+                                                        <i className="flaticon2-shield text-danger" />
+                                                    </div>
+                                                    <div className="timeline-content ml-n5 pseudo-before-none bg-white">
+                                                        <div className="d-flex align-items-center justify-content-between mb-3">
+                                                            <div className="mr-2 mt-2">
+                                                                <a href="#" className="text-dark-75 text-hover-primary font-weight-bolder font-size-h6">Rafi Putra Ramadhan</a>
+                                                                <small className="text-muted ml-2">3 days ago (edited)</small>
+                                                            </div>
+                                                            <div className="dropdown ml-2 mt-2">
+                                                                <a href="#" className="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <i className="ki ki-more-hor icon-md" />
+                                                                </a>
+                                                                <div className="dropdown-menu p-0 m-0 dropdown-menu-anim dropdown-menu-right" style={{}}>
+                                                                    <ul className="navi navi-hover navi-active navi-accent navi-link-rounded-lg">
+                                                                        <li className="navi-item mx-2 my-1">
+                                                                            <a href="#" className="navi-link">
+                                                                      <span className="navi-text">
+                                                                          Edit
+                                                                      </span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li className="navi-item mx-2 my-1">
+                                                                            <a href="#" className="navi-link">
+                                                                      <span className="navi-text">
+                                                                          Delete
+                                                                      </span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <p className="p-0">Sed ut perspiciatis unde omnis iste natus error sit
+                                                            voluptatem accusantium doloremque laudantium, totam rem aperiam,
+                                                            eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+                                                            Sed ut perspiciatis unde omnis iste natus error sit
+                                                            voluptatem accusantium doloremque laudantium, totam rem aperiam,
+                                                            eaque ipsa quae ab illo inventore veritatis et quasi architecto.
+                                                        </p>
+                                                        <div className="d-flex align-items-center ml-n2 mt-n1">
+                                                            <a href="#" className="btn btn-hover-text-primary btn-hover-icon-primary btn-sm btn-text-dark-50 rounded font-weight-bolder font-size-sm p-2 mr-2">
+                                                                <div className="d-flex align-items-center">
+                                                                    <i className="far fa-comment-alt icon-1x mr-1" />
+                                                                    12
+                                                                </div>
+                                                            </a>
+                                                            <a href="#" className="btn btn-sm btn-text-danger btn-hover-text-dark-25 btn-hover-icon-dark-25 font-weight-bolder rounded font-size-sm p-2">
+                                                                <div className="d-flex align-items-center">
+                                                                    <i className="fas fa-heart icon-1x text-danger mr-1" />
+                                                                    76
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -179,6 +310,40 @@ export default function Show() {
                                             }
                                             </div>
                                     }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="modal modal-sticky modal-sticky-bottom-right-custom" id="add_comment" role="dialog" data-backdrop="static">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="card card-custom">
+                                <div className="card-header align-items-center justify-content-between px-4 py-3">
+                                    <div className="text-left">
+                                        <div className="text-dark-75 font-weight-bold font-size-h5">Add Comment on "VIDEO TITLE"</div>
+                                    </div>
+                                    <div className="text-right">
+                                        <button type="button" className="btn btn-clean btn-sm btn-icon btn-icon-md" data-dismiss="modal">
+                                            <i className="ki ki-close icon-1x" />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="card-footer align-items-center">
+                                    <textarea className="form-control border-0 p-0" rows={10} placeholder="Type a comment." defaultValue={""} />
+                                    <div className="d-flex align-items-center justify-content-between mt-5">
+                                        <div className="mr-3">
+                                            {/*<a href="#" className="btn btn-clean btn-icon btn-md mr-1">*/}
+                                            {/*    <i className="flaticon2-photograph icon-lg" />*/}
+                                            {/*</a>*/}
+                                            {/*<a href="#" className="btn btn-clean btn-icon btn-md">*/}
+                                            {/*    <i className="flaticon2-photo-camera icon-lg" />*/}
+                                            {/*</a>*/}
+                                        </div>
+                                        <div>
+                                            <button type="button" className="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">Comment</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

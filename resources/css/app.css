@@ -33,3 +33,52 @@
     border: 1px;
 }
 
+.pseudo-before-none::before {
+    content: none !important;
+}
+
+.timeline-reply {
+    margin-left: -20px !important;
+    margin-top: 1rem;
+}
+
+.modal.modal-sticky.modal-sticky-bottom-right-custom {
+    padding: 0 !important;
+    max-width: 760px;
+    height: auto;
+    position: fixed;
+    top: auto;
+    left: auto;
+    right: 25px;
+    bottom: 25px;
+    margin: 0;
+    -webkit-box-shadow: 0 0 60px -15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 60px -15px rgba(0, 0, 0, 0.2);
+}
+.modal.modal-sticky.modal-sticky-bottom-right-custom .modal-dialog {
+    position: static;
+    max-width: 760px;
+    width: auto;
+    margin: 0;
+    border-radius: 0.42rem;
+}
+.modal.modal-sticky.modal-sticky-bottom-right-custom .modal-dialog .modal-content {
+    border: 0;
+    border-radius: 0.42rem;
+}
+.modal.modal-sticky.modal-sticky-bottom-right-custom.modal-sticky-lg {
+    max-width: 600px;
+}
+.modal.modal-sticky.modal-sticky-bottom-right-custom.modal-sticky-lg .modal-dialog {
+    max-width: 600px;
+}
+@media (max-width: 991.98px) {
+    .modal.modal-sticky.modal-sticky-bottom-right-custom {
+        bottom: 10px;
+    }
+}
+@media (max-width: 767.98px) {
+    .modal.modal-sticky.modal-sticky-bottom-right-custom {
+        max-width: 90%;
+    }
+}

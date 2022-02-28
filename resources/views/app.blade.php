@@ -18,8 +18,8 @@
     <script src="{{ mix('/js/app.js') }}" defer></script>
     @routes
 </head>
-<body id="kt_body" class="quick-panel-right demo-panel-right offcanvas-right header-fixed subheader-enabled page-loading"
-      style="background-image: url({{ asset('assets/media/bg/bg-10.jpg') }})">
+<body id="kt_body" class="header-fixed subheader-enabled page-loading"
+      style="background-image: url({{ asset('assets/media/bg/bg-10.jpg') }});">
 @inertia
 </body>
 </html>
