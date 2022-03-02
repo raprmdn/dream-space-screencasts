@@ -75,3 +75,9 @@ To run the project:
 ```
 php artisan serve
 ```
+
+Login account:
+```
+email    : admin@dreamspace.com
+password : 123123123
+```
