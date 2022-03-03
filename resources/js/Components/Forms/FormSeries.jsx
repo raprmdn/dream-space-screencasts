@@ -13,6 +13,18 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
     const [ preview, setPreview ] = useState(data.thumbnail ? data.thumbnail : null)
     const optionsTopics = topicsData.map(topic => ({value: topic.id, label: topic.name}))
 
+    const tab = (e) => {
+        if (e.keyCode === 9) {
+            e.preventDefault()
+            e.target.setRangeText(
+                '\t',
+                e.target.selectionStart,
+                e.target.selectionStart,
+                'end'
+            )
+        }
+    }
+
     const changeHandler = (e) => {
         let value = e.target.files[0]
         let reader = new FileReader()
@@ -64,7 +76,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                         <textarea id="description" name="description"
                                   value={data.description} onChange={(e) => setData('description', e.target.value)}
                                   className={`form-control ${errors.description && ('is-invalid')}`}
-                                  placeholder="Enter a series description" rows={10}>
+                                  placeholder="Enter a series description" rows={10} onKeyDown={tab}>
                                     </textarea>
                         {errors.description && (<div className="invalid-feedback mb-n5">{errors.description}</div>)}
                     </div>

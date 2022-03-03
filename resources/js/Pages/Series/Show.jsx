@@ -9,6 +9,9 @@ import SeriesBannerMeta from "../../Components/SeriesBannerMeta";
 import ButtonIcon from "../../Components/ButtonIcon";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import YouTube from 'react-youtube';
+import ReactMarkdown from 'react-markdown'
+import CodeBlock from "../../Components/CodeBlock";
+import remarkGfm from 'remark-gfm'
 
 export default function Show() {
     const { auth } = usePage().props
@@ -111,10 +114,10 @@ export default function Show() {
                                     <span>{series.title}</span>
                                 </span>
                             </h1>
-                            <p className="font-weight-bold font-size-h5 text-muted"
-                               align="justify" style={{whiteSpace: 'pre-line'}}>
-                                {series.description}
-                            </p>
+                            <ReactMarkdown children={series.description}
+                                           components={CodeBlock}
+                                           remarkPlugins={[remarkGfm]}
+                                           className="font-weight-bold text-muted font-size-h6"/>
                             <div className="d-lg-flex mt-2">
                                 {
                                     auth.user !== null ? (

@@ -87,3 +87,11 @@
     }
 }
 
+code {
+    background-color: inherit !important;
+}
+
+pre {
+    border-radius: .475rem;
+}
+

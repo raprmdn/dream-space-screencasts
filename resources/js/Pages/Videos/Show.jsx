@@ -11,6 +11,18 @@ export default function Show() {
     const [ watchable ] = useState(!!video.current_video.source)
     const [ currentEpisode ] = useState(video.current_video.episode)
 
+    const tab = (e) => {
+        if (e.keyCode === 9) {
+            e.preventDefault()
+            e.target.setRangeText(
+                '\t',
+                e.target.selectionStart,
+                e.target.selectionStart,
+                'end'
+            )
+        }
+    }
+
     useEffect(() => {
         if (videos.length > 10) {
             const cardPosition = document.getElementById(`${currentEpisode}`);
@@ -330,7 +342,8 @@ export default function Show() {
                                     </div>
                                 </div>
                                 <div className="card-footer align-items-center">
-                                    <textarea className="form-control border-0 p-0" rows={10} placeholder="Type a comment." defaultValue={""} />
+                                    <textarea className="form-control border-0 p-0" rows={10}
+                                              placeholder="Type a comment." defaultValue={""} onKeyDown={tab} />
                                     <div className="d-flex align-items-center justify-content-between mt-5">
                                         <div className="mr-3">
                                             {/*<a href="#" className="btn btn-clean btn-icon btn-md mr-1">*/}
