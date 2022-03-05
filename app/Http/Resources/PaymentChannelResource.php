@@ -26,7 +26,7 @@ class PaymentChannelResource extends JsonResource
             'image' => $this->imageChannel,
             'instruction' => $this->instruction,
             'status' => $this->status,
-            'archived' => $this->archived
+            'archived' => (bool) $this->archived
         ];
     }
 }

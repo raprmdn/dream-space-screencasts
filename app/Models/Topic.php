@@ -38,7 +38,7 @@ class Topic extends Model
      */
     public function scopeSearch($query, $params)
     {
-        return $query->whereRaw('LOWER(name) like ?', "%$params%")
+        return $query->whereRaw('LOWER(name) like ?', '%' . strtolower($params) . '%')
             ->orderBy('position')->paginate(20)
             ->appends(request()->only('search'));
     }

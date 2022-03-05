@@ -59,7 +59,7 @@ class Series extends Model
      */
     public function scopeSearch($query, $params)
     {
-        return $query->whereRaw('LOWER(title) like ?', "%$params%")
+        return $query->whereRaw('LOWER(title) like ?', '%' . strtolower($params) . '%')
             ->latest()->paginate(20)
             ->appends(request()->only('search'));
     }
