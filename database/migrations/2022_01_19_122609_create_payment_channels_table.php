@@ -18,7 +18,7 @@ class CreatePaymentChannelsTable extends Migration
             $table->string('virtual_number')->nullable();
             $table->string('payment_channel_owner')->nullable();
             $table->string('image')->nullable();
-            $table->string('instruction')->nullable();
+            $table->longText('instruction')->nullable();
             $table->string('status')->nullable();
             $table->boolean('archived')->nullable();
             $table->timestamps();

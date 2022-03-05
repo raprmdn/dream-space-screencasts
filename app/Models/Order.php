@@ -23,7 +23,7 @@ class Order extends Model
      */
     public function scopeSearch($query, $params)
     {
-        return $query->where('invoice', 'ilike', '%' . $params . '%')
+        return $query->where('invoice', 'like', '%' . $params . '%')
             ->latest()->paginate(20)
             ->appends(request()->only('search'));
     }

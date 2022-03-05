@@ -19,14 +19,14 @@ class PaymentTypeAndChannelSeeder extends Seeder
 
         collect([
            [
-               'title' => 'Manual Transfer',
+               'payment_type' => 'Manual Transfer',
                'identifier' => 'manual-transfer',
                'description' => 'Pembayaran transfer secara manual, upload bukti pembayaran jika diperlukan.',
                'status' => 'Inactive',
                'archived' => false,
            ],
             [
-                'title' => 'Instant Payment',
+                'payment_type' => 'Instant Payment',
                 'identifier' => 'instant-payment',
                 'description' => 'Verifikasi pembayaran secara otomatis, tanpa perlu upload bukti pembayaran.',
                 'status' => 'Inactive',
@@ -44,7 +44,7 @@ class PaymentTypeAndChannelSeeder extends Seeder
          * Put your manual payment channel you want.
          * 'identifier_channel' only required for Instant Payment Gateway (Midtrans).
          */
-        $manual_payment = collect([
+        $manual_payment_channels = [
             [
                 'payment_channel' => 'BRI',
                 'identifier_code' => Str::uuid(),
@@ -53,7 +53,7 @@ class PaymentTypeAndChannelSeeder extends Seeder
                 'status' => 'Inactive',
                 'archived' => false,
             ]
-        ]);
+        ];
 
         /*
          * Put your instant payment channel you want.
@@ -64,13 +64,13 @@ class PaymentTypeAndChannelSeeder extends Seeder
          * https://docs.midtrans.com/en/core-api/convenience-store?id=sample-request-and-request-body
          */
 
-        $instant_payment = collect([
+        $instant_payment_channels = [
             [
                 'payment_channel' => 'BRI',
                 'identifier_channel' => 'bri',
                 'type' => 'bank_transfer',
                 'identifier_code' => Str::uuid(),
-                'instruction ' => '
+                'instruction' => '
                     - Log in Aplikasi BRImo
                     - Pilih menu "BRIVA"
                     - Masukkan Virtual Number BRIVA
@@ -86,7 +86,7 @@ class PaymentTypeAndChannelSeeder extends Seeder
                 'identifier_channel' => 'bca',
                 'type' => 'bank_transfer',
                 'identifier_code' => Str::uuid(),
-                'instruction ' => '
+                'instruction' => '
                     - Log in BCA Mobile App
                     - Pilih m-BCA
                     - Masukkan kode akses m-BCA
@@ -104,7 +104,7 @@ class PaymentTypeAndChannelSeeder extends Seeder
                 'identifier_channel' => 'bni',
                 'type' => 'bank_transfer',
                 'identifier_code' => Str::uuid(),
-                'instruction ' => '
+                'instruction' => '
                     - Log in BNI Mobile Banking
                     - Pilih menu "Transfer"
                     - Pilih menu Virtual Account Billing
@@ -120,7 +120,7 @@ class PaymentTypeAndChannelSeeder extends Seeder
                 'identifier_channel' => 'mandiri',
                 'type' => 'echannel',
                 'identifier_code' => Str::uuid(),
-                'instruction ' => '
+                'instruction' => '
                     - Login Mandiri Internet Banking
                     - Pilih menu Pembayaran
                     - Pilih menu Multipayment
@@ -137,7 +137,7 @@ class PaymentTypeAndChannelSeeder extends Seeder
                 'identifier_channel' => 'permata',
                 'type' => 'bank_transfer',
                 'identifier_code' => Str::uuid(),
-                'instruction ' => '
+                'instruction' => '
                     - Log in PermataMobile
                     - Pilih pembayaran tagihan
                     - Pilih Virtual Account
@@ -155,7 +155,7 @@ class PaymentTypeAndChannelSeeder extends Seeder
                 'identifier_channel' => 'gopay',
                 'type' => 'gopay',
                 'identifier_code' => Str::uuid(),
-                'instruction ' => '
+                'instruction' => '
                     - Buka aplikasi Gojek
                     - Lakukan Scan pada QR Code
                     - Cek payment details pada aplikasi
@@ -171,7 +171,7 @@ class PaymentTypeAndChannelSeeder extends Seeder
                 'identifier_channel' => 'alfamart',
                 'type' => 'cstore',
                 'identifier_code' => Str::uuid(),
-                'instruction ' => '
+                'instruction' => '
                     - Simpan Payment Code yang diberikan
                     - Pergi ke Alfamart
                     - Pergi ke kasir dan berikan Payment Code
@@ -184,7 +184,7 @@ class PaymentTypeAndChannelSeeder extends Seeder
             [
                 'payment_channel' => 'Indomaret',
                 'identifier_channel' => 'indomaret',
-                'instruction ' => '
+                'instruction' => '
                     - Simpan Payment Code yang diberikan
                     - Pergi ke Indomaret
                     - Pergi ke kasir dan berikan Payment Code
@@ -196,12 +196,12 @@ class PaymentTypeAndChannelSeeder extends Seeder
                 'status' => 'Inactive',
                 'archived' => true,
             ],
-        ]);
+        ];
 
-        $payment_type_1 = PaymentType::find(1);
-        $payment_type_1->paymentChannels()->create([$manual_payment]);
+        $manual = PaymentType::find(1);
+        $instant = PaymentType::find(2);
 
-        $payment_type_2 = PaymentType::find(2);
-        $payment_type_2->paymentChannels()->create([$instant_payment]);
+        $manual->paymentChannels()->createMany($manual_payment_channels);
+        $instant->paymentChannels()->createMany($instant_payment_channels);
     }
 }

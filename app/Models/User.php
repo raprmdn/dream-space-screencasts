@@ -78,8 +78,8 @@ class User extends Authenticatable
     public function scopeSearch($query, $params)
     {
         return $query->where(function ($query) use($params) {
-                    $query->where('name', 'ilike', '%' . $params . '%')
-                        ->orWhere('email', 'ilike', '%' . $params . '%');
+                        $query->whereRaw('LOWER(name) like ?', "%$params%")
+                        ->orWhereRaw('LOWER(email) like ?', "%$params%");
                     })
                     ->latest()->paginate(16)
                     ->appends(request()->only('search'));
