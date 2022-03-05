@@ -4,6 +4,9 @@ import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Breadcrumb from "../../../Components/Breadcrumb";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import SeriesBannerMeta from "../../../Components/SeriesBannerMeta";
+import CodeBlock from "../../../Components/CodeBlock";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
 
 export default function Index() {
     const { series: libraries } = usePage().props;
@@ -51,10 +54,10 @@ export default function Index() {
                                                                     </Link>
                                                                 </div>
                                                                 <div className="d-flex mt-5 mr-5">
-                                                                    <p className="text-muted"
-                                                                       align="justify" style={{whiteSpace: 'pre-line'}}>
-                                                                        {series.description}
-                                                                    </p>
+                                                                    <ReactMarkdown children={series.description}
+                                                                                   components={CodeBlock}
+                                                                                   remarkPlugins={[remarkGfm]}
+                                                                                   className="text-muted"/>
                                                                 </div>
                                                             </div>
                                                             <div className="d-flex">

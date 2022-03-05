@@ -208,7 +208,8 @@ class User extends Authenticatable
      */
     public function watchlist(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Series::class, 'user_watchlist', 'user_id', 'series_id');
+        return $this->belongsToMany(Series::class, 'user_watchlist', 'user_id', 'series_id')
+            ->withTimestamps()->orderByPivot('created_at', 'desc');
     }
 
     /**
@@ -224,7 +225,8 @@ class User extends Authenticatable
      */
     public function purchases(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Series::class, 'purchased_series', 'user_id', 'series_id')->withTimestamps();
+        return $this->belongsToMany(Series::class, 'purchased_series', 'user_id', 'series_id')
+            ->withTimestamps()->orderByPivot('created_at', 'desc');
     }
 
     /**

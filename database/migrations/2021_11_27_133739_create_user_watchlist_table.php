@@ -11,6 +11,7 @@ class CreateUserWatchlistTable extends Migration
         Schema::create('user_watchlist', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('series_id')->constrained('series')->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 

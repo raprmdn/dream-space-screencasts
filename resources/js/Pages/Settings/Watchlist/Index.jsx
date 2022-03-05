@@ -6,6 +6,9 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import {Inertia} from "@inertiajs/inertia";
 import SeriesBannerMeta from "../../../Components/SeriesBannerMeta";
+import CodeBlock from "../../../Components/CodeBlock";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
 
 export default function Index() {
     const { data:watchlists } = usePage().props.watchlist
@@ -62,10 +65,10 @@ export default function Index() {
                                                                     </Link>
                                                                 </div>
                                                                 <div className="d-flex mt-5 mr-5">
-                                                                    <p className="text-muted"
-                                                                       align="justify" style={{whiteSpace: 'pre-line'}}>
-                                                                        {series.description}
-                                                                    </p>
+                                                                    <ReactMarkdown children={series.description}
+                                                                                   components={CodeBlock}
+                                                                                   remarkPlugins={[remarkGfm]}
+                                                                                   className="text-muted"/>
                                                                 </div>
                                                             </div>
                                                             <div className="d-flex">

@@ -99,7 +99,7 @@ class SeriesService
     public function getUserPurchasedSeries()
     {
         $series = Auth::user()->purchases()->with(['topics:id,name,slug', 'videos'])
-                    ->oldest()->get()->map(function ($series) {
+                    ->get()->map(function ($series) {
                         Helper::castingRuntime($series);
                         unset($series->videos);
                         return $series;

@@ -13,7 +13,7 @@ class WatchlistService
     public function getUserWatchlist(): SeriesCollection
     {
         $watchlist = Auth::user()->watchlist()->with(['topics:id,name,slug', 'videos'])
-                    ->oldest()->get()->map(function ($series) {
+                    ->get()->map(function ($series) {
                         Helper::castingRuntime($series);
                         unset($series->videos);
                         return $series;

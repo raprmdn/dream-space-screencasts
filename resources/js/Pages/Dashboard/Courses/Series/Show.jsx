@@ -6,6 +6,9 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import Modal from "../../../../Components/Modal";
 import FormVideos from "../../../../Components/Forms/FormVideos";
 import Swal from "sweetalert2";
+import CodeBlock from "../../../../Components/CodeBlock";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
 
 export default function Show() {
     const { data: series } = usePage().props.series
@@ -104,9 +107,9 @@ export default function Show() {
                                 </div>
                                 <hr/>
                                 <div className="text-dark-50 m-0 pt-5 font-weight-normal">
-                                    <p align="justify" style={{whiteSpace: 'pre-line'}}>
-                                        {series.description}
-                                    </p>
+                                    <ReactMarkdown children={series.description}
+                                                   components={CodeBlock}
+                                                   remarkPlugins={[remarkGfm]}/>
                                 </div>
                                 <hr/>
                                 <div className="w-auto w-lg-auto w-xxl-600px">

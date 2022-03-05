@@ -11,9 +11,12 @@ use Midtrans\{Config, CoreApi, Notification};
 
 class OrderService
 {
+    protected $midtransConfig;
+
     public function __construct()
     {
         $midtransConfig = MidtransConfig::first();
+        $this->midtransConfig = $midtransConfig;
         Config::$serverKey = $midtransConfig->server_key;
         Config::$isProduction = $midtransConfig->environment;
         Config::$isSanitized = $midtransConfig->sanitized;
@@ -28,6 +31,9 @@ class OrderService
 
         $this->response = null;
         DB::transaction(function () use ($channel) {
+            $midtransConfigPaymentIsEnabled = $this->midtransConfig->status === 'Enable';
+            $paymentTypeIsActive = $channel->paymentType->status === 'Active';
+
             $invoice = now()->format('dmy') . rand(100000, 999999);
             $identifier = Str::uuid();
 
@@ -51,8 +57,12 @@ class OrderService
              *  Before made payment with Midtrans, first make sure u have to put client and server key in Midtrans Config.
              */
             if ($channel->identifier_channel !== null) {
-                // Do Instant Payment w/ Midtrans
-                $payloads = $this->_instantPaymentRequest($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform);
+               if ( $midtransConfigPaymentIsEnabled  && $paymentTypeIsActive ) {
+                   // Do Instant Payment w/ Midtrans
+                   $payloads = $this->_instantPaymentRequest($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform);
+               } else {
+                   throw new Exception("There's was an issue, please try again later.");
+               }
             } else {
                 // Do Manual Transfer
                 $payloads = null;
