@@ -109,9 +109,9 @@ export default function SeriesTrashed(props) {
                                                                   className="btn btn-sm btn-clean btn-icon" data-toggle="tooltip" title="Restore">
                                                                 <i className="la la-redo-alt text-success" />
                                                             </Link>
-                                                            <button onClick={() => deleteHandler(series)} className="btn btn-sm btn-clean btn-icon" data-toggle="tooltip" title="Delete permanent">
-                                                                <i className="la la-trash text-danger" />
-                                                            </button>
+                                                            {/*<button onClick={() => deleteHandler(series)} className="btn btn-sm btn-clean btn-icon" data-toggle="tooltip" title="Delete permanent">*/}
+                                                            {/*    <i className="la la-trash text-danger" />*/}
+                                                            {/*</button>*/}
                                                         </div>
                                                     </td>
                                                 </tr>

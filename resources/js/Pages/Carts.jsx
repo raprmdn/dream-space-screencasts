@@ -13,6 +13,7 @@ export default function Carts() {
     const { data:payment_type } = usePage().props.payment_type
     const [ paymentIdentifierCode, setPaymentIdentifierCode ] = useState(null)
     const [ loading, setLoading ] = useState(false)
+    const [ onCheckout, setOnCheckout ] = useState(false)
 
     const remove = (e, series) => {
         e.preventDefault()
@@ -51,16 +52,12 @@ export default function Carts() {
         }, {
             preserveScroll: true,
             onStart: () => {
-                setLoading(true)
+                setOnCheckout(true)
                 window.$('#selectPayment').modal('hide')
             },
             onFinish: () => {
-                setLoading(false)
+                setOnCheckout(false)
             },
-            onSuccess: () => {
-                setLoading(false)
-                window.$('#selectPayment').modal('hide')
-            }
         })
     }
 
@@ -153,9 +150,9 @@ export default function Carts() {
                                             <div className="separator separator-solid mb-5"/>
                                             <SummaryLineItem label={'Subtotal'} textType={'text-primary'}
                                                              labelPrice={`Rp. ${carts.cart_summary.subtotal_formatted},-`} />
-                                            <button className={`btn btn-primary btn-block font-weight-bold mr-5 mt-8 ${loading && ('spinner spinner-sm spinner-white spinner-right')}`}
-                                                    data-toggle="modal" data-target="#selectPayment" disabled={loading}>
-                                                {loading ? 'Please wait...' : 'Select Payment'}
+                                            <button className={`btn btn-primary btn-block font-weight-bold mr-5 mt-8 ${onCheckout && ('spinner spinner-sm spinner-white spinner-right')}`}
+                                                    data-toggle="modal" data-target="#selectPayment" disabled={onCheckout}>
+                                                {onCheckout ? 'Please wait...' : 'Select Payment'}
                                             </button>
                                         </div>
                                     </div>
@@ -276,9 +273,9 @@ export default function Carts() {
                         </button>
                         <button type="submit"
                                 onClick={(e) => _checkoutHandler(e)}
-                                className={`btn btn-primary font-weight-bold ${loading && ('spinner spinner-sm spinner-white spinner-right')}`}
-                                disabled={paymentIdentifierCode === null || loading}>
-                            {loading ? 'Please wait...' : 'Checkout'}
+                                className={`btn btn-primary font-weight-bold ${onCheckout && ('spinner spinner-sm spinner-white spinner-right')}`}
+                                disabled={paymentIdentifierCode === null || onCheckout}>
+                            {onCheckout ? 'Please wait...' : 'Checkout'}
                         </button>
                     </div>
                 </div>

@@ -5,12 +5,17 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import Label from "../Label";
 import ButtonSubmit from "../ButtonSubmit";
+import Modal from "../Modal";
+import CodeBlock from "../CodeBlock";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
 
 const animatedComponents = makeAnimated();
 
 export default function FormSeries({topicsData, submitHandler, data, setData, errors, processing, submitLabel}) {
     const fileInput = useRef()
-    const [ preview, setPreview ] = useState(data.thumbnail ? data.thumbnail : null)
+    const [ previewImage, setPreviewImage ] = useState(data.thumbnail ? data.thumbnail : null)
+    const [ previewDescription, setPreviewDescription ] = useState('')
     const optionsTopics = topicsData.map(topic => ({value: topic.id, label: topic.name}))
 
     const tab = (e) => {
@@ -29,7 +34,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
         let value = e.target.files[0]
         let reader = new FileReader()
         reader.onload = () => {
-            setPreview(reader.result)
+            setPreviewImage(reader.result)
         }
         reader.readAsDataURL(value)
         setData('thumbnail', value)
@@ -37,8 +42,16 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
 
     const removePicture = () => {
         setData('thumbnail', null)
-        setPreview(null)
+        setPreviewImage(null)
         fileInput.current.value = null
+    }
+
+    const _previewDescription = () => {
+        setPreviewDescription(data.description)
+    }
+
+    const _closeModal = () => {
+        setPreviewDescription('')
     }
 
     return (
@@ -71,13 +84,31 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                         {errors.topics && (<span className="text-danger font-size-sm mb-n5">{errors.topics}</span>)}
                     </div>
                     <div className="form-group">
-                        <Label labelFor={"description"} children={"Series Description"}/>
-                        <span className="text-danger"> * </span>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div>
+                                <Label labelFor={"description"} children={"Series Description"}/>
+                                <span className="text-danger"> * </span>
+                            </div>
+                            <div className="mb-1 text-dark-75">
+                                <button type="button" className="btn btn-sm btn-outline-secondary"
+                                        data-toggle="modal" data-target="#preview"
+                                        disabled={!data.description}
+                                        onClick={_previewDescription}>
+                                    <i className="fa fa-search icon-sm mr-1"/>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
                         <textarea id="description" name="description"
                                   value={data.description} onChange={(e) => setData('description', e.target.value)}
                                   className={`form-control ${errors.description && ('is-invalid')}`}
                                   placeholder="Enter a series description" rows={10} onKeyDown={tab}>
                                     </textarea>
+                        <span className="form-text text-muted"> * You may use Markdown with
+                            <a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax" target="_blank">
+                                &nbsp;GitHub-flavored
+                            </a> code blocks.
+                        </span>
                         {errors.description && (<div className="invalid-feedback mb-n5">{errors.description}</div>)}
                     </div>
                     <div className="form-group row">
@@ -162,7 +193,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                             <input type="text" id="preview_series" name="preview_series"
                                    value={data.preview_series} onChange={(e) => setData('preview_series', e.target.value)}
                                    className={`form-control ${errors.preview_series && ('is-invalid')}`}
-                                   placeholder="Enter a series preview url. ex:_XyBa8QsVQU" />
+                                   placeholder="Enter a series preview url. ex: cM963tI7Q_k" />
                             {errors.preview_series && (<div className="invalid-feedback mb-n5">{errors.preview_series}</div>)}
                         </div>
                     </div>
@@ -234,11 +265,11 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                                ref={fileInput}
                         />
                         {
-                            preview && (
+                            previewImage && (
                                 <div className="position-relative">
                                     <LazyLoadImage
                                         effect="blur"
-                                        src={preview}
+                                        src={previewImage}
                                         className="my-3 rounded-lg mw-100" />
                                     <button onClick={removePicture} className="btn btn-xs btn-icon btn-circle btn-white btn-shadow position-absolute mt-3 top-0 right-0">
                                         <i className="ki ki-bold-close icon-xs text-muted" />
@@ -253,6 +284,17 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                     <ButtonSubmit label={submitLabel} optionalClass={"btn-block"} processing={processing}/>
                 </div>
             </form>
+            {
+                previewDescription && (
+                    <Modal trigger={"preview"} title={"Preview Description"} size={"modal-xl"} onClick={_closeModal}>
+                        <div className="card-body">
+                            <ReactMarkdown children={previewDescription}
+                                           components={CodeBlock}
+                                           remarkPlugins={[remarkGfm]}/>
+                        </div>
+                    </Modal>
+                )
+            }
         </div>
     )
 }
