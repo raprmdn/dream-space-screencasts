@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Carbon\Carbon;
+
 class Helper
 {
     public static function rupiahFormat($number): string
@@ -33,5 +35,16 @@ class Helper
             'm' => $m,
             's' => $s
         ];
+    }
+
+    public static function runtimeFormatted($runtime): string
+    {
+        $runtime_formatted = Carbon::parse($runtime)->format('h:i:s');
+        $exploded = explode(':', $runtime_formatted);
+        $exploded[0] === '12'
+            ?  $runtimeFormatted = Carbon::parse($runtime)->format('i:s')
+            :  $runtimeFormatted = Carbon::parse($runtime)->format('h:i:s');
+
+        return $runtimeFormatted;
     }
 }

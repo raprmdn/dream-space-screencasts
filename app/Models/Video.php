@@ -10,7 +10,8 @@ class Video extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'series_id', 'title', 'source', 'episode', 'runtime', 'is_free', 'is_archived'
+        'series_id', 'title', 'source', 'episode',
+        'runtime', 'is_free', 'is_archived', 'description'
     ];
 
     /**

@@ -9,6 +9,7 @@ import Modal from "../Modal";
 import CodeBlock from "../CodeBlock";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
+import { keyTab } from "../Helpers";
 
 const animatedComponents = makeAnimated();
 
@@ -17,18 +18,6 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
     const [ previewImage, setPreviewImage ] = useState(data.thumbnail ? data.thumbnail : null)
     const [ previewDescription, setPreviewDescription ] = useState('')
     const optionsTopics = topicsData.map(topic => ({value: topic.id, label: topic.name}))
-
-    const tab = (e) => {
-        if (e.keyCode === 9) {
-            e.preventDefault()
-            e.target.setRangeText(
-                '\t',
-                e.target.selectionStart,
-                e.target.selectionStart,
-                'end'
-            )
-        }
-    }
 
     const changeHandler = (e) => {
         let value = e.target.files[0]
@@ -102,7 +91,7 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                         <textarea id="description" name="description"
                                   value={data.description} onChange={(e) => setData('description', e.target.value)}
                                   className={`form-control ${errors.description && ('is-invalid')}`}
-                                  placeholder="Enter a series description" rows={10} onKeyDown={tab}>
+                                  placeholder="Enter a series description" rows={10} onKeyDown={keyTab}>
                                     </textarea>
                         <span className="form-text text-muted"> * You may use Markdown with
                             <a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax" target="_blank">

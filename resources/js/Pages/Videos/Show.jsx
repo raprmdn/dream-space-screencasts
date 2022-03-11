@@ -4,24 +4,16 @@ import {Head, Link, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
 import YouTube from "react-youtube";
 import CardVideoLink from "../../Components/CardVideoLink";
+import CodeBlock from "../../Components/CodeBlock";
+import remarkGfm from "remark-gfm";
+import ReactMarkdown from "react-markdown";
+import { keyTab } from "../../Components/Helpers";
 
 export default function Show() {
     const { video, series, videos, auth } = usePage().props
     const [ loadingVideo, setLoadingVideo ] = useState(true)
     const [ watchable ] = useState(!!video.current_video.source)
     const [ currentEpisode ] = useState(video.current_video.episode)
-
-    const tab = (e) => {
-        if (e.keyCode === 9) {
-            e.preventDefault()
-            e.target.setRangeText(
-                '\t',
-                e.target.selectionStart,
-                e.target.selectionStart,
-                'end'
-            )
-        }
-    }
 
     useEffect(() => {
         if (videos.length > 10) {
@@ -117,19 +109,31 @@ export default function Show() {
                     <div className="row">
                         <div className="col-xl-7">
                             <div className="card card-custom gutter-b shadow-sm">
-                                <div className="card-body d-flex align-items-center flex-wrap py-3">
-                                    <div className="mr-2 py-2">
-                                        <div className="font-size-h5 font-weight-bolder text-dark">
-                                            {video.current_video.title}
-                                        </div>
-                                        <div className="d-flex flex-wrap align-items-center mt-3 text-dark-50">
-                                            <span>Episode {video.current_video.episode}</span>
-                                            <span className="label label-dot bg-dark opacity-50 mx-3"/>
-                                            <span>{video.current_video.runtime.runtime_formatted}</span>
-                                            <span className="label label-dot bg-dark opacity-50 mx-3"/>
-                                            <span>{video.current_video.created_at}</span>
+                                <div className="card-body py-3">
+                                    <div className="d-flex align-items-center flex-wrap">
+                                        <div className="mr-2 py-2">
+                                            <div className="font-size-h5 font-weight-bolder text-dark">
+                                                {video.current_video.title}
+                                            </div>
+                                            <div className="d-flex flex-wrap align-items-center mt-3 text-dark-50">
+                                                <span>Episode {video.current_video.episode}</span>
+                                                <span className="label label-dot bg-dark opacity-50 mx-3"/>
+                                                <span>{video.current_video.runtime.runtime_formatted}</span>
+                                                <span className="label label-dot bg-dark opacity-50 mx-3"/>
+                                                <span>{video.current_video.created_at}</span>
+                                            </div>
                                         </div>
                                     </div>
+                                    {
+                                        video.current_video.description && (
+                                            <>
+                                                <div className="separator separator-solid separator-border-2 my-4"/>
+                                                <ReactMarkdown children={video.current_video.description}
+                                                               components={CodeBlock}
+                                                               remarkPlugins={[remarkGfm]}/>
+                                            </>
+                                        )
+                                    }
                                 </div>
                             </div>
                             <div className="card card-custom card-transparent gutter-b" style={{border: '1px dashed #9CA3AF'}}>
@@ -343,7 +347,7 @@ export default function Show() {
                                 </div>
                                 <div className="card-footer align-items-center">
                                     <textarea className="form-control border-0 p-0" rows={10}
-                                              placeholder="Type a comment." defaultValue={""} onKeyDown={tab} />
+                                              placeholder="Type a comment." defaultValue={""} onKeyDown={keyTab} />
                                     <div className="d-flex align-items-center justify-content-between mt-5">
                                         <div className="mr-3">
                                             {/*<a href="#" className="btn btn-clean btn-icon btn-md mr-1">*/}

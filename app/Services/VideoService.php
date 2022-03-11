@@ -89,6 +89,7 @@ class VideoService
             'source' => $attributes['source'],
             'episode' => $attributes['episode'],
             'runtime' => $attributes['runtime'],
+            'description' => $attributes['description'],
             'is_free' => $attributes['is_free'],
             'is_archived' => $attributes['is_archived']
         ];

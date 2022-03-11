@@ -17,6 +17,7 @@ export default function Index(props) {
         source: '',
         episode: '',
         runtime: '',
+        description: '',
         is_free: false,
         is_archived: false
     });

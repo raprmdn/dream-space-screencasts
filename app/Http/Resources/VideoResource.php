@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\Helper;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Request;
@@ -16,11 +17,7 @@ class VideoResource extends JsonResource
      */
     public function toArray($request)
     {
-        $runtime_formatted = Carbon::parse($this->runtime)->format('h:i:s');
-        $exploded = explode(':', $runtime_formatted);
-        $exploded[0] === '12'
-            ? $runtimeFormatted = Carbon::parse($this->runtime)->format('i:s')
-            : $runtimeFormatted = Carbon::parse($this->runtime)->format('h:i:s');
+        $runtimeFormatted = Helper::runtimeFormatted($this->runtime);
 
         return [
             'id' => $this->id,
@@ -31,6 +28,7 @@ class VideoResource extends JsonResource
                 'runtime_unformatted' => $this->runtime,
                 'runtime_formatted' => $runtimeFormatted,
             ],
+            'description' => $this->description,
             'is_free' => $this->is_free,
             'is_archived' => $this->is_archived,
             'series' => $this->whenLoaded('series'),

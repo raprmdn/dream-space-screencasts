@@ -1,13 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Select from "react-select";
 import NumberFormat from 'react-number-format';
 import Label from "../Label";
 import ButtonSubmit from "../ButtonSubmit";
+import { keyTab } from "../Helpers";
+import ReactMarkdown from "react-markdown";
+import CodeBlock from "../CodeBlock";
+import remarkGfm from "remark-gfm";
 
 export default function FormVideos({seriesData, data, setData, submitHandler, errors, processing, submitLabel}) {
+    const [ onPreview, setOnPreview ] = useState(false)
     let options = null;
     if (route().current() !== 'series.add_videos') {
         options = seriesData.map(series => ({value: series.id, label: series.title}))
+    }
+
+    const _previewClick = () => {
+        setOnPreview(!onPreview)
     }
 
     return (
@@ -49,6 +58,50 @@ export default function FormVideos({seriesData, data, setData, submitHandler, er
                                className={`form-control ${errors.title && ('is-invalid')}`}
                                placeholder="Enter a video title" />
                         {errors.title && (<div className="invalid-feedback mb-n5">{errors.title}</div>)}
+                    </div>
+                    <div className="form-group">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div>
+                                <Label labelFor={"description"} children={"Series Description"}/>
+                            </div>
+                            <div className="mb-1 text-dark-75">
+                                <button type="button" className="btn btn-sm btn-outline-secondary"
+                                        data-toggle="modal" data-target="#preview"
+                                        disabled={!data.description}
+                                        onClick={_previewClick}
+                                >
+                                    <i className="fa fa-search icon-sm mr-1"/>
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                        {
+                            !onPreview
+                                ?
+                                <>
+                                    <textarea id="description" name="description"
+                                              value={data.description ? data.description : ''} onChange={(e) => setData('description', e.target.value)}
+                                              className={`form-control ${errors.description && ('is-invalid')}`}
+                                              placeholder="Enter a series description" rows={10} onKeyDown={keyTab}>
+                                    </textarea>
+                                </>
+                                :
+                                <>
+                                    <div className="example">
+                                        <div className="example-preview">
+                                            <ReactMarkdown children={data.description}
+                                                           components={CodeBlock}
+                                                           remarkPlugins={[remarkGfm]}/>
+                                        </div>
+                                    </div>
+                                </>
+                        }
+                        <span className="form-text text-muted"> * You may use Markdown with
+                            <a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax" target="_blank">
+                                &nbsp;GitHub-flavored
+                            </a> code blocks.
+                        </span>
+                        {errors.description && (<div className="invalid-feedback mb-n5">{errors.description}</div>)}
                     </div>
                     <div className="form-group row">
                         <div className="col-lg-4">
