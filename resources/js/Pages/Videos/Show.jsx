@@ -33,6 +33,19 @@ export default function Show() {
         },
     };
 
+    const _videoNavTitle = () => {
+        let label;
+        if (video.has_next) {
+            label = `Next eps ${video.next_video_is.episode}. ${video.next_video_is.title}.`
+        } else if (series.status === 'Development') {
+            label = `Nantikan video-video terbaru dari Series "${series.title}".`
+        } else {
+            label = `Terima kasih, Anda telah menyelesaikan Series "${series.title}".`
+        }
+
+        return label
+    }
+
     return (
         <>
             <Head title={`${video.current_video.episode}. ${video.current_video.title} - ${series.title}`}/>
@@ -77,7 +90,36 @@ export default function Show() {
             </Jumbotron>
             <div className="d-flex flex-column-fluid mt-10">
                 <div className="container">
-                    <div className="card card-custom gutter-b mt-n17 shadow-sm">
+
+                    {/* Mobile Screen Navigator */}
+                    <div className="row d-flex d-sm-none mb-8">
+                        <div className="col-6">
+                            <Link as={"button"} className="btn btn-white btn-hover-white p-5 mt-n17 btn-lg btn-block"
+                                  href={video.has_prev && (route('watch.video', [series.slug, video.prev_to]))}
+                                  disabled={!video.has_prev}>
+                                <div className="d-flex symbol-group symbol-hover justify-content-center">
+                                    <i className={`flaticon2-back ${video.has_prev ? 'text-dark' : 'text-muted'}`}/>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className="col-6">
+                            <Link as={"button"} className="btn btn-white btn-hover-white p-5 mt-n17 btn-lg btn-block"
+                                  href={video.has_next && (route('watch.video', [series.slug, video.next_video_is.episode]))}
+                                  disabled={!video.has_next}>
+                                <div className="d-flex symbol-group symbol-hover justify-content-center">
+                                    <i className={`flaticon2-next ${video.has_next ? 'text-dark' : 'text-muted'}`}/>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                    <div className="d-flex d-sm-none card card-custom gutter-b shadow-sm">
+                        <div className="d-flex card-body justify-content-center">
+                            {_videoNavTitle()}
+                        </div>
+                    </div>
+                    {/* End Mobile Screen Navigator */}
+
+                    <div className="d-none d-sm-flex card card-custom gutter-b mt-n17 shadow-sm">
                         <div className="card-body d-flex align-items-center justify-content-between flex-wrap py-3">
                             <div className="symbol-group symbol-hover py-2">
                                 <Link as={"button"} className="btn btn-link"
@@ -87,15 +129,9 @@ export default function Show() {
                                 </Link>
                             </div>
                             <div className="d-flex align-items-center mr-2 py-2">
-                                <h3 className="font-weight-bolder mb-0">
-                                    {
-                                        video.has_next
-                                        ?
-                                            <>Next eps {video.next_video_is.episode}. {video.next_video_is.title}</>
-                                        :
-                                            <>Terima kasih, Anda telah menyelesaikan Series "{series.title}". </>
-                                    }
-                                </h3>
+                                <div className="font-weight-bolder font-size-h3-md mb-0">
+                                    {_videoNavTitle()}
+                                </div>
                             </div>
                             <div className="symbol-group symbol-hover py-2">
                                 <Link as={"button"} className="btn btn-link"
