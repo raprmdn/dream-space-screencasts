@@ -103,7 +103,7 @@ Login account:
 email    : admin@dreamspace.com
 password : 123123123
 ```
-Otherwise, if you want to edit the React file, install NPM file by run
+Then, if you want to edit the React file, install NPM file by run:
 ```shell
 npm install
 ```
