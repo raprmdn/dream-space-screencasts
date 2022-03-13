@@ -1,6 +1,6 @@
 import React from 'react';
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { materialOceanic} from "react-syntax-highlighter/dist/esm/styles/prism";
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import { materialOceanic } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const CodeBlock = {
     code({node, inline, className, children, ...props}) {
@@ -10,7 +10,6 @@ const CodeBlock = {
                 children={String(children).replace(/\n$/, '')}
                 style={materialOceanic}
                 language={match[1]}
-                // useInlineStyles={false}
                 {...props}
             />
         ) : (

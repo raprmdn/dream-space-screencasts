@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -18,6 +18,18 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
     const [ previewImage, setPreviewImage ] = useState(data.thumbnail ? data.thumbnail : null)
     const [ previewDescription, setPreviewDescription ] = useState('')
     const optionsTopics = topicsData.map(topic => ({value: topic.id, label: topic.name}))
+    const [ isFreeSeries, setIsFreeSeries ] = useState(!!data.is_free)
+    const [ discountPlaceholder, setDiscountPlaceholder ] = useState('')
+
+    useEffect(() => {
+        if ( isFreeSeries ) {
+            setDiscountPlaceholder('Discount not available, because you set free for this series.')
+        } else if ( !data.is_discount ) {
+            setDiscountPlaceholder('Discount not available for this series.')
+        } else {
+            setDiscountPlaceholder('Enter a discount price')
+        }
+    }, [data.is_discount, isFreeSeries])
 
     const changeHandler = (e) => {
         let value = e.target.files[0]
@@ -41,6 +53,17 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
 
     const _closeModal = () => {
         setPreviewDescription('')
+    }
+
+    const freeSeriesHandler = (e) => {
+        setIsFreeSeries(!isFreeSeries)
+        setData({
+            ...data,
+            is_free: e.target.checked,
+            is_discount: false,
+            price: '',
+            discount_price: '',
+        })
     }
 
     return (
@@ -102,7 +125,41 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                     </div>
                     <div className="form-group row">
                         <div className="col-lg-6">
+                            <div className="checkbox-list">
+                                <label className="checkbox">
+                                    <input type="checkbox"
+                                           name="is_free"
+                                           id="is_free"
+                                           checked={isFreeSeries}
+                                           onChange={(e) => freeSeriesHandler(e)}
+                                    />
+                                    <span />Free Series
+                                </label>
+                            </div>
+                        </div>
+                        <div className="col-lg-6">
+                            <div className="checkbox-list">
+                                <label className="checkbox">
+                                    <input type="checkbox"
+                                           name="is_discount"
+                                           id="is_discount"
+                                           checked={data.is_discount}
+                                           disabled={isFreeSeries}
+                                           onChange={(e) => setData({
+                                               ...data,
+                                               is_discount: e.target.checked,
+                                               discount_price: '',
+                                           })}
+                                    />
+                                    <span />Discount Series
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <div className="col-lg-6">
                             <Label labelFor={"price"} children={"Series Price"}/>
+                            {!isFreeSeries && (<span className="text-danger"> * </span>)}
                             <div className="input-group">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">Rp.</span>
@@ -111,12 +168,14 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                                        value={data.price} onChange={(e) => setData('price', e.target.value)}
                                        className={`form-control ${errors.price && ('is-invalid')}`}
                                        min={1}
-                                       placeholder="Enter a series price" />
+                                       disabled={isFreeSeries}
+                                       placeholder={isFreeSeries ? 'Price is not available, because you set free for this series.' : 'Enter a series price'} />
                                 {errors.price && (<div className="invalid-feedback mb-n5">{errors.price}</div>)}
                             </div>
                         </div>
                         <div className="col-lg-6">
                             <Label labelFor={"discount_price"} children={"Series Discount Price"}/>
+                            {data.is_discount && (<span className="text-danger"> * </span>)}
                             <div className="input-group">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text">Rp.</span>
@@ -125,7 +184,8 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                                        value={data.discount_price} onChange={(e) => setData('discount_price', e.target.value)}
                                        className={`form-control ${errors.discount_price && ('is-invalid')}`}
                                        min={1}
-                                       placeholder="Enter a series discount price" />
+                                       disabled={!data.is_discount || isFreeSeries}
+                                       placeholder={discountPlaceholder} />
                                 {errors.discount_price && (<div className="invalid-feedback mb-n5">{errors.discount_price}</div>)}
                             </div>
                         </div>
@@ -204,47 +264,22 @@ export default function FormSeries({topicsData, submitHandler, data, setData, er
                             {errors.project_demo && (<div className="invalid-feedback mb-n5">{errors.project_demo}</div>)}
                         </div>
                     </div>
-                    <div className="form-group row">
-                        <div className="col-lg-4 d-flex justify-content-center">
-                            <div className="checkbox-inline">
-                                <label className="checkbox">
-                                    <input type="checkbox"
-                                           name="is_discount"
-                                           id="is_discount"
-                                           checked={!!data.is_discount}
-                                           onChange={(e) => setData('is_discount', e.target.checked)}
-                                    />
-                                    <span />Discount Series</label>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 d-flex justify-content-center">
-                            <div className="checkbox-inline">
-                                <label className="checkbox">
-                                    <input type="checkbox"
-                                           name="is_free"
-                                           id="is_free"
-                                           checked={!!data.is_free}
-                                           onChange={(e) => setData('is_free', e.target.checked)}
-                                    />
-                                    <span />Free Series</label>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 d-flex justify-content-center">
-                            <div className="checkbox-inline">
-                                <label className="checkbox">
-                                    <input type="checkbox"
-                                           name="archived_at"
-                                           id="archived_at"
-                                           checked={!!data.archived_at}
-                                           onChange={(e) => setData('archived_at', e.target.checked)}
-                                    />
-                                    <span />Archive Series</label>
-                            </div>
+                    <div className="form-group">
+                        <div className="checkbox-list">
+                            <label className="checkbox">
+                                <input type="checkbox"
+                                       name="archived_at"
+                                       id="archived_at"
+                                       checked={!!data.archived_at}
+                                       onChange={(e) => setData('archived_at', e.target.checked)}
+                                />
+                                <span />Archive Series
+                            </label>
                         </div>
                     </div>
                     <div className="form-group">
                         <Label labelFor={"thumbnail"} children={"Series Thumbnail"}/>
-                        <span className="text-danger"> * Recommended 1280 x 720</span>
+                        <span className="text-danger"> * Recommended Thumbnail : 1280 x 720 or 1920 x 1080</span>
                         <input type="file"
                                className="form-control"
                                id="thumbnail"

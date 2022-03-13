@@ -19,6 +19,7 @@ export default function Show() {
         source: '',
         episode: '',
         runtime: '',
+        description: '',
         is_free: false,
         is_archived: false
     });
