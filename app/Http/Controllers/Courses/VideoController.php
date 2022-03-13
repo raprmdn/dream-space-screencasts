@@ -59,6 +59,10 @@ class VideoController extends Controller
 
     public function watchVideo(Series $series, Video $video)
     {
+        if ($series->archived_at || $video->is_archived){
+            abort(404);
+        }
+
         return inertia('Videos/Show', [
             'series' => $this->seriesService->getCurrentSeries($series),
             'video' =>  $this->videoService->getCurrentVideo($series->id, $video),

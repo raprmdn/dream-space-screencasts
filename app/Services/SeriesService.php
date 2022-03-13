@@ -159,6 +159,11 @@ class SeriesService
 
     private function _fields(array $attributes) : array
     {
+        if ($attributes['is_free']) {
+            $attributes['price'] = null;
+            $attributes['discount_price'] = null;
+            $attributes['is_discount'] = false;
+        }
         return [
             'title' => $attributes['title'],
             'slug' => $attributes['slug'],

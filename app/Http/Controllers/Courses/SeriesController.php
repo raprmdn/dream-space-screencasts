@@ -96,6 +96,10 @@ class SeriesController extends Controller
 
     public function showDetailSeries(Series $series)
     {
+        if ($series->archived_at){
+            abort(404);
+        }
+
         return inertia('Series/Show', [
             'series' => $this->seriesService->findBySlug($series->slug)
         ]);
