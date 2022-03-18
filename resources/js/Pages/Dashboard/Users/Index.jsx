@@ -1,12 +1,47 @@
 import React from 'react';
 import App from "../../../Layouts/App";
-import {Head, Link, usePage} from "@inertiajs/inertia-react";
+import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
 import SearchFilter from "../../../Components/SearchFilter";
 import SmallPagination from "../../../Components/SmallPagination";
 import Breadcrumb from "../../../Components/Breadcrumb";
+import Modal from "../../../Components/Modal";
+import FormAddUser from "../../../Components/Forms/FormAddUser";
+import {Inertia} from "@inertiajs/inertia";
 
 export default function Index() {
     const { data: users, meta: {links, from} } = usePage().props.users
+    const { roles } = usePage().props
+    const { data, setData, post, clearErrors , errors, processing, reset } = useForm({
+        name: '',
+        username: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        roles: '',
+        verified_user: false,
+    });
+
+    const submitHandler = (e) => {
+        e.preventDefault()
+        post(route('users.add'), {
+            data,
+            preserveScroll: true,
+            onSuccess: () => {
+                reset()
+                window.$('#addUser').modal('hide')
+            }
+        })
+    }
+
+    const _doActionWithUserEmail = (e, id) => {
+        e.preventDefault()
+        Inertia.put(route('manual.email-verify'), {
+            user_id: id
+        }, {
+            preserveScroll: true
+        })
+    }
+
     return (
         <>
             <Head title="Dream Space | Users"/>
@@ -25,10 +60,10 @@ export default function Index() {
                             </h3>
                             <div className="card-toolbar">
                                 <SearchFilter placeholder={"Search users . . ."}/>
-                                <a href="#" className="btn btn-light-primary font-weight-bolder font-size-sm ml-3"
-                                   data-toggle="modal" data-target="#modalPermissions">
+                                <button type="button" className="btn btn-light-primary font-weight-bolder font-size-sm ml-3"
+                                   data-toggle="modal" data-target="#addUser" onClick={() => {reset(); clearErrors();}}>
                                     Add User
-                                </a>
+                                </button>
                             </div>
                         </div>
                         <div className="card-body py-0">
@@ -83,6 +118,11 @@ export default function Index() {
                                                             <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
                                                             <div className="dropdown-menu" >
                                                                 <Link className="dropdown-item" href="#">View</Link>
+                                                                {
+                                                                    user.verified_email
+                                                                        ? <button type="button" onClick={e => _doActionWithUserEmail(e, user.id)} className="dropdown-item">Mark as an unverified email</button>
+                                                                        : <button type="button" onClick={e => _doActionWithUserEmail(e, user.id)} className="dropdown-item">Mark as verify email</button>
+                                                                }
                                                                 {/*<Link as="button" className="dropdown-item">Remove Role</Link>*/}
                                                             </div>
                                                         </div>
@@ -102,6 +142,19 @@ export default function Index() {
                     </div>
                 </div>
             </div>
+            <Modal trigger={"addUser"} title={"Add new User"} size={"modal-lg"}>
+                <FormAddUser
+                    {...{
+                        data,
+                        setData,
+                        roles,
+                        submitHandler,
+                        errors,
+                        processing,
+                        submitLabel:"Create"
+                    }}
+                />
+            </Modal>
         </>
     )
 }

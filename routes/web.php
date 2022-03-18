@@ -70,6 +70,8 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
     Route::prefix('user-management')->middleware(['can:user management'])->group(function () {
         Route::prefix('users')->group(function () {
             Route::get('', [UsersController::class, 'index'])->name('users.index');
+            Route::post('add', [UsersController::class, 'add'])->name('users.add');
+            Route::put('verify', [UsersController::class, 'emailVerify'])->name('manual.email-verify');
         });
         Route::prefix('roles')->group(function () {
             Route::get('', [RoleController::class, 'index'])->name('roles.index');

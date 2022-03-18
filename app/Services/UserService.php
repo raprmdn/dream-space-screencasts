@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Http\Resources\UserSingleResource;
+use App\Models\User;
 use App\Traits\ImageTrait;
 use Illuminate\Support\{Facades\Auth, Facades\Storage};
+use Spatie\Permission\Models\Role;
 
 class UserService
 {
@@ -35,6 +37,31 @@ class UserService
         }
 
         Auth::user()->update($this->_fields($attributes));
+    }
+
+    public function addUserByAdmin($attributes)
+    {
+        $role = Role::findOrFail($attributes['roles']);
+        $user = User::create([
+            'name' => $attributes['name'],
+            'username' => $attributes['username'],
+            'email' => $attributes['email'],
+            'password' => \Hash::make($attributes['password'])
+        ]);
+        $user->syncRoles($role);
+        if ($attributes['verified_user']) $user->markEmailAsVerified();
+    }
+
+    public function makeUserEmailVerifyOrUnverified($id): string
+    {
+        $user = User::findOrFail($id);
+        if ($user->hasVerifiedEmail()) {
+            $user->unverified();
+            return "$user->name email, has been mark as an unverified email.";
+        } else {
+            $user->markEmailAsVerified();
+            return "$user->name email, has been mark as verified email.";
+        }
     }
 
     private function _fields(array $attributes): array
