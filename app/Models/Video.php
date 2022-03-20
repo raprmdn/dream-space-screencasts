@@ -48,4 +48,12 @@ class Video extends Model
     {
         return $this->belongsTo(Series::class, 'series_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Comment::class, 'video_id');
+    }
 }
