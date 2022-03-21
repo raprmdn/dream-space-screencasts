@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\{CartController,
+    CommentController,
     Courses\SeriesController,
     Courses\VideoController,
     IndexController,
@@ -35,6 +36,7 @@ Route::middleware('auth')->group(function () {
         Route::put('profile/{user:id}', [ProfileController::class, 'update'])->name('profile.update');
         Route::get('password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
     });
+    Route::post('comments', [CommentController::class, 'comment'])->name('comment');
     Route::post('add-to-carts', [CartController::class, 'create'])->name('add.carts');
     Route::post('saves', [WatchlistController::class, 'save'])->name('saves');
     Route::get('carts', [CartController::class, 'index'])->name('carts');

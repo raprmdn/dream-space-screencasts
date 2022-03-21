@@ -1,19 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import App from "../../Layouts/App";
-import {Head, Link, usePage} from "@inertiajs/inertia-react";
+import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
 import YouTube from "react-youtube";
 import CardVideoLink from "../../Components/CardVideoLink";
 import CodeBlock from "../../Components/CodeBlock";
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
-import { keyTab } from "../../Components/Helpers";
+import AddCommentCard from "../../Components/AddCommentCard";
+import {Inertia} from "@inertiajs/inertia";
+import CommentTextArea from "../../Components/CommentTextArea";
+import CommentCard from "../../Components/CommentCard";
 
 export default function Show() {
-    const { video, series, videos, auth } = usePage().props
+    const { video, series, videos, auth, comments } = usePage().props
     const [ loadingVideo, setLoadingVideo ] = useState(true)
     const [ watchable ] = useState(!!video.current_video.source)
     const [ currentEpisode ] = useState(video.current_video.episode)
+
+    const { data, setData, post, errors, clearErrors, reset, processing } = useForm({
+        video_id: video.current_video.id,
+        comment: ''
+    });
 
     useEffect(() => {
         if (videos.length > 10) {
@@ -44,6 +52,21 @@ export default function Show() {
         }
 
         return label
+    }
+
+    const submitCommentHandler = (e) => {
+        e.preventDefault()
+        post(route('comment'), {
+            data,
+            only: ['errors', 'comments'],
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+                clearErrors()
+                reset()
+                window.$('#add_comment').modal('hide')
+            }
+        })
     }
 
     return (
@@ -172,137 +195,27 @@ export default function Show() {
                                     }
                                 </div>
                             </div>
-                            <div className="card card-custom card-transparent gutter-b" style={{border: '1px dashed #9CA3AF'}}>
-                                <button className="btn btn-link text-decoration-none text-dark-50"
-                                        data-toggle="modal" data-target="#add_comment">
-                                    <div className="card-body py-1 ml-n5">
-                                        <div className="d-flex align-items-center">
-                                            <div className="symbol symbol-40 symbol-lg-35 symbol-circle mr-4">
-                                                <img alt="Pic" src="/assets/media/users/100_1.jpg"/>
-                                            </div>
-                                            <div>
-                                                Add a comment . . .
-                                            </div>
-                                        </div>
-                                    </div>
-                                </button>
-                            </div>
-                            <div className="gutter-b">
-                                <div className="timeline timeline-3">
-                                    <div className="timeline-items">
-                                        <div className="timeline-item border-left-0">
-                                            <div className="timeline-media">
-                                                <i className="flaticon2-shield text-danger" />
-                                            </div>
-                                            <div className="timeline-content ml-n5 pseudo-before-none bg-white">
-                                                <div className="d-flex align-items-center justify-content-between mb-3">
-                                                    <div className="mr-2 mt-2">
-                                                        <a href="#" className="text-dark-75 text-hover-primary font-weight-bolder font-size-h6">Rafi Putra Ramadhan</a>
-                                                        <small className="text-muted ml-2">2 hours ago</small>
-                                                    </div>
-                                                    <div className="dropdown ml-2 mt-2">
-                                                        <a href="#" className="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i className="ki ki-more-hor icon-md" />
-                                                        </a>
-                                                        <div className="dropdown-menu p-0 m-0 dropdown-menu-anim dropdown-menu-right" style={{}}>
-                                                            <ul className="navi navi-hover navi-active navi-accent navi-link-rounded-lg">
-                                                                <li className="navi-item mx-2 my-1">
-                                                                    <a href="#" className="navi-link">
-                                                                      <span className="navi-text">
-                                                                          Edit
-                                                                      </span>
-                                                                    </a>
-                                                                </li>
-                                                                <li className="navi-item mx-2 my-1">
-                                                                    <a href="#" className="navi-link">
-                                                                      <span className="navi-text">
-                                                                          Delete
-                                                                      </span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p className="p-0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto.</p>
-                                                <div className="d-flex align-items-center ml-n2 mt-n1">
-                                                    <a href="#" className="btn btn-hover-text-primary btn-hover-icon-primary btn-sm btn-text-dark-50 rounded font-weight-bolder font-size-sm p-2 mr-2">
-                                                        <div className="d-flex align-items-center">
-                                                            <i className="far fa-comment-alt icon-1x mr-1" />
-                                                            12
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" className="btn btn-sm btn-text-dark-50 btn-hover-icon-danger btn-hover-text-danger font-weight-bolder rounded font-size-sm p-2">
-                                                        <div className="d-flex align-items-center">
-                                                            <i className="far fa-heart icon-1x mr-1" />
-                                                            75
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div className="timeline-reply">
-                                                <div className="timeline-item border-left-0">
-                                                    <div className="timeline-media">
-                                                        <i className="flaticon2-shield text-danger" />
-                                                    </div>
-                                                    <div className="timeline-content ml-n5 pseudo-before-none bg-white">
-                                                        <div className="d-flex align-items-center justify-content-between mb-3">
-                                                            <div className="mr-2 mt-2">
-                                                                <a href="#" className="text-dark-75 text-hover-primary font-weight-bolder font-size-h6">Rafi Putra Ramadhan</a>
-                                                                <small className="text-muted ml-2">3 days ago (edited)</small>
-                                                            </div>
-                                                            <div className="dropdown ml-2 mt-2">
-                                                                <a href="#" className="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    <i className="ki ki-more-hor icon-md" />
-                                                                </a>
-                                                                <div className="dropdown-menu p-0 m-0 dropdown-menu-anim dropdown-menu-right" style={{}}>
-                                                                    <ul className="navi navi-hover navi-active navi-accent navi-link-rounded-lg">
-                                                                        <li className="navi-item mx-2 my-1">
-                                                                            <a href="#" className="navi-link">
-                                                                      <span className="navi-text">
-                                                                          Edit
-                                                                      </span>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li className="navi-item mx-2 my-1">
-                                                                            <a href="#" className="navi-link">
-                                                                      <span className="navi-text">
-                                                                          Delete
-                                                                      </span>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <p className="p-0">Sed ut perspiciatis unde omnis iste natus error sit
-                                                            voluptatem accusantium doloremque laudantium, totam rem aperiam,
-                                                            eaque ipsa quae ab illo inventore veritatis et quasi architecto.
-                                                            Sed ut perspiciatis unde omnis iste natus error sit
-                                                            voluptatem accusantium doloremque laudantium, totam rem aperiam,
-                                                            eaque ipsa quae ab illo inventore veritatis et quasi architecto.
-                                                        </p>
-                                                        <div className="d-flex align-items-center ml-n2 mt-n1">
-                                                            <a href="#" className="btn btn-hover-text-primary btn-hover-icon-primary btn-sm btn-text-dark-50 rounded font-weight-bolder font-size-sm p-2 mr-2">
-                                                                <div className="d-flex align-items-center">
-                                                                    <i className="far fa-comment-alt icon-1x mr-1" />
-                                                                    12
-                                                                </div>
-                                                            </a>
-                                                            <a href="#" className="btn btn-sm btn-text-danger btn-hover-text-dark-25 btn-hover-icon-dark-25 font-weight-bolder rounded font-size-sm p-2">
-                                                                <div className="d-flex align-items-center">
-                                                                    <i className="fas fa-heart icon-1x text-danger mr-1" />
-                                                                    76
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {
+                                auth.user
+                                    ? <AddCommentCard
+                                        modalTarget={"#add_comment"}
+                                        auth={auth.user}
+                                        label={'Add a comment . . .'}
+                                    />
+                                    : <AddCommentCard
+                                        modalTarget={null}
+                                        auth={null}
+                                        label={'Login to comment . . .'}
+                                        onClick={() => Inertia.visit(route('login'))}
+                                    />
+                            }
+                            {
+                                comments.map((comment, index) => (
+                                    <span key={index}>
+                                        <CommentCard comment={comment} />
+                                    </span>
+                                ))
+                            }
                         </div>
                         <div className="col-xl-5">
                             <div className="card card-custom gutter-b shadow-sm">
@@ -367,41 +280,20 @@ export default function Show() {
                         </div>
                     </div>
                 </div>
-                <div className="modal modal-sticky modal-sticky-bottom-right-custom" id="add_comment" role="dialog" data-backdrop="static">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="card card-custom">
-                                <div className="card-header align-items-center justify-content-between px-4 py-3">
-                                    <div className="text-left">
-                                        <div className="text-dark-75 font-weight-bold font-size-h5">Add Comment on "VIDEO TITLE"</div>
-                                    </div>
-                                    <div className="text-right">
-                                        <button type="button" className="btn btn-clean btn-sm btn-icon btn-icon-md" data-dismiss="modal">
-                                            <i className="ki ki-close icon-1x" />
-                                        </button>
-                                    </div>
-                                </div>
-                                <div className="card-footer align-items-center">
-                                    <textarea className="form-control border-0 p-0" rows={10}
-                                              placeholder="Type a comment." defaultValue={""} onKeyDown={keyTab} />
-                                    <div className="d-flex align-items-center justify-content-between mt-5">
-                                        <div className="mr-3">
-                                            {/*<a href="#" className="btn btn-clean btn-icon btn-md mr-1">*/}
-                                            {/*    <i className="flaticon2-photograph icon-lg" />*/}
-                                            {/*</a>*/}
-                                            {/*<a href="#" className="btn btn-clean btn-icon btn-md">*/}
-                                            {/*    <i className="flaticon2-photo-camera icon-lg" />*/}
-                                            {/*</a>*/}
-                                        </div>
-                                        <div>
-                                            <button type="button" className="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6">Comment</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {
+                    auth.user && (
+                        <CommentTextArea
+                            {...{
+                                video,
+                                data,
+                                setData,
+                                submitHandler:submitCommentHandler,
+                                errors,
+                                processing
+                            }}
+                        />
+                    )
+                }
             </div>
         </>
     )

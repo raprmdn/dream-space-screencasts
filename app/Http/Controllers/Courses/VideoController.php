@@ -6,17 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VideoRequest;
 use App\Models\Series;
 use App\Models\Video;
+use App\Services\CommentService;
 use App\Services\SeriesService;
 use App\Services\VideoService;
 
 class VideoController extends Controller
 {
-    protected $videoService, $seriesService;
+    protected $videoService, $seriesService, $commentService;
 
-    public function __construct(VideoService $videoService, SeriesService $seriesService)
+    public function __construct(VideoService $videoService, SeriesService $seriesService, CommentService $commentService)
     {
         $this->videoService = $videoService;
         $this->seriesService = $seriesService;
+        $this->commentService = $commentService;
     }
 
     public function index()
@@ -66,7 +68,8 @@ class VideoController extends Controller
         return inertia('Videos/Show', [
             'series' => $this->seriesService->getCurrentSeries($series),
             'video' =>  $this->videoService->getCurrentVideo($series->id, $video),
-            'videos' => $this->videoService->findVideosBySeries($series)
+            'videos' => $this->videoService->findVideosBySeries($series),
+            'comments' => $this->commentService->getVideoComments($video)
         ]);
     }
 }
