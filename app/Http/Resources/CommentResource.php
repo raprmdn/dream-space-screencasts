@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class CommentResource extends JsonResource
 {
@@ -14,7 +15,7 @@ class CommentResource extends JsonResource
      */
     public function toArray($request)
     {
-        $editableOrDeletable = $this->user_id === $this->user->id;
+        $editableOrDeletable = Auth::user() && $this->user_id === Auth::user()->id;
 
         return [
             'id' => $this->id,
