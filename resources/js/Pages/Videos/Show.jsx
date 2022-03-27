@@ -42,7 +42,7 @@ export default function Show() {
 
     const opts = {
         playerVars: {
-            autoplay: 0,
+            autoplay: 1,
         },
     };
 
