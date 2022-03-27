@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "@inertiajs/inertia-react";
 
-export default function CardVideoLink({seriesSlug, video, buyable, auth, current = false}) {
+function CardVideoLink({seriesSlug, video, buyable, auth, current = false}) {
     return (
         <Link href={route('watch.video', [seriesSlug, video.episode])}
               className={`d-flex align-items-center ${current && ('bg-light-light')} bg-hover-light-light border border-1 rounded p-5 mb-4`}>
@@ -44,3 +44,5 @@ export default function CardVideoLink({seriesSlug, video, buyable, auth, current
         </Link>
     )
 }
+
+export default React.memo(CardVideoLink)

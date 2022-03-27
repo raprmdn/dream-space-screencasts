@@ -16,6 +16,7 @@ class CommentResource extends JsonResource
     public function toArray($request)
     {
         $editableOrDeletable = Auth::user() && $this->user_id === Auth::user()->id;
+        CommentRepliesResource::withoutWrapping();
 
         return [
             'id' => $this->id,
@@ -23,7 +24,7 @@ class CommentResource extends JsonResource
             'video_id' => $this->video_id,
             'parent_id' => $this->parent_id,
             'comment' => $this->body,
-            'replies' => [],
+            'replies' => CommentRepliesResource::collection($this->whenLoaded('replies')),
             'likes_count' => null,
             'replies_count' => null,
             'user' => [

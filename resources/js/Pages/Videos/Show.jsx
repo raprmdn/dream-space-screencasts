@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import App from "../../Layouts/App";
 import {Head, Link, useForm, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
@@ -9,8 +9,9 @@ import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import AddCommentCard from "../../Components/AddCommentCard";
 import {Inertia} from "@inertiajs/inertia";
-import CommentTextArea from "../../Components/CommentTextArea";
+import CommentTextAreaForm from "../../Components/Forms/CommentTextAreaForm";
 import CommentCard from "../../Components/CommentCard";
+import CommentPopUp from "../../Components/CommentPopUp";
 
 export default function Show() {
     const { video, series, videos, auth, comments } = usePage().props
@@ -20,6 +21,10 @@ export default function Show() {
 
     const { data, setData, post, errors, clearErrors, reset, processing } = useForm({
         video_id: video.current_video.id,
+        parent_id: '',
+        reply_to: '',
+        mentioned_username: '',
+        mentioned_user_id: '',
         comment: ''
     });
 
@@ -54,6 +59,16 @@ export default function Show() {
         return label
     }
 
+    const onClickReply = useCallback((value) => {
+        setData({
+            ...data,
+            parent_id: value.parent_id,
+            reply_to: value.reply_to,
+            mentioned_username: value.mentioned_username,
+            mentioned_user_id: value.mentioned_user_id
+        });
+    }, []);
+
     const submitCommentHandler = (e) => {
         e.preventDefault()
         post(route('comment'), {
@@ -65,6 +80,21 @@ export default function Show() {
                 clearErrors()
                 reset()
                 window.$('#add_comment').modal('hide')
+            }
+        })
+    }
+
+    const replyCommentHandler = (e) => {
+        e.preventDefault()
+        post(route('replies.comment'), {
+            data,
+            only: ['errors', 'comments'],
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+                clearErrors()
+                reset()
+                window.$('#comment_reply').modal('hide')
             }
         })
     }
@@ -210,9 +240,11 @@ export default function Show() {
                                     />
                             }
                             {
-                                comments.map((comment, index) => (
-                                    <span key={index}>
-                                        <CommentCard comment={comment} />
+                                comments.map((comment) => (
+                                    <span key={comment.id}>
+                                        <CommentCard comment={comment}
+                                                     onClickReply={onClickReply}
+                                        />
                                     </span>
                                 ))
                             }
@@ -282,16 +314,38 @@ export default function Show() {
                 </div>
                 {
                     auth.user && (
-                        <CommentTextArea
-                            {...{
-                                video,
-                                data,
-                                setData,
-                                submitHandler:submitCommentHandler,
-                                errors,
-                                processing
-                            }}
-                        />
+                        <CommentPopUp trigger={"add_comment"}>
+                            <CommentTextAreaForm
+                                {...{
+                                    video,
+                                    data,
+                                    setData,
+                                    submitHandler:submitCommentHandler,
+                                    errors,
+                                    processing,
+                                    clearErrors,
+                                    reset
+                                }}
+                            />
+                        </CommentPopUp>
+                    )
+                }
+                {
+                    auth.user && (
+                        <CommentPopUp trigger={"comment_reply"}>
+                            <CommentTextAreaForm
+                                {...{
+                                    video,
+                                    data,
+                                    setData,
+                                    submitHandler:replyCommentHandler,
+                                    errors,
+                                    processing,
+                                    clearErrors,
+                                    reset
+                                }}
+                            />
+                        </CommentPopUp>
                     )
                 }
             </div>

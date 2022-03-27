@@ -18,9 +18,13 @@ class CommentController extends Controller
     {
         $this->commentService->comment($request->all());
 
-        return redirect()->back()->with([
-            'type' => 'success',
-            'message' => 'Comment added.'
-        ]);
+        return redirect()->back();
+    }
+
+    public function replies(CommentRequest $request)
+    {
+        $this->commentService->replies($request->all());
+
+        return redirect()->back();
     }
 }

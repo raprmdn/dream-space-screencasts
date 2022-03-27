@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function AddCommentCard({modalTarget, auth, label, ...props}) {
+function AddCommentCard({modalTarget, auth, label, ...props}) {
     return (
         <div className="card card-custom card-transparent gutter-b" style={{border: '1px dashed #9CA3AF'}}>
             <button {...props} className="btn btn-link text-decoration-none text-dark-50"
@@ -28,3 +28,5 @@ export default function AddCommentCard({modalTarget, auth, label, ...props}) {
         </div>
     )
 }
+
+export default React.memo(AddCommentCard)

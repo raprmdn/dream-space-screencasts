@@ -11,8 +11,10 @@ class CommentService
     {
         CommentResource::withoutWrapping();
         return CommentResource::collection(
-            $video->comments()
-                ->with('user:id,name,username,profile_picture')
+            $video->comments()->where('parent_id', null)
+                ->with(['user:id,name,username,profile_picture', 'replies' => function ($query) {
+                    $query->with(['user:id,name,username,profile_picture']);
+                }])
                 ->latest()
                 ->get()
         );
@@ -23,6 +25,19 @@ class CommentService
         Auth::user()->comments()->create([
             'video_id' => $attributes['video_id'],
             'body' => $attributes['comment']
+        ]);
+    }
+
+    public function replies($attributes)
+    {
+        if ($attributes['mentioned_user_id'] !== Auth::user()->id) {
+            $attributes['comment'] =  $attributes['mentioned_username'] . ' ' . $attributes['comment'];
+        }
+
+        Auth::user()->comments()->create([
+            'video_id' => $attributes['video_id'],
+            'body' => $attributes['comment'],
+            'parent_id' => $attributes['parent_id']
         ]);
     }
 }

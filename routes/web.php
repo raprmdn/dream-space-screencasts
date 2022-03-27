@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
         Route::get('password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
     });
     Route::post('comments', [CommentController::class, 'comment'])->name('comment');
+    Route::post('replies', [CommentController::class, 'replies'])->name('replies.comment');
     Route::post('add-to-carts', [CartController::class, 'create'])->name('add.carts');
     Route::post('saves', [WatchlistController::class, 'save'])->name('saves');
     Route::get('carts', [CartController::class, 'index'])->name('carts');
