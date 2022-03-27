@@ -4,9 +4,19 @@ import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import {Inertia} from "@inertiajs/inertia";
 
 function CommentCard({comment, ...props}) {
     const domain = window.location.protocol + '//' + window.location.hostname;
+    const likeToggleHandler = (e, id) => {
+        e.preventDefault();
+        Inertia.post(route('comment.like', id), {}, {
+            only: ['errors', 'comments'],
+            preserveState: true,
+            preserveScroll: true,
+        })
+    };
+
     return (
         <div className="gutter-b">
             <div className="timeline timeline-3">
@@ -77,15 +87,24 @@ function CommentCard({comment, ...props}) {
                                         }}>
                                     <div className="d-flex align-items-center">
                                         <i className="far fa-comment-alt icon-nm mr-1" />
-                                        12
+                                        {comment.replies_count}
                                     </div>
                                 </button>
-                                <a href="#" className="btn btn-sm btn-text-dark-50 btn-hover-icon-danger btn-hover-text-danger font-weight-bolder rounded font-size-sm p-2">
+                                <button className="btn btn-sm btn-text-dark-50 btn-hover-icon-danger btn-hover-text-danger font-weight-bolder rounded font-size-sm p-2"
+                                        onClick={(e) => likeToggleHandler(e, comment.id)}>
                                     <div className="d-flex align-items-center">
-                                        <i className="far fa-heart icon-nm mr-1" />
-                                        75
+                                        {
+                                            comment.liked ?
+                                                <>
+                                                    <i className="fas fa-heart text-danger icon-nm mr-1" /> {comment.likes_count}
+                                                </>
+                                            :
+                                                <>
+                                                    <i className="far fa-heart icon-nm mr-1" /> {comment.likes_count}
+                                                </>
+                                        }
                                     </div>
-                                </a>
+                                </button>
                             </div>
                         </div>
                         {
@@ -146,7 +165,7 @@ function CommentCard({comment, ...props}) {
                                                                    remarkPlugins={[remarkGfm]}/>
                                                 </div>
                                                 <div className="d-flex align-items-center ml-n2">
-                                                    <button className="btn btn-hover-text-primary btn-hover-icon-primary btn-sm btn-text-dark-50 rounded font-weight-bolder font-size-sm p-2 mr-2"
+                                                    <button className="btn btn-hover-text-primary btn-hover-icon-primary btn-sm btn-text-dark-50 rounded font-weight-bolder font-size-sm p-2 mr-n2"
                                                             data-toggle="modal" data-target="#comment_reply"
                                                             onClick={() =>{
                                                                 props.onClickReply({
@@ -157,16 +176,24 @@ function CommentCard({comment, ...props}) {
                                                                 })
                                                             }}>
                                                         <div className="d-flex align-items-center">
-                                                            <i className="far fa-comment-alt icon-nm mr-1" />
-                                                            12
+                                                            <i className="far fa-comment-alt icon-nm" />
                                                         </div>
                                                     </button>
-                                                    <a href="#" className="btn btn-sm btn-text-dark-50 btn-hover-icon-danger btn-hover-text-danger font-weight-bolder rounded font-size-sm p-2">
+                                                    <button className="btn btn-sm btn-text-dark-50 btn-hover-icon-danger btn-hover-text-danger font-weight-bolder rounded font-size-sm p-2"
+                                                            onClick={(e) => likeToggleHandler(e, reply.id)}>
                                                         <div className="d-flex align-items-center">
-                                                            <i className="far fa-heart icon-nm mr-1" />
-                                                            75
+                                                            {
+                                                                reply.liked ?
+                                                                    <>
+                                                                        <i className="fas fa-heart text-danger icon-nm mr-1" /> {reply.likes_count}
+                                                                    </>
+                                                                    :
+                                                                    <>
+                                                                        <i className="far fa-heart icon-nm mr-1" /> {reply.likes_count}
+                                                                    </>
+                                                            }
                                                         </div>
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

@@ -7,6 +7,37 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     protected $fillable = ['user_id', 'video_id', 'parent_id', 'body', 'edited'];
+    protected $with = ['likes'];
+
+    /**
+     * Check if user is liked the comment.
+     *
+     * @return bool
+     */
+    public function hasLiked(): bool
+    {
+        return (bool) $this->likes->where('user_id', auth()->id())->first();
+    }
+
+    /**
+     * Auth user likes the comment.
+     *
+     * @return mixed
+     */
+    public function like()
+    {
+        return auth()->user()->likes()->save($this->likes()->make());
+    }
+
+    /**
+     * Auth user unlike the comment.
+     *
+     * @return mixed
+     */
+    public function unlike()
+    {
+        return auth()->user()->likes()->where('likeable_id', $this->id)->delete();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

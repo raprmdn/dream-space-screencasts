@@ -6,6 +6,7 @@ use App\Http\Controllers\{CartController,
     Courses\VideoController,
     IndexController,
     Invoice\InvoiceController,
+    LikeController,
     MyLibrary\MyLibraryController,
     Order\OrderController,
     PaymentConfiguration\PaymentChannelController,
@@ -44,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::post('remove', [CartController::class, 'remove'])->name('remove.carts');
     Route::post('make-an-order', [OrderController::class, 'order'])->name('order');
     Route::get('invoice/{order:identifier}', [InvoiceController::class, 'show'])->name('invoice.show');
+    Route::post('likes/{comment:id}', LikeController::class)->name('comment.like');
 });
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {

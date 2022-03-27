@@ -25,8 +25,8 @@ class CommentResource extends JsonResource
             'parent_id' => $this->parent_id,
             'comment' => $this->body,
             'replies' => CommentRepliesResource::collection($this->whenLoaded('replies')),
-            'likes_count' => null,
-            'replies_count' => null,
+            'likes_count' => $this->likes_count,
+            'replies_count' => $this->replies_count,
             'user' => [
                 'id' => $this->user->id,
                 'name' => $this->user->name,
@@ -34,6 +34,7 @@ class CommentResource extends JsonResource
                 'profile_picture' => $this->user->photoProfile
             ],
             'edited' => (bool) $this->edited,
+            'liked' => (bool) $this->hasLiked(),
             'actions' => $editableOrDeletable,
             'commented' => $this->created_at->diffForHumans()
         ];

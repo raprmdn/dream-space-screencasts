@@ -12,8 +12,9 @@ class CommentService
         CommentResource::withoutWrapping();
         return CommentResource::collection(
             $video->comments()->where('parent_id', null)
+                ->withCount(['replies', 'likes'])
                 ->with(['user:id,name,username,profile_picture', 'replies' => function ($query) {
-                    $query->with(['user:id,name,username,profile_picture']);
+                    $query->withCount('likes')->with(['user:id,name,username,profile_picture']);
                 }])
                 ->latest()
                 ->get()
