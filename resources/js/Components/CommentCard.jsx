@@ -7,7 +7,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import {Inertia} from "@inertiajs/inertia";
 
 function CommentCard({comment, ...props}) {
-    const domain = window.location.protocol + '//' + window.location.hostname;
+    const URL = window.location.protocol + '//' + window.location.hostname;
     const likeToggleHandler = (e, id) => {
         e.preventDefault();
         Inertia.post(route('comment.like', id), {}, {
@@ -81,7 +81,7 @@ function CommentCard({comment, ...props}) {
                                             props.onClickReply({
                                                 parent_id: comment.id,
                                                 reply_to: comment.user.name,
-                                                mentioned_username: `[@${comment.user.name}](${domain}/${comment.user.username})`,
+                                                mentioned_username: `[@${comment.user.name}](${URL}/${comment.user.username})`,
                                                 mentioned_user_id: comment.user.id,
                                             })
                                         }}>
@@ -171,7 +171,7 @@ function CommentCard({comment, ...props}) {
                                                                 props.onClickReply({
                                                                     parent_id: comment.id,
                                                                     reply_to: reply.user.name,
-                                                                    mentioned_username: `[@${reply.user.name}](${domain}/${reply.user.username})`,
+                                                                    mentioned_username: `[@${reply.user.name}](${URL}/${reply.user.username})`,
                                                                     mentioned_user_id: reply.user.id,
                                                                 })
                                                             }}>
