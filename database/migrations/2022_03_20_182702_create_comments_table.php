@@ -12,7 +12,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('video_id')->constrained('videos')->cascadeOnDelete();
-            $table->foreignId('parent_id')->nullable();
+            $table->foreignId('parent_id')->nullable()->constrained('comments')->cascadeOnDelete();
             $table->text('body');
             $table->boolean('edited')->default(false)->nullable();
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
+use App\Models\Comment;
 use App\Services\CommentService;
 
 class CommentController extends Controller
@@ -24,6 +25,13 @@ class CommentController extends Controller
     public function replies(CommentRequest $request)
     {
         $this->commentService->replies($request->all());
+
+        return redirect()->back();
+    }
+
+    public function delete(Comment $comment)
+    {
+        $this->commentService->deleteComment($comment);
 
         return redirect()->back();
     }

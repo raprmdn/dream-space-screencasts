@@ -69,6 +69,14 @@ export default function Show() {
         });
     }, []);
 
+    const onClickDelete = useCallback((value) => {
+        Inertia.delete(route('comment.delete', value), {
+            only: ['errors', 'comments'],
+            preserveScroll: true,
+            preserveState: true,
+        });
+    }, []);
+
     const submitCommentHandler = (e) => {
         e.preventDefault()
         post(route('comment'), {
@@ -244,6 +252,7 @@ export default function Show() {
                                     <span key={comment.id}>
                                         <CommentCard comment={comment}
                                                      onClickReply={onClickReply}
+                                                     onClickDelete={onClickDelete}
                                         />
                                     </span>
                                 ))

@@ -47,21 +47,22 @@ function CommentCard({comment, ...props}) {
                                             <a href="#" className="text-hover-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i className="ki ki-more-hor icon-sm" />
                                             </a>
-                                            <div className="dropdown-menu p-0 m-0 dropdown-menu-anim dropdown-menu-right" style={{}}>
+                                            <div className="dropdown-menu p-0 m-0 dropdown-menu-anim dropdown-menu-right">
                                                 <ul className="navi navi-hover navi-active navi-accent navi-link-rounded-lg">
                                                     <li className="navi-item mx-2 my-1">
                                                         <a href="#" className="navi-link">
-                                                    <span className="navi-text">
-                                                        Edit
-                                                    </span>
+                                                            <span className="navi-text">
+                                                                Edit
+                                                            </span>
                                                         </a>
                                                     </li>
                                                     <li className="navi-item mx-2 my-1">
-                                                        <a href="#" className="navi-link">
-                                                    <span className="navi-text">
-                                                        Delete
-                                                    </span>
-                                                        </a>
+                                                        <button className="btn btn-block navi-link"
+                                                                onClick={() => {
+                                                                    props.onClickDelete(comment.id);
+                                                                }}>
+                                                            Delete
+                                                        </button>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -77,7 +78,7 @@ function CommentCard({comment, ...props}) {
                             <div className="d-flex align-items-center ml-n2">
                                 <button className="btn btn-hover-text-primary btn-hover-icon-primary btn-sm btn-text-dark-50 rounded font-weight-bolder font-size-sm p-2 mr-2"
                                         data-toggle="modal" data-target="#comment_reply"
-                                        onClick={() =>{
+                                        onClick={() => {
                                             props.onClickReply({
                                                 parent_id: comment.id,
                                                 reply_to: comment.user.name,
@@ -137,7 +138,7 @@ function CommentCard({comment, ...props}) {
                                                                 <a href="#" className="text-hover-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                     <i className="ki ki-more-hor icon-sm" />
                                                                 </a>
-                                                                <div className="dropdown-menu p-0 m-0 dropdown-menu-anim dropdown-menu-right" style={{}}>
+                                                                <div className="dropdown-menu p-0 m-0 dropdown-menu-anim dropdown-menu-right">
                                                                     <ul className="navi navi-hover navi-active navi-accent navi-link-rounded-lg">
                                                                         <li className="navi-item mx-2 my-1">
                                                                             <a href="#" className="navi-link">
@@ -147,11 +148,12 @@ function CommentCard({comment, ...props}) {
                                                                             </a>
                                                                         </li>
                                                                         <li className="navi-item mx-2 my-1">
-                                                                            <a href="#" className="navi-link">
-                                                                            <span className="navi-text">
+                                                                            <button className="btn btn-block navi-link"
+                                                                                    onClick={() => {
+                                                                                        props.onClickDelete(reply.id);
+                                                                                    }}>
                                                                                 Delete
-                                                                            </span>
-                                                                            </a>
+                                                                            </button>
                                                                         </li>
                                                                     </ul>
                                                                 </div>

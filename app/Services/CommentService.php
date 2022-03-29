@@ -41,4 +41,10 @@ class CommentService
             'parent_id' => $attributes['parent_id']
         ]);
     }
+
+    public function deleteComment($comment)
+    {
+        $comment->likes()->delete();
+        $comment->delete();
+    }
 }
