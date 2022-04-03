@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('invoice/{order:identifier}', [InvoiceController::class, 'show'])->name('invoice.show');
     Route::post('likes/{comment:id}', LikeController::class)->name('comment.like');
     Route::delete('delete-comment/{comment:id}', [CommentController::class, 'delete'])->name('comment.delete');
+    Route::put('comments/{comment:id}', [CommentController::class, 'update'])->name('comment.update');
 });
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {

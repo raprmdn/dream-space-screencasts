@@ -29,6 +29,13 @@ class CommentController extends Controller
         return redirect()->back();
     }
 
+    public function update(CommentRequest $request, Comment $comment)
+    {
+        $this->commentService->updateComment($request->all(), $comment);
+
+        return redirect()->back();
+    }
+
     public function delete(Comment $comment)
     {
         $this->commentService->deleteComment($comment);

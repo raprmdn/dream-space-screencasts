@@ -16,14 +16,18 @@ export default function CommentTextAreaForm({video, data, setData, submitHandler
                         {
                             data.parent_id
                                 ? <><i className="flaticon-reply mr-1"/> Reply to <span className="text-primary">@{data.reply_to}</span></>
-                                : <>Add a comment on <span className="text-primary">{video.current_video.title}</span></>
+                                :
+                                    !data.id
+                                        ? <>Add a comment on <span className="text-primary">{video.current_video.title}</span></>
+                                        : <>Edit Comment</>
+
                         }
                     </div>
                 </div>
                 <div className="text-right">
                     <button type="button" className="btn btn-clean btn-sm btn-icon btn-icon-md" data-dismiss="modal"
                             onClick={() => {
-                                reset('parent_id', 'reply_to', 'mentioned_username', 'comment', 'mentioned_user_id');
+                                reset('parent_id', 'comment', 'id', 'reply_to');
                                 clearErrors();}
                             }>
                         <i className="ki ki-close icon-1x" />
@@ -86,7 +90,9 @@ export default function CommentTextAreaForm({video, data, setData, submitHandler
                             {
                                 data.parent_id
                                     ? <ButtonSubmit label={'Reply'} processing={processing}/>
-                                    : <ButtonSubmit label={'Comment'} processing={processing}/>
+                                    : !data.id
+                                        ? <ButtonSubmit label={'Comment'} processing={processing}/>
+                                        : <ButtonSubmit label={'Update'} processing={processing}/>
                             }
                         </div>
                     </div>

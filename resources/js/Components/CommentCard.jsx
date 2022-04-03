@@ -7,7 +7,6 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import {Inertia} from "@inertiajs/inertia";
 
 function CommentCard({comment, ...props}) {
-    const URL = window.location.protocol + '//' + window.location.hostname;
     const likeToggleHandler = (e, id) => {
         e.preventDefault();
         Inertia.post(route('comment.like', id), {}, {
@@ -50,11 +49,13 @@ function CommentCard({comment, ...props}) {
                                             <div className="dropdown-menu p-0 m-0 dropdown-menu-anim dropdown-menu-right">
                                                 <ul className="navi navi-hover navi-active navi-accent navi-link-rounded-lg">
                                                     <li className="navi-item mx-2 my-1">
-                                                        <a href="#" className="navi-link">
-                                                            <span className="navi-text">
-                                                                Edit
-                                                            </span>
-                                                        </a>
+                                                        <button className="btn btn-block navi-link" data-toggle="modal" data-target="#comment_edit"
+                                                                onClick={() => props.onClickEditComment({
+                                                                    id: comment.id,
+                                                                    comment: comment.comment,
+                                                                })}>
+                                                            Edit
+                                                        </button>
                                                     </li>
                                                     <li className="navi-item mx-2 my-1">
                                                         <button className="btn btn-block navi-link"
@@ -81,9 +82,7 @@ function CommentCard({comment, ...props}) {
                                         onClick={() => {
                                             props.onClickReply({
                                                 parent_id: comment.id,
-                                                reply_to: comment.user.name,
-                                                mentioned_username: `[@${comment.user.name}](${URL}/${comment.user.username})`,
-                                                mentioned_user_id: comment.user.id,
+                                                reply_to: comment.user.name
                                             })
                                         }}>
                                     <div className="d-flex align-items-center">
@@ -141,11 +140,13 @@ function CommentCard({comment, ...props}) {
                                                                 <div className="dropdown-menu p-0 m-0 dropdown-menu-anim dropdown-menu-right">
                                                                     <ul className="navi navi-hover navi-active navi-accent navi-link-rounded-lg">
                                                                         <li className="navi-item mx-2 my-1">
-                                                                            <a href="#" className="navi-link">
-                                                                            <span className="navi-text">
-                                                                                Edit
-                                                                            </span>
-                                                                            </a>
+                                                                            <button className="btn btn-block navi-link" data-toggle="modal" data-target="#comment_edit"
+                                                                                    onClick={() => props.onClickEditComment({
+                                                                                        id: reply.id,
+                                                                                        comment: reply.comment,
+                                                                                    })}>
+                                                                                    Edit
+                                                                            </button>
                                                                         </li>
                                                                         <li className="navi-item mx-2 my-1">
                                                                             <button className="btn btn-block navi-link"

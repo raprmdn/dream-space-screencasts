@@ -19,14 +19,14 @@ export default function Show() {
     const [ watchable ] = useState(!!video.current_video.source)
     const [ currentEpisode ] = useState(video.current_video.episode)
 
-    const { data, setData, post, errors, clearErrors, reset, processing } = useForm({
+    const { data, setData, post, put, errors, clearErrors, reset, processing } = useForm({
+        id: '',
         video_id: video.current_video.id,
         parent_id: '',
         reply_to: '',
-        mentioned_username: '',
-        mentioned_user_id: '',
         comment: ''
     });
+    console.log(data)
 
     useEffect(() => {
         if (videos.length > 10) {
@@ -64,8 +64,15 @@ export default function Show() {
             ...data,
             parent_id: value.parent_id,
             reply_to: value.reply_to,
-            mentioned_username: value.mentioned_username,
-            mentioned_user_id: value.mentioned_user_id
+        });
+    }, []);
+
+    const onClickEditComment = useCallback((value) => {
+        console.log(value)
+        setData({
+            ...data,
+            id: value.id,
+            comment: value.comment
         });
     }, []);
 
@@ -103,6 +110,21 @@ export default function Show() {
                 clearErrors()
                 reset()
                 window.$('#comment_reply').modal('hide')
+            }
+        })
+    }
+
+    const editCommentHandler = (e) => {
+        e.preventDefault()
+        put(route('comment.update', data.id), {
+            data,
+            only: ['errors', 'comments'],
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+                clearErrors()
+                reset()
+                window.$('#comment_edit').modal('hide')
             }
         })
     }
@@ -253,6 +275,7 @@ export default function Show() {
                                         <CommentCard comment={comment}
                                                      onClickReply={onClickReply}
                                                      onClickDelete={onClickDelete}
+                                                     onClickEditComment={onClickEditComment}
                                         />
                                     </span>
                                 ))
@@ -348,6 +371,24 @@ export default function Show() {
                                     data,
                                     setData,
                                     submitHandler:replyCommentHandler,
+                                    errors,
+                                    processing,
+                                    clearErrors,
+                                    reset
+                                }}
+                            />
+                        </CommentPopUp>
+                    )
+                }
+                {
+                    auth.user && (
+                        <CommentPopUp trigger={"comment_edit"}>
+                            <CommentTextAreaForm
+                                {...{
+                                    video,
+                                    data,
+                                    setData,
+                                    submitHandler:editCommentHandler,
                                     errors,
                                     processing,
                                     clearErrors,
