@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Traits\InstantPayment;
 use App\Http\Resources\{ItemDetailsResource, SeriesResource};
 use App\Models\{MidtransConfig, Order, PaymentChannel, PaymentMidtransResponse, Series, User};
 use Auth;
@@ -11,6 +12,8 @@ use Midtrans\{Config, CoreApi, Notification};
 
 class OrderService
 {
+    use InstantPayment;
+
     protected $midtransConfig;
 
     public function __construct()
@@ -52,73 +55,38 @@ class OrderService
                 'gross_amount' => $grossAmount,
             ]);
 
-            /*
-             *  ~ !! Important !! ~
-             *  Before made payment with Midtrans, first make sure u have to put client and server key in Midtrans Config.
-             */
             if ($channel->identifier_channel !== null) {
+
                if ( $midtransConfigPaymentIsEnabled  && $paymentTypeIsActive ) {
-                   // Do Instant Payment w/ Midtrans
-                   $payloads = $this->_instantPaymentRequest($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform);
+                   /*
+                     * Instant Payment with Midtrans.
+                     *
+                     *  Important:
+                     * - Make sure you already put client and server key in Midtrans Config.
+                     */
+                   $payloads = $this->makeInstantPaymentRequest($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform);
+
+                   try {
+                       $midtransResponse = CoreApi::charge($payloads);
+                   } catch (Exception) {
+                       throw new Exception("There's was an issue, please try again later.");
+                   }
+
+                   $this->_updateOrderTable($order, $midtransResponse);
+                   $this->_midtransPaymentResponseTable($midtransResponse, json_encode($midtransResponse));
+                   Auth::user()->carts()->delete();
+
                } else {
                    throw new Exception("There's was an issue, please try again later.");
                }
             } else {
-                // Do Manual Transfer
-                $payloads = null;
+                dd('Do Manual Transfer. Not Available Yet.');
             }
-
-
-            try {
-                $midtransResponse = CoreApi::charge($payloads);
-            } catch (Exception $exception) {
-                throw new Exception("There's was an issue, please try again later.");
-            }
-
-            $this->_updateOrderTable($order, $midtransResponse);
-            $this->_midtransPaymentResponse($midtransResponse, json_encode($midtransResponse));
-            Auth::user()->carts()->delete();
 
             $this->response = $identifier;
         });
 
         return $this->response;
-    }
-
-    private function _instantPaymentRequest($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform): array
-    {
-        switch ($channel->identifier_channel) {
-            case 'bri' :
-            case 'bca' :
-            case 'bni' :
-                return $this->_payloads(
-                    $channel, $invoice, $grossAmount,
-                    $seriesItemsDetailsTransform, $this->_request_BRI_BCA_BNI($channel)
-                );
-            case 'mandiri' :
-                return $this->_payloads(
-                    $channel, $invoice, $grossAmount,
-                    $seriesItemsDetailsTransform, $this->_request_Mandiri($channel, $invoice)
-                );
-            case 'permata' :
-                return $this->_payloads(
-                    $channel, $invoice, $grossAmount,
-                    $seriesItemsDetailsTransform, $this->_request_Permata($channel)
-                );
-            case 'gopay' :
-                return $this->_payloads(
-                    $channel, $invoice, $grossAmount,
-                    $seriesItemsDetailsTransform, $this->_request_Gopay($channel)
-                );
-            case 'alfamart' :
-            case 'indomaret' :
-                return $this->_payloads(
-                    $channel, $invoice, $grossAmount,
-                    $seriesItemsDetailsTransform, $this->_request_Alfamart_Indomaret($channel)
-                );
-            default :
-                throw new Exception("There's was an issue. Couldn't find the payment method.");
-        }
     }
 
     public function notificationHandler()
@@ -134,79 +102,9 @@ class OrderService
 
             \Log::info('notification from midtrans', [$notification->getResponse()]);
             $order = Order::where('invoice', $invoice)->firstOrFail();
-            $this->_midtransPaymentResponse($notification, json_encode($notification->getResponse()));
+            $this->_midtransPaymentResponseTable($notification, json_encode($notification->getResponse()));
             $this->_orderStatusHandling($status, $paymentType, $fraudStatus, $order, $statusCode, $paidAt);
         });
-    }
-
-    private function _payloads($channel, $invoice, $grossAmount, $seriesItemsDetailsTransform, $requestTransfer): array
-    {
-        $payloads = [
-            "payment_type" => $channel->type,
-            "transaction_details" => [
-                'order_id' => $invoice,
-                'gross_amount' => $grossAmount
-            ],
-            "customer_details" => [
-                'first_name' => Auth::user()->name,
-                'email' => Auth::user()->email
-            ],
-            "item_details" => $seriesItemsDetailsTransform,
-        ];
-
-        return array_replace_recursive($payloads, $requestTransfer);
-    }
-
-    private function _request_BRI_BCA_BNI($channel): array
-    {
-        return [
-            $channel->type => [
-                "bank" => $channel->identifier_channel,
-                "va_number" => ""
-            ]
-        ];
-    }
-
-    private function _request_Mandiri($channel, $invoice): array
-    {
-        return [
-            $channel->type => [
-                "bill_info1" => "Payment : $invoice",
-                "bill_info2" => "Course purchase.",
-            ]
-        ];
-    }
-
-    private function _request_Permata($channel): array
-    {
-        return [
-            $channel->type => [
-                "bank" => $channel->identifier_channel,
-                "permata" => [
-                    "recipient_name" => Auth::user()->name
-                ]
-            ]
-        ];
-    }
-
-    private function _request_Gopay($channel): array
-    {
-        return [
-            $channel->type => [
-                "enable_callback" => false,
-                "callback_url" => "someapps://callback"
-            ]
-        ];
-    }
-
-    public function _request_Alfamart_Indomaret($channel): array
-    {
-        return [
-            $channel->type => [
-                "store" => $channel->identifier_channel,
-	            "message" => "Purchasing online course.",
-            ]
-        ];
     }
 
     private function _userSuccessPurchasing($order)
@@ -216,6 +114,37 @@ class OrderService
         $seriesOrderCollectionId = collect($seriesOrderJson)->pluck('id');
 
         $user->purchasing($seriesOrderCollectionId);
+    }
+
+    private function _orderStatusHandling($status, $paymentType, $fraudStatus, $order, $statusCode, $paidAt)
+    {
+        if ($status == 'capture') {
+            if ($paymentType == 'credit_card') {
+                if ($fraudStatus == 'challenge') {
+                    $order->setStatusPending();
+                } else {
+                    $order->setStatusSuccess();
+                    $this->_userSuccessPurchasing($order);
+                }
+                $order->update(['status_code' => $statusCode, 'paid_at' => $paidAt]);
+            }
+        } else if ($status == 'settlement') {
+            $order->setStatusSuccess();
+            $order->update(['status_code' => $statusCode, 'paid_at' => $paidAt]);
+            $this->_userSuccessPurchasing($order);
+        } else if ($status == 'pending') {
+            $order->setStatusPending();
+            $order->update(['status_code' => $statusCode]);
+        } else if ($status == 'deny') {
+            $order->setStatusFailed();
+            $order->update(['status_code' => $statusCode]);
+        } else if ($status == 'expire') {
+            $order->setStatusExpired();
+            $order->update(['status_code' => $statusCode]);
+        } else if ($status == 'cancel') {
+            $order->setStatusFailed();
+            $order->update(['status_code' => $statusCode]);
+        }
     }
 
     private function _updateOrderTable($order, $response)
@@ -253,38 +182,7 @@ class OrderService
         ]);
     }
 
-    private function _orderStatusHandling($status, $paymentType, $fraudStatus, $order, $statusCode, $paidAt)
-    {
-        if ($status == 'capture') {
-            if ($paymentType == 'credit_card') {
-                if ($fraudStatus == 'challenge') {
-                    $order->setStatusPending();
-                } else {
-                    $order->setStatusSuccess();
-                    $this->_userSuccessPurchasing($order);
-                }
-                $order->update(['status_code' => $statusCode, 'paid_at' => $paidAt]);
-            }
-        } else if ($status == 'settlement') {
-            $order->setStatusSuccess();
-            $order->update(['status_code' => $statusCode, 'paid_at' => $paidAt]);
-            $this->_userSuccessPurchasing($order);
-        } else if ($status == 'pending') {
-            $order->setStatusPending();
-            $order->update(['status_code' => $statusCode]);
-        } else if ($status == 'deny') {
-            $order->setStatusFailed();
-            $order->update(['status_code' => $statusCode]);
-        } else if ($status == 'expire') {
-            $order->setStatusExpired();
-            $order->update(['status_code' => $statusCode]);
-        } else if ($status == 'cancel') {
-            $order->setStatusFailed();
-            $order->update(['status_code' => $statusCode]);
-        }
-    }
-
-    private function _midtransPaymentResponse($response, $responseBody)
+    private function _midtransPaymentResponseTable($response, $responseBody)
     {
         PaymentMidtransResponse::updateOrCreate(['order_id' => $response->order_id],
         [

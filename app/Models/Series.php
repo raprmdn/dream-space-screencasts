@@ -27,6 +27,19 @@ class Series extends Model
         'archived_at' => 'datetime',
     ];
 
+    protected static function booted()
+    {
+        static::updated(function ($series) {
+            if ($series->wasChanged(['price', 'discount_price', 'is_discount'])) {
+                $price = !$series->discount_price ? $series->price : $series->discount_price;
+                $series->carts()->update(['price' => $price]);
+            }
+            if ($series->wasChanged(['is_free'])) {
+                $series->carts()->delete();
+            }
+        });
+    }
+
     /**
      * Path storage for topic thumbnail.
      *

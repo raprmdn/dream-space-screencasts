@@ -122,6 +122,11 @@ export default function PaymentChannelIndex() {
             />
             <div className="d-flex flex-column-fluid">
                 <div className="container">
+                    <div className="alert alert-danger mb-5 p-5" role="alert">
+                        <h4 className="alert-heading">Important Things!</h4>
+                        <p>By changing the default payment channels will affect the functionality payment system.</p>
+                        <p className="mb-0">Whenever you need to, be sure to keep things nice and tidy.</p>
+                    </div>
                     <div className="row">
                         {
                             payment_type.map((type) => (
