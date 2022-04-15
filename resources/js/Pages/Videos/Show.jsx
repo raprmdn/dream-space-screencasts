@@ -14,7 +14,8 @@ import CommentCard from "../../Components/CommentCard";
 import CommentPopUp from "../../Components/CommentPopUp";
 
 export default function Show() {
-    const { video, series, videos, auth, comments } = usePage().props
+    const { video, series, videos, auth } = usePage().props
+    const { data: comments, links } = usePage().props.comments
     const [ loadingVideo, setLoadingVideo ] = useState(true)
     const [ watchable ] = useState(!!video.current_video.source)
     const [ currentEpisode ] = useState(video.current_video.episode)
@@ -26,7 +27,6 @@ export default function Show() {
         reply_to: '',
         comment: ''
     });
-    console.log(data)
 
     useEffect(() => {
         if (videos.length > 10) {
@@ -68,7 +68,6 @@ export default function Show() {
     }, []);
 
     const onClickEditComment = useCallback((value) => {
-        console.log(value)
         setData({
             ...data,
             id: value.id,
@@ -83,6 +82,30 @@ export default function Show() {
             preserveState: true,
         });
     }, []);
+
+    const onClickNextComments = (e) => {
+        e.preventDefault();
+        Inertia.replace(links.next, {
+            only: ['comments'],
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+                document.getElementById('comment_area').scrollIntoView({behavior: 'smooth'});
+            }
+        });
+    }
+
+    const onClickPreviousComments = (e) => {
+        e.preventDefault();
+        Inertia.replace(links.prev, {
+            only: ['comments'],
+            preserveScroll: true,
+            preserveState: true,
+            onSuccess: () => {
+                document.getElementById('comment_area').scrollIntoView({behavior: 'smooth'});
+            }
+        });
+    }
 
     const submitCommentHandler = (e) => {
         e.preventDefault()
@@ -280,6 +303,24 @@ export default function Show() {
                                     </span>
                                 ))
                             }
+                            <div className="d-flex justify-content-center mt-5">
+                                {
+                                    links.prev && (
+                                        <button type="button" className="btn btn-sm btn-info mr-3"
+                                                onClick={onClickPreviousComments}>
+                                            Previous Comments
+                                        </button>
+                                    )
+                                }
+                                {
+                                    links.next && (
+                                        <button type="button" className="btn btn-sm btn-info"
+                                                onClick={onClickNextComments}>
+                                            Next Comments
+                                        </button>
+                                    )
+                                }
+                            </div>
                         </div>
                         <div className="col-xl-5">
                             <div className="card card-custom gutter-b shadow-sm">

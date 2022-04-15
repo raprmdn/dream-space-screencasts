@@ -2,7 +2,7 @@ import React from 'react';
 
 function AddCommentCard({modalTarget, auth, label, ...props}) {
     return (
-        <div className="card card-custom card-transparent gutter-b" style={{border: '1px dashed #9CA3AF'}}>
+        <div id="comment_area" className="card card-custom card-transparent gutter-b" style={{border: '1px dashed #9CA3AF'}}>
             <button {...props} className="btn btn-link text-decoration-none text-dark-50"
                     data-toggle="modal" data-target={modalTarget}>
                 <div className="card-body py-1 ml-n5">

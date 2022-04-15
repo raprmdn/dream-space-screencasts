@@ -9,7 +9,6 @@ class CommentService
 {
     public function getVideoComments($video)
     {
-        CommentResource::withoutWrapping();
         return CommentResource::collection(
             $video->comments()->where('parent_id', null)
                 ->withCount(['replies', 'likes'])
@@ -17,7 +16,7 @@ class CommentService
                     $query->withCount('likes')->with(['user:id,name,username,profile_picture'])->oldest();
                 }])
                 ->latest()
-                ->get()
+                ->simplePaginate(10)
         );
     }
 
