@@ -173,7 +173,6 @@ export default function Show() {
                                     <YouTube
                                         videoId={video.current_video.source}
                                         className={"embed-responsive-item rounded"}
-                                        loading={"lazy"}
                                         opts={opts}
                                         onReady={_onReady}
                                     />
