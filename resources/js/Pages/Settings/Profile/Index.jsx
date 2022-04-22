@@ -5,7 +5,7 @@ import Breadcrumb from "../../../Components/Breadcrumb";
 import FormProfileUpdate from "../../../Components/Forms/FormProfileUpdate";
 import SidebarProfileSettings from "../../../Components/SidebarProfileSettings";
 
-export default function Profile() {
+export default function Index() {
     const { user } = usePage().props
     const [ preview, setPreview ] = useState(user.picture || null)
 
@@ -79,4 +79,4 @@ export default function Profile() {
     )
 }
 
-Profile.layout = (page) => <App children={page}/>
+Index.layout = (page) => <App children={page}/>

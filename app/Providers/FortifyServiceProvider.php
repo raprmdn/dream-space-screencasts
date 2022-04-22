@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController;
 use Laravel\Fortify\Contracts\{LoginResponse, LogoutResponse, PasswordUpdateResponse, RegisterResponse};
 
 class FortifyServiceProvider extends ServiceProvider
@@ -61,6 +62,10 @@ class FortifyServiceProvider extends ServiceProvider
                 ]);
             }
         });
+
+        $this->app->afterResolving(EmailVerificationNotificationController::class, function ($controller) {
+            $controller->middleware('throttle:verification');
+        });
     }
 
     /**
@@ -83,6 +88,22 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
+        RateLimiter::for('verification', function (Request $request) {
+            $key = $request->ip();
+            $max = 1;
+            $decay = 60;
+
+            if (RateLimiter::tooManyAttempts($key, $max)) {
+                $seconds = RateLimiter::availableIn($key);
+                return redirect()->back()->with([
+                    'type' => 'error',
+                    'message' => "Too many attempts. Please try again later in $seconds seconds."
+                ]);
+            } else {
+                RateLimiter::hit($key, $decay);
+            }
+        });
+
         Fortify::loginView(function () {
             return inertia('Auth/Login');
         });
@@ -102,6 +123,10 @@ class FortifyServiceProvider extends ServiceProvider
                     'token' => $request->route('token')
                 ]
             ]);
+        });
+
+        Fortify::verifyEmailView(function () {
+            return inertia('Settings/VerifyEmail');
         });
     }
 }

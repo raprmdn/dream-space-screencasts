@@ -68,7 +68,7 @@ class OrderService
 
                    try {
                        $midtransResponse = CoreApi::charge($payloads);
-                   } catch (Exception) {
+                   } catch (Exception $e) {
                        throw new Exception("There's was an issue, please try again later.");
                    }
 

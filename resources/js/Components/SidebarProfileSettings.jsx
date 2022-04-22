@@ -1,7 +1,9 @@
 import React from 'react';
-import {Link} from "@inertiajs/inertia-react";
+import {Link, usePage} from "@inertiajs/inertia-react";
 
 export default function SidebarProfileSettings() {
+    const { auth } = usePage().props
+
     return (
         <>
             <div className="card card-custom gutter-b">
@@ -24,6 +26,19 @@ export default function SidebarProfileSettings() {
                             </Link>
                         </div>
                     </div>
+                    {
+                        !auth.user.email_verified_at && (
+                            <div className="navi navi-bold navi-hover navi-active navi-link-rounded">
+                                <div className="navi-item mb-2">
+                                    <Link href={route('verification.notice')}
+                                          className={`navi-link py-4 ${route().current('verification.notice') ? 'active' : ''}`}>
+                                        <span className="navi-icon"><i className="fas fa-check-circle mr-4" /></span>
+                                        <span className="navi-text font-size-lg">Verify Email</span>
+                                    </Link>
+                                </div>
+                            </div>
+                        )
+                    }
                     <div className="separator separator-solid"/>
                     <div className="navi navi-bold navi-hover navi-link-rounded mt-2">
                         <div className="navi-item mb-2">
