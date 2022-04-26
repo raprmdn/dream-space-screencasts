@@ -56,16 +56,18 @@ FILESYSTEM_DRIVER=public
 
 // and another settings
 
-MAIL_MAILER="..."
-MAIL_HOST="..."
-MAIL_PORT="..."
+QUEUE_CONNECTION=database
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
 MAIL_USERNAME="..."
 MAIL_PASSWORD="..."
-MAIL_ENCRYPTION="..."
+MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS="..."
-MAIL_FROM_NAME="..."
+MAIL_FROM_NAME="${APP_NAME}"
 ```
-> **Note**: for now this SMTP work only for reset password. Any feature like, verify email, invoice, etc. will available coming soon.
+> **Note**: for now this SMTP work only for reset password, verify email, resend email verification. Any feature like, invoice, etc. will available coming soon.
 
 Run: 
 ```shell
@@ -98,6 +100,11 @@ To run the project:
 php artisan serve
 ```
 
+To start a queue worker and process new jobs. Run the worker using terminal:
+```shell
+php artisan queue:work
+```
+
 Login account:
 ```
 email    : admin@dreamspace.com
@@ -109,9 +116,9 @@ npm install
 ```
 then 
 ```shell
-// If You using NPM
+# If You using NPM
 npm run watch
 
-// If You using Yarn
+# If You using Yarn
 yarn watch
 ```
