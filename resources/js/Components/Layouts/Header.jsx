@@ -159,13 +159,35 @@ export default function Header() {
                                                             }
                                                             {
                                                                 auth.can.includes('invoice management') && (
-                                                                    <li className={`menu-item ${route().current('orders.list') ? 'menu-item-active' : ''}`} aria-haspopup="true">
-                                                                        <Link href={route('orders.list')} className="menu-link">
+                                                                    <li className={`menu-item menu-item-submenu ${segmentUrl.split("/")[2] === 'invoice-management' ? 'menu-item-open menu-item-here' : ''}`}
+                                                                        data-menu-toggle="hover" aria-haspopup="true">
+                                                                        <a href="" className="menu-link menu-toggle">
                                                                             <div className="menu-icon">
                                                                                 <i className="flaticon-price-tag text-dark-25"/>
                                                                             </div>
-                                                                            <span className="menu-text">List Orders</span>
-                                                                        </Link>
+                                                                            <span className="menu-text">Orders</span>
+                                                                            <i className="menu-arrow" />
+                                                                        </a>
+                                                                        <div className="menu-submenu menu-submenu-classic menu-submenu-right">
+                                                                            <ul className="menu-subnav">
+                                                                                <li className={`menu-item ${route().current('orders.list') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('orders.list')} className="menu-link">
+                                                                                        <i className="menu-bullet menu-bullet-dot">
+                                                                                            <span />
+                                                                                        </i>
+                                                                                        <span className="menu-text">List Orders</span>
+                                                                                    </Link>
+                                                                                </li>
+                                                                                <li className={`menu-item ${route().current('midtrans-response') ? 'menu-item-active' : ''}`} aria-haspopup="true">
+                                                                                    <Link href={route('midtrans-response')} className="menu-link">
+                                                                                        <i className="menu-bullet menu-bullet-dot">
+                                                                                            <span />
+                                                                                        </i>
+                                                                                        <span className="menu-text">Payment Midtrans Response</span>
+                                                                                    </Link>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
                                                                     </li>
                                                                 )
                                                             }

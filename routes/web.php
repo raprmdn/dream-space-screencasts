@@ -6,6 +6,7 @@ use App\Http\Controllers\{CartController,
     Courses\VideoController,
     IndexController,
     Invoice\InvoiceController,
+    Invoice\PaymentMidtransResponseController,
     LikeController,
     MyLibrary\MyLibraryController,
     Order\OrderController,
@@ -98,6 +99,7 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
     });
     Route::prefix('invoice-management')->group(function () {
         Route::get('orders', [InvoiceController::class, 'index'])->name('orders.list');
+        Route::get('midtrans-response', PaymentMidtransResponseController::class)->name('midtrans-response');
     });
     Route::prefix('payment')->middleware(['can:payment configuration'])->group(function () {
         Route::prefix('configuration')->group(function () {
