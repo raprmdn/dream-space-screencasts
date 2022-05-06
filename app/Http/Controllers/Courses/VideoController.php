@@ -69,7 +69,8 @@ class VideoController extends Controller
             'series' => $this->seriesService->getCurrentSeries($series),
             'video' =>  $this->videoService->getCurrentVideo($series->id, $video),
             'videos' => $this->videoService->findVideosBySeries($series),
-            'comments' => $this->commentService->getVideoComments($video)
+            'comments' => $this->commentService->getVideoComments($video),
+            'highlighted_comments' => $this->commentService->getPinnedComments($video)
         ]);
     }
 }

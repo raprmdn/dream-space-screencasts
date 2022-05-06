@@ -14,7 +14,7 @@ import CommentCard from "../../Components/CommentCard";
 import CommentPopUp from "../../Components/CommentPopUp";
 
 export default function Show() {
-    const { video, series, videos, auth } = usePage().props
+    const { video, series, videos, auth, highlighted_comments } = usePage().props
     const { data: comments, links } = usePage().props.comments
     const [ loadingVideo, setLoadingVideo ] = useState(true)
     const [ watchable ] = useState(!!video.current_video.source)
@@ -86,7 +86,7 @@ export default function Show() {
     const onClickNextComments = (e) => {
         e.preventDefault();
         Inertia.replace(links.next, {
-            only: ['comments'],
+            only: ['comments', 'highlighted_comments'],
             preserveScroll: true,
             preserveState: true,
             onSuccess: () => {
@@ -98,7 +98,7 @@ export default function Show() {
     const onClickPreviousComments = (e) => {
         e.preventDefault();
         Inertia.replace(links.prev, {
-            only: ['comments'],
+            only: ['comments', 'highlighted_comments'],
             preserveScroll: true,
             preserveState: true,
             onSuccess: () => {
@@ -111,7 +111,7 @@ export default function Show() {
         e.preventDefault()
         post(route('comment'), {
             data,
-            only: ['errors', 'comments'],
+            only: ['errors', 'comments', 'highlighted_comments'],
             preserveScroll: true,
             preserveState: true,
             onSuccess: () => {
@@ -126,7 +126,7 @@ export default function Show() {
         e.preventDefault()
         post(route('replies.comment'), {
             data,
-            only: ['errors', 'comments'],
+            only: ['errors', 'comments', 'highlighted_comments'],
             preserveScroll: true,
             preserveState: true,
             onSuccess: () => {
@@ -141,7 +141,7 @@ export default function Show() {
         e.preventDefault()
         put(route('comment.update', data.id), {
             data,
-            only: ['errors', 'comments'],
+            only: ['errors', 'comments', 'highlighted_comments'],
             preserveScroll: true,
             preserveState: true,
             onSuccess: () => {
@@ -290,6 +290,18 @@ export default function Show() {
                                         label={'Login to comment . . .'}
                                         onClick={() => Inertia.visit(route('login'))}
                                     />
+                            }
+                            {
+                                highlighted_comments.map((comment) => (
+                                    <span key={comment.id}>
+                                        <CommentCard comment={comment}
+                                                     onClickReply={onClickReply}
+                                                     onClickDelete={onClickDelete}
+                                                     onClickEditComment={onClickEditComment}
+                                                     highlighted={true}
+                                        />
+                                    </span>
+                                ))
                             }
                             {
                                 comments.map((comment) => (

@@ -20,7 +20,6 @@ class CommentRepliesResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'video_id' => $this->video_id,
             'parent_id' => $this->parent_id,
             'comment' => $this->body,
             'likes_count' => $this->likes_count,

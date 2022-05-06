@@ -49,6 +49,8 @@ Route::middleware('auth')->group(function () {
     Route::post('likes/{comment:id}', LikeController::class)->name('comment.like');
     Route::delete('delete-comment/{comment:id}', [CommentController::class, 'delete'])->name('comment.delete');
     Route::put('comments/{comment:id}', [CommentController::class, 'update'])->name('comment.update');
+    Route::post('pin-comment', [CommentController::class, 'pin'])
+        ->name('comment.pin')->middleware('role:administrator');
 });
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {

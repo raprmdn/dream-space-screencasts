@@ -29,6 +29,13 @@ class CommentController extends Controller
         return redirect()->back();
     }
 
+    public function pin()
+    {
+        $this->commentService->pinComment(request('comment_id'));
+
+        return redirect()->back();
+    }
+
     public function update(CommentRequest $request, Comment $comment)
     {
         $this->commentService->updateComment($request->all(), $comment);

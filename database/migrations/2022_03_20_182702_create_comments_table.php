@@ -14,6 +14,7 @@ class CreateCommentsTable extends Migration
             $table->foreignId('video_id')->constrained('videos')->cascadeOnDelete();
             $table->foreignId('parent_id')->nullable()->constrained('comments')->cascadeOnDelete();
             $table->text('body');
+            $table->boolean('pinned')->default(false)->nullable();
             $table->boolean('edited')->default(false)->nullable();
             $table->timestamps();
         });

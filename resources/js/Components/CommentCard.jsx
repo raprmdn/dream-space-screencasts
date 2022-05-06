@@ -5,12 +5,27 @@ import ReactMarkdown from "react-markdown";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import {Inertia} from "@inertiajs/inertia";
+import {usePage} from "@inertiajs/inertia-react";
 
-function CommentCard({comment, ...props}) {
+function CommentCard({comment, highlighted = false, ...props}) {
+    const { auth } = usePage().props
+    const isAdmin = auth.roles === 'administrator'
+
     const likeToggleHandler = (e, id) => {
         e.preventDefault();
         Inertia.post(route('comment.like', id), {}, {
-            only: ['errors', 'comments'],
+            only: ['errors', 'comments', 'highlighted_comments'],
+            preserveState: true,
+            preserveScroll: true,
+        })
+    };
+
+    const pinCommentHandler = (e, id) => {
+        e.preventDefault();
+        Inertia.post(route('comment.pin'), {
+            comment_id: id
+        }, {
+            only: ['errors', 'comments', 'highlighted_comments'],
             preserveState: true,
             preserveScroll: true,
         })
@@ -34,11 +49,16 @@ function CommentCard({comment, ...props}) {
                                 />
                             </div>
                         </div>
-                        <div className="timeline-content ml-n8 pseudo-before-none bg-white">
+                        <div className={`timeline-content ml-n8 pseudo-before-none bg-white ${highlighted && ('border border-primary border-2')}`}>
                             <div className="d-flex align-items-center justify-content-between mb-3 mt-2">
                                 <div className="mr-2">
                                     <a href="#" className="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">{comment.user.name}</a>
-                                    <small className="text-muted ml-2">{comment.commented} {comment.edited && (' (edited)')}</small>
+                                    <small className="text-muted ml-2">{comment.commented} {comment.edited && ('(edited)')}</small>
+                                    {
+                                        highlighted && (
+                                            <span className="label label-inline-dark label-inline label-sm text-dark-50 font-weight-bold ml-2">HIGHLIGHTED COMMENT</span>
+                                        )
+                                    }
                                 </div>
                                 {
                                     comment.actions && (
@@ -105,6 +125,19 @@ function CommentCard({comment, ...props}) {
                                         }
                                     </div>
                                 </button>
+                                {
+                                    isAdmin && (
+                                        <button className="btn btn-icon"
+                                                onClick={(e) => pinCommentHandler(e, comment.id)}>
+                                            {
+                                                highlighted ?
+                                                    <i className="la la-thumbtack text-danger"></i>
+                                                :
+                                                    <i className="la la-thumbtack"></i>
+                                            }
+                                        </button>
+                                    )
+                                }
                             </div>
                         </div>
                         {
@@ -129,7 +162,7 @@ function CommentCard({comment, ...props}) {
                                                 <div className="d-flex align-items-center justify-content-between mb-3 mt-2">
                                                     <div className="mr-2">
                                                         <a href="#" className="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">{reply.user.name}</a>
-                                                        <small className="text-muted ml-2">{reply.commented} {reply.edited && (' (edited)')}</small>
+                                                        <small className="text-muted ml-2">{reply.commented} {reply.edited && ('(edited)')}</small>
                                                     </div>
                                                     {
                                                         reply.actions && (

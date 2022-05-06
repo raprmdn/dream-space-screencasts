@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\CommentResource;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 
 class CommentService
@@ -10,7 +11,7 @@ class CommentService
     public function getVideoComments($video)
     {
         return CommentResource::collection(
-            $video->comments()->where('parent_id', null)
+            $video->comments()->isParent()->notPinned()
                 ->withCount(['replies', 'likes'])
                 ->with(['user:id,name,username,profile_picture', 'replies' => function ($query) {
                     $query->withCount('likes')->with(['user:id,name,username,profile_picture'])->oldest();
@@ -20,7 +21,19 @@ class CommentService
         );
     }
 
-    public function comment($attributes)
+    public function getPinnedComments($video)
+    {
+        return CommentResource::collection(
+            $video->comments()->isParent()->pinned()
+                ->withCount(['replies', 'likes'])
+                ->with(['user:id,name,username,profile_picture', 'replies' => function ($query) {
+                    $query->withCount('likes')->with(['user:id,name,username,profile_picture'])->oldest();
+                }])
+                ->latest()->get()
+        );
+    }
+
+    public function comment($attributes): void
     {
         Auth::user()->comments()->create([
             'video_id' => $attributes['video_id'],
@@ -28,7 +41,7 @@ class CommentService
         ]);
     }
 
-    public function replies($attributes)
+    public function replies($attributes): void
     {
         Auth::user()->comments()->create([
             'video_id' => $attributes['video_id'],
@@ -37,7 +50,17 @@ class CommentService
         ]);
     }
 
-    public function updateComment($attributes, $comment)
+    public function pinComment($id): void
+    {
+        $comment = Comment::findOrFail($id);
+        if ($comment->pinned) {
+            $comment->unpin();
+        } else {
+            $comment->pin();
+        }
+    }
+
+    public function updateComment($attributes, $comment): void
     {
         $comment->update([
             'body' => $attributes['comment'],
@@ -45,7 +68,7 @@ class CommentService
         ]);
     }
 
-    public function deleteComment($comment)
+    public function deleteComment($comment): void
     {
         $comment->likes()->delete();
         $comment->delete();

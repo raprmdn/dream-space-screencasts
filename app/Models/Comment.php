@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable = ['user_id', 'video_id', 'parent_id', 'body', 'edited'];
+    protected $fillable = ['user_id', 'video_id', 'parent_id', 'body', 'pinned' ,'edited'];
     protected $with = ['likes'];
 
     /**
@@ -37,6 +37,67 @@ class Comment extends Model
     public function unlike()
     {
         return auth()->user()->likes()->where('likeable_id', $this->id)->delete();
+    }
+
+    /**
+     * Pin the comment.
+     *
+     * @return void
+     */
+    public function pin(): void
+    {
+        $this->update([
+            'pinned' => true
+        ]);
+    }
+
+    /**
+     * Unpin the comment.
+     *
+     * @return void
+     */
+    public function unpin(): void
+    {
+        $this->update([
+            'pinned' => false
+        ]);
+    }
+
+
+    /**
+     * Comment parent.
+     *
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeIsParent($query)
+    {
+        return $query->where('parent_id', null);
+    }
+
+    /**
+     * Comment not pinned.
+     *
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeNotPinned($query)
+    {
+        return $query->where('pinned', false);
+    }
+
+    /**
+     * Comment pinned.
+     *
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopePinned($query)
+    {
+        return $query->where('pinned', true);
     }
 
     /**
