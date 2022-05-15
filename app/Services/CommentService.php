@@ -73,4 +73,14 @@ class CommentService
         $comment->likes()->delete();
         $comment->delete();
     }
+
+    public function disableReply($id): void
+    {
+        $comment = Comment::findOrFail($id);
+        if ($comment->can_reply) {
+            $comment->disableReply();
+        } else {
+            $comment->enableReply();
+        }
+    }
 }

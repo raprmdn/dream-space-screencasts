@@ -247,9 +247,9 @@ export default function Show() {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
+                    <div className="d-flex flex-column-reverse flex-lg-row">
                         <div className="col-xl-7">
-                            <div className="card card-custom gutter-b shadow-sm">
+                            <div className="d-none d-lg-flex card card-custom gutter-b shadow-sm">
                                 <div className="card-body py-3">
                                     <div className="d-flex align-items-center flex-wrap">
                                         <div className="mr-2 py-2">
@@ -277,63 +277,93 @@ export default function Show() {
                                     }
                                 </div>
                             </div>
-                            {
-                                auth.user
-                                    ? <AddCommentCard
-                                        modalTarget={"#add_comment"}
-                                        auth={auth.user}
-                                        label={'Add a comment . . .'}
-                                    />
-                                    : <AddCommentCard
-                                        modalTarget={null}
-                                        auth={null}
-                                        label={'Login to comment . . .'}
-                                        onClick={() => Inertia.visit(route('login'))}
-                                    />
-                            }
-                            {
-                                highlighted_comments.map((comment) => (
-                                    <span key={comment.id}>
-                                        <CommentCard comment={comment}
-                                                     onClickReply={onClickReply}
-                                                     onClickDelete={onClickDelete}
-                                                     onClickEditComment={onClickEditComment}
-                                                     highlighted={true}
-                                        />
-                                    </span>
-                                ))
-                            }
-                            {
-                                comments.map((comment) => (
-                                    <span key={comment.id}>
-                                        <CommentCard comment={comment}
-                                                     onClickReply={onClickReply}
-                                                     onClickDelete={onClickDelete}
-                                                     onClickEditComment={onClickEditComment}
-                                        />
-                                    </span>
-                                ))
-                            }
-                            <div className="d-flex justify-content-center mt-5">
+                            <div>
                                 {
-                                    links.prev && (
-                                        <button type="button" className="btn btn-sm btn-info mr-3"
-                                                onClick={onClickPreviousComments}>
-                                            Previous Comments
-                                        </button>
-                                    )
+                                    auth.user
+                                        ? <AddCommentCard
+                                            modalTarget={"#add_comment"}
+                                            auth={auth.user}
+                                            label={'Add a comment . . .'}
+                                        />
+                                        : <AddCommentCard
+                                            modalTarget={null}
+                                            auth={null}
+                                            label={'Login to comment . . .'}
+                                            onClick={() => Inertia.visit(route('login'))}
+                                        />
                                 }
                                 {
-                                    links.next && (
-                                        <button type="button" className="btn btn-sm btn-info"
-                                                onClick={onClickNextComments}>
-                                            Next Comments
-                                        </button>
-                                    )
+                                    highlighted_comments.map((comment) => (
+                                        <span key={comment.id}>
+                                            <CommentCard comment={comment}
+                                                         onClickReply={onClickReply}
+                                                         onClickDelete={onClickDelete}
+                                                         onClickEditComment={onClickEditComment}
+                                                         highlighted={true}
+                                            />
+                                        </span>
+                                    ))
                                 }
+                                {
+                                    comments.map((comment) => (
+                                        <span key={comment.id}>
+                                            <CommentCard comment={comment}
+                                                         onClickReply={onClickReply}
+                                                         onClickDelete={onClickDelete}
+                                                         onClickEditComment={onClickEditComment}
+                                            />
+                                        </span>
+                                    ))
+                                }
+                                <div className="d-flex justify-content-center mt-5">
+                                    {
+                                        links.prev && (
+                                            <button type="button" className="btn btn-sm btn-info mr-3"
+                                                    onClick={onClickPreviousComments}>
+                                                Previous Comments
+                                            </button>
+                                        )
+                                    }
+                                    {
+                                        links.next && (
+                                            <button type="button" className="btn btn-sm btn-info"
+                                                    onClick={onClickNextComments}>
+                                                Next Comments
+                                            </button>
+                                        )
+                                    }
+                                </div>
                             </div>
                         </div>
                         <div className="col-xl-5">
+                            <div className="d-flex d-lg-none card card-custom gutter-b shadow-sm">
+                                <div className="card-body py-3">
+                                    <div className="d-flex align-items-center flex-wrap">
+                                        <div className="mr-2 py-2">
+                                            <div className="font-size-h5 font-weight-bolder text-dark">
+                                                {video.current_video.title}
+                                            </div>
+                                            <div className="d-flex flex-wrap align-items-center mt-3 text-dark-50">
+                                                <span>Episode {video.current_video.episode}</span>
+                                                <span className="label label-dot bg-dark opacity-50 mx-3"/>
+                                                <span>{video.current_video.runtime.runtime_formatted}</span>
+                                                <span className="label label-dot bg-dark opacity-50 mx-3"/>
+                                                <span>{video.current_video.created_at}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {
+                                        video.current_video.description && (
+                                            <>
+                                                <div className="separator separator-solid separator-border-2 my-4"/>
+                                                <ReactMarkdown children={video.current_video.description}
+                                                               components={CodeBlock}
+                                                               remarkPlugins={[remarkGfm]}/>
+                                            </>
+                                        )
+                                    }
+                                </div>
+                            </div>
                             <div className="card card-custom gutter-b shadow-sm">
                                 <div className="card-body d-flex align-items-center flex-wrap py-3">
                                     <div className="mr-2 py-2">

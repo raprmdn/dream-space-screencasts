@@ -31,6 +31,17 @@ function CommentCard({comment, highlighted = false, ...props}) {
         })
     };
 
+    const disableReplyHandler = (e, id) => {
+        e.preventDefault()
+        Inertia.post(route('comment.disable-reply'), {
+            comment_id: id
+        }, {
+            only: ['errors', 'comments', 'highlighted_comments'],
+            preserveState: true,
+            preserveScroll: true,
+        })
+    }
+
     return (
         <div className="gutter-b">
             <div className="timeline timeline-3">
@@ -49,14 +60,14 @@ function CommentCard({comment, highlighted = false, ...props}) {
                                 />
                             </div>
                         </div>
-                        <div className={`timeline-content ml-n8 pseudo-before-none bg-white ${highlighted && ('border border-primary border-2')}`}>
-                            <div className="d-flex align-items-center justify-content-between mb-3 mt-2">
+                        <div className={`timeline-content ml-n8 pseudo-before-none ${highlighted ? ('border border-primary bg-primary-o-20') : ('bg-white')}`}>
+                            <div className="d-flex align-items-center justify-content-between mb-3">
                                 <div className="mr-2">
                                     <a href="#" className="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">{comment.user.name}</a>
                                     <small className="text-muted ml-2">{comment.commented} {comment.edited && ('(edited)')}</small>
                                     {
                                         highlighted && (
-                                            <span className="label label-inline-dark label-inline label-sm text-dark-50 font-weight-bold ml-2">HIGHLIGHTED COMMENT</span>
+                                            <span className="label label-primary label-inline label-sm font-weight-bold ml-2">HIGHLIGHTED COMMENT</span>
                                         )
                                     }
                                 </div>
@@ -97,19 +108,23 @@ function CommentCard({comment, highlighted = false, ...props}) {
                                                remarkPlugins={[remarkGfm]}/>
                             </div>
                             <div className="d-flex align-items-center ml-n2">
-                                <button className="btn btn-hover-text-primary btn-hover-icon-primary btn-sm btn-text-dark-50 rounded font-weight-bolder font-size-sm p-2 mr-2"
-                                        data-toggle="modal" data-target="#comment_reply"
-                                        onClick={() => {
-                                            props.onClickReply({
-                                                parent_id: comment.id,
-                                                reply_to: comment.user.name
-                                            })
-                                        }}>
-                                    <div className="d-flex align-items-center">
-                                        <i className="far fa-comment-alt icon-nm mr-1" />
-                                        {comment.replies_count}
-                                    </div>
-                                </button>
+                                {
+                                    comment.can_reply && (
+                                        <button className="btn btn-hover-text-primary btn-hover-icon-primary btn-sm btn-text-dark-50 rounded font-weight-bolder font-size-sm p-2 mr-2"
+                                                data-toggle="modal" data-target="#comment_reply"
+                                                onClick={() => {
+                                                    props.onClickReply({
+                                                        parent_id: comment.id,
+                                                        reply_to: comment.user.name
+                                                    })
+                                                }}>
+                                            <div className="d-flex align-items-center">
+                                                <i className="far fa-comment-alt icon-nm mr-1" />
+                                                {comment.replies_count}
+                                            </div>
+                                        </button>
+                                    )
+                                }
                                 <button className="btn btn-sm btn-text-dark-50 btn-hover-icon-danger btn-hover-text-danger font-weight-bolder rounded font-size-sm p-2"
                                         onClick={(e) => likeToggleHandler(e, comment.id)}>
                                     <div className="d-flex align-items-center">
@@ -134,6 +149,19 @@ function CommentCard({comment, highlighted = false, ...props}) {
                                                     <i className="la la-thumbtack text-danger"></i>
                                                 :
                                                     <i className="la la-thumbtack"></i>
+                                            }
+                                        </button>
+                                    )
+                                }
+                                {
+                                    isAdmin && (
+                                        <button className="btn btn-icon"
+                                                onClick={(e) => disableReplyHandler(e, comment.id)}>
+                                            {
+                                                comment.can_reply ?
+                                                    <i className="la la-comment-slash"></i>
+                                                :
+                                                    <i className="la la-comment"></i>
                                             }
                                         </button>
                                     )

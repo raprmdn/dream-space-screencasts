@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable = ['user_id', 'video_id', 'parent_id', 'body', 'pinned' ,'edited'];
+    protected $fillable = ['user_id', 'video_id', 'parent_id', 'body', 'pinned', 'can_reply' ,'edited'];
     protected $with = ['likes'];
 
     /**
@@ -60,6 +60,30 @@ class Comment extends Model
     {
         $this->update([
             'pinned' => false
+        ]);
+    }
+
+    /**
+     * Disable reply for the comment.
+     *
+     * @return void
+     */
+    public function disableReply(): void
+    {
+        $this->update([
+            'can_reply' => false
+        ]);
+    }
+
+    /**
+     * Enable reply for the comment.
+     *
+     * @return void
+     */
+    public function enableReply(): void
+    {
+        $this->update([
+            'can_reply' => true
         ]);
     }
 

@@ -51,6 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::put('comments/{comment:id}', [CommentController::class, 'update'])->name('comment.update');
     Route::post('pin-comment', [CommentController::class, 'pin'])
         ->name('comment.pin')->middleware('role:administrator');
+    Route::post('disable-comment', [CommentController::class, 'disableReply'])
+        ->name('comment.disable-reply')->middleware('role:administrator');
 });
 
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {

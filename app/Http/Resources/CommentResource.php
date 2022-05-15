@@ -35,7 +35,8 @@ class CommentResource extends JsonResource
             ],
             'edited' => (bool) $this->edited,
             'liked' => (bool) $this->hasLiked(),
-            'highlighted_comment' => $this->pinned,
+            'highlighted_comment' => (bool) $this->pinned,
+            'can_reply' => (bool) $this->can_reply,
             'actions' => $editableOrDeletable,
             'commented' => $this->created_at->diffForHumans()
         ];

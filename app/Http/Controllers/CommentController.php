@@ -49,4 +49,11 @@ class CommentController extends Controller
 
         return redirect()->back();
     }
+
+    public function disableReply()
+    {
+        $this->commentService->disableReply(request('comment_id'));
+
+        return redirect()->back();
+    }
 }
