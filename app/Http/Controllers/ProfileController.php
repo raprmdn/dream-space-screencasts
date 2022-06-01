@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
+use App\Models\User;
 use App\Services\UserService;
 
 class ProfileController extends Controller
@@ -18,6 +19,14 @@ class ProfileController extends Controller
     {
         return inertia('Settings/Profile/Index', [
             'user' => $this->userService->getCurrentUser()
+        ]);
+    }
+
+    public function show(User $user)
+    {
+        return inertia('Profile/Show', [
+            'user' => $this->userService->showProfile($user),
+            'latest_activity' => $this->userService->getLatestCommentUserActivity($user)
         ]);
     }
 

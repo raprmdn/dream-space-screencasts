@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import {Inertia} from "@inertiajs/inertia";
-import {usePage} from "@inertiajs/inertia-react";
+import {Link, usePage} from "@inertiajs/inertia-react";
 
 function CommentCard({comment, highlighted = false, ...props}) {
     const { auth } = usePage().props
@@ -63,7 +63,7 @@ function CommentCard({comment, highlighted = false, ...props}) {
                         <div className={`timeline-content ml-n8 pseudo-before-none ${highlighted ? ('border border-primary bg-primary-o-20') : ('bg-white')}`}>
                             <div className="d-flex align-items-center justify-content-between mb-3">
                                 <div className="mr-2">
-                                    <a href="#" className="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">{comment.user.name}</a>
+                                    <Link href={route('profile.show', comment.user.username)} className="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">{comment.user.name}</Link>
                                     <small className="text-muted ml-2">{comment.commented} {comment.edited && ('(edited)')}</small>
                                     {
                                         highlighted && (
@@ -189,7 +189,7 @@ function CommentCard({comment, highlighted = false, ...props}) {
                                             <div className="timeline-content ml-n8 pseudo-before-none bg-white">
                                                 <div className="d-flex align-items-center justify-content-between mb-3 mt-2">
                                                     <div className="mr-2">
-                                                        <a href="#" className="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">{reply.user.name}</a>
+                                                        <Link href={route('profile.show', reply.user.username)} className="text-dark-75 text-hover-primary font-size-lg font-weight-bolder">{reply.user.name}</Link>
                                                         <small className="text-muted ml-2">{reply.commented} {reply.edited && ('(edited)')}</small>
                                                     </div>
                                                     {

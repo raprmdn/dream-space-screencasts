@@ -399,7 +399,7 @@ export default function Header() {
                                             <div className="separator separator-solid"/>
                                             <div className="navi navi-hover navi-active navi-accent navi-link-rounded-lg">
                                                 <li className="navi-item px-5 my-2">
-                                                    <a className="navi-link" href="#">
+                                                    <Link className="navi-link" href={route('profile.show', auth.user.username)}>
                                                         <span className="navi-icon"><i className="flaticon2-user" /></span>
                                                         <span className="navi-text font-weight-bold">Profile</span>
                                                         {
@@ -412,7 +412,7 @@ export default function Header() {
                                                                       title="Please verify your email.">Unverified</span>
                                                             )
                                                         }
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                                 <li className="navi-item px-5 mb-2">
                                                     <Link className={`navi-link ${route().current('watchlist.index') ? 'active' : ''}`} href={route('watchlist.index')}>

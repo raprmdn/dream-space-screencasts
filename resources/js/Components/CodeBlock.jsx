@@ -1,6 +1,6 @@
 import React from 'react';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import { materialOceanic } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const CodeBlock = {
     code({node, inline, className, children, ...props}) {
@@ -8,7 +8,7 @@ const CodeBlock = {
         return !inline && match ? (
             <SyntaxHighlighter
                 children={String(children).replace(/\n$/, '')}
-                style={materialOceanic}
+                style={oneDark}
                 language={match[1]}
                 {...props}
             />

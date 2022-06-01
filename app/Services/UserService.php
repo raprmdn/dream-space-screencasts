@@ -20,7 +20,7 @@ class UserService
         return UserSingleResource::make($user);
     }
 
-    public function updateProfile($attributes)
+    public function updateProfile($attributes): void
     {
         if ( $attributes['email'] !== Auth::user()->email ) Auth::user()->unverified();
 
@@ -39,7 +39,7 @@ class UserService
         Auth::user()->update($this->_fields($attributes));
     }
 
-    public function addUserByAdmin($attributes)
+    public function addUserByAdmin($attributes): void
     {
         $role = Role::findOrFail($attributes['roles']);
         $user = User::create([
@@ -60,8 +60,20 @@ class UserService
             return "$user->name email, has been mark as an unverified email.";
         } else {
             $user->markEmailAsVerified();
-            return "$user->name email, has been mark as verified email.";
+            return "$user->name email, has been mark as an verified email.";
         }
+    }
+
+    public function showProfile($user): UserSingleResource
+    {
+        UserSingleResource::withoutWrapping();
+
+        return UserSingleResource::make($user);
+    }
+
+    public function getLatestCommentUserActivity($user)
+    {
+        return [];
     }
 
     private function _fields(array $attributes): array

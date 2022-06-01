@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
         ->name('comment.disable-reply')->middleware('role:administrator');
 });
 
+Route::get('{user:username}', [ProfileController::class, 'show'])->name('profile.show');
+
 Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group(function () {
     Route::prefix('courses')->middleware('can:courses')->group(function () {
         Route::prefix('series')->group(function () {
@@ -101,7 +103,7 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
             Route::delete('{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
         });
     });
-    Route::prefix('invoice-management')->group(function () {
+    Route::prefix('invoice-management')->middleware('can:invoice management')->group(function () {
         Route::get('orders', [InvoiceController::class, 'index'])->name('orders.list');
         Route::get('midtrans-response', PaymentMidtransResponseController::class)->name('midtrans-response');
     });
@@ -126,7 +128,7 @@ Route::prefix('p')->middleware(['auth', 'role:administrator|instructor'])->group
             Route::put('{payment_channel:identifier_code}', [PaymentChannelController::class, 'update'])->name('payment.channel_update');
         });
     });
-    Route::prefix('trash')->middleware(['can:topic'])->group(function () {
+    Route::prefix('trash')->middleware(['can:trash'])->group(function () {
         Route::get('series', [TrashController::class, 'seriesTrashed'])->name('trash.series_index');
         Route::post('series/{series}', [TrashController::class, 'seriesRestore'])->name('trash.series_restore');
         Route::delete('series/{series}', [TrashController::class, 'seriesForce'])->name('trash.series_force');
