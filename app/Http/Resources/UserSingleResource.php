@@ -31,7 +31,9 @@ class UserSingleResource extends JsonResource
             'picture' => $this->photoProfile,
             'is_verified_email' => $isVerified,
             'verified_email' => $isVerified ? $this->email_verified_at->format('d F Y, H:i') : null,
-            'joined' => $this->created_at->diffForHumans()
+            'joined' => $this->created_at->diffForHumans(),
+            'comments_count' => $this->when(isset($this->comments_count), $this->comments_count),
+            'likes_count' => $this->when(isset($this->likes_count), $this->likes_count),
         ];
     }
 }

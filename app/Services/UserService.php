@@ -66,6 +66,7 @@ class UserService
 
     public function showProfile($user): UserSingleResource
     {
+        $user = User::withCount(['comments', 'likes'])->where('username', $user->username)->first();
         UserSingleResource::withoutWrapping();
 
         return UserSingleResource::make($user);
