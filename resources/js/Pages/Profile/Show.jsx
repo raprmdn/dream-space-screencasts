@@ -2,9 +2,11 @@ import React from 'react';
 import App from "../../Layouts/App";
 import {Head, usePage} from "@inertiajs/inertia-react";
 import Jumbotron from "../../Components/Jumbotron";
+import Timeline from "../../Components/Timeline";
 
 export default function Show() {
-    const {user} = usePage().props;
+    const { user } = usePage().props;
+    const { data:activities } = usePage().props.activities;
 
     return (
         <>
@@ -140,6 +142,30 @@ export default function Show() {
                     </div>
                 </div>
             </Jumbotron>
+            <div className="d-flex flex-column-fluid mt-10">
+                <div className="container">
+                    <h1 className="font-weight-boldest text-dark mb-10 ml-25">{user.name}'s activity</h1>
+                    {
+                        activities.length > 0
+                        ?
+                            <div className="timeline timeline-3">
+                                <div className="timeline-items">
+                                    {
+                                        activities.map((activity, index) => (
+                                            <div className="timeline-item" key={index}>
+                                                <Timeline activity={activity} user={user} />
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        :
+                            <div className="text-center">
+                                <div className="text-dark mb-10 font-size-h5">No activities yet</div>
+                            </div>
+                    }
+                </div>
+            </div>
         </>
     )
 }

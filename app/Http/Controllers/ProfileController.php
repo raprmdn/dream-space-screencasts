@@ -26,7 +26,7 @@ class ProfileController extends Controller
     {
         return inertia('Profile/Show', [
             'user' => $this->userService->showProfile($user),
-            'latest_activity' => $this->userService->getLatestCommentUserActivity($user)
+            'activities' => $this->userService->getLatestUserActivity($user)
         ]);
     }
 

@@ -37,11 +37,6 @@
     content: none !important;
 }
 
-.timeline-reply {
-    margin-left: -20px !important;
-    margin-top: 1rem;
-}
-
 .modal.modal-sticky.modal-sticky-bottom-right-custom {
     padding: 0 !important;
     max-width: 760px;
@@ -90,4 +85,31 @@ code {
 pre {
     border-radius: .475rem;
     font-size: 11px;
+}
+
+.timeline.timeline-3 .timeline-items .timeline-item .timeline-content {
+    border-radius: 0.825rem;
+    position: relative;
+    background-color: #FFF;
+    padding: 0.75rem 1.5rem;
+}
+
+.timeline.timeline-3 .timeline-items .timeline-item {
+    margin-left: 25px;
+    border-left: 1px dashed rgba(77, 77, 77, 0.62);
+    padding: 0 0 20px 50px;
+    position: relative;
+}
+
+.timeline.timeline-3 .timeline-items .timeline-item .timeline-content::before {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    top: 10px;
+    left: -25px;
+    border-right: solid 10px #ffffff;
+    border-bottom: solid 17px transparent;
+    border-left: solid 17px transparent;
+    border-top: solid 17px transparent;
 }

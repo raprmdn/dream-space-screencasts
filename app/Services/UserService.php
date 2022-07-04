@@ -2,10 +2,15 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ActivityFeedResource;
 use App\Http\Resources\UserSingleResource;
+use App\Models\ActivityFeed;
+use App\Models\Comment;
+use App\Models\Like;
 use App\Models\User;
 use App\Traits\ImageTrait;
 use Illuminate\Support\{Facades\Auth, Facades\Storage};
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\Permission\Models\Role;
 
 class UserService
@@ -72,9 +77,30 @@ class UserService
         return UserSingleResource::make($user);
     }
 
-    public function getLatestCommentUserActivity($user)
+    public function getLatestUserActivity($user)
     {
-        return [];
+        $activities = ActivityFeed::with(['feedable' => function (MorphTo $morphTo) {
+            $morphTo->morphWith([
+                Comment::class => [
+                    'video' => function ($q) {
+                        $q->with('series:id,slug')->select('id', 'series_id', 'title', 'episode');
+                    },
+                    'parent' => function ($q) {
+                        $q->with('user:id,name,username')->select('id', 'user_id', 'video_id', 'parent_id');
+                    }
+                ],
+                Like::class => ['likeable' => function ($q) {
+                    $q->with([
+                        'video' => function ($q) {
+                            $q->with('series:id,slug')->select('id', 'series_id' ,'title', 'episode');
+                        },
+                        'user:id,name,username'
+                    ]);
+                }],
+            ]);
+        }])->where('user_id', $user->id)->latest()->paginate(20);
+
+        return ActivityFeedResource::collection($activities);
     }
 
     private function _fields(array $attributes): array

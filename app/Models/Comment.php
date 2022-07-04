@@ -2,12 +2,38 @@
 
 namespace App\Models;
 
+use App\Traits\HasFeed;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    use HasFeed;
+
     protected $fillable = ['user_id', 'video_id', 'parent_id', 'body', 'pinned', 'can_reply' ,'edited'];
     protected $with = ['likes'];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($model) {
+            if (!$model->parent_id) {
+                $icon = 'flaticon-comment';
+                $type = 'comment_on_video';
+                $heading = 'comment on';
+            } else {
+                $icon = 'flaticon2-talk';
+                $type = 'replied_to_comment';
+                $heading = 'replied to';
+            }
+
+            $model->feeds()->create([
+                'user_id' => $model->user_id,
+                'icon' => $icon,
+                'type' => $type,
+                'heading' => $heading,
+            ]);
+        });
+    }
 
     /**
      * Check if user is liked the comment.

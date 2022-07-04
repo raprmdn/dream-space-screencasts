@@ -70,7 +70,25 @@ class CommentService
 
     public function deleteComment($comment): void
     {
-        $comment->likes()->delete();
+        $comment->replies->each(function ($reply) {
+            $reply->likes->each(function ($like) {
+                $like->feeds->each(function ($feed) {
+                    $feed->delete();
+                });
+                $like->delete();
+            });
+            $reply->feeds->each(function ($feed) {
+                $feed->delete();
+            });
+        });
+        $comment->likes->each(function ($like) {
+            $like->feeds->each(function ($feed) {
+                $feed->delete();
+            });
+            $like->delete();
+        });
+        $comment->feeds()->delete();
+
         $comment->delete();
     }
 
