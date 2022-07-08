@@ -18,49 +18,42 @@ export default function Login({flash}) {
         e.preventDefault()
         post('/login', data)
     }
+    console.log(data)
     return (
-        <div>
+        <>
             <Head title="Dream Space - Login"/>
-            <div className="mb-20">
-                <h3 className="opacity-50 font-weight-normal">Sign In To Dream Space</h3>
-                <p className="opacity-50">Enter your credentials to login your account.</p>
-                {flash.status && (<div className="text-success">{flash.status}</div>)}
-            </div>
-            <form onSubmit={submitHandler} noValidate>
-                <div className="form-group">
-                    <input className={`form-control h-auto text-white bg-white-o-10 rounded-pill border-0 py-4 px-8
-                                        ${errors.email ? 'is-invalid' : ''}`}
-                           type="email" placeholder="Email" name="email" id="email"
-                           value={data.email} onChange={changeHandler} />
-                    {errors.email && (<div className="invalid-feedback mb-n5">{errors.email}</div>)}
+            <div className="login-form login-signin">
+                <div className="text-center mb-10 mb-lg-20">
+                    <h3 className="font-size-h1">Sign In to Dream Space</h3>
+                    <p className="text-muted font-weight-bold">Enter your credentials to login your account.</p>
+                    {flash.status && (<div className="text-success">{flash.status}</div>)}
                 </div>
-                <div className="form-group">
-                    <input className={`form-control h-auto text-white bg-white-o-10 rounded-pill border-0 py-4 px-8
-                                        ${errors.password ? 'is-invalid' : ''}`}
-                           type="password" placeholder="Password" name="password" id="password"
-                           value={data.password} onChange={changeHandler}/>
-                    {errors.password && (<div className="invalid-feedback mb-n5">{errors.password}</div>)}
-                </div>
-                <div className="form-group d-flex flex-wrap justify-content-between align-items-center px-8 opacity-60">
-                    <div className="checkbox-inline">
-                        <label className="checkbox checkbox-outline checkbox-white text-white m-0">
-                            <input type="checkbox" name="remember" id="remember" />
-                            <span />Remember me</label>
+                <form onSubmit={submitHandler} className="form" autoComplete="off">
+                    <div className="form-group">
+                        <input className={`form-control form-control-solid h-auto py-5 px-6 ${errors.email ? 'is-invalid' : ''}`}
+                               type="email" placeholder="Email"
+                               name="email" id="email"
+                               value={data.email} onChange={changeHandler} />
+                        {errors.email && (<div className="invalid-feedback mb-n5">{errors.email}</div>)}
                     </div>
-                    <Link href={route('password.request')} className="text-white font-weight-bold">Forgot Password ?</Link>
-                </div>
-                <div className="form-group text-center mt-10">
-                    <button type="submit" className="btn btn-pill btn-primary opacity-90 px-15 py-3" disabled={processing}>
-                        {processing && (<i className="spinner spinner-sm spinner-white px-4"/>)}
-                        Sign In
-                    </button>
-                </div>
-            </form>
-            <div className="mt-10">
-                <span className="opacity-50 mr-2">Don't have an account?</span>
-                <Link href={route('register')} className="text-white opacity-30 font-weight-normal">Sign Up</Link>
+                    <div className="form-group">
+                        <input className={`form-control form-control-solid h-auto py-5 px-6 ${errors.password ? 'is-invalid' : ''}`}
+                               type="password" placeholder="Password"
+                               name="password" id="password"
+                               value={data.password} onChange={changeHandler}/>
+                        {errors.password && (<div className="invalid-feedback mb-n5">{errors.password}</div>)}
+                    </div>
+                    <div className="form-group d-flex flex-wrap justify-content-between align-items-center">
+                        <Link href={route('password.request')} className="text-dark-50 text-hover-primary my-3 mr-2">Forgot Password ?</Link>
+                        <button type="submit" disabled={processing}
+                                className="btn btn-primary font-weight-bold px-9 py-4 my-3">
+                            {processing && (<i className="spinner spinner-sm spinner-white px-4"/>)}
+                            Sign In
+                        </button>
+                    </div>
+                </form>
             </div>
-        </div>
+        </>
     )
 }
 
