@@ -18,7 +18,7 @@ export default function Login({flash}) {
         e.preventDefault()
         post('/login', data)
     }
-    console.log(data)
+
     return (
         <>
             <Head title="Dream Space - Login"/>
