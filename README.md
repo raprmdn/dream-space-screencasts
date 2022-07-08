@@ -17,6 +17,7 @@ Dream Space Screencast is online learning platform for developer, specifically b
 - [React](https://reactjs.org/)
 
 #### Package
+- [Socialite](https://laravel.com/docs/9.x/socialite), Google Authentication.
 - [Midtrans](https://github.com/Midtrans/midtrans-php)
 - [Spatie Role and Permission](https://spatie.be/index.php/docs/laravel-permission/v5/introduction)
 - [Ziggy](https://github.com/tighten/ziggy) Laravel routes in JavaScript
@@ -52,12 +53,7 @@ cp .env.example .env
 
 Configure the .env: <br> 
 ```php
-FILESYSTEM_DRIVER=public
-
-// and another settings
-
-QUEUE_CONNECTION=database
-
+# Setup SMTP.
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.mailtrap.io
 MAIL_PORT=2525
@@ -66,6 +62,11 @@ MAIL_PASSWORD="..."
 MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS="..."
 MAIL_FROM_NAME="${APP_NAME}"
+
+# Setup Google Login.
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REDIRECT=
 ```
 > **Note**: for now this SMTP work only for reset password, verify email, resend email verification. Any feature like, invoice, etc. will available coming soon.
 
