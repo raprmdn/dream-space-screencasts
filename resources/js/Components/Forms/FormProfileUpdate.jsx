@@ -83,12 +83,26 @@ export default function FormProfileUpdate({updateHandler, data, setData, errors,
                 <div className="form-group row">
                     <div className="col-lg-6">
                         <Label labelFor={"email"} children={"Email"}/>
-                        <span className="text-danger"> * </span>
-                        <input type="text" id="email" name="email"
-                               value={data.email} onChange={e => setData('email', e.target.value)}
-                               className={`form-control ${errors.email && ('is-invalid')}`}
-                               placeholder="Enter a email" />
-                        <span className="form-text text-danger">By changing the email you have to verify the email again.</span>
+                        {
+                            user.provider
+                            ?
+                                <>
+                                    <input type="text"
+                                           value={data.email}
+                                           className="form-control" readOnly={true} />
+                                    <span className="form-text text-success">You're connected with google account.</span>
+                                </>
+                            :
+                                <>
+                                    <span className="text-danger"> * </span>
+                                    <input type="text" id="email" name="email"
+                                           value={data.email} onChange={e => setData('email', e.target.value)}
+                                           className={`form-control ${errors.email && ('is-invalid')}`}
+                                           placeholder="Enter a email" />
+                                    <span className="form-text text-danger">By changing the email you have to verify the email again.</span>
+                                </>
+
+                        }
                         {errors.email && (<div className="invalid-feedback mb-n5">{errors.email}</div>)}
                     </div>
                     <div className="d-flex col-lg-6 align-items-center">

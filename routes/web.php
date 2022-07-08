@@ -14,6 +14,7 @@ use App\Http\Controllers\{CartController,
     PaymentConfiguration\PaymentConfigurationController,
     PaymentConfiguration\PaymentTypeController,
     ProfileController,
+    SSOGoogleController,
     Topic\TopicController,
     TrashController,
     UserManagement\PermissionController,
@@ -28,6 +29,8 @@ Route::get('topics/{topic:slug}', [TopicController::class, 'show'])->name('topic
 Route::get('series', [SeriesController::class, 'findAllSeries'])->name('series');
 Route::get('series/{series:slug}', [SeriesController::class, 'showDetailSeries'])->name('series.show');
 Route::get('series/{series:slug}/eps/{video:episode}', [VideoController::class, 'watchVideo'])->name('watch.video');
+Route::get('/login/google', [SSOGoogleController::class, 'google'])->name('sso.google')->middleware('guest');
+Route::get('/login/google/callback', [SSOGoogleController::class, 'googleCallback'])->middleware('guest');
 
 Route::middleware('auth')->group(function () {
     Route::prefix('settings')->group(function () {

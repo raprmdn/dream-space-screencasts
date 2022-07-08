@@ -34,6 +34,7 @@ class UserSingleResource extends JsonResource
             'joined' => $this->created_at->diffForHumans(),
             'comments_count' => $this->when(isset($this->comments_count), $this->comments_count),
             'likes_count' => $this->when(isset($this->likes_count), $this->likes_count),
+            'provider' => $this->provider,
         ];
     }
 }
