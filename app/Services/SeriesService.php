@@ -109,6 +109,23 @@ class SeriesService
         return SeriesResource::collection($series);
     }
 
+    public function getRecentlyUpdated()
+    {
+        $series = Series::with(['topics:id,name,slug'])
+            ->notArchived()
+            ->latest()
+            ->take(3)
+            ->get()
+            ->map(function ($series) {
+                Helper::castingRuntime($series);
+                unset($series->videos);
+                return $series;
+            });
+        SeriesResource::withoutWrapping();
+
+        return SeriesResource::collection($series);
+    }
+
     public function save($attributes): array
     {
         $picture = $attributes['thumbnail'];

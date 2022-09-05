@@ -1,12 +1,15 @@
 import React from 'react';
 import App from "../Layouts/App";
-import {Head, Link} from "@inertiajs/inertia-react"
+import {Head, Link, usePage} from "@inertiajs/inertia-react"
 import Jumbotron from "../Components/Jumbotron";
 import MenuTopics from "../Components/MenuTopics";
 import CourseCard from "../Components/CourseCard";
 import SectionFeature from "../Components/SectionFeature";
 
 export default function Home() {
+    const { recently_updated: recentlyUpdated } = usePage().props
+    console.log(recentlyUpdated);
+
     return (
         <>
             <Head title="Dream Space">
@@ -38,9 +41,11 @@ export default function Home() {
                         title={"Recently Updated"}
                         description={"Penasaran terhadap apa saja courses terbaru? berikut di bawah ini adalah courses yang baru saja diperbarui."}/>
                     <div className="row">
-                        {/*<CourseCard/>*/}
-                        {/*<CourseCard/>*/}
-                        {/*<CourseCard/>*/}
+                        {
+                            recentlyUpdated.map((course) => (
+                                <CourseCard key={course.id} course={course}/>
+                            ))
+                        }
                     </div>
                     <SectionFeature
                         title={"Top Courses"}

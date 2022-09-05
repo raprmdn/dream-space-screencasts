@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\SeriesService;
 use App\Services\TopicService;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    protected $topicService;
+    protected $topicService, $seriesService;
 
-    public function __construct(TopicService $topicService)
+    public function __construct(TopicService $topicService, SeriesService $seriesService)
     {
         $this->topicService = $topicService;
+        $this->seriesService = $seriesService;
     }
 
     /**
@@ -24,6 +26,7 @@ class IndexController extends Controller
     {
         return inertia('Home', [
             'topics' => $this->topicService->getTopicByValue(8),
+            'recently_updated' => $this->seriesService->getRecentlyUpdated(),
         ]);
     }
 }
